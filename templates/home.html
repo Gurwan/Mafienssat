@@ -1,18 +1,7 @@
 {% extends 'main.html' %}
 {% block content %}
-    <h1>Bet Klax</h1>
-    Liste des membres
-    {% for p in players %}
-        - {{p.firstname}}
-    {% endfor %}
-    {% if request.user.is_authenticated %}
-        Bienvenue {{request.user.username}}
-        <a href="{% url 'logout' %}"> Se déconnecter </a>
-    {% else %}
-        <a href="{% url 'login' %}"> Se connecter </a>
-        <a href="{% url 'register' %}"> S'inscrire </a>
-    {% endif %}
+{% include 'nav.html' %}
+<div class="container">
 
-
-
+</div>
 {% endblock %}

@@ -1,13 +1,14 @@
-<!DOCTYPE html>
-<html>
-<body>
+{% extends 'main.html' %}
+{% block content %}
+{% include 'nav.html' %}
+<div class="container">
     <h1>Login</h1>
     <div>
         <form method="POST" action="">
             {% csrf_token %}
             
             <label>Pseudo :</label>
-            <input type="text" name="username" placeholder="Lache ton blaze man"/>
+            <input type="text" name="username" placeholder="Lache ton blaze man"/><br>
             
             <label>Mot de passe :</label>
             <input type="password" name="password" placeholder="Entre ton mot de passe"/>
@@ -15,5 +16,5 @@
             <input type="submit" value="Login">
         </form>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}

@@ -1,28 +1,26 @@
-<!DOCTYPE html>
-<html>
-<body>
-    <h1>Register</h1>
-    <div>
-        <form class="form" action="" method="POST">
-          {% csrf_token %}
+{% extends 'main.html' %}
+{% block content %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% include 'nav.html' %}
+<div class="container">
+  <h1 style="text-align: center; margin-top:20px">Register</h1>
+    <form class="form" action="" method="POST">
+      {% csrf_token %}
+      {% bootstrap_form form %}
 
-          {% for field in form %}
-          <div class="form__group form__group">
-            <label for="room_name">{{field.label}}</label>
-            {{field}}
-          </div>
-          {% endfor %}
+      {% buttons %}
+      <button class="btn btn--main btn btn-primary" type="submit">
+        Register
+      </button>
+      {% endbuttons %}
+    </form>
 
-
-          <button class="btn btn--main" type="submit">
-            Register
-          </button>
-        </form>
-
-        <div class="auth__action">
-          <p>Already signed up yet?</p>
-          <a href="{% url 'login' %}" class="btn btn--link">Sign Up</a>
-        </div>
+    <div class="auth__action">
+      <p>Already signed up yet?</p>
+      <a href="{% url 'login' %}" class="btn btn--link btn btn-primary">Sign Up</a>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}
+
