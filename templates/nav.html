@@ -1,28 +1,35 @@
 {% extends 'main.html' %}
+{% load static %}
 {% block content %}
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" style="margin-left: 5px;" href="{% url 'home' %}">BetKlax</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="{% url 'home' %}">Accueil</a>
-        </li>
-        {% if request.user.is_authenticated %}
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'logout' %}"> Se déconnecter </a>
-            </li>
-        {% else %}
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'register' %}"> Inscription </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'login' %}"> Se connecter </a>
-            </li>
-        {% endif %}
-    </div>
-  </nav>
+<nav class="nav">
+  <div class="container-fluid">
+      <div class="logo">
+          <a href="{% url 'home' %}"><img width="200" height="300" class="img-fluid" src="{% static 'betklax_logo.png' %}"></a>
+      </div>
+      <div id="mainListDiv" class="main_list">
+          <ul class="navlinks">
+              <li><a href="{% url 'home' %}">Accueil</a></li>
+              {% if request.user.is_authenticated %}
+                <li><a href="{% url 'logout' %}">Se déconnecter</a></li>
+              {% else %}
+                <li><a href="{% url 'login' %}">Se connecter</a></li>
+                <li><a href="{% url 'register' %}">S'inscrire</a></li>
+              {% endif %}
+          </ul>
+      </div>
+      <span class="navTrigger">
+          <i></i>
+          <i></i>
+          <i></i>
+      </span>
+  </div>
+</nav>
+<script>
+  $('.navTrigger').click(function () {
+    $(this).toggleClass('active');
+    console.log("Clicked menu");
+    $("#mainListDiv").toggleClass("show_list");
+    $("#mainListDiv").fadeIn();
+  });
+</script>
 {% endblock %}
