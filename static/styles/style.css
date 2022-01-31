@@ -4,7 +4,7 @@
 }
 
 body {
-    background-color: #101447;
+    background-color: #666666;
     color: white;
 }
 
@@ -59,7 +59,7 @@ body {
     font-size: 2.4rem;
 }
 .nav div.main_list ul li a:hover {
-    color: #00E676;
+    color: #000;
 }
 .navTrigger {
   display: none;
