@@ -60,4 +60,4 @@ def home(request):
 def betKlax(request):
     players = User.objects.all()
 
-    return render(request, 'bets.html')
+    return render(request, 'betKlax.html')
