@@ -34,15 +34,15 @@ class Bets(models.Model):
     bet_name = models.CharField(max_length=256, unique=True)
 
     win_rate = models.DecimalField(max_digits=4, decimal_places=2)
-    win_vote = models.IntegerField()
+    win_vote = models.IntegerField(default=0)
     win_gains = models.OneToOneField('Klaxcoin', on_delete=models.CASCADE, related_name='wKlaxcoin')
 
     draw_rate = models.DecimalField(max_digits=4, decimal_places=2)
-    draw_vote = models.IntegerField()
+    draw_vote = models.IntegerField(default=0)
     draw_gains = models.OneToOneField('Klaxcoin', on_delete=models.CASCADE, related_name='dKlaxcoin')
 
     lose_rate = models.DecimalField(max_digits=4, decimal_places=2)
-    lose_vote = models.IntegerField()
+    lose_vote = models.IntegerField(default=0)
     lose_gains = models.OneToOneField('Klaxcoin', on_delete=models.CASCADE, related_name='lKlaxcoin')
 
     created = models.DateTimeField(auto_now_add=True)
@@ -59,5 +59,5 @@ class StoreBets(models.Model):
     )
     gains = models.DecimalField(max_digits=12, decimal_places=2)
     created = models.DateTimeField(auto_now_add=True)
-    is_combined = models.BooleanField()
-    id_combined = models.IntegerField(default=int(0))   # refers to the lower combined bet, if not itself
+    is_combined = models.BooleanField(default=False)
+    id_combined = models.IntegerField(default=0)   # refers to the lower combined bet, if not itself
