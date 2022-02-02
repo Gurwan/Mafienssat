@@ -1,8 +1,10 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import User
 from django.contrib.auth import authenticate, login, logout
 from .forms import UserForm
+
 
 def loginPage(request):
 
@@ -51,5 +53,11 @@ def registerUser(request):
 def home(request):
     players = User.objects.all()  # va chercher tous les utilisateurs du site
     data = {'players': players}
+
     return render(request, 'home.html', data)
-# Create your views here.
+
+
+def betKlax(request):
+    players = User.objects.all()
+
+    return render(request, 'bets.html')
