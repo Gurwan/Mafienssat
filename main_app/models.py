@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 
 # Klaxcoin
 class Klaxcoin(models.Model):
-    number: models.DecimalField(max_digits=2)
+    value: models.DecimalField(max_digits=12, decimal_places=2)
 
 
 # User
@@ -32,21 +32,19 @@ class User(AbstractUser):
 class Bets(models.Model):
     id_bet = models.AutoField(primary_key=True, unique=True)
     bet_name = models.CharField(max_length=256, unique=True)
-    win_rate = models.DecimalField(max_digits=2)
+
+    win_rate = models.DecimalField(max_digits=4, decimal_places=2)
     win_vote = models.IntegerField()
-    win_gains = models.OneToOneField(
-        Klaxcoin,
-        on_delete=models.CASCADE)
-    draw_rate = models.DecimalField(max_digits=2)
+    win_gains = models.OneToOneField('Klaxcoin', on_delete=models.CASCADE, related_name='wKlaxcoin')
+
+    draw_rate = models.DecimalField(max_digits=4, decimal_places=2)
     draw_vote = models.IntegerField()
-    draw_gains = models.OneToOneField(
-        Klaxcoin,
-        on_delete=models.CASCADE)
-    lose_rate = models.DecimalField(max_digits=2)
+    draw_gains = models.OneToOneField('Klaxcoin', on_delete=models.CASCADE, related_name='dKlaxcoin')
+
+    lose_rate = models.DecimalField(max_digits=4, decimal_places=2)
     lose_vote = models.IntegerField()
-    lose_gains = models.OneToOneField(
-        Klaxcoin,
-        on_delete=models.CASCADE)
+    lose_gains = models.OneToOneField('Klaxcoin', on_delete=models.CASCADE, related_name='lKlaxcoin')
+
     created = models.DateTimeField(auto_now_add=True)
     ended = models.DateTimeField()
 
@@ -59,7 +57,7 @@ class StoreBets(models.Model):
         ('D', 'Draw'),
         ('L', 'Lose')
     )
-    gains = models.DecimalField(max_digits=2)
+    gains = models.DecimalField(max_digits=12, decimal_places=2)
     created = models.DateTimeField(auto_now_add=True)
     is_combined = models.BooleanField()
     id_combined = models.IntegerField(default=int(0))   # refers to the lower combined bet, if not itself
