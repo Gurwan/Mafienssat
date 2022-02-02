@@ -1,0 +1,14 @@
+{% extends 'main.html' %}
+{% block content %}
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% include 'nav.html' %}
+<div class="container">
+  <div>
+    <img src="{% static "betklax_logo.png" %}" alt="Logo">
+  </div>
+
+</div>
+{% endblock %}
