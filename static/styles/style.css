@@ -4,8 +4,15 @@
 }
 
 body {
-    background-color: #666666;
+    background-color: #666666; /* 666666 ou 0f0f3d*/
     color: white;
+}
+
+h6 {
+    font-family: 'Corleone', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+    font-size: 28px;
 }
 
 .nav {
