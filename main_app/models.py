@@ -4,11 +4,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
-# Klaxcoin
-class Klaxcoin(models.Model):
-    value = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
-
-
 # User
 class User(AbstractUser):
     id = models.AutoField(primary_key=True, unique=True)
@@ -25,7 +20,7 @@ class User(AbstractUser):
     sector = models.CharField(max_length=4, choices=SECTOR, blank=True, help_text='Donne moi ta filière bro')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    klax_coins = models.OneToOneField(Klaxcoin, on_delete=models.CASCADE, default=0.00)
+    klax_coins = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
@@ -36,15 +31,15 @@ class Bets(models.Model):
 
     win_rate = models.DecimalField(max_digits=4, decimal_places=2, default=1.00)
     win_vote = models.IntegerField(default=0)
-    win_gains = models.OneToOneField('Klaxcoin', on_delete=models.CASCADE, related_name='wKlaxcoin', default=0.00)
+    win_gains = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
 
     draw_rate = models.DecimalField(max_digits=4, decimal_places=2, default=1.00)
     draw_vote = models.IntegerField(default=0)
-    draw_gains = models.OneToOneField('Klaxcoin', on_delete=models.CASCADE, related_name='dKlaxcoin', default=0.00)
+    draw_gains = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
 
     lose_rate = models.DecimalField(max_digits=4, decimal_places=2, default=1.00)
     lose_vote = models.IntegerField(default=0)
-    lose_gains = models.OneToOneField('Klaxcoin', on_delete=models.CASCADE, related_name='lKlaxcoin', default=0.00)
+    lose_gains = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
 
     created = models.DateTimeField(auto_now_add=True)
     ended = models.DateTimeField()
