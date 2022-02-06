@@ -10,21 +10,16 @@
     <img src="{% static "betklax_logo.png" %}" alt="Logo">
   </div>
 
-  <h1 style="text-align: center; margin-top:20px">Tous les paris</h1>
+  <h1 style="text-align: center; margin-top:20px">Tous vos paris</h1>
     <div class="container">
-        {%  for bet in bets %}
+        {%  for bet in mybets %}
             <div>
                 <small>{{ bet.bet_name }}</small>
                 <small>{{ bet.ended }}</small>
-                <form name="makeBetW" method="POST">
-                    {% csrf_token %}
-                    <button class="btn btn--main" type="submit" id="{{ bet.id }}" value="makeBetW" name="makeBetW">{{ bet.win_rate }}</button>
-                    <button class="btn btn--main" type="submit" id="{{ bet.id }}" value="makeBetL" name="makeBetL">{{ bet.lose_rate }}</button>
-                </form>
+                <small>{{ bet.draw_rate }}</small>
                 <small>{{ bet.lose_rate }}</small>
             </div>
         {% endfor %}
     </div>
-
 </div>
 {% endblock %}

@@ -1,5 +1,3 @@
-import uuid
-
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
@@ -54,7 +52,7 @@ class StoreBets(models.Model):
         ('L', 'Lose')
     )
     result = models.CharField(max_length=1, choices=RESULT, blank=True, help_text='Which result for the bet')
-    gains = models.DecimalField(max_digits=12, decimal_places=2)
+    gains = models.DecimalField(max_digits=12, decimal_places=2, default=1.00)
     created = models.DateTimeField(auto_now_add=True)
     is_combined = models.BooleanField(default=False)
     id_combined = models.IntegerField(null=True)   # refers to the lower combined bet, if not itself

@@ -6,5 +6,8 @@ urlpatterns = [
     path("login/", views.loginPage, name="login"),
     path("logout/", views.logoutUser, name="logout"),
     path("register/", views.registerUser, name="register"),
-    path("betKlax/", views.betKlax, name="betKlax")
+    path("betKlax/", views.betKlax, name="betKlax"),
+    path('makeBetW', views.makeBetW, name='makeBetW'),
+    path('makeBetL', views.makeBetL, name='makeBetL'),
+    path("myBets/", views.myBets, name="myBets")
 ]
