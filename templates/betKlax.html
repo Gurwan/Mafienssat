@@ -16,15 +16,34 @@
             <div>
                 <small>{{ bet.bet_name }}</small>
                 <small>{{ bet.ended }}</small>
-                <form name="makeBetW" method="POST">
-                    {% csrf_token %}
-                    <button class="btn btn--main" type="submit" id="{{ bet.id }}" value="makeBetW" name="makeBetW">{{ bet.win_rate }}</button>
-                    <button class="btn btn--main" type="submit" id="{{ bet.id }}" value="makeBetL" name="makeBetL">{{ bet.lose_rate }}</button>
-                </form>
+                <button class="btn btn--main" type="submit" id="w-{{ bet.id }}" onclick="makeBet(this.id)" value="makeBetW" name="makeBetW">{{ bet.win_rate }}</button>
+                <button class="btn btn--main" type="submit" id="l-{{ bet.id }}" onclick="makeBet(this.id)" value="makeBetL" name="makeBetL">{{ bet.lose_rate }}</button>
+                <input type="number" id="mise">
                 <small>{{ bet.lose_rate }}</small>
             </div>
         {% endfor %}
     </div>
-
+    <script>
+        function makeBet(id){
+            let montant = document.getElementById("mise").value;
+            const formData = new FormData();
+            formData.append('csrfmiddlewaretoken', "{{ csrf_token }}");
+            formData.append('montant', montant);
+            formData.append('bet',id.split("-")[1]);
+            if(montant > 0){
+                if(id.split("-")[0] == "w"){
+                    fetch('{% url "makeBetW" %}', {
+                        method: 'POST',
+                        body: formData
+                    })
+                } else {
+                    fetch('{% url "makeBetL" %}', {
+                        method: 'POST',
+                        body: formData
+                    })
+                }
+            }
+        }
+    </script>
 </div>
 {% endblock %}

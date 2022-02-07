@@ -57,7 +57,7 @@ def home(request):
 
 
 def makeBetW(request):
-    print("win Bet")
+
     current_user = request.user
     if current_user is not None:
         primary_key = request.POST["id"] if request.POST["id"] is not None else ''

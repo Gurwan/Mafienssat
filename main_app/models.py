@@ -20,7 +20,7 @@ class User(AbstractUser):
     updated = models.DateTimeField(auto_now=True)
     klax_coins = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['username']
 
 
 class Bets(models.Model):
