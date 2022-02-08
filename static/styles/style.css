@@ -3,13 +3,78 @@
     src: url('../font/Corleone.TTF');
 }
 
+@font-face {
+    font-family: Bolf;
+    src: url('../font/theboldfont.ttf');
+}
+
+
 body {
     background-color: #666666; /* 666666 ou 0f0f3d*/
     color: white;
 }
 
+#main_title {
+    font-family: 'Bolf', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+    font-size: 110px;
+    margin-top: 20px;
+}
+
+#main_title h1 {
+  text-align: center;
+  font-size: 90px;
+}
+
+#main_col {
+    font-family: 'Bolf', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+    font-size: 110px;
+    margin-top: 20px;
+    margin-bottom: 100px;
+}
+
+#main_col .row .col {
+    border-top: 20px solid black;
+    padding-top: 20px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+#main_col .row #left {
+    border-right: 20px solid black;
+}
+
+#main_col .row #right {
+    border-left: 20px solid black;
+}
+
+#main_col .row .col h2{
+    text-align: center;
+}
+
+#main_title h1 span {
+    color: red;
+}
+
+@media screen and (min-width: 370px) and (max-width: 560px) {
+    #main_title h1 {
+        text-align: center;
+        font-size: 60px;
+      }
+}
+
+@media screen and (min-width: 200px) and (max-width: 370px) {
+    #main_title h1 {
+        text-align: center;
+        font-size: 40px;
+      }
+}
+
 h6 {
-    font-family: 'Corleone', Arial, sans-serif;
+    font-family: 'Bolf', Arial, sans-serif;
     font-weight:normal;
     font-style:normal;
     font-size: 28px;
@@ -36,7 +101,7 @@ h6 {
 .nav div.logo a {
     text-decoration: none;
     color: #FFF;
-    font-size: 2.5rem;
+    font-size: 2rem;
 }
 .nav div.logo a:hover {
     color: #00E676;
@@ -63,7 +128,7 @@ h6 {
     text-decoration: none;
     color: #FFF;
     line-height: 65px;
-    font-size: 2.4rem;
+    font-size: 2rem;
 }
 .nav div.main_list ul li a:hover {
     color: #000;
