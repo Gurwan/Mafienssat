@@ -9,5 +9,7 @@ urlpatterns = [
     path("betKlax/", views.betKlax, name="betKlax"),
     path('makeBetW', views.makeBetW, name='makeBetW'),
     path('makeBetL', views.makeBetL, name='makeBetL'),
-    path("myBets/", views.myBets, name="myBets")
+    path("myBets/", views.myBets, name="myBets"),
+    path("event/", views.event, name="event"),
+    path("liste/", views.liste, name="liste")
 ]

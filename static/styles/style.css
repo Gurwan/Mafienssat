@@ -14,12 +14,46 @@ body {
     color: white;
 }
 
+#choices {
+  
+}
+
+* {
+    cursor:url(https://i.ibb.co/2Whsx1h/klaxicon-5.png), default;
+}
+
 #main_title {
     font-family: 'Bolf', Arial, sans-serif;
     font-weight:normal;
     font-style:normal;
     font-size: 110px;
     margin-top: 20px;
+}
+
+#betklax_title {
+    font-family: 'Bolf', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+    text-align: center;
+}
+
+#betklax_title h1 {
+    text-align: center;
+    font-size: 60px;
+}
+
+#betklax_title h1 span {
+    color: black;
+    font-size: 80px;
+}
+
+#betklax_title p span {
+    color: black;
+    font-style: italic;
+}
+
+#betklax_title p {
+    font-size: 20px;
 }
 
 #main_title h1 {
@@ -31,33 +65,35 @@ body {
     font-family: 'Bolf', Arial, sans-serif;
     font-weight:normal;
     font-style:normal;
-    font-size: 110px;
     margin-top: 20px;
-    margin-bottom: 100px;
+    margin-bottom: 50px;
 }
 
 #main_col .row .col {
-    border-top: 20px solid black;
+    border: 20px solid black;
     padding-top: 20px;
     margin-right: 10px;
     margin-left: 10px;
+    text-align: center;
 }
 
 #main_col .row #left {
-    border-right: 20px solid black;
+    background-color: #0f0f3d;
 }
 
 #main_col .row #right {
-    border-left: 20px solid black;
+    background-color: #3d0f0f;
 }
 
 #main_col .row .col h2{
     text-align: center;
+    font-size: 50px;
 }
 
 #main_title h1 span {
     color: red;
 }
+
 
 @media screen and (min-width: 370px) and (max-width: 560px) {
     #main_title h1 {
@@ -66,11 +102,25 @@ body {
       }
 }
 
-@media screen and (min-width: 200px) and (max-width: 370px) {
+@media screen and (min-width: 100px) and (max-width: 370px) {
     #main_title h1 {
         text-align: center;
         font-size: 40px;
-      }
+    }
+
+    #main_col .row .col h2{
+        font-size: 30px;
+    }
+
+    #betklax_title h1 {
+        text-align: center;
+        font-size: 40px;
+    }
+    
+    #betklax_title h1 span {
+        color: black;
+        font-size: 50px;
+    }
 }
 
 h6 {
@@ -90,6 +140,7 @@ h6 {
     font-family: 'Corleone', Arial, sans-serif;
     font-weight:normal;
     font-style:normal;
+    background-color: #000000;
 }
 
 .nav div.logo {
@@ -137,7 +188,6 @@ h6 {
   display: none;
 }
 .nav {
-    padding-top: 20px;
     padding-bottom: 20px;
     -webkit-transition: all 0.4s ease;
     transition: all 0.4s ease;

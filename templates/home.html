@@ -2,22 +2,37 @@
 {% block content %}
 {% include 'nav.html' %}
 <div class="container">
-
     <div id="main_title">
         <h1>Mafienssat débarque pour vous <span>casser la gueule</span>.</h1>
     </div>
+</div>
 
+<div class="container-fluid" id="choices">
     <div id="main_col">
         <div class="row">
-            <div class="col" id="left">
+            <div class="col" id="left" onclick="goEvent()">
                 <h2>Prochain événement</h2>
+                <p>(En cliquant ici tu peux t'inscrire ou parier sur le prochain événement)</p>
             </div>
-            <div class="col" id="right">
+            <div class="col" id="right" onclick="goListe()">
                 <h2>Découvre la liste</h2>
+                <p>(Le troisième membre du BDA va vous surprendre 😈)</p>
             </div>
         </div>
     </div>
+</div>
 
+<div class="container">
+    <div id="betklax_title">
+        <h1>Mais attend c'est quoi <span>BetKlax</span> ?</h1>
+        <p>Parier avec vos Klaxcoins sur le vainqueur du prochain événement et empochez votre mise si elle est gagnante !</p>
+        <p>Les participants aux épreuves gagneront bien entendu des Klaxcoins en fonction de leurs performances</p>
+        <p>La personne détenant le plus de Klaxcoins à la fin des campagnes gagnera ...</p>
+        <p><span>100 Klaxcoins offert à l'inscription !</span></p>
+    </div>
+</div>
+
+<!--
     <div id="table_liste_members" style="margin-top:80px">
         <div class="row">
             <div class="col">
@@ -190,4 +205,15 @@
         </div>
     </div>
 </div>
+   -->
+
+<script>
+    function goEvent(){
+        window.location.href = window.location.href + "event"
+    }
+
+    function goListe(){
+        window.location.href = window.location.href + "liste"
+    }
+</script>
 {% endblock %}
