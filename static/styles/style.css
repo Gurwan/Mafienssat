@@ -3,13 +3,128 @@
     src: url('../font/Corleone.TTF');
 }
 
+@font-face {
+    font-family: Bolf;
+    src: url('../font/theboldfont.ttf');
+}
+
+
 body {
     background-color: #666666; /* 666666 ou 0f0f3d*/
     color: white;
 }
 
+#choices {
+  
+}
+
+* {
+    cursor:url(https://i.ibb.co/2Whsx1h/klaxicon-5.png), default;
+}
+
+#main_title {
+    font-family: 'Bolf', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+    font-size: 110px;
+    margin-top: 20px;
+}
+
+#betklax_title {
+    font-family: 'Bolf', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+    text-align: center;
+}
+
+#betklax_title h1 {
+    text-align: center;
+    font-size: 60px;
+}
+
+#betklax_title h1 span {
+    color: black;
+    font-size: 80px;
+}
+
+#betklax_title p span {
+    color: black;
+    font-style: italic;
+}
+
+#betklax_title p {
+    font-size: 20px;
+}
+
+#main_title h1 {
+  text-align: center;
+  font-size: 90px;
+}
+
+#main_col {
+    font-family: 'Bolf', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+#main_col .row .col {
+    border: 20px solid black;
+    padding-top: 20px;
+    margin-right: 10px;
+    margin-left: 10px;
+    text-align: center;
+}
+
+#main_col .row #left {
+    background-color: #0f0f3d;
+}
+
+#main_col .row #right {
+    background-color: #3d0f0f;
+}
+
+#main_col .row .col h2{
+    text-align: center;
+    font-size: 50px;
+}
+
+#main_title h1 span {
+    color: red;
+}
+
+
+@media screen and (min-width: 370px) and (max-width: 560px) {
+    #main_title h1 {
+        text-align: center;
+        font-size: 60px;
+      }
+}
+
+@media screen and (min-width: 100px) and (max-width: 370px) {
+    #main_title h1 {
+        text-align: center;
+        font-size: 40px;
+    }
+
+    #main_col .row .col h2{
+        font-size: 30px;
+    }
+
+    #betklax_title h1 {
+        text-align: center;
+        font-size: 40px;
+    }
+    
+    #betklax_title h1 span {
+        color: black;
+        font-size: 50px;
+    }
+}
+
 h6 {
-    font-family: 'Corleone', Arial, sans-serif;
+    font-family: 'Bolf', Arial, sans-serif;
     font-weight:normal;
     font-style:normal;
     font-size: 28px;
@@ -25,6 +140,7 @@ h6 {
     font-family: 'Corleone', Arial, sans-serif;
     font-weight:normal;
     font-style:normal;
+    background-color: #000000;
 }
 
 .nav div.logo {
@@ -36,7 +152,7 @@ h6 {
 .nav div.logo a {
     text-decoration: none;
     color: #FFF;
-    font-size: 2.5rem;
+    font-size: 2rem;
 }
 .nav div.logo a:hover {
     color: #00E676;
@@ -63,7 +179,7 @@ h6 {
     text-decoration: none;
     color: #FFF;
     line-height: 65px;
-    font-size: 2.4rem;
+    font-size: 2rem;
 }
 .nav div.main_list ul li a:hover {
     color: #000;
@@ -72,7 +188,6 @@ h6 {
   display: none;
 }
 .nav {
-    padding-top: 20px;
     padding-bottom: 20px;
     -webkit-transition: all 0.4s ease;
     transition: all 0.4s ease;

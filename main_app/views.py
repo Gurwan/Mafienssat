@@ -137,3 +137,8 @@ def betKlax(request):
     return render(request, 'betKlax.html', {'bets': bets})
 
 
+def event(request):
+    return render(request, 'event.html')
+
+def liste(request):
+    return render(request, 'liste.html')
