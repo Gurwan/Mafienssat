@@ -9,13 +9,14 @@
       <div id="mainListDiv" class="main_list">
           <ul class="navlinks">
               <li><a href="{% url 'home' %}">Accueil</a></li>
-              {% if request.user.is_authenticated %}
-                <li><a href="{% url 'logout' %}">Se déconnecter</a></li>
-                <li><a href="{% url 'betKlax' %}">BetKlax</a></li>
-                <li><a href="{% url 'myBets' %}">Mes BetKlax</a></li>
+              {% if not request.user.is_authenticated %}
+                  <li><a href="{% url 'login' %}">Se connecter</a></li>
+                  <li><a href="{% url 'register' %}">S'inscrire</a></li>
+                  <li><a href="{% url 'betKlax' %}">BetKlax</a></li>
               {% else %}
-                <li><a href="{% url 'login' %}">Se connecter</a></li>
-                <li><a href="{% url 'register' %}">S'inscrire</a></li>
+                  <li><a href="{% url 'betKlax' %}">BetKlax</a></li>
+                  <li><a href="{% url 'myBets' %}">Mes BetKlax</a></li>
+                  <li><a href="{% url 'logout' %}">Se déconnecter</a></li>
               {% endif %}
           </ul>
       </div>

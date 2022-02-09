@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+{% block content %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% include 'nav.html' %}
+<div class="container">
+  <h1 style="text-align: center; margin-top:20px">Ajout d'un nouveau pari</h1>
+    <form class="form" action="" method="POST">
+      {% csrf_token %}
+      {% bootstrap_form betform %}
+
+      {% buttons %}
+      <button class="btn btn--main btn btn-primary" type="submit">
+        Ajouter le pari
+      </button>
+      {% endbuttons %}
+    </form>
+</div>
+{% endblock %}
+

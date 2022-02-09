@@ -14,7 +14,8 @@
     <div class="container">
         {%  for bet in mybets %}
             <div>
-                <small>{{ bet.bet_name }}</small>
+                <small>{{ bet.bet_id.bet_name }}</small>
+                <small>{{ bet.gains }}</small>
                 <small>{{ bet.ended }}</small>
                 <small>{{ bet.draw_rate }}</small>
                 <small>{{ bet.lose_rate }}</small>
