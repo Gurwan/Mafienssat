@@ -10,7 +10,14 @@
     <img src="{% static "betklax_logo.png" %}" alt="Logo">
   </div>
 
-  <h1 style="text-align: center; margin-top:20px">Tous vos paris</h1>
+  <div class="container">
+      {% if user %}
+            <div>
+                <small>Vous avez {{ user.klax_coins }} klaxCoins</small>
+            </div>
+        {% endif %}
+  </div>
+  <h1 style="text-align: center; margin-top:20px"><br>Tous vos paris</h1>
     <div class="container">
         {%  for bet in mybets %}
             <div>

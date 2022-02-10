@@ -5,21 +5,33 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% include 'nav.html' %}
-<div class="container">
+<div class="container" xmlns="http://www.w3.org/1999/html">
   <div>
     <img src="{% static "betklax_logo.png" %}" alt="Logo">
   </div>
 
-  <h1 style="text-align: center; margin-top:20px">Tous les paris</h1>
+  <div class="container">
+      {% if user %}
+            <div>
+                <small>{{ user.username }}: {{ user.klax_coins }} klaxCoins</small>
+            </div>
+        {% else %}
+            <div>
+                <small>\: 0 klaxCoins</small>
+            </div>
+        {% endif %}
+  </div>
+  <h1 style="text-align: center; margin-top:20px"><br> Tous les paris</h1>
     <div class="container">
+
         {%  for bet in bets %}
             <div>
-                <small>{{ bet.bet_name }}</small>
-                <small onload="displayMonth({{ bet.ended.date }})"></small> <small>: Fini le {{ bet.ended.date.day }} {{ bet.ended.date.year }} à {{ bet.ended.hour }}:{{ bet.ended.minute }}</small>
+                <small>{{ bet.bet_name }} : <br></small>
+                <small> Fini le {{ bet.ended.date.day }} {{ bet.ended.date.month }} {{ bet.ended.date.year }} à {{ bet.ended.hour }}:{{ bet.ended.minute }} <br></small>
                 {% if request.user.is_authenticated %}
-                    <button class="btn btn--main" type="submit" id="w-{{ bet.id }}" onclick="makeBet(this.id)" value="makeBetW" name="makeBetW">{{ bet.win_rate }}</button>
+                    <button class="btn btn--main" type="submit" id="w-{{ bet.id }}" onclick="makeBet(this.id)" value="makeBetW" name="makeBetW">Win: {{ bet.win_rate }}</button>
                     <br>
-                    <button class="btn btn--main" type="submit" id="l-{{ bet.id }}" onclick="makeBet(this.id)" value="makeBetL" name="makeBetL">{{ bet.lose_rate }}</button>
+                    <button class="btn btn--main" type="submit" id="l-{{ bet.id }}" onclick="makeBet(this.id)" value="makeBetL" name="makeBetL">Lose: {{ bet.lose_rate }}</button>
                     <br>
                     <label for="mise"></label><input type="number" id="mise">
                 {% else %}
