@@ -167,3 +167,8 @@ def event(request):
 
 def liste(request):
     return render(request, 'liste.html')
+
+def klaxment(request):
+    userList = User.objects.all()  # va chercher tous les utilisateurs du site
+    data = {'userList': userList}
+    return render(request, 'klaxment.html',data)

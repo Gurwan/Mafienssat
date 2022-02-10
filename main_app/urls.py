@@ -12,5 +12,6 @@ urlpatterns = [
     path('makeBetL', views.makeBetL, name='makeBetL'),
     path("myBets/", views.myBets, name="myBets"),
     path("event/", views.event, name="event"),
-    path("liste/", views.liste, name="liste")
+    path("liste/", views.liste, name="liste"),
+    path("klaxment/", views.klaxment, name="klaxment")
 ]

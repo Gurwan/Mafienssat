@@ -1,0 +1,25 @@
+{% extends 'main.html' %}
+{% block content %}
+{% include 'nav.html' %}
+<div class="container">
+    <div id="main_title">
+        <h1>Klaxment <span>officiel</span></h1>
+        <div id="klaxment_list">
+            {% for user in userList %}
+                {% if forloop.counter == 1 %}
+                    <h2><span>Première place </span> {{user.firstname}} {{user.lastname}} - {{user.klax_coins}}</h2>
+                {% elif forloop.counter == 2 %}
+                    <h3><span>Deuxième place </span>  {{user.firstname}} {{user.lastname}} - {{user.klax_coins}}</h2>
+                {% elif forloop.counter == 3 %}
+                    <h4><span>Troisième place :</span> {{user.firstname}} {{user.lastname}} - {{user.klax_coins}}</h2>
+                {% elif forloop.counter <= 10 %}
+                    <h5><span>{{forloop.counter}}ème place :</span> {{user.firstname}} {{user.lastname}} - {{user.klax_coins}}</h5>    
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <div>
+        
+    </div>
+</div>
+{% endblock %}

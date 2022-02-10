@@ -14,12 +14,32 @@ body {
     color: white;
 }
 
+#klaxment_list {
+    text-align: center;
+}
+
+#klaxment_list span {
+    color: rgb(255, 218, 85);
+}
+
+#klaxment_list h2 {
+    font-size: 50px;
+}
+
+#klaxment_list h3 {
+    font-size: 40px;
+}
+
+#klaxment_list h4 {
+    font-size: 30px;
+}
+
 #choices {
   
 }
 
 * {
-    cursor:url(https://i.ibb.co/2Whsx1h/klaxicon-5.png), default;
+    cursor:url(https://i.ibb.co/2Whsx1h/klaxicon-5.png) 25 15, auto;
 }
 
 #main_title {
