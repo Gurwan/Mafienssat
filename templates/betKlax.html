@@ -27,7 +27,7 @@
         {%  for bet in bets %}
             <div>
                 <small>{{ bet.bet_name }} : <br></small>
-                <small> Fini le {{ bet.ended.date.day }} {{ bet.ended.date.month }} {{ bet.ended.date.year }} à {{ bet.ended.hour }}:{{ bet.ended.minute }} <br></small>
+                <small> Fini le {{ bet.ended.date.day }} <span id="month">{{ bet.ended.date.month }}</span> {{ bet.ended.date.year }} à {{ bet.ended.hour }}:{{ bet.ended.minute }} <br></small>
                 {% if request.user.is_authenticated %}
                     <button class="btn btn--main" type="submit" id="w-{{ bet.id }}" onclick="makeBet(this.id)" value="makeBetW" name="makeBetW">Win: {{ bet.win_rate }}</button>
                     <br>
@@ -68,6 +68,7 @@
                     })
                 }
             }
+            location.reload();
         }
     </script>
 </div>
