@@ -50,6 +50,13 @@ body {
     margin-top: 20px;
 }
 
+#liste_off {
+    font-family: 'Bolf', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+    margin-top: 20px;
+}
+
 #betklax_title {
     font-family: 'Bolf', Arial, sans-serif;
     font-weight:normal;
@@ -80,6 +87,11 @@ body {
   text-align: center;
   font-size: 90px;
 }
+
+#liste_off h1 {
+    text-align: center;
+    font-size: 90px;
+  }
 
 #main_col {
     font-family: 'Bolf', Arial, sans-serif;
@@ -114,16 +126,57 @@ body {
     color: red;
 }
 
+#liste_off span {
+    color: red;
+}
+
+#liste_off .row .col p {
+    margin-top: 10px;
+    font-size: 30px;
+}
+
+#liste_off h2 {
+    margin-top: 10px;
+    font-size: 50px;
+}
+
+#liste_off .row {
+    text-align: center;
+}
 
 @media screen and (min-width: 370px) and (max-width: 560px) {
     #main_title h1 {
         text-align: center;
         font-size: 60px;
       }
+
+    #liste_off h1 {
+        text-align: center;
+        font-size: 60px;
+    }
+
+    #liste_off h2 {
+        margin-top: 10px;
+        font-size: 35px;
+    }
+
+    #liste_off .row .col p {
+        font-size: 25px;
+    }
+
+    #liste_off img{
+        width: 300px;
+        height: 200px;
+    }
 }
 
 @media screen and (min-width: 100px) and (max-width: 370px) {
     #main_title h1 {
+        text-align: center;
+        font-size: 40px;
+    }
+
+    #liste_off h1 {
         text-align: center;
         font-size: 40px;
     }
@@ -140,6 +193,20 @@ body {
     #betklax_title h1 span {
         color: black;
         font-size: 50px;
+    }
+
+    #liste_off h2 {
+        margin-top: 10px;
+        font-size: 30px;
+    }
+
+    #liste_off .row .col p {
+        font-size: 20px;
+    }
+
+    #liste_off img{
+        width: 250px;
+        height: 166px;
     }
 }
 
