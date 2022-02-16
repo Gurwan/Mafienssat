@@ -31,10 +31,6 @@ class Bets(models.Model):
     win_vote = models.IntegerField(default=0)
     win_gains = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
 
-    draw_rate = models.DecimalField(max_digits=4, decimal_places=2, default=1.00)
-    draw_vote = models.IntegerField(default=0)
-    draw_gains = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
-
     lose_rate = models.DecimalField(max_digits=4, decimal_places=2, default=1.00)
     lose_vote = models.IntegerField(default=0)
     lose_gains = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
@@ -54,8 +50,8 @@ class StoreBets(models.Model):
     result = models.CharField(max_length=1, choices=RESULT, blank=True, help_text='Which result for the bet')
     gains = models.DecimalField(max_digits=12, decimal_places=2, default=1.00)
     created = models.DateTimeField(auto_now_add=True)
-    is_combined = models.BooleanField(default=False)
-    id_combined = models.IntegerField(null=True)   # refers to the lower combined bet, if not itself
+    bet_rate = models.DecimalField(max_digits=4, decimal_places=2, default=1.00)
+    blocked_bet = models.BooleanField(default=False)
 
 
 class Event(models.Model):
@@ -67,7 +63,7 @@ class Event(models.Model):
         ('S', 'Soirée'),
         ('J', 'Jeux'),
         ('S', 'Sport'),
-        ('E', 'E-Sport')
+        ('E', 'E-Sport') #Concours,
     )
     event_type = models.CharField(max_length=1, choices=TYPE, blank=True, help_text='Which type of event')
     event_date = models.DateTimeField()
