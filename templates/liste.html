@@ -1,0 +1,121 @@
+{% extends 'main.html' %}
+{% block content %}
+{% load static %}
+{% include 'nav.html' %}
+<div class="container">
+    <div id="liste_off">
+        <h1>Les mafieux <span>officiels</span></h1>
+        <h2>Le bureau <span>corrompu</span></h2>
+        <div class="row">
+            <div class="col">
+                <img class="rounded mx-auto d-block" style="text-align: center;" width="350px" height="235px" src="{% static 'img/arno.jpg' %}">
+                <p>Arno</p>
+            </div>
+            <div class="col">
+                <img class="rounded mx-auto d-block" style="text-align: center;" width="350px" height="235px" src="{% static 'img/emeric.jpg' %}">
+                <p>Emeric</p>
+            </div>
+            <div class="col">
+                <img class="rounded mx-auto d-block" style="text-align: center;" width="350px" height="235px" src="{% static 'img/elisa.jpg' %}">
+                <p>Elisa</p>
+            </div>
+            <div class="col">
+                <img class="rounded mx-auto d-block" style="text-align: center;" width="350px" height="235px" src="{% static 'img/emilien.jpg' %}">
+                <p>Emilien</p>
+            </div>
+            <div class="col">
+                <img class="rounded mx-auto d-block" style="text-align: center;" width="350px" height="235px" src="{% static 'img/alix.jpg' %}">
+                <p>Alix</p>
+            </div>
+        </div>
+        <h2>Le pôle <span>event</span></h2>
+        <div class="row">
+            <div class="col">
+                <img class="rounded mx-auto d-block" style="text-align: center;" width="350px" height="235px" src="{% static 'img/ariane.jpg' %}">
+                <p>Ariane</p>
+            </div>
+            <div class="col">
+                <img class="rounded mx-auto d-block" style="text-align: center;" width="350px" height="235px" src="{% static 'img/garvan.jpg' %}">
+                <p>Garvan</p>
+            </div>
+            <div class="col">
+                <img class="rounded mx-auto d-block" style="text-align: center;" width="350px" height="235px" src="{% static 'img/loic.jpg' %}">
+                <p>Loïc</p>
+            </div>
+            <div class="col">
+                <img class="rounded mx-auto d-block" style="text-align: center;" width="350px" height="235px" src="{% static 'img/guillaume.jpg' %}">
+                <p>Guillaume</p>
+            </div>
+        </div>
+        <h2>Le pôle <span>communication</span> et respo club</h2>
+        <div class="row">
+            <div class="col">
+                <img class="rounded mx-auto d-block" style="text-align: center;" width="350px" height="235px" src="{% static 'img/adele.jpg' %}">
+                <p>Adèle</p>
+            </div>
+            <div class="col">
+                <img class="rounded mx-auto d-block" style="text-align: center;" width="350px" height="235px" src="{% static 'img/laure.jpg' %}">
+                <p>Laure</p>
+            </div>
+            <div class="col">
+                <img class="rounded mx-auto d-block" style="text-align: center;" width="350px" height="235px" src="{% static 'img/laura.jpg' %}">
+                <p>Laura</p>
+            </div>
+        </div>
+        <h2>Le pôle <span>des arts</span></h2>
+        <div class="row">
+            <div class="col">
+                <img class="rounded mx-auto d-block" style="text-align: center;" width="350px" height="235px" src="{% static 'img/lou.jpg' %}">
+                <p>Lou</p>
+            </div>
+            <div class="col">
+                <img class="rounded mx-auto d-block" style="text-align: center;" width="350px" height="235px" src="{% static 'img/mathias.jpg' %}">
+                <p>Mathias</p>
+            </div>
+            <div class="col">
+                <img class="rounded mx-auto d-block" style="text-align: center;" width="350px" height="235px" src="{% static 'img/emmanuel.jpg' %}">
+                <p>Emmanuel</p>
+            </div>
+        </div>
+        <h2>Le pôle <span>des sports</span></h2>
+        <div class="row">
+            <div class="col">
+                <img class="rounded mx-auto d-block" style="text-align: center;" onclick="playClown()" width="350px" height="235px" src="{% static 'img/malo.jpg' %}">
+                <p>Malo</p>
+            </div>
+            <div class="col">
+                <img class="rounded mx-auto d-block" style="text-align: center;" width="350px" height="235px" src="{% static 'img/gurwan.jpg' %}">
+                <p>Gurwan</p>
+            </div>
+            <div class="col">
+                <img class="rounded mx-auto d-block" style="text-align: center;" width="350px" height="235px" src="{% static 'img/raphael.jpg' %}">
+                <p>Raphaël</p>
+            </div>
+            <div class="col">
+                <img class="rounded mx-auto d-block" style="text-align: center;" width="350px" height="235px" src="{% static 'img/simian.jpg' %}">
+                <p>Simian</p>
+            </div>
+        </div>
+        <h2>Les deux respos <span>KFET</span></h2>
+        <div class="row">
+            <div class="col">
+                <img class="rounded mx-auto d-block" style="text-align: center;" width="350px" height="235px" src="{% static 'img/leo.jpg' %}">
+                <p>Léo</p>
+            </div>
+            <div class="col">
+                <img class="rounded mx-auto d-block" style="text-align: center;" width="350px" height="235px" src="{% static 'img/leok.jpg' %}">
+                <p>Léo</p>
+            </div>
+        </div>
+    </div>
+    <div>
+        
+    </div>
+
+    <script>
+        function playClown(){
+            new Audio("https://soundboardguy.com/wp-content/uploads/2021/05/circus-clown-music.mp3").play();
+        }
+    </script>
+</div>
+{% endblock %}

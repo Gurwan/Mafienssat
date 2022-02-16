@@ -25,6 +25,15 @@
         </ul>
     {% endif %}
 
+
+    <div id="soundlink" class="{% static 'sound/klax.mp3' %}"></div>
+
+    <script>
+        $("body").click(function(){
+            new Audio(document.getElementById("soundlink").className).play();
+        });
+    </script>
+
     {% block content %}
 
 
