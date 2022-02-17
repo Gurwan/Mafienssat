@@ -17,5 +17,11 @@
       {% endbuttons %}
     </form>
 </div>
+<h1 style="text-align: center; margin-top:20px">Paris en cours</h1>
+<div class="container">
+    {% for bet in bets %}
+        <small>{{ bet.bet_name }}: fini le {{ bet.ended }} <br></small>
+    {% endfor %}
+</div>
 {% endblock %}
 

@@ -18,6 +18,10 @@
                   <li><a href="{% url 'betKlax' %}">BetKlax</a></li>
                   <li><a href="{% url 'myBets' %}">Mes BetKlax</a></li>
                   <li><a href="{% url 'logout' %}">Se déconnecter</a></li>
+                  {% if request.user.is_staff %}
+                      <a style="text-align: center; color: rgba(255,0,0,0.98); font-size: 25px">Staff :  </a>
+                      <li><a href="{% url 'betCreator' %}">Créer un betklax</a> </li>
+                  {% endif %}
               {% endif %}
           </ul>
       </div>

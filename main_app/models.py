@@ -18,7 +18,7 @@ class User(AbstractUser):
     sector = models.CharField(max_length=4, choices=SECTOR, blank=True, help_text='Donne moi ta filière bro')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    klax_coins = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
+    klax_coins = models.DecimalField(max_digits=12, decimal_places=2, default=100.00)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
@@ -27,17 +27,13 @@ class Bets(models.Model):
     id = models.AutoField(primary_key=True, unique=True)
     bet_name = models.CharField(max_length=256, unique=True)
 
-    win_rate = models.DecimalField(max_digits=4, decimal_places=2, default=1.00)
+    win_rate = models.DecimalField(max_digits=4, decimal_places=2, default=2.00)
     win_vote = models.IntegerField(default=0)
-    win_gains = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
+    win_gains = models.DecimalField(max_digits=12, decimal_places=2, default=1.00)
 
-    draw_rate = models.DecimalField(max_digits=4, decimal_places=2, default=1.00)
-    draw_vote = models.IntegerField(default=0)
-    draw_gains = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
-
-    lose_rate = models.DecimalField(max_digits=4, decimal_places=2, default=1.00)
+    lose_rate = models.DecimalField(max_digits=4, decimal_places=2, default=2.00)
     lose_vote = models.IntegerField(default=0)
-    lose_gains = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
+    lose_gains = models.DecimalField(max_digits=12, decimal_places=2, default=1.00)
 
     created = models.DateTimeField(auto_now_add=True)
     ended = models.DateTimeField()
@@ -54,8 +50,8 @@ class StoreBets(models.Model):
     result = models.CharField(max_length=1, choices=RESULT, blank=True, help_text='Which result for the bet')
     gains = models.DecimalField(max_digits=12, decimal_places=2, default=1.00)
     created = models.DateTimeField(auto_now_add=True)
-    is_combined = models.BooleanField(default=False)
-    id_combined = models.IntegerField(null=True)   # refers to the lower combined bet, if not itself
+    bet_rate = models.DecimalField(max_digits=4, decimal_places=2, default=1.00)
+    blocked_bet = models.BooleanField(default=False)
 
 
 class Event(models.Model):
@@ -67,7 +63,7 @@ class Event(models.Model):
         ('S', 'Soirée'),
         ('J', 'Jeux'),
         ('S', 'Sport'),
-        ('E', 'E-Sport')
+        ('E', 'E-Sport') #Concours,
     )
     event_type = models.CharField(max_length=1, choices=TYPE, blank=True, help_text='Which type of event')
     event_date = models.DateTimeField()
