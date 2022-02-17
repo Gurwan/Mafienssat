@@ -40,7 +40,6 @@ def registerUser(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.username = user.username.lower()
-            user.klax_coins = 100
             user.save()
             login(request, user)
             return redirect('home')
@@ -67,7 +66,8 @@ def addBet(request):
                 bet.save()
             else:
                 messages.error(request, 'Erreur lors de la création du paris')
-        return render(request, 'betCreator.html', {'betform': betform})
+        bets = Bets.objects.all()
+        return render(request, 'betCreator.html', {'betform': betform, 'bets': bets})
     else:
         messages.error(request, "Tu dois être membre du staff pour accéder à cette page")
 
@@ -198,23 +198,24 @@ def finalizeBet(request):
     current_user = User.objects.get(pk=request.user.id)
     if current_user is not None:
         bet_id = request.POST['bet']
-        gains = request.POST['gains']
+        gains = request.POST['gains'] if request.POST['gains'] is not "" else Decimal(0)
+        print(gains)
         if current_user.klax_coins >= Decimal(gains):
             if bet_id is not None:
                 bet = StoreBets.objects.get(bet_id_id=bet_id, user_id_id=current_user.id)
                 if bet is not None:
-                    current_user.klax_coins -= Decimal(gains)
-                    current_user.save()
+                    if gains > 0:
+                        current_user.klax_coins -= Decimal(gains)
+                        current_user.save()
+                        bet.gains += Decimal(gains)
 
-                    bet.is_combined = False
-                    bet.id_combined = bet_id
-                    bet.gains += Decimal(gains)
                     if bet.result == 'W':
                         bet.bet_id.win_gains += Decimal(gains)
                         bet.bet_rate = bet.bet_id.win_rate
                     else:
                         bet.bet_id.lose_gains += Decimal(gains)
                         bet.bet_rate = bet.bet_id.lose_rate
+                    bet.blocked_bet = True
                     bet.save()
             else:
                 messages.error(request, "Contacte les admins si le problème perciste après un refresh de la page")
