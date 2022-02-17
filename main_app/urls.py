@@ -15,6 +15,7 @@ urlpatterns = [
     path("addGains", views.addGains, name="addGains"),
     path("finalizeBet", views.finalizeBet, name="finalizeBet"),
     path("event/", views.event, name="event"),
+    path("eventCreator/", views.addEvent, name="eventCreator"),
     path("liste/", views.liste, name="liste"),
     path("klaxment/", views.klaxment, name="klaxment")
 ]

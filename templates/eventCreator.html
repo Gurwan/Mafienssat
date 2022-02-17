@@ -1,0 +1,27 @@
+{% extends 'main.html' %}
+{% block content %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% include 'nav.html' %}
+<div class="container">
+  <h1 style="text-align: center; margin-top:20px">Ajout d'un nouvel événement</h1>
+    <form class="form" action="" method="POST">
+      {% csrf_token %}
+      {% bootstrap_form eventform %}
+
+      {% buttons %}
+      <button class="btn btn--main btn btn-primary" type="submit">
+        Ajouter l'événement
+      </button>
+      {% endbuttons %}
+    </form>
+</div>
+<h1 style="text-align: center; margin-top:20px">Événements en cours</h1>
+<div class="container">
+    {% for event in events %}
+        <small>{{ event.event_name }}: fini le {{ event.event_date }} <br></small>
+    {% endfor %}
+</div>
+{% endblock %}
+

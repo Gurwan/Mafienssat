@@ -2,8 +2,8 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from decimal import *
-from .models import User, Bets, StoreBets
-from .forms import UserForm, AddBetForm
+from .models import User, Bets, StoreBets, Event, Registrations
+from .forms import UserForm, AddBetForm, AddEventForm
 
 
 def loginPage(request):
@@ -242,6 +242,22 @@ def betKlax(request):
         user = None
 
     return render(request, 'betKlax.html', {'bets': bets, 'user': user})
+
+
+def addEvent(request):
+    if request.user.is_staff:
+        eventform = AddEventForm()
+        if request.method == 'POST':
+            eventform = AddEventForm(request.POST)
+            if eventform.is_valid():
+                event = eventform.save(commit=False)
+                event.save()
+            else:
+                messages.error(request, 'Erreur lors de la création d\'un événement')
+        events = Event.objects.all()
+        return render(request, 'eventCreator.html', {'eventform': eventform, 'events': events})
+    else:
+        messages.error(request, "Tu dois être membre du staff pour accéder à cette page")
 
 
 def event(request):
