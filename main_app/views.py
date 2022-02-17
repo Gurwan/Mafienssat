@@ -13,7 +13,7 @@ def loginPage(request):
 
         try:
             user = User.objects.get(username=username)
-        except:
+        except User.DoesNotExist:
             messages.error(request, 'Ca marche pas contacte Mafienssat sur insta et viens gueuler en mp bg')
 
         user = authenticate(request, username=username, password=password)
@@ -248,8 +248,8 @@ def addEvent(request):
         if request.method == 'POST':
             eventform = AddEventForm(request.POST)
             if eventform.is_valid():
-                event = eventform.save(commit=False)
-                event.save()
+                eventf = eventform.save(commit=False)
+                eventf.save()
             else:
                 messages.error(request, 'Erreur lors de la création d\'un événement')
         events = Event.objects.all()
