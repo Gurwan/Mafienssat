@@ -30,6 +30,10 @@
 
     <script>
         $("body").click(function(){
+            var allAudios = document.querySelectorAll('audio');
+	        allAudios.forEach(function(audio){
+		        audio.pause();
+	        });
             new Audio(document.getElementById("soundlink").className).play();
         });
     </script>

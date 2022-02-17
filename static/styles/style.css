@@ -57,6 +57,28 @@ body {
     margin-top: 20px;
 }
 
+#next-event {
+    font-family: 'Bolf', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+    margin-top: 20px;
+}
+
+#next-event #name {
+    display: inline-block;
+    margin-top: 20px;
+}
+
+#next-event #date {
+    display: inline-block;
+    margin-top: 20px;
+}
+
+#next-event h4 {
+    display: inline-block;
+}
+
+
 #betklax_title {
     font-family: 'Bolf', Arial, sans-serif;
     font-weight:normal;
@@ -91,7 +113,12 @@ body {
 #liste_off h1 {
     text-align: center;
     font-size: 90px;
-  }
+}
+
+#next-event h1 {
+    text-align: center;
+    font-size: 90px;
+}
 
 #main_col {
     font-family: 'Bolf', Arial, sans-serif;
@@ -122,6 +149,35 @@ body {
     font-size: 50px;
 }
 
+#main_col_event {
+    font-family: 'Bolf', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+#main_col_event .row .col {
+    border: 10px solid black;
+    padding-top: 10px;
+    margin-right: 5px;
+    margin-left: 5px;
+    text-align: center;
+}
+
+#main_col_event .row #left {
+    background-color: #522699;
+}
+
+#main_col_event .row #right {
+    background-color: #a7662a;
+}
+
+#main_col_event .row .col h2{
+    text-align: center;
+    font-size: 30px;
+}
+
 #main_title h1 span {
     color: red;
 }
@@ -141,6 +197,24 @@ body {
 }
 
 #liste_off .row {
+    text-align: center;
+}
+
+#next-event span {
+    color: red;
+}
+
+#next-event .row .col p {
+    margin-top: 10px;
+    font-size: 30px;
+}
+
+#next-event h2 {
+    margin-top: 10px;
+    font-size: 50px;
+}
+
+#next-event .row {
     text-align: center;
 }
 
@@ -168,6 +242,25 @@ body {
         width: 300px;
         height: 200px;
     }
+
+    #next-event h1 {
+        text-align: center;
+        font-size: 60px;
+    }
+
+    #next-event h2 {
+        margin-top: 10px;
+        font-size: 35px;
+    }
+
+    #next-event .row .col p {
+        font-size: 25px;
+    }
+
+    #next-event img{
+        width: 300px;
+        height: 200px;
+    }
 }
 
 @media screen and (min-width: 100px) and (max-width: 370px) {
@@ -183,6 +276,10 @@ body {
 
     #main_col .row .col h2{
         font-size: 30px;
+    }
+
+    #main_col_event .row .col h2{
+        font-size: 20px;
     }
 
     #betklax_title h1 {

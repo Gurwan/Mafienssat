@@ -114,6 +114,10 @@
 
     <script>
         function playClown(){
+            var allAudios = document.querySelectorAll('audio');
+	        allAudios.forEach(function(audio){
+		        audio.pause();
+	        });
             new Audio("https://soundboardguy.com/wp-content/uploads/2021/05/circus-clown-music.mp3").play();
         }
     </script>
