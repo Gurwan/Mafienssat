@@ -18,7 +18,7 @@ class User(AbstractUser):
     sector = models.CharField(max_length=4, choices=SECTOR, blank=True, help_text='Donne moi ta filière bro')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    klax_coins = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
+    klax_coins = models.DecimalField(max_digits=12, decimal_places=2, default=100.00)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
@@ -27,13 +27,13 @@ class Bets(models.Model):
     id = models.AutoField(primary_key=True, unique=True)
     bet_name = models.CharField(max_length=256, unique=True)
 
-    win_rate = models.DecimalField(max_digits=4, decimal_places=2, default=1.00)
+    win_rate = models.DecimalField(max_digits=4, decimal_places=2, default=2.00)
     win_vote = models.IntegerField(default=0)
-    win_gains = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
+    win_gains = models.DecimalField(max_digits=12, decimal_places=2, default=1.00)
 
-    lose_rate = models.DecimalField(max_digits=4, decimal_places=2, default=1.00)
+    lose_rate = models.DecimalField(max_digits=4, decimal_places=2, default=2.00)
     lose_vote = models.IntegerField(default=0)
-    lose_gains = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
+    lose_gains = models.DecimalField(max_digits=12, decimal_places=2, default=1.00)
 
     created = models.DateTimeField(auto_now_add=True)
     ended = models.DateTimeField()
