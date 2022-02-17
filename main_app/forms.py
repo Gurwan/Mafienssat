@@ -18,4 +18,4 @@ class AddBetForm(ModelForm):
 class AddEventForm(ModelForm):
     class Meta:
         model = Event
-        fields = ['event_name', 'event_type', 'event_description', 'event_date', 'max_attendees']
+        fields = ['event_name', 'event_type', 'event_description', 'event_date', 'max_attendees', 'associated_bet']

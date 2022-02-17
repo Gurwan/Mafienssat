@@ -3,39 +3,16 @@
 {% load static %}
 {% include 'nav.html' %}
 <div class="container">
-    <div id="next-event">
-        <h1>Prochain <span>événement</span></h1>
-        <img class="img-fluid" src="{% static 'img/background.jpg' %}"></img>
-        <h2 id="name">Nom de l'événement</h2>
-        <h3 id="date">Jeudi 17 Mars à 18h</h3>
-        <div>
-            <h4>Type de l'événement</h4> - 
-            <h4>17 inscrits sur 26 places disponibles</h4>
-        </div>
-      
-        <p>Description Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi odit quae consequatur unde sequi commodi quas libero, necessitatibus vel perferendis hic laboriosam, quidem culpa in incidunt? Aspernatur, expedita atque! Ab.</p>
-        
-    </div>
-    <div class="container-fluid" id="choices">
-        <div id="main_col_event">
-            <div class="row">
-                <div class="col" id="left" onclick="goEvent()">
-                    <h2>Participer à l'événement</h2>
-                </div>
-                <div class="col" id="right" onclick="goListe()">
-                    <h2>Parier sur l'événement</h2>
-                </div>
-            </div>
-        </div>
-    </div>
     {% for event in events %}
         <div id="next-event">
-            <img class="img-fluid" src="{% static 'img/background.jpg' %}"></img>
+            <img class="img-fluid" src="{% static 'img/background.jpg' %}"/>
             <h2 id="name">{{event.event_name}}</h2>
-            <h3 id="date">{{event.event_date}}</h3>
+            <h3 id="date">{{event.event_date.ctime}}</h3>
             <div>
-                <h4>{{event.event_type}}</h4> - 
-                <h4>{{event.attendees_number}} inscrits sur {{event.max_attendees}} places disponibles</h4>
+                <h4>{{event.event_type.title}}</h4> <br> <!-- TODO faire en sorte de pouvoir afficher le nom de l'event et pas l'acronyme -->
+                {% if event.max_attendees != 0 %}
+                    <h4>{{event.attendees_number}} inscrits sur {{event.max_attendees}} places disponibles</h4>
+                {% endif %}
             </div>
         
             <p>{{event.event_description}}</p>
@@ -44,15 +21,35 @@
         <div class="container-fluid" id="choices">
             <div id="main_col_event">
                 <div class="row">
-                    <div class="col" id="left" onclick="goEvent()">
-                        <h2>Participer à l'événement</h2>
-                    </div>
-                    <div class="col" id="right" onclick="goListe()">
-                        <h2>Parier sur l'événement</h2>
-                    </div>
+                    {% if user %}
+                        {% if event.attendees_number < event.max_attendees and event.max_attendees != 0 %} <!-- TODO faire en sorte qu'une fois que l'utilisateur à cliqué une fois il ne puisse qu'annuler sa participation -->
+                            <div class="col" id="event-{{ event.id }}" onclick="goEvent(this.id)">
+                                <h2>Participer à l'événement</h2>
+                            </div>
+                        {% endif %}
+                        {% if event.associated_bet %}
+                            <div class="col" id="bet" onclick="goBet()">
+                                <h2>Parier sur l'événement</h2>
+                            </div>
+                        {% endif %}
+                    {% endif %}
                 </div>
             </div>
         </div>
     {% endfor %}
+
+    <script>
+        function goEvent(id){
+
+            const formData = new FormData();
+            formData.append('csrfmiddlewaretoken', "{{ csrf_token }}");
+            formData.append('event', id.split("-")[1]);
+            fetch('{% url "eventRegistration" %}', {
+                        method: 'POST',
+                        body: formData
+                    })
+        }
+
+    </script>
 </div>
 {% endblock %}

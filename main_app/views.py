@@ -174,9 +174,7 @@ def addGains(request):
     if current_user is not None:
         bet_id = request.POST['bet']
         gains = request.POST['gains']
-        print(current_user.id)
         if current_user.klax_coins >= Decimal(gains):
-            print(bet_id)
             bet = StoreBets.objects.all().get(user_id_id=current_user.id, bet_id_id=bet_id)
             bet.gains += Decimal(gains)
             if bet.result == 'W':
@@ -198,7 +196,7 @@ def finalizeBet(request):
     current_user = User.objects.get(pk=request.user.id)
     if current_user is not None:
         bet_id = request.POST['bet']
-        gains = request.POST['gains'] if request.POST['gains'] is not "" else Decimal(0)
+        gains = request.POST['gains'] if request.POST['gains'] != "" else Decimal(0)
         print(gains)
         if current_user.klax_coins >= Decimal(gains):
             if bet_id is not None:
@@ -262,8 +260,47 @@ def addEvent(request):
 
 def event(request):
     events = Event.objects.all()
-    data = {'events': events}
+    if request.user is not None:
+        user = request.user
+    else:
+        user = None
+    data = {'events': events, 'user': user}
+
     return render(request, 'event.html', data)
+
+
+def eventRegistration(request):
+
+    if request.user is not None:
+        if request.method == 'POST':
+            event_id = request.POST['event']
+
+            try:
+                done = Registrations.objects.get(user_id_id=request.user.id, event_id_id=event_id)
+            except Registrations.DoesNotExist:
+                done = None
+
+            if done is None and event_id is not None:
+                event = Event.objects.get(pk=event_id)
+                user = User.objects.get(pk=request.user.id)
+
+                reg = Registrations()
+                reg.event_id = event
+                reg.user_id = user
+                reg.save()
+
+                if event.max_attendees != 0 and event.attendees_number < event.max_attendees:
+                    event.attendees_number += 1
+                    event.save()
+                else:
+                    messages.error(request, "Cet évènement est déja complet")
+            else:
+                messages.error(request, "Erreur lors de l'identification de l'évènement")
+        else:
+            messages.error(request, "Un problème est survenu lors de votre inscripion, veuillez réessayer et si cela persiste, veuillez contacter un admin")
+    else:
+        messages.error(request, "Vous devez être connecté pour vous inscrire à cet évènement")
+    return redirect('event')
 
 
 def liste(request):
