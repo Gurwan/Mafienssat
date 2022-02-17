@@ -28,29 +28,31 @@
             </div>
         </div>
     </div>
-    <div id="next-event">
-        <img class="img-fluid" src="{% static 'img/background.jpg' %}"></img>
-        <h2 id="name">Nom de l'événement</h2>
-        <h3 id="date">Jeudi 17 Mars à 18h</h3>
-        <div>
-            <h4>Type de l'événement</h4> - 
-            <h4>17 inscrits sur 26 places disponibles</h4>
-        </div>
-      
-        <p>Description Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi odit quae consequatur unde sequi commodi quas libero, necessitatibus vel perferendis hic laboriosam, quidem culpa in incidunt? Aspernatur, expedita atque! Ab.</p>
+    {% for event in events %}
+        <div id="next-event">
+            <img class="img-fluid" src="{% static 'img/background.jpg' %}"></img>
+            <h2 id="name">{{event.event_name}}</h2>
+            <h3 id="date">{{event.event_date}}</h3>
+            <div>
+                <h4>{{event.event_type}}</h4> - 
+                <h4>{{event.attendees_number}} inscrits sur {{event.max_attendees}} places disponibles</h4>
+            </div>
         
-    </div>
-    <div class="container-fluid" id="choices">
-        <div id="main_col_event">
-            <div class="row">
-                <div class="col" id="left" onclick="goEvent()">
-                    <h2>Participer à l'événement</h2>
-                </div>
-                <div class="col" id="right" onclick="goListe()">
-                    <h2>Parier sur l'événement</h2>
+            <p>{{event.event_description}}</p>
+            
+        </div>
+        <div class="container-fluid" id="choices">
+            <div id="main_col_event">
+                <div class="row">
+                    <div class="col" id="left" onclick="goEvent()">
+                        <h2>Participer à l'événement</h2>
+                    </div>
+                    <div class="col" id="right" onclick="goListe()">
+                        <h2>Parier sur l'événement</h2>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    {% endfor %}
 </div>
 {% endblock %}

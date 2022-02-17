@@ -261,7 +261,9 @@ def addEvent(request):
 
 
 def event(request):
-    return render(request, 'event.html')
+    events = Event.objects.all()
+    data = {'events': events}
+    return render(request, 'event.html', data)
 
 
 def liste(request):
