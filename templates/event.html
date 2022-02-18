@@ -3,11 +3,14 @@
 {% load static %}
 {% include 'nav.html' %}
 <div class="container">
+    <div id="next-event">
+        <h1>Prochains <span>événements</span></h1>
+    </div>
     {% for event in events %}
         <div id="next-event">
             <img class="img-fluid" src="{% static 'img/background.jpg' %}"/>
             <h2 id="name">{{event.event_name}}</h2>
-            <h3 id="date">{{event.event_date.ctime}}</h3>
+            <h3 id="date">Le {{event.event_date | date:"d"}} {{event.event_date | date:"F"}} {{event.event_date | date:"o"}} à {{event.event_date | date:"H"}}h{{event.event_date | date:"i"}}</h3>
             <div>
                 <h4>{{event.event_type.title}}</h4> <br> <!-- TODO faire en sorte de pouvoir afficher le nom de l'event et pas l'acronyme -->
                 {% if event.max_attendees != 0 %}
@@ -23,12 +26,12 @@
                 <div class="row">
                     {% if user %}
                         {% if event.attendees_number < event.max_attendees and event.max_attendees != 0 %} <!-- TODO faire en sorte qu'une fois que l'utilisateur à cliqué une fois il ne puisse qu'annuler sa participation -->
-                            <div class="col" id="event-{{ event.id }}" onclick="goEvent(this.id)">
+                            <div class="col" id="event-{{ event.id }}" onclick="goEvent(this.id)" style="background-color: #522699">
                                 <h2>Participer à l'événement</h2>
                             </div>
                         {% endif %}
                         {% if event.associated_bet %}
-                            <div class="col" id="bet" onclick="goBet()">
+                            <div class="col" id="bet" onclick="goBet()" style=" background-color: #a7662a">
                                 <h2>Parier sur l'événement</h2>
                             </div>
                         {% endif %}

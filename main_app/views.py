@@ -8,15 +8,15 @@ from .forms import UserForm, AddBetForm, AddEventForm
 
 def loginPage(request):
     if request.method == "POST":
-        username = request.POST.get('username').lower()
+        email = request.POST.get('email').lower()
         password = request.POST.get('password')
 
         try:
-            user = User.objects.get(username=username)
+            user = User.objects.get(email=email)
         except User.DoesNotExist:
             messages.error(request, 'Ca marche pas contacte Mafienssat sur insta et viens gueuler en mp bg')
 
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request, email=email, password=password)
 
         if user is not None:
             login(request, user)
