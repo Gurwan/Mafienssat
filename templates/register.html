@@ -4,22 +4,22 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% include 'nav.html' %}
-<div class="container">
-  <h1 style="text-align: center; margin-top:20px">Register</h1>
+<div class="container" id="login">
+  <h1>S'inscrire</h1>
     <form class="form" action="" method="POST">
       {% csrf_token %}
       {% bootstrap_form form %}
 
       {% buttons %}
-      <button class="btn btn--main btn btn-primary" type="submit">
-        Register
+      <button class="btn btn--main btn btn-danger" style="margin-bottom: 10px" type="submit">
+        S'inscrire
       </button>
       {% endbuttons %}
     </form>
 
     <div class="auth__action">
-      <p>Already signed up yet?</p>
-      <a href="{% url 'login' %}" class="btn btn--link btn btn-primary">Sign Up</a>
+      <p>Tu as déjà un compte ?</p>
+      <a href="{% url 'login' %}" class="btn btn--link btn btn-danger" style="margin-bottom: 10px;">Connecte toi</a>
     </div>
 </div>
 {% endblock %}

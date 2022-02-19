@@ -1,8 +1,8 @@
 {% extends 'main.html' %}
 {% block content %}
 {% include 'nav.html' %}
-<div class="container">
-    <h1>Login</h1>
+<div class="container" id="login">
+    <h1>Se connecter</h1>
     <div>
         <form method="POST" action="">
             {% csrf_token %}
@@ -13,7 +13,7 @@
             <label>Mot de passe :</label>
             <input type="password" name="password" placeholder="Entre ton mot de passe"/>
 
-            <input type="submit" value="Login">
+            <input style="background-color: red; color:white" type="submit" value="Se connecter">
         </form>
     </div>
 </div>

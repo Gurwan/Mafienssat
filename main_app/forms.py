@@ -7,6 +7,14 @@ class UserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['firstname', 'lastname', 'username', 'email', 'sector', 'password1', 'password2']
+        labels = {
+            'firstname' : 'Prénom',
+            'lastname' : 'Nom',
+            'username' : 'Pseudo',
+            'sector' : 'Filière',
+            'password1' : 'Mot de passe',
+            'password2' : 'Confirmer le mot de passe ',
+        }
 
 
 class AddBetForm(ModelForm):
