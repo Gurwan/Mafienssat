@@ -100,6 +100,37 @@ body {
     margin-top: 20px;
 }
 
+#betklax-pages {
+    font-family: 'Bolf', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+    margin-top: 20px;
+}
+
+#betklax-pages h1 {
+    font-size: 60px;
+    text-align: center;
+}
+
+#betklax-pages h2 {
+    font-size: 45px;
+    text-align: center;
+}
+
+#betklax-pages p {
+    font-size: 30px;
+    text-align: center;
+}
+
+#betklax-pages span {
+    color: red;
+}
+
+#yellow-span {
+    color: yellow!important;
+}
+
+
 #next-event {
     font-family: 'Bolf', Arial, sans-serif;
     font-weight:normal;
@@ -260,6 +291,35 @@ body {
 #next-event .row {
     text-align: center;
 }
+
+.div-du-bet {    
+    text-align: center;
+    background-color: black;
+    padding: 10px;
+    border-radius: 12px;
+    justify-content: center
+}
+
+.div-du-bet h3 {    
+    font-size: 25px;
+}
+
+.div-du-bet h4 {    
+    font-size: 17px;
+}
+
+.button_rate {
+    display: inline-block;
+    background-color: yellow;
+    font-family: 'Corleone', Arial, sans-serif;
+}
+
+.button_rate #rate {
+    font-family: 'Bolf', Arial, sans-serif;
+    font-weight: bold;
+}
+
+
 
 @media screen and (min-width: 370px) and (max-width: 560px) {
     #main_title h1 {
@@ -441,7 +501,7 @@ h6 {
         margin: 0;
     }
 }
-@media screen and (max-width:960px) {
+@media screen and (max-width:1400px) {
     .navTrigger {
         display: block;
     }
