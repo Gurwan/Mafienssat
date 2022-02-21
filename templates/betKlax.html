@@ -51,7 +51,7 @@
         const formData = new FormData();
         formData.append('csrfmiddlewaretoken', "{{ csrf_token }}");
         formData.append('name', 'myBets');
-        formData.append('bet', id)
+        formData.append('bet', id.split("-")[1])
         fetch('{% url "ratingRecalculation" %}', {
                 method: 'POST',
                 body: formData
