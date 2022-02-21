@@ -5,53 +5,45 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% include 'nav.html' %}
-<div class="container">
-  <div>
-    <img src="{% static "betklax_logo.png" %}" alt="Logo">
-  </div>
-
-  <div class="container">
-      {% if user %}
-            <div>
-                <small>Vous avez {{ user.klax_coins }} klaxCoins</small>
-            </div>
-        {% endif %}
-  </div>
-  <h1 style="text-align: center; margin-top:20px"><br>Tous vos paris</h1>
-    <div class="container">
-        {% if mybets %}
-            {%  for bet in mybets %}
-                <div>
-                    <small>{{ bet.bet_id.bet_name }} <br></small>
-                    <small>Fini le : {{ bet.bet_id.ended.ctime.format }} <br></small>
-                    <small>Montant parié : {{ bet.gains }} <br></small>
-
-                    {% if bet.result == 'W' %}
-                        <small>Cote gagnante : {{ bet.bet_id.win_rate }} <br></small>
-                    {% else %}
-                        <small>Cote perdante : {{ bet.bet_id.lose_rate }} <br></small>
-                    {% endif %}
-
-                    <label for="mise"></label><input type="number" id="mise{{ bet.id }}">
-                    <br>
-
-                    <button class="btn btn--main" type="submit" id="{{ bet.bet_id.id }}" onclick="addGains(this.id)" value="addGains{{ bet.bet_id.id }}" name="addGains{{ bet.bet_id.id }}"> Ajouter des KlaxCoins sur le pari</button>
-                    <br>
-
-
-                    {% if bet.result == 'W' %}
-                        <button class="btn btn--main" type="submit" id="{{ bet.bet_id.id }}" onclick="finalizeBet(this.id)" value="finalizeBet{{ bet.bet_id.id }}" name="finalizeBet{{ bet.bet_id.id }}">Bloquer la cote à {{ bet.bet_id.win_rate }}</button>
-                        <br>
-                    {% else %}
-                        <button class="btn btn--main" type="submit" id="{{ bet.bet_id.id }}" onclick="finalizeBet(this.id)" value="finalizeBet{{ bet.bet_id.id }}" name="finalizeBet{{ bet.bet_id.id }}">Bloquer la cote à {{ bet.bet_id.lose_rate }}</button>
-                        <br>
-                    {% endif %}
-                </div>
-            {% endfor %}
-        {% else %}
-            <small>Vous n'avez aucun pari sélectionné</small>
-        {% endif %}
-    </div>
+<div class="container-fluid" id="betklax-pages">
+    <h2>Ton pocheton de klaxcoins</h2>
+      {% if user.klax_coins > 0 %}
+          <div>
+              <p><span>Tododododoo...</span> tu as {{ user.klax_coins }} <span id="yellow-span">klaxcoins</span></p>
+          </div>
+      {% else %}
+          <div>
+            <p><span>Time to soudoyer</span> car là tu n'as aucun <span id="yellow-span">klaxcoin</span> à parier (tema la bete de phrase)</p>
+          </div>
+      {% endif %}
+</div>
+<div class="container-fluid" id="betklax-pages">
+    <h1 style="text-align: center; margin-top:20px">Tous vos paris</h1>
+    {% if mybets %}
+        {%  for bet in mybets %}
+        <div class="div-du-bet">
+            <h3>{{ bet.bet_id.bet_name }}</h3>
+            <h4>Fini le {{bet.bet_id.ended | date:"d"}} {{bet.bet_id.ended  | date:"F"}} {{bet.bet_id.ended  | date:"o"}} à {{bet.bet_id.ended | date:"H"}}h{{bet.bet_id.ended | date:"i"}}</h4>
+            <h4>Montant parié : {{ bet.gains }} Klaxcoins</h4>
+            {% if bet.result == 'W' %}
+                    <h4>Sur la côte gagnante : {{ bet.bet_id.win_rate }} </h4>
+            {% else %}
+                    <h4>Sur la côte perdante : {{ bet.bet_id.lose_rate }} </h4>
+            {% endif %}
+            <label for="mise"></label><input placeholder="15" type="number" id="mise{{ bet.id }}">
+            <br>
+            <button style="color:black; background-color: yellow; margin-bottom:10px; margin-top: 5px" class="btn btn--main" type="submit" id="{{ bet.bet_id.id }}" onclick="addGains(this.id)" value="addGains{{ bet.bet_id.id }}" name="addGains{{ bet.bet_id.id }}"> Ajouter des Klaxcoins sur le pari</button>
+            <br>
+            {% if bet.result == 'W' and request.user.is_staff %}
+                <button style="background-color:red; color:white" class="btn btn--main" type="submit" id="{{ bet.bet_id.id }}" onclick="finalizeBet(this.id)" value="finalizeBet{{ bet.bet_id.id }}" name="finalizeBet{{ bet.bet_id.id }}">Bloquer la cote à {{ bet.bet_id.win_rate }}</button>
+            {% elif request.user.is_staff %}
+                <button style="background-color:red; color:white" class="btn btn--main" type="submit" id="{{ bet.bet_id.id }}" onclick="finalizeBet(this.id)" value="finalizeBet{{ bet.bet_id.id }}" name="finalizeBet{{ bet.bet_id.id }}">Bloquer la cote à {{ bet.bet_id.lose_rate }}</button>
+            {% endif %}
+        </div>
+        {% endfor %}
+    {% else %}
+        <small>Vous n'avez aucun pari sélectionné</small>
+    {% endif %}
     <h1 style="text-align: center; margin-top:20px"> Vos paris bloqués </h1>
     <div class="container">
         {% for bet in finalizedBets %}
