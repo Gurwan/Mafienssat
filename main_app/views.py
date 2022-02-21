@@ -74,16 +74,22 @@ def addBet(request):
 
 def ratingRecalculation(request):
     bet_id = request.POST['bet']
-    bet = Bets.objects.all().get(pk=bet_id)
+    try:
+        bet = Bets.objects.all().get(pk=bet_id)
+    except Bets.DoesNotExist:
+        bet = None
+
     if bet is not None:
-        w_gains = float(bet.win_gains) if bet.win_gains > Decimal(0) else Decimal(1)
-        l_gains = float(bet.lose_gains) if bet.lose_gains > Decimal(0) else Decimal(1)
+        w_gains = float(bet.win_gains) + float(1)
+        l_gains = float(bet.lose_gains) + float(1)
+        print(w_gains, l_gains)
+
         w_rate = (w_gains + l_gains)/w_gains
         l_rate = (w_gains + l_gains)/l_gains
         bet.win_rate = Decimal(w_rate)
         bet.lose_rate = Decimal(l_rate)
         bet.save()
-
+        print(w_rate, l_rate)
         name = request.POST['name']
         if name is not None:
             return redirect(name)
@@ -106,14 +112,18 @@ def makeBetW(request):
                 current_user.klax_coins -= 1
                 current_user.save()
 
+                bet = Bets.objects.get(id=primary_key)
+                bet.win_gains += 1
+                bet.win_vote += 1
+                bet.save()
+
                 myBet = StoreBets()
                 myBet.result = 'W'
                 myBet.gains = 1
-                myBet.bet_id = Bets.objects.get(id=primary_key)
+                myBet.bet_id = bet
                 myBet.user_id = request.user
-                myBet.bet_id.win_gains += 1
-                myBet.bet_id.win_vote += 1
                 myBet.save()
+
             else:
                 messages.error(request, "Tu n\'as pas asser de klax_coins espèce de rat")
         else:
@@ -135,13 +145,16 @@ def makeBetL(request):
                 current_user.klax_coins -= 1
                 current_user.save()
 
+                bet = Bets.objects.get(id=primary_key)
+                bet.lose_gains += 1
+                bet.lose_vote += 1
+                bet.save()
+
                 myBet = StoreBets()
                 myBet.result = 'L'
                 myBet.gains = 1
-                myBet.bet_id = Bets.objects.get(id=primary_key)
+                myBet.bet_id = bet
                 myBet.user_id = request.user
-                myBet.bet_id.lose_gains += 1
-                myBet.bet_id.lose_vote += 1
                 myBet.save()
             else:
                 messages.error(request, "Tu n\'as pas asser de klax_coins espèce de rat")
@@ -162,7 +175,6 @@ def myBets(request):
             finalId.append(b.bet_id.id)
         mybets = StoreBets.objects.all().filter(user_id_id=current_user.id).exclude(bet_id_id__in=finalId)
         user = User.objects.get(pk=current_user.id)
-        # todo ajouter la requête permettant de récupérer les combinés dans tab 2D
 
         return render(request, 'myBetKlax.html', {'mybets': mybets, 'finalizedBets': finalizedBets, 'user': user})
     else:
@@ -179,8 +191,12 @@ def addGains(request):
             bet.gains += Decimal(gains)
             if bet.result == 'W':
                 bet.bet_id.win_gains += Decimal(gains)
-            else:
+                print(bet.bet_id.win_gains)
+            elif bet.result == 'L':
                 bet.bet_id.lose_gains += Decimal(gains)
+                print(bet.bet_id.lose_gains)
+            else:
+                messages.error(request, "Le résultat du pari est inconnu")
             bet.save()
 
             current_user.klax_coins -= Decimal(gains)
@@ -202,7 +218,7 @@ def finalizeBet(request):
             if bet_id is not None:
                 bet = StoreBets.objects.get(bet_id_id=bet_id, user_id_id=current_user.id)
                 if bet is not None:
-                    if gains > 0:
+                    if Decimal(gains) > Decimal(0):
                         current_user.klax_coins -= Decimal(gains)
                         current_user.save()
                         bet.gains += Decimal(gains)
@@ -210,9 +226,14 @@ def finalizeBet(request):
                     if bet.result == 'W':
                         bet.bet_id.win_gains += Decimal(gains)
                         bet.bet_rate = bet.bet_id.win_rate
-                    else:
+                        print("finalize w_g: ", bet.bet_id.win_gains)
+                    elif bet.result == 'L':
                         bet.bet_id.lose_gains += Decimal(gains)
                         bet.bet_rate = bet.bet_id.lose_rate
+                        print("finalize l_g: ", bet.bet_id.win_gains)
+                    else:
+                        messages.error(request, "Le résultat du pari est inconnu")
+
                     bet.blocked_bet = True
                     bet.save()
             else:
@@ -281,17 +302,16 @@ def eventRegistration(request):
                 done = None
 
             if done is None and event_id is not None:
-                event = Event.objects.get(pk=event_id)
-                user = User.objects.get(pk=request.user.id)
+                this_event = Event.objects.get(pk=event_id)
 
                 reg = Registrations()
-                reg.event_id = event
-                reg.user_id = user
+                reg.event_id = this_event
+                reg.user_id = request.user
                 reg.save()
 
-                if event.max_attendees != 0 and event.attendees_number < event.max_attendees:
-                    event.attendees_number += 1
-                    event.save()
+                if this_event.max_attendees != 0 and this_event.attendees_number < this_event.max_attendees:
+                    this_event.attendees_number += 1
+                    this_event.save()
                 else:
                     messages.error(request, "Cet évènement est déja complet")
             else:
