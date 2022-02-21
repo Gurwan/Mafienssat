@@ -34,12 +34,55 @@ body {
     font-size: 30px;
 }
 
-#choices {
-  
-}
-
 * {
     cursor:url(https://i.ibb.co/2Whsx1h/klaxicon-5.png) 25 15, auto;
+}
+
+#login {
+    font-family: 'Bolf', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+}
+
+#login h1 {
+    font-size: 90px;
+    margin-top: 20px;
+}
+
+#login input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+#login button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+#login a {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+#login p {
+    font-size: 20px;
+}
+
+#login li {
+    color: white !important;
+}
+
+#login small {
+    color: white !important; 
+}
+
+
+#login label {
+    color: red;
+    font-size: 40px;
 }
 
 #main_title {
@@ -56,6 +99,37 @@ body {
     font-style:normal;
     margin-top: 20px;
 }
+
+#betklax-pages {
+    font-family: 'Bolf', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+    margin-top: 20px;
+}
+
+#betklax-pages h1 {
+    font-size: 60px;
+    text-align: center;
+}
+
+#betklax-pages h2 {
+    font-size: 45px;
+    text-align: center;
+}
+
+#betklax-pages p {
+    font-size: 30px;
+    text-align: center;
+}
+
+#betklax-pages span {
+    color: red;
+}
+
+#yellow-span {
+    color: yellow!important;
+}
+
 
 #next-event {
     font-family: 'Bolf', Arial, sans-serif;
@@ -218,6 +292,36 @@ body {
     text-align: center;
 }
 
+.div-du-bet {    
+    text-align: center;
+    background-color: black;
+    padding: 10px;
+    border-radius: 12px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.div-du-bet h3 {    
+    font-size: 25px;
+}
+
+.div-du-bet h4 {    
+    font-size: 17px;
+}
+
+.button_rate {
+    display: inline-block;
+    background-color: yellow;
+    font-family: 'Corleone', Arial, sans-serif;
+}
+
+.button_rate #rate {
+    font-family: 'Bolf', Arial, sans-serif;
+    font-weight: bold;
+}
+
+
+
 @media screen and (min-width: 370px) and (max-width: 560px) {
     #main_title h1 {
         text-align: center;
@@ -260,6 +364,14 @@ body {
     #next-event img{
         width: 300px;
         height: 200px;
+    }
+
+    #login label {
+        font-size: 30px;
+    }
+
+    #login h1 {
+        font-size: 50px;
     }
 }
 
@@ -304,6 +416,14 @@ body {
     #liste_off img{
         width: 250px;
         height: 166px;
+    }
+
+    #login h1 {
+        font-size: 30px;
+    }
+
+    #login label {
+        font-size: 20px;
     }
 }
 
@@ -382,7 +502,7 @@ h6 {
         margin: 0;
     }
 }
-@media screen and (max-width:960px) {
+@media screen and (max-width:1400px) {
     .navTrigger {
         display: block;
     }

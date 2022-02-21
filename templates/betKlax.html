@@ -5,72 +5,75 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% include 'nav.html' %}
-<div class="container" xmlns="http://www.w3.org/1999/html">
-  <div>
-    <img src="{% static "betklax_logo.png" %}" alt="Logo">
-  </div>
+<div class="container-fluid" id="betklax-pages">
+    <h2>Ton pocheton de klaxcoins</h2>
+      {% if user.klax_coins > 0 %}
+          <div>
+              <p><span>Tododododoo...</span> tu as {{ user.klax_coins }} <span id="yellow-span">klaxcoins</span></p>
+          </div>
+      {% else %}
+          <div>
+            <p><span>Time to soudoyer</span> car là tu n'as aucun <span id="yellow-span">klaxcoin</span> à parier (tema la bete de phrase)</p>
+          </div>
+      {% endif %}
+</div>
 
-  <div class="container">
-      {% if user %}
-            <div>
-                <small>{{ user.username }}: {{ user.klax_coins }} klaxCoins</small>
-            </div>
-        {% else %}
-            <div>
-                <small>\: 0 klaxCoins</small>
-            </div>
-        {% endif %}
-  </div>
-  <h1 style="text-align: center; margin-top:20px"><br> Tous les paris</h1>
-    <div class="container">
-
-        {%  for bet in bets %}
-            <div>
-                <small>{{ bet.bet_name }} : <br></small>
-                <small>Fini le {{ bet.ended.ctime.format }} <br></small>
-                {% if request.user.is_authenticated %}
-                    <button class="btn btn--main" type="submit" id="w-{{ bet.id }}" onclick="makeBet(this.id)" value="makeBetW" name="makeBetW">Win: {{ bet.win_rate }}</button>
-                    <br>
-                    <button class="btn btn--main" type="submit" id="l-{{ bet.id }}" onclick="makeBet(this.id)" value="makeBetL" name="makeBetL">Lose: {{ bet.lose_rate }}</button>
-                {% else %}
-                    <small> <br>Win: {{ bet.win_rate }} <br></small>
-                    <small> Lose: {{ bet.lose_rate }} <br></small>
-                {% endif %}
-            </div>
-        {% endfor %}
-    </div>
-    <script>
-
-        function ratingRecalculation(id){
-
-            const formData = new FormData();
-            formData.append('csrfmiddlewaretoken', "{{ csrf_token }}");
-            formData.append('name', 'myBets');
-            formData.append('bet', id)
-            fetch('{% url "ratingRecalculation" %}', {
+<div class="container-fluid" id="betklax-pages">
+    <h1 style="text-align: center; margin-top:20px">Tous les paris</h1>
+    {% for bet in bets %}
+        <div class="div-du-bet">
+            <h3>{{ bet.bet_name }}</h3>
+            <h4>Fini le {{bet.ended | date:"d"}} {{bet.ended  | date:"F"}} {{bet.ended  | date:"o"}} à {{bet.ended | date:"H"}}h{{bet.ended | date:"i"}}</h4>
+            {% if request.user.is_authenticated %}
+                <button class="button_rate" type="submit" id="w-{{ bet.id }}" onclick="makeBet(this.id)" value="makeBetW" name="makeBetW">
+                    <p id="label">Oui</p>
+                    <p id="rate">{{ bet.win_rate }}</p>
+                </button>
+                <button class="button_rate" type="submit" id="l-{{ bet.id }}" onclick="makeBet(this.id)" value="makeBetL" name="makeBetL">
+                    <p id="label">Non</p>
+                    <p id="rate">{{ bet.lose_rate }}</p>
+                </button>
+            {% else %}
+                <div class="button_rate">
+                    <p id="label">Oui</p>
+                    <p id="rate">{{ bet.win_rate }}</p>
+                </div>
+                <div class="button_rate">
+                    <p id="label">Non</p>
+                    <p id="rate">{{ bet.lose_rate }}</p>
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+<script>
+    function ratingRecalculation(id){
+        const formData = new FormData();
+        formData.append('csrfmiddlewaretoken', "{{ csrf_token }}");
+        formData.append('name', 'myBets');
+        formData.append('bet', id)
+        fetch('{% url "ratingRecalculation" %}', {
+                method: 'POST',
+                body: formData
+            })
+    }
+    function makeBet(id){
+        const formData = new FormData();
+        formData.append('csrfmiddlewaretoken', "{{ csrf_token }}");
+        formData.append('bet',id.split("-")[1]);
+        if(id.split("-")[0] === "w"){
+                fetch('{% url "makeBetW" %}', {
                     method: 'POST',
                     body: formData
                 })
-        }
-
-        function makeBet(id){
-            const formData = new FormData();
-            formData.append('csrfmiddlewaretoken', "{{ csrf_token }}");
-            formData.append('bet',id.split("-")[1]);
-            if(id.split("-")[0] === "w"){
-                    fetch('{% url "makeBetW" %}', {
-                        method: 'POST',
-                        body: formData
-                    })
-                } else {
-                    fetch('{% url "makeBetL" %}', {
-                        method: 'POST',
-                        body: formData
-                    })
-                }
-            //location.reload();
-            ratingRecalculation(id.split("-")[1]);
-        }
-    </script>
-</div>
+            } else {
+                fetch('{% url "makeBetL" %}', {
+                    method: 'POST',
+                    body: formData
+                })
+            }
+        //location.reload();
+        ratingRecalculation(id);
+    }
+</script>
 {% endblock %}
