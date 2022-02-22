@@ -14,6 +14,11 @@
               <h2>Créer un événement</h2>
           </div>
       </div>
+      <div class="row">
+          <div class="col" id="left" onclick="goAlloCreator()">
+              <h2>Créer un allo</h2>
+          </div>
+      </div>
   </div>
 </div>
 <script>
@@ -23,6 +28,10 @@
 
     function goEventCreator(){
         window.location.href = window.location.href + "eventCreator"
+    }
+    
+    function goAlloCreator(){
+        window.location.href = window.location.href + "alloCreator"
     }
 </script>
 {% endblock %}
