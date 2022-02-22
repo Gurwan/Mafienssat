@@ -80,3 +80,17 @@ class Registrations(models.Model):
     event_id = models.ForeignKey('Event', on_delete=models.CASCADE)
     user_id = models.ForeignKey('User', on_delete=models.CASCADE)
 
+
+class Allos(models.Model):
+    id = models.AutoField(primary_key=True, unique=True)
+    name = models.CharField(max_length=256)
+    description = models.CharField(max_length=1024)
+    cost = models.DecimalField(max_digits=12, decimal_places=2, default=1.00)
+
+
+class AllosRegistration(models.Model):
+    allo_id = models.ForeignKey('Allos', on_delete=models.CASCADE)
+    user_id = models.ForeignKey('User', on_delete=models.CASCADE)
+    date = models.DateField(help_text='YYYY-MM-DD HH:MM:SS')
+    take_over = models.BooleanField(default=False)
+    made = models.BooleanField(default=False)
