@@ -25,6 +25,7 @@
         formData.append('csrfmiddlewaretoken', "{{ csrf_token }}");
         formData.append('date', date);
         formData.append('allo', id);
+        console.log("cocuo");
         fetch('{% url "sendAllo" %}', {
                     method: 'POST',
                     body: formData

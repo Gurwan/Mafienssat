@@ -28,7 +28,9 @@
         fetch('{% url "alloRegistration" %}', {
                     method: 'POST',
                     body: formData
+                }) .then(() => {
+                    location.replace("http://localhost:8001/alloRegistration/2");
                 })
-    }
+    } 
 </script>
 {% endblock %}
