@@ -382,6 +382,29 @@ def alloRegistration(request, id_allo):
     return render(request, 'alloRegistration.html', {'allo': selected_allo})
 
 
+def alloRequested(request):
+    all_request = AllosRegistration.objects.filter(made=False)
+    return render(request, 'alloRequested.html', {'allos': all_request})
+
+
+def takeOverAllo(request):
+    if request.method == 'POST':
+        allo_id = request.POST['allo']
+        allo = AllosRegistration.objects.get(id=allo_id)
+        allo.take_over = True
+        allo.save()
+    redirect('alloRequested')
+
+
+def dontTakeOverAllo(request):
+    if request.method == 'POST':
+        allo_id = request.POST['allo']
+        allo = AllosRegistration.objects.get(id=allo_id)
+        allo.take_over = False
+        allo.save()
+    redirect('alloRequested')
+
+
 def staff(request):
     return render(request, 'staff.html')
 

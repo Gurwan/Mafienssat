@@ -1,0 +1,44 @@
+{% extends 'main.html' %}
+{% block content %}
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% include 'nav.html' %}
+<div class="container">
+    {% for allo in allos %}
+        <small>{{ allo.allo_id.name }} pour {{ allo.user_id.firstname }} {{ allo.user_id.lastname }} le {{ allo.date }}</small>
+        <br>
+        {% if allo.take_over %}
+            <button class="button_take_over" type="submit" id="{{ allo.id }}" onclick="dontTakeOver(this.id)" value="takeOver" name="takeOver">
+                Ne plus prendre en charge ce allo
+            </button>
+        {% else %}
+            <button class="button_take_over" type="submit" id="{{ allo.id }}" onclick="takeOver(this.id)" value="takeOver" name="takeOver">
+                Prendre en charge ce allo
+            </button>
+        {% endif %}
+    {% endfor %}
+</div>
+<script>
+    function takeOver(id){
+        const data = new FormData();
+        data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
+        data.append('allo', id);
+        fetch('{% url "takeOverAllo" %}', {
+                method: 'POST',
+                body: data
+            })
+    }
+
+    function dontTakeOver(id){
+        const data = new FormData();
+        data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
+        data.append('allo', id);
+        fetch('{% url "dontTakeOverAllo" %}', {
+                method: 'POST',
+                body: data
+            })
+    }
+</script>
+{% endblock %}
