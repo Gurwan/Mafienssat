@@ -8,7 +8,7 @@ urlpatterns = [
     path("register/", views.registerUser, name="register"),
 
     path("betKlax/", views.betKlax, name="betKlax"),
-    path("betCreator/", views.addBet, name="betCreator"),
+    
     path("ratingRecalculation", views.ratingRecalculation, name="ratingRecalculation"),
     path('makeBetW', views.makeBetW, name='makeBetW'),
     path('makeBetL', views.makeBetL, name='makeBetL'),
@@ -17,10 +17,15 @@ urlpatterns = [
     path("finalizeBet", views.finalizeBet, name="finalizeBet"),
 
     path("event/", views.event, name="event"),
-    path("eventCreator/", views.addEvent, name="eventCreator"),
     path("eventRegistration", views.eventRegistration, name="eventRegistration"),
 
     path("liste/", views.liste, name="liste"),
 
-    path("klaxment/", views.klaxment, name="klaxment")
+    path("klaxment/", views.klaxment, name="klaxment"),
+
+    path("goals/", views.goals, name="goals"),
+
+    path("staff/", views.staff, name="staff"),
+    path("staff/betCreator/", views.addBet, name="betCreator"),
+    path("staff/eventCreator/", views.addEvent, name="eventCreator"),
 ]

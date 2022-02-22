@@ -1,0 +1,29 @@
+{% extends 'main.html' %}
+{% block content %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% include 'nav.html' %}
+<div class="container-fluid">
+  <div id="main_col">
+      <div class="row">
+          <div class="col" id="left" onclick="goBetCreator()">
+              <h2>Créer un bet</h2>
+          </div>
+          <div class="col" id="right" onclick="goEventCreator()">
+              <h2>Créer un événement</h2>
+          </div>
+      </div>
+  </div>
+</div>
+<script>
+    function goBetCreator(){
+        window.location.href = window.location.href + "betCreator"
+    }
+
+    function goEventCreator(){
+        window.location.href = window.location.href + "eventCreator"
+    }
+</script>
+{% endblock %}
+

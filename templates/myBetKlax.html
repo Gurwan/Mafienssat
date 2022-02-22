@@ -30,7 +30,7 @@
             {% else %}
                     <h4>Sur la côte perdante : {{ bet.bet_id.lose_rate }} </h4>
             {% endif %}
-            <label for="mise"></label><input placeholder="15" type="number" id="mise{{ bet.id }}">
+            <label for="mise"></label><input placeholder="15" type="number" id="mise{{ bet.bet_id.id }}">
             <br>
             <button style="color:black; background-color: yellow; margin-bottom:10px; margin-top: 5px" class="btn btn--main" type="submit" id="{{ bet.bet_id.id }}" onclick="addGains(this.id)" value="addGains{{ bet.bet_id.id }}" name="addGains{{ bet.bet_id.id }}"> Ajouter des Klaxcoins sur le pari</button>
             <br>
@@ -42,25 +42,30 @@
         </div>
         {% endfor %}
     {% else %}
-        <small>Vous n'avez aucun pari sélectionné</small>
+        <h3 style="text-align: center;">Vous n'avez misé sur aucun pari</h3>
     {% endif %}
     <h1 style="text-align: center; margin-top:20px"> Vos paris bloqués </h1>
     <div class="container">
         {% for bet in finalizedBets %}
-            <div>
-                <small>
-                    {{ bet.bet_id.bet_name }} <br>
-                    {% if bet.result == 'W' %}
-                        Issue: Victoire <br>
-                        Cote: {{ bet.bet_id.win_rate }}
-                    {% else %}
-                        Issue: Défaite <br>
-                        Cote: {{ bet.bet_id.lose_rate }}
-                    {% endif %}
-                    <br>
-                    Mise pariée: {{ bet.gains }} <br>
-                </small>
-            </div>
+        <div class="div-du-bet">
+            <h3>{{ bet.bet_id.bet_name }}</h3>
+            <h4>Fini le {{bet.bet_id.ended | date:"d"}} {{bet.bet_id.ended  | date:"F"}} {{bet.bet_id.ended  | date:"o"}} à {{bet.bet_id.ended | date:"H"}}h{{bet.bet_id.ended | date:"i"}}</h4>
+            <h4>Mise pariée : {{ bet.gains }} Klaxcoins</h4>
+            {% if bet.result == 'W' %}
+                    <h4>Sur la côte gagnante : {{ bet.bet_id.win_rate }} </h4>
+            {% else %}
+                    <h4>Sur la côte perdante : {{ bet.bet_id.lose_rate }} </h4>
+            {% endif %}
+            <label for="mise"></label><input placeholder="15" type="number" id="mise{{ bet.id }}">
+            <br>
+            <button style="color:black; background-color: yellow; margin-bottom:10px; margin-top: 5px" class="btn btn--main" type="submit" id="{{ bet.bet_id.id }}" onclick="addGains(this.id)" value="addGains{{ bet.bet_id.id }}" name="addGains{{ bet.bet_id.id }}"> Ajouter des Klaxcoins sur le pari</button>
+            <br>
+            {% if bet.result == 'W' %}
+                <button style="background-color:red; color:white" class="btn btn--main" type="submit" id="{{ bet.bet_id.id }}" onclick="finalizeBet(this.id)" value="finalizeBet{{ bet.bet_id.id }}" name="finalizeBet{{ bet.bet_id.id }}">Bloquer la cote à {{ bet.bet_id.win_rate }}</button>
+            {% else %}
+                <button style="background-color:red; color:white" class="btn btn--main" type="submit" id="{{ bet.bet_id.id }}" onclick="finalizeBet(this.id)" value="finalizeBet{{ bet.bet_id.id }}" name="finalizeBet{{ bet.bet_id.id }}">Bloquer la cote à {{ bet.bet_id.lose_rate }}</button>
+            {% endif %}
+        </div>
         {% endfor %}
     </div>
     <script>
@@ -81,8 +86,9 @@
         }
 
         function addGains(id){
-
-            let gains = document.getElementById("mise" + id).value
+            console.log("mise"+id);
+            let gains = document.getElementById("mise" + id).value;
+            
             const formData = new FormData();
             formData.append('csrfmiddlewaretoken', "{{ csrf_token }}");
             formData.append('gains', gains);

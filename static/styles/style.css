@@ -320,6 +320,25 @@ body {
     font-weight: bold;
 }
 
+.loadbar {
+    width:25px;
+    height:90%;
+    background-color:#fff;
+    border:1px solid #ccc;
+    position:relative; 
+    margin-bottom: 20px;
+}
+
+.bar {
+    width:100%;
+    display:block;        
+    font-family:arial;
+    font-size:12px; 
+    background-color:green;
+    color:#fff;       
+    position:absolute;
+    bottom:0;        
+}
 
 
 @media screen and (min-width: 370px) and (max-width: 560px) {
@@ -502,7 +521,7 @@ h6 {
         margin: 0;
     }
 }
-@media screen and (max-width:1400px) {
+@media screen and (max-width:1000px) {
     .navTrigger {
         display: block;
     }

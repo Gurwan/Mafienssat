@@ -331,3 +331,9 @@ def klaxment(request):
     userList = User.objects.all().order_by('-klax_coins')  # va chercher tous les utilisateurs du site
     data = {'userList': userList}
     return render(request, 'klaxment.html', data)
+
+def staff(request):
+    return render(request, 'staff.html')
+    
+def goals(request):
+    return render(request, 'goals.html')    
