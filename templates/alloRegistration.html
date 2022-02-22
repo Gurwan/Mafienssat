@@ -21,13 +21,13 @@
 <script>
     function sendAllo(id){
         let date = document.getElementById("date").value;
-        const formData = new FormData();
-        formData.append('csrfmiddlewaretoken', "{{ csrf_token }}");
-        formData.append('date', date);
-        formData.append('allo', id);
+        const data = new FormData();
+        data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
+        data.append('date', date);
+        data.append('allo', id);
         fetch('{% url "sendAllo" %}', {
                     method: 'POST',
-                    body: formData
+                    body: data
                 })
     }
 </script>

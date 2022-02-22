@@ -11,7 +11,8 @@
               <li><a href="{% url 'home' %}">Accueil</a></li>
               {% if not request.user.is_authenticated %}
                   <li><a href="{% url 'login' %}">Se connecter</a></li>
-                  <li><a href="{% url 'register' %}">S'inscrire</a></li>            
+                  <li><a href="{% url 'register' %}">S'inscrire</a></li>
+                  <li><a href="{% url 'betKlax' %}">BetKlax</a></li>
               {% else %}
                   <li><a href="{% url 'klaxment' %}">Klaxment</a></li>
                   <li><a href="{% url 'goals' %}">Goals</a></li>

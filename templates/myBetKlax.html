@@ -79,14 +79,14 @@
         function addGains(id){
 
             let gains = document.getElementById("mise" + id).value;
-            const formData = new FormData();
-            formData.append('csrfmiddlewaretoken', "{{ csrf_token }}");
-            formData.append('gains', gains);
-            formData.append('bet', id);
+            const data = new FormData();
+            data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
+            data.append('gains', gains);
+            data.append('bet', id);
             if(gains > 0){
                 fetch('{% url "addGains" %}', {
                         method: 'POST',
-                        body: formData
+                        body: data
                     })
             }
             ratingRecalculation(id);
@@ -95,14 +95,14 @@
         function finalizeBet(id){
 
             let gains = document.getElementById("mise" + id).value;
-            const formData = new FormData();
-            formData.append('csrfmiddlewaretoken', "{{ csrf_token }}");
-            formData.append('gains', gains);
-            formData.append('bet', id);
+            const data = new FormData();
+            data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
+            data.append('gains', gains);
+            data.append('bet', id);
             if(gains >= 0){
                 fetch('{% url "finalizeBet" %}', {
                         method: 'POST',
-                        body: formData
+                        body: data
                     })
             }
             ratingRecalculation(id);
