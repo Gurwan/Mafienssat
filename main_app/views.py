@@ -378,3 +378,11 @@ def alloRegistration(request):
     selected_allo = Allos.objects.get(pk=allo_id)
     print(selected_allo.name)
     return render(request, 'alloRegistration.html', {'allo': selected_allo})
+
+
+def staff(request):
+    return render(request, 'staff.html')
+
+
+def goals(request):
+    return render(request, 'goals.html')

@@ -14,16 +14,14 @@
                   <li><a href="{% url 'register' %}">S'inscrire</a></li>            
               {% else %}
                   <li><a href="{% url 'klaxment' %}">Klaxment</a></li>
+                  <li><a href="{% url 'goals' %}">Goals</a></li>
                   <li><a href="{% url 'betKlax' %}">BetKlax</a></li>
                   <li><a href="{% url 'myBets' %}">Mes BetKlax</a></li>
                   <li><a href="{% url 'allos' %}">Allo ? Tu m'entends</a></li>
-                  <li><a href="{% url 'logout' %}">Se déconnecter</a></li>
                   {% if request.user.is_staff %}
-                      <a style="text-align: center; color: rgba(255,0,0,0.98); font-size: 25px">Staff :  </a>
-                      <li><a href="{% url 'betCreator' %}"> Créer un betklax</a> </li>
-                      <li><a href="{% url 'eventCreator' %}">Créer un event</a> </li>
-                      <li><a href="{% url 'alloCreator' %}">Créer un allo</a> </li>
+                      <li><a style=" color: rgba(255,0,0,0.98);" href="{% url 'staff' %}">Staff</a></li>
                   {% endif %}
+                  <li><a href="{% url 'logout' %}">Se déconnecter</a></li>
               {% endif %}
           </ul>
       </div>
