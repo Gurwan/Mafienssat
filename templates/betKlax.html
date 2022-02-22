@@ -48,28 +48,28 @@
 </div>
 <script>
     function ratingRecalculation(id){
-        const formData = new FormData();
-        formData.append('csrfmiddlewaretoken', "{{ csrf_token }}");
-        formData.append('name', 'myBets');
-        formData.append('bet', id.split("-")[1])
+        const data = new FormData();
+        data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
+        data.append('name', 'myBets');
+        data.append('bet', id.split("-")[1])
         fetch('{% url "ratingRecalculation" %}', {
                 method: 'POST',
-                body: formData
+                body: data
             })
     }
     function makeBet(id){
-        const formData = new FormData();
-        formData.append('csrfmiddlewaretoken', "{{ csrf_token }}");
-        formData.append('bet',id.split("-")[1]);
+        const data = new FormData();
+        data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
+        data.append('bet',id.split("-")[1]);
         if(id.split("-")[0] === "w"){
                 fetch('{% url "makeBetW" %}', {
                     method: 'POST',
-                    body: formData
+                    body: data
                 })
             } else {
                 fetch('{% url "makeBetL" %}', {
                     method: 'POST',
-                    body: formData
+                    body: data
                 })
             }
         //location.reload();

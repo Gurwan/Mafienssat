@@ -94,3 +94,4 @@ class AllosRegistration(models.Model):
     date = models.DateField(help_text='YYYY-MM-DD HH:MM:SS')
     take_over = models.BooleanField(default=False)
     made = models.BooleanField(default=False)
+7
