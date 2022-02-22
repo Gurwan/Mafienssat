@@ -281,9 +281,17 @@ def event(request):
     events = Event.objects.all()
     if request.user is not None:
         user = request.user
+        registered_event = EventRegistration.objects.filter(user_id_id=user.id)
+        reg_event_id = []
+        for e in registered_event:
+            reg_event_id.append(e.event_id.id)
+        if reg_event_id:
+            events = Event.objects.exclude(id__in=reg_event_id)
+            registered_event = Event.objects.filter(id__in=reg_event_id)
     else:
         user = None
-    data = {'events': events, 'user': user}
+        registered_event = None
+    data = {'events': events, 'user': user, 'registered': registered_event}
 
     return render(request, 'event.html', data)
 
@@ -312,6 +320,28 @@ def eventRegistration(request):
                     this_event.save()
                 else:
                     messages.error(request, "Cet évènement est déja complet")
+            else:
+                messages.error(request, "Erreur lors de l'identification de l'évènement")
+        else:
+            messages.error(request, "Un problème est survenu lors de votre inscripion, veuillez réessayer et si cela persiste, veuillez contacter un admin")
+    else:
+        messages.error(request, "Vous devez être connecté pour vous inscrire à cet évènement")
+    return redirect('event')
+
+
+def eventDeregistration(request):
+
+    if request.user is not None:
+        if request.method == 'POST':
+            event_id = request.POST['event']
+
+            if event_id is not None:
+                this_event = Event.objects.get(pk=event_id)
+                this_event.attendees_number -= 1
+                this_event.save()
+
+                done = EventRegistration.objects.get(user_id_id=request.user.id, event_id_id=event_id)
+                done.delete()
             else:
                 messages.error(request, "Erreur lors de l'identification de l'évènement")
         else:
