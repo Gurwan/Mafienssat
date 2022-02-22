@@ -30,7 +30,7 @@
             {% else %}
                     <h4>Sur la côte perdante : {{ bet.bet_id.lose_rate }} </h4>
             {% endif %}
-            <label for="mise"></label><input placeholder="15" type="number" id="mise{{ bet.id }}">
+            <label for="mise"></label><input placeholder="15" type="number" id="mise-{{ bet.id }}">
             <br>
             <button style="color:black; background-color: yellow; margin-bottom:10px; margin-top: 5px" class="btn btn--main" type="submit" id="{{ bet.bet_id.id }}" onclick="addGains(this.id)" value="addGains{{ bet.bet_id.id }}" name="addGains{{ bet.bet_id.id }}"> Ajouter des Klaxcoins sur le pari</button>
             <br>
@@ -73,7 +73,7 @@
             const formData = new FormData();
             formData.append('csrfmiddlewaretoken', "{{ csrf_token }}");
             formData.append('name', 'myBets');
-            formData.append('bet', id.split("-")[1])
+            formData.append('bet', id)
             fetch('{% url "ratingRecalculation" %}', {
                     method: 'POST',
                     body: formData
@@ -82,7 +82,7 @@
 
         function addGains(id){
 
-            let gains = document.getElementById("mise" + id).value
+            let gains = document.getElementById("mise-" + id).value
             const formData = new FormData();
             formData.append('csrfmiddlewaretoken', "{{ csrf_token }}");
             formData.append('gains', gains);
@@ -98,7 +98,7 @@
 
         function finalizeBet(id){
 
-            let gains = document.getElementById("mise" + id).value;
+            let gains = document.getElementById("mise-" + id).value;
             const formData = new FormData();
             formData.append('csrfmiddlewaretoken', "{{ csrf_token }}");
             formData.append('gains', gains);
