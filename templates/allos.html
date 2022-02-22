@@ -21,11 +21,11 @@
     {% endfor %}
 </div>
 <script>
-    function requestAllo(id){
+    function requestAllo(id_allo){
         const data = new FormData();
         data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
-        data.append('allo', id);
-        location.replace("http://localhost:8001/alloRegistration/"+id);
+        data.append('allo', id_allo);
+        location.replace("http://localhost:8000/alloRegistration/"+id_allo);
     } 
 </script>
 {% endblock %}

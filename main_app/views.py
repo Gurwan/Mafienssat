@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from decimal import *
 from datetime import datetime
-from .models import User, Bets, StoreBets, Event, Registrations, AllosRegistration, Allos
+from .models import User, Bets, StoreBets, Event, EventRegistration, AllosRegistration, Allos
 from .forms import UserForm, AddBetForm, AddEventForm, AlloAdminForm, AlloForm
 
 
@@ -295,14 +295,14 @@ def eventRegistration(request):
             event_id = request.POST['event']
 
             try:
-                done = Registrations.objects.get(user_id_id=request.user.id, event_id_id=event_id)
-            except Registrations.DoesNotExist:
+                done = EventRegistration.objects.get(user_id_id=request.user.id, event_id_id=event_id)
+            except EventRegistration.DoesNotExist:
                 done = None
 
             if done is None and event_id is not None:
                 this_event = Event.objects.get(pk=event_id)
 
-                reg = Registrations()
+                reg = EventRegistration()
                 reg.event_id = this_event
                 reg.user_id = request.user
                 reg.save()
@@ -338,18 +338,21 @@ def allos(request):
 
 def sendAllo(request):
     if request.method == 'POST':
-        date = request.POST['date']
+        date = request.POST['date'] + " " + request.POST['time'] + ":00"
         allo_id = request.POST['allo']
         if date is not None and allo_id is not None:
-            selected_allo = Allos.objects.get(pk=allo_id)
+            selected_allo = Allos.objects.get(id=allo_id)
 
-            allo = AllosRegistration()
-            allo.user_id = request.user
-            allo.allo_id = selected_allo
-            allo.date = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
-            allo.save()
-            return redirect('allos')
-
+            user = User.objects.get(pk=request.user.id)
+            if user is not None:
+                allo = AllosRegistration()
+                allo.user_id = user
+                allo.allo_id = selected_allo
+                allo.date = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
+                allo.save()
+                return redirect('allos')
+            else:
+                messages.error(request, "Utilisateur non trouvé")
         else:
             messages.error(request, "Erreur lors de l\'envoie de ta demande")
     else:
@@ -373,10 +376,33 @@ def alloCreator(request):
     return render(request, 'alloCreator.html', {'form': form, 'allos': all_allos})
 
 
-def alloRegistration(request,id):
-    allo_id = id
-    selected_allo = Allos.objects.get(pk=allo_id)
+def alloRegistration(request, id_allo):
+    selected_allo = Allos.objects.get(pk=id_allo)
+
     return render(request, 'alloRegistration.html', {'allo': selected_allo})
+
+
+def alloRequested(request):
+    all_request = AllosRegistration.objects.filter(made=False)
+    return render(request, 'alloRequested.html', {'allos': all_request})
+
+
+def takeOverAllo(request):
+    if request.method == 'POST':
+        allo_id = request.POST['allo']
+        allo = AllosRegistration.objects.get(id=allo_id)
+        allo.take_over = True
+        allo.save()
+    redirect('alloRequested')
+
+
+def dontTakeOverAllo(request):
+    if request.method == 'POST':
+        allo_id = request.POST['allo']
+        allo = AllosRegistration.objects.get(id=allo_id)
+        allo.take_over = False
+        allo.save()
+    redirect('alloRequested')
 
 
 def staff(request):

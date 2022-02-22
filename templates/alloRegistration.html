@@ -9,6 +9,7 @@
     <div class="container">
 
         <label for="date">Date souhaitée:</label><input type="date" id="date">
+        <label for="time">Heure souhaitée:</label><input type="time" id="time">
         <br>
         <button style="background-color:red; color:white" class="btn btn--main" type="submit" id="{{ allo.id }}" onclick="sendAllo(this.id)" value="sendAllo" name="sendAllo">
             <p>Envoyer la demande</p> <br>
@@ -21,9 +22,12 @@
 <script>
     function sendAllo(id){
         let date = document.getElementById("date").value;
+        let time = document.getElementById("time").value;
+        console.log(time);
         const data = new FormData();
         data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
         data.append('date', date);
+        data.append('time', time);
         data.append('allo', id);
         fetch('{% url "sendAllo" %}', {
                     method: 'POST',

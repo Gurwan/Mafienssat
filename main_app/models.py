@@ -75,7 +75,7 @@ class Event(models.Model):
     associated_bet = models.BooleanField(default=False)
 
 
-class Registrations(models.Model):
+class EventRegistration(models.Model):
     id = models.AutoField(primary_key=True, unique=True)
     event_id = models.ForeignKey('Event', on_delete=models.CASCADE)
     user_id = models.ForeignKey('User', on_delete=models.CASCADE)
@@ -94,4 +94,3 @@ class AllosRegistration(models.Model):
     date = models.DateField(help_text='YYYY-MM-DD HH:MM:SS')
     take_over = models.BooleanField(default=False)
     made = models.BooleanField(default=False)
-7

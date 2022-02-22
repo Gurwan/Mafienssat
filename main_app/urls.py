@@ -27,10 +27,13 @@ urlpatterns = [
 
     path("allos/", views.allos, name="allos"),
     path("sendAllo", views.sendAllo, name="sendAllo"),
-    path("alloRegistration/<int:id>/", views.alloRegistration, name="alloRegistration"),
+    path("alloRegistration/<int:id_allo>/", views.alloRegistration, name="alloRegistration"),
+    path("takeOverAllo", views.takeOverAllo, name="takeOverAllo"),
+    path("dontTakeOverAllo", views.dontTakeOverAllo, name="dontTakeOverAllo"),
 
     path("staff/", views.staff, name="staff"),
     path("staff/betCreator/", views.addBet, name="betCreator"),
     path("staff/eventCreator/", views.addEvent, name="eventCreator"),
     path("staff/alloCreator/", views.alloCreator, name="alloCreator"),
+    path("staff/alloRequested/", views.alloRequested, name="alloRequested")
 ]
