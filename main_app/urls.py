@@ -22,5 +22,10 @@ urlpatterns = [
 
     path("liste/", views.liste, name="liste"),
 
-    path("klaxment/", views.klaxment, name="klaxment")
+    path("klaxment/", views.klaxment, name="klaxment"),
+
+    path("allos/", views.allos, name="allos"),
+    path("sendAllo", views.sendAllo, name="sendAllo"),
+    path("alloRegistration/", views.alloRegistration, name="alloRegistration"),
+    path("alloCreator/", views.alloCreator, name="alloCreator")
 ]

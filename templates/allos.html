@@ -1,0 +1,34 @@
+{% extends 'main.html' %}
+{% block content %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% load static %}
+{% include 'nav.html' %}
+<div class="container">
+    <div id="next-event">
+        <h1>Prochains <span>événements</span></h1>
+    </div>
+    {% for allo in allos %}
+        <small>{{ allo.name }}</small> <br>
+        <small>{{ allo.description }}</small> <br>
+        <small>Coût: {{ allo.cost }} klaxcoins </small> <br>
+        <button class="button_make_allo" type="submit" id="{{ allo.id }}" onclick="requestAllo(this.id)" value="alloRegistration" name="alloRegistration">
+            <p id="label">Envoyer une demande</p>
+            <p id="cost">{{ allo.cost }}</p>
+        </button>
+        <br> <br>
+    {% endfor %}
+</div>
+<script>
+    function requestAllo(id){
+        const formData = new FormData();
+        formData.append('csrfmiddlewaretoken', "{{ csrf_token }}");
+        formData.append('allo', id);
+        fetch('{% url "alloRegistration" %}', {
+                    method: 'POST',
+                    body: formData
+                })
+    }
+</script>
+{% endblock %}
