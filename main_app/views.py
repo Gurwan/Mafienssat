@@ -373,13 +373,10 @@ def alloCreator(request):
     return render(request, 'alloCreator.html', {'form': form, 'allos': all_allos})
 
 
-def alloRegistration(request):
-    if request.method == 'POST':
-        allo_id = request.POST['allo']
-        selected_allo = Allos.objects.get(pk=allo_id)
-        return render(request, 'alloRegistration.html', {'allo': selected_allo})
-    else:
-        messages.error(request, "Impossible de traiter la requête")
+def alloRegistration(request,id):
+    allo_id = id
+    selected_allo = Allos.objects.get(pk=allo_id)
+    return render(request, 'alloRegistration.html', {'allo': selected_allo})
 
 
 def staff(request):

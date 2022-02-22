@@ -27,7 +27,7 @@ urlpatterns = [
 
     path("allos/", views.allos, name="allos"),
     path("sendAllo", views.sendAllo, name="sendAllo"),
-    path("alloRegistration/", views.alloRegistration, name="alloRegistration"),
+    path("alloRegistration/<int:id>/", views.alloRegistration, name="alloRegistration"),
 
     path("staff/", views.staff, name="staff"),
     path("staff/betCreator/", views.addBet, name="betCreator"),

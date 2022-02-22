@@ -25,10 +25,7 @@
         const data = new FormData();
         data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
         data.append('allo', id);
-        fetch('{% url "alloRegistration" %}', {
-                    method: 'POST',
-                    body: data
-                })
+        location.replace("http://localhost:8001/alloRegistration/"+id);
     } 
 </script>
 {% endblock %}
