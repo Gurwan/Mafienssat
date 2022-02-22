@@ -2,8 +2,9 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from decimal import *
-from .models import User, Bets, StoreBets, Event, Registrations
-from .forms import UserForm, AddBetForm, AddEventForm
+from datetime import datetime
+from .models import User, Bets, StoreBets, Event, Registrations, AllosRegistration, Allos
+from .forms import UserForm, AddBetForm, AddEventForm, AlloAdminForm, AlloForm
 
 
 def loginPage(request):
@@ -74,10 +75,7 @@ def addBet(request):
 
 def ratingRecalculation(request):
     bet_id = request.POST['bet']
-    try:
-        bet = Bets.objects.all().get(pk=bet_id)
-    except Bets.DoesNotExist:
-        bet = None
+    bet = Bets.objects.all().get(pk=bet_id)
 
     if bet is not None:
         w_gains = float(bet.win_gains) + float(1)
@@ -331,3 +329,52 @@ def klaxment(request):
     userList = User.objects.all().order_by('-klax_coins')  # va chercher tous les utilisateurs du site
     data = {'userList': userList}
     return render(request, 'klaxment.html', data)
+
+
+def allos(request):
+    all_allos = Allos.objects.all()
+    return render(request, 'allos.html', {'allos': all_allos})
+
+
+def sendAllo(request):
+    if request.method == 'POST':
+        date = request.POST['date']
+        allo_id = request.POST['allo']
+        if date is not None and allo_id is not None:
+            selected_allo = Allos.objects.get(pk=allo_id)
+
+            allo = AllosRegistration()
+            allo.user_id = request.user
+            allo.allo_id = selected_allo
+            allo.date = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
+            allo.save()
+            return redirect('allos')
+
+        else:
+            messages.error(request, "Erreur lors de l\'envoie de ta demande")
+    else:
+        messages.error(request, "Erreur lors de l\'envoie de ta demande")
+
+
+def alloCreator(request):
+    form = AlloAdminForm()
+
+    if request.method == 'POST':
+        form = AlloAdminForm(request.POST)
+        if form.is_valid():
+            allo = form.save(commit=False)
+            allo.save()
+            return redirect('alloCreator')
+        else:
+            messages.error(request, "Erreur lors de la creation du allo")
+
+    all_allos = Allos.objects.all()
+
+    return render(request, 'alloCreator.html', {'form': form, 'allos': all_allos})
+
+
+def alloRegistration(request):
+    allo_id = request.POST['allo']
+    selected_allo = Allos.objects.get(pk=allo_id)
+    print(selected_allo.name)
+    return render(request, 'alloRegistration.html', {'allo': selected_allo})
