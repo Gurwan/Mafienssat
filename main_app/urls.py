@@ -41,8 +41,8 @@ urlpatterns = [
         # Footer
     path("partners/", views.partners, name="partners"),
     path("credits/", views.ourCredits, name="credits"),
-    path("values/", views.ourCredits, name="credits"),
-    path("promises/", views.ourCredits, name="credits"),
+    path("values/", views.ourValues, name="values"),
+    path("promises/", views.promises, name="promises"),
 
         # Staff
     path("staff/", views.staff, name="staff"),

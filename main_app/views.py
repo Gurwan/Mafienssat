@@ -452,3 +452,11 @@ def partners(request):
 
 def ourCredits(request):
     return render(request, 'footers/credits.html')
+
+
+def promises(request):
+    return render(request, 'footers/campaignPromises.html')
+
+
+def ourValues(request):
+    return render(request, 'footers/ourValues.html')
