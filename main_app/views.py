@@ -68,7 +68,7 @@ def addBet(request):
             else:
                 messages.error(request, 'Erreur lors de la création du paris')
         bets = Bets.objects.all()
-        return render(request, 'betCreator.html', {'betform': betform, 'bets': bets})
+        return render(request, 'bets/betCreator.html', {'betform': betform, 'bets': bets})
     else:
         messages.error(request, "Tu dois être membre du staff pour accéder à cette page")
 
@@ -174,7 +174,7 @@ def myBets(request):
         mybets = StoreBets.objects.all().filter(user_id_id=current_user.id).exclude(bet_id_id__in=finalId)
         user = User.objects.get(pk=current_user.id)
 
-        return render(request, 'myBetKlax.html', {'mybets': mybets, 'finalizedBets': finalizedBets, 'user': user})
+        return render(request, 'bets/myBetKlax.html', {'mybets': mybets, 'finalizedBets': finalizedBets, 'user': user})
     else:
         messages.error(request, "Connecte toi")
 
@@ -185,7 +185,7 @@ def addGains(request):
         bet_id = request.POST['bet']
         gains = request.POST['gains']
         if current_user.klax_coins >= Decimal(gains):
-            bet = StoreBets.objects.all().get(user_id_id=current_user.id, bet_id_id=bet_id)
+            bet = StoreBets.objects.get(user_id_id=current_user.id, bet_id_id=bet_id)
             bet.gains += Decimal(gains)
             if bet.result == 'W':
                 bet.bet_id.win_gains += Decimal(gains)
@@ -195,6 +195,7 @@ def addGains(request):
                 print(bet.bet_id.lose_gains)
             else:
                 messages.error(request, "Le résultat du pari est inconnu")
+            bet.bet_id.save()
             bet.save()
 
             current_user.klax_coins -= Decimal(gains)
@@ -233,6 +234,7 @@ def finalizeBet(request):
                         messages.error(request, "Le résultat du pari est inconnu")
 
                     bet.blocked_bet = True
+                    bet.bet_id.save()
                     bet.save()
             else:
                 messages.error(request, "Contacte les admins si le problème perciste après un refresh de la page")
@@ -253,12 +255,13 @@ def betKlax(request):
             bet.append(b.bet_id_id)
         bets = Bets.objects.exclude(id__in=bet)
         user = User.objects.get(pk=current_user.id)
+        return redirect('myBets')
 
     else:  # show all bets
         bets = Bets.objects.all()
         user = None
 
-    return render(request, 'betKlax.html', {'bets': bets, 'user': user})
+    return render(request, 'bets/betKlax.html', {'bets': bets, 'user': user})
 
 
 def addEvent(request):
@@ -272,7 +275,7 @@ def addEvent(request):
             else:
                 messages.error(request, 'Erreur lors de la création d\'un événement')
         events = Event.objects.all()
-        return render(request, 'eventCreator.html', {'eventform': eventform, 'events': events})
+        return render(request, 'events/eventCreator.html', {'eventform': eventform, 'events': events})
     else:
         messages.error(request, "Tu dois être membre du staff pour accéder à cette page")
 
@@ -293,7 +296,7 @@ def event(request):
         registered_event = None
     data = {'events': events, 'user': user, 'registered': registered_event}
 
-    return render(request, 'event.html', data)
+    return render(request, 'events/event.html', data)
 
 
 def eventRegistration(request):
@@ -352,18 +355,18 @@ def eventDeregistration(request):
 
 
 def liste(request):
-    return render(request, 'liste.html')
+    return render(request, 'nav_links/liste.html')
 
 
 def klaxment(request):
     userList = User.objects.all().order_by('-klax_coins')  # va chercher tous les utilisateurs du site
     data = {'userList': userList}
-    return render(request, 'klaxment.html', data)
+    return render(request, 'nav_links/klaxment.html', data)
 
 
 def allos(request):
     all_allos = Allos.objects.all()
-    return render(request, 'allos.html', {'allos': all_allos})
+    return render(request, 'allos/allos.html', {'allos': all_allos})
 
 
 def sendAllo(request):
@@ -403,18 +406,18 @@ def alloCreator(request):
 
     all_allos = Allos.objects.all()
 
-    return render(request, 'alloCreator.html', {'form': form, 'allos': all_allos})
+    return render(request, 'allos/alloCreator.html', {'form': form, 'allos': all_allos})
 
 
 def alloRegistration(request, id_allo):
     selected_allo = Allos.objects.get(pk=id_allo)
 
-    return render(request, 'alloRegistration.html', {'allo': selected_allo})
+    return render(request, 'allos/alloRegistration.html', {'allo': selected_allo})
 
 
 def alloRequested(request):
     all_request = AllosRegistration.objects.filter(made=False)
-    return render(request, 'alloRequested.html', {'allos': all_request})
+    return render(request, 'allos/alloRequested.html', {'allos': all_request})
 
 
 def takeOverAllo(request):
@@ -440,4 +443,12 @@ def staff(request):
 
 
 def goals(request):
-    return render(request, 'goals.html')
+    return render(request, 'nav_links/goals.html')
+
+
+def partners(request):
+    return render(request, 'footers/partners.html')
+
+
+def ourCredits(request):
+    return render(request, 'footers/credits.html')

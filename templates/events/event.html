@@ -12,7 +12,7 @@
             <h2 id="name">{{event.event_name}}</h2>
             <h3 id="date">Le {{event.event_date | date:"d"}} {{event.event_date | date:"F"}} {{event.event_date | date:"o"}} à {{event.event_date | date:"H"}}h{{event.event_date | date:"i"}}</h3>
             <div>
-                <h4>{{event.event_type.title}}</h4> <br> <!-- TODO faire en sorte de pouvoir afficher le nom de l'event et pas l'acronyme -->
+                <h4>{{event.get_event_type_display}}</h4> <br>
                 {% if event.max_attendees != 0 %}
                     <h4>{{event.attendees_number}} inscrits sur {{event.max_attendees}} places disponibles</h4>
                 {% endif %}
@@ -25,7 +25,7 @@
             <div id="main_col_event">
                 <div class="row">
                     {% if user %}
-                        {% if event.attendees_number < event.max_attendees and event.max_attendees != 0 %} <!-- TODO faire en sorte qu'une fois que l'utilisateur à cliqué une fois il ne puisse qu'annuler sa participation -->
+                        {% if event.attendees_number < event.max_attendees and event.max_attendees != 0 %}
                             <div class="col" id="event-{{ event.id }}" onclick="goEvent(this.id)" style="background-color: #522699">
                                 <h2>Participer à l'événement</h2>
                             </div>

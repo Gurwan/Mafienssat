@@ -47,16 +47,6 @@
     {% endfor %}
 </div>
 <script>
-    function ratingRecalculation(id){
-        const data = new FormData();
-        data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
-        data.append('name', 'myBets');
-        data.append('bet', id.split("-")[1])
-        fetch('{% url "ratingRecalculation" %}', {
-                method: 'POST',
-                body: data
-            })
-    }
     function makeBet(id){
         const data = new FormData();
         data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
@@ -73,7 +63,6 @@
                 })
             }
         //location.reload();
-        ratingRecalculation(id);
     }
 </script>
 {% endblock %}
