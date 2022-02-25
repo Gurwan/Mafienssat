@@ -8,7 +8,7 @@
     <h1 style="text-align: center; margin-top:20px">Faire la demande pour {{ allo.name }}</h1>
     <div class="container">
 
-        <label for="date">Date souhaitée:</label><input type="date" id="date" min="{{ allo.start_date.year }}-{{ allo.start_date.month }}-{{ allo.start_date.day }}" max="{{ allo.end_date.date }}">
+        <label for="date">Date souhaitée:</label><input type="date" id="date" min="{{ allo.start_date.year }}-{{ allo.start_date.month }}-{{ allo.start_date.day }}" max="{{ allo.end_date.year }}-{{ allo.end_date.month }}-{{ allo.end_date.day }}">
         <label for="time">Heure souhaitée:</label><input type="time" id="time" min="{{ allo.start_date.hour }}:{{ allo.start_date.minute }}" max="{{ allo.end_date.hour }}:{{ allo.end_date.minute }}">
         <br>
         <button style="background-color:red; color:white" class="btn btn--main" type="submit" id="{{ allo.id }}" onclick="sendAllo(this.id)" value="sendAllo" name="sendAllo">
@@ -20,6 +20,43 @@
     <h1 style="text-align: center; margin-top:20px">Erreur lors du chargement réessaye</h1>
 {% endif %}
 <script>
+    $(document).ready(function(){
+        let initDate = document.getElementById("date").min;
+        let splitDate = initDate.split("-");
+       
+        if(parseInt(splitDate[1]) < 10){
+            splitDate[1] = "0" + splitDate[1];
+        }
+
+        if(splitDate[2] < 10){
+            splitDate[2] = "0" + splitDate[2];
+        }
+       
+        document.getElementById("date").min = splitDate[0] + "-" + splitDate[1] + "-" + splitDate[2];
+
+        let initDate1 = document.getElementById("date").max;
+        let splitDate1 = initDate1.split("-");
+       
+        if(parseInt(splitDate1[1]) < 10){
+            splitDate1[1] = "0" + splitDate1[1];
+        }
+
+        if(splitDate1[2] < 10){
+            splitDate1[2] = "0" + splitDate1[2];
+        }
+       
+        document.getElementById("date").max = splitDate1[0] + "-" + splitDate1[1] + "-" + splitDate1[2];
+
+        let initTime = document.getElementById("time").min;
+        let splitTime = initTime.split(":");
+        if(splitTime[0] < 10){
+            splitTime[0] = "0" + splitTime[1];
+        }
+        if(splitTime[1] < 10){
+            splitTime[1] = "0" + splitTime[1];
+        }
+        document.getElementById("time").min = splitTime[0] + ":" + splitTime[1];
+    });
     function setRightFormat(val){
 
         if(val < 9){
