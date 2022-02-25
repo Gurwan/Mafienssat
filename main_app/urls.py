@@ -33,7 +33,10 @@ urlpatterns = [
 
         # Allos
     path("allos/", views.allos, name="allos"),
+    path("myAllos/", views.myAllos, name="myAllos"),
+    path("byAllos", views.buyAllos, name="byAllos"),
     path("sendAllo", views.sendAllo, name="sendAllo"),
+    path("buyAlloTicket", views.buyAlloTicket, name="buyAlloTicket"),
     path("alloRegistration/<int:id_allo>/", views.alloRegistration, name="alloRegistration"),
     path("takeOverAllo", views.takeOverAllo, name="takeOverAllo"),
     path("dontTakeOverAllo", views.dontTakeOverAllo, name="dontTakeOverAllo"),

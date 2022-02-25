@@ -1,0 +1,116 @@
+{% extends 'main.html' %}
+{% block content %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% load static %}
+{% include 'nav.html' %}
+{% if user %}
+    <h1 style="text-align: center; margin-top:20px">Vos allo a disposition</h1>
+    {% if counter %} <!-- TODO ajuster les prix ! -->
+        <small>Bières à domicile: {{ counter.biere }}</small> <br>
+        {% if counter.biere == 0 %}
+            <button class="button_take_over" type="submit" id="A-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
+                <p>Acheter ce allo 20 klaxcoins</p>
+            </button> <br>
+        {% endif %}
+
+        <small>Goûter: {{ counter.gouter }}</small> <br>
+        {% if counter.gouter == 0 %}
+            <button class="button_take_over" type="submit" id="B-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
+                <p>Acheter ce allo 20 klaxcoins</p>
+            </button> <br>
+        {% endif %}
+
+        <small>P'tit dej: {{ counter.ptitdej }}</small> <br>
+        {% if counter.ptitdej == 0 %}
+            <button class="button_take_over" type="submit" id="C-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
+                <p>Acheter ce allo 20 klaxcoins</p>
+            </button> <br>
+        {% endif %}
+
+        <small>Ménage: {{ counter.menage }}</small> <br>
+        {% if counter.menage == 0 %}
+            <button class="button_take_over" type="submit" id="D-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
+                <p>Acheter ce allo 20 klaxcoins</p>
+            </button> <br>
+        {% endif %}
+
+        <small>Car wash: {{ counter.car_wash }}</small> <br>
+        {% if counter.car_wash == 0 %}
+            <button class="button_take_over" type="submit" id="E-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
+                <p>Acheter ce allo 20 klaxcoins</p>
+            </button> <br>
+        {% endif %}
+
+        <small>Klaxeur fou: {{ counter.klax }}</small> <br>
+        {% if counter.klax == 0 %}
+            <button class="button_take_over" type="submit" id="F-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
+                <p>Acheter ce allo 20 klaxcoins</p>
+            </button> <br>
+        {% endif %}
+
+        <small>Bricolage: {{ counter.bricolage }}</small> <br>
+        {% if counter.bricolage == 0 %}
+            <button class="button_take_over" type="submit" id="G-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
+                <p>Acheter ce allo 20 klaxcoins</p>
+            </button> <br>
+        {% endif %}
+
+        <small>Cuisine: {{ counter.cuisine }}</small> <br>
+        {% if counter.cuisine == 0 %}
+            <button class="button_take_over" type="submit" id="H-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
+                <p>Acheter ce allo 20 klaxcoins</p>
+            </button> <br>
+        {% endif %}
+
+        <small>Courses: {{ counter.courses }}</small> <br>
+        {% if counter.courses == 0 %}
+            <button class="button_take_over" type="submit" id="I-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
+                <p>Acheter ce allo 20 klaxcoins</p>
+            </button> <br>
+        {% endif %}
+
+        <small>Taxi: {{ counter.taxi }}</small> <br>
+        {% if counter.taxi == 0 %}
+            <button class="button_take_over" type="submit" id="J-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
+                <p>Acheter ce allo 20 klaxcoins</p>
+            </button> <br>
+        {% endif %}
+    {% else %}
+        <small>Erreur lors du chargement de vos donnés</small>
+    {% endif %}
+    <br>
+    <h1 style="text-align: center; margin-top:20px">Vos demandes de allo</h1>
+    {% if allos %}
+        {% for allo in allos %}
+            <small>{{ allo.allo_id.get_allo_type_display }}</small> <br>
+            <small>Le {{allo.date | date:"d"}} {{allo.date  | date:"F"}} {{allo.date  | date:"o"}} à {{allo.date | date:"H"}}h{{allo.date | date:"i"}}</small> <br>
+            {% if allo.take_over %}
+                {% if allo.made %}
+                    <small>Etat: Réalisé</small> <br>
+                {% else %}
+                    <small>Etat: Pris en charge</small> <br>
+                {% endif %}
+            {% else %}
+                <small>Etat: Envoyé</small> <br>
+            {% endif %}
+            <br>
+        {% endfor %}
+    {% else %}
+        <small>Vous n'avez demandé aucun allo</small> <br>
+    {% endif %}
+{% endif %}
+<script>
+    function buyAllo(id){
+        const data = new FormData();
+        data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
+        data.append('allo', id.split("-")[0]);
+        data.append('cost', id.split("-")[1]);
+        fetch('{% url "byAllos" %}', {
+                method: 'POST',
+                body: data
+            })
+    }
+</script>
+{% endblock %}

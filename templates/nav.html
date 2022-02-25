@@ -21,6 +21,7 @@
                   <li><a href="{% url 'betKlax' %}">BetKlax</a></li>
                   <li><a href="{% url 'myBets' %}">Mes BetKlax</a></li>
                   <li><a href="{% url 'allos' %}">Allo ? Tu m'entends</a></li>
+                  <li><a href="{% url 'myAllos' %}">Vos allos</a></li>
                   {% if request.user.is_staff %}
                       <li><a style=" color: rgba(255,0,0,0.98);" href="{% url 'staff' %}">Staff</a></li>
                   {% endif %}
