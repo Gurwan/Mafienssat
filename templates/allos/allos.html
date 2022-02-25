@@ -10,7 +10,6 @@
         <h1>Les <span>Allo</span> à votre disposition</h1>
     </div>
     {% for allo in allos %}
-        <small>{{ allo.name }}</small> <br>
         <small>{{ allo.get_allo_type_display }}</small> <br>
         <small>{{ allo.description }}</small> <br>
         <small>Disponible du {{allo.start_date | date:"d"}} {{allo.start_date  | date:"F"}} {{allo.start_date  | date:"o"}} à {{allo.start_date | date:"H"}}h{{allo.start_date | date:"i"}}</small>
