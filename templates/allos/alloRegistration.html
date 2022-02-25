@@ -4,19 +4,24 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% include 'nav.html' %}
-{% if allo %}
-    <h1 style="text-align: center; margin-top:20px">Faire la demande pour {{ allo.name }}</h1>
+{% if allo and user%}
+    <h1 style="text-align: center; margin-top:20px">Faire la demande pour {{ allo.get_allo_type_display }}</h1>
     <div class="container">
 
         <label for="date">Date souhaitée:</label><input type="date" id="date" min="{{ allo.start_date.year }}-{{ allo.start_date.month }}-{{ allo.start_date.day }}" max="{{ allo.end_date.year }}-{{ allo.end_date.month }}-{{ allo.end_date.day }}">
         <label for="time">Heure souhaitée:</label><input type="time" id="time" min="{{ allo.start_date.hour }}:{{ allo.start_date.minute }}" max="{{ allo.end_date.hour }}:{{ allo.end_date.minute }}">
         <br>
-        <button style="background-color:red; color:white" class="btn btn--main" type="submit" id="{{ allo.id }}" onclick="sendAllo(this.id)" value="sendAllo" name="sendAllo">
-            <p>Envoyer la demande</p> <br>
-            <p>{{ allo.cost }} klaxcoins</p>
-        </button>
+        {% if allowed > 0 %}
+            <button style="background-color:red; color:white" class="btn btn--main" type="submit" id="{{ allo.id }}" onclick="sendAllo(this.id)" value="sendAllo" name="sendAllo">
+                <p>Envoyer la demande</p>
+            </button>
+        {% else %}
+            <button style="background-color:red; color:white" class="btn btn--main" type="submit" id="{{ allo.id }}" onclick="buyTicket(this.id)" value="buyTicket" name="buyTicket">
+                <p>Acheter un ticket</p>
+            </button>
+        {% endif %}
     </div>
-{% else %}
+{% elif user %}
     <h1 style="text-align: center; margin-top:20px">Erreur lors du chargement réessaye</h1>
 {% endif %}
 <script>
@@ -78,6 +83,16 @@
         data.append('time', time);
         data.append('allo', id);
         fetch('{% url "sendAllo" %}', {
+                    method: 'POST',
+                    body: data
+                })
+    }
+    function buyTicket(id){
+
+        const data = new FormData();
+        data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
+        data.append('allo', id);
+        fetch('{% url "buyAlloTicket" %}', {
                     method: 'POST',
                     body: data
                 })
