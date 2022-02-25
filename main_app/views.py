@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from decimal import *
 from datetime import datetime
-from .models import User, Bets, StoreBets, Event, EventRegistration, AllosRegistration, Allos
+from .models import User, Bets, StoreBets, Event, EventRegistration, AllosRegistration, Allos, AllosUserCounters
 from .forms import UserForm, AddBetForm, AddEventForm, AlloAdminForm, AlloForm
 
 
@@ -42,6 +42,8 @@ def registerUser(request):
             user = form.save(commit=False)
             user.username = user.username.lower()
             user.save()
+            allos_counters = AllosUserCounters(user_id=user)
+            allos_counters.save()
             login(request, user)
             return redirect('home')
         else:
@@ -369,16 +371,110 @@ def allos(request):
     return render(request, 'allos/allos.html', {'allos': all_allos})
 
 
+def myAllos(request):
+    user = User.objects.get(pk=request.user.id)
+    if user is not None:
+        counter = AllosUserCounters.objects.get(user_id_id=user.id)
+        my_allos = AllosRegistration.objects.filter(user_id_id=user.id)
+        return render(request, 'allos/myAllos.html', {'user': user, 'counter': counter, 'allos': my_allos})
+    else:
+        messages.error(request, "Vous devez être connecté")
+
+
+def buyAllos(request):
+    user = User.objects.get(pk=request.user.id)
+    if user is not None:
+        if request.method == 'POST':
+            allo_type = request.POST['allo']
+            allo_cost = request.POST['cost']
+            counter = AllosUserCounters.objects.get(user_id_id=user.id)
+            if allo_type is not None and allo_cost is not None:
+                if int(allo_cost) > 0:
+                    if user.klax_coins >= Decimal(allo_cost):
+                        user.klax_coins -= Decimal(allo_cost)
+                        user.save()
+                        addAlloCounter(allo_type, counter, 1)
+                        counter.save()
+
+                    else:
+                        messages.error(request, "Tu n'as pas assez de klaxcoins")
+                else:
+                    addAlloCounter(allo_type, counter, 1)
+                    counter.save()
+
+                return redirect('myAllos')
+            else:
+                messages.error(request, "Erreur lors de l'envoie de la requete")
+        else:
+            messages.error(request, "Erreur lors de l'envoie de la requete")
+    else:
+        messages.error(request, "Vous devez être connecté")
+
+
+def addAlloCounter(allo_type, counter, nb):
+    if allo_type == "A":
+        counter.biere += nb
+    elif allo_type == "B":
+        counter.gouter += nb
+    elif allo_type == "C":
+        counter.ptitdej += nb
+    elif allo_type == "D":
+        counter.menage += nb
+    elif allo_type == "E":
+        counter.car_wash += nb
+    elif allo_type == "F":
+        counter.klax += nb
+    elif allo_type == "G":
+        counter.bricolage += nb
+    elif allo_type == "H":
+        counter.cuisine += nb
+    elif allo_type == "I":
+        counter.courses += nb
+    elif allo_type == "J":
+        counter.taxi += nb
+
+
+def buyAlloTicket(request):
+    if request.method == 'POST':
+        user = User.objects.get(id=request.user.id)
+        if user is not None:
+            allo_id = request.POST['allo']
+            if allo_id is not None:
+                selected_allo = Allos.objects.get(id=allo_id)
+                counter = AllosUserCounters.objects.get(user_id=user)
+
+                if user.klax_coins >= selected_allo.cost:
+                    user.klax_coins -= selected_allo.cost
+                    user.save()
+
+                    addAlloCounter(selected_allo.allo_type, counter, 1)
+                    counter.save()
+
+                    allowed = alloAllowed(selected_allo.allo_type, counter)
+
+                    return render(request, 'allos/alloRegistration.html', {'allo': selected_allo, 'allowed': allowed})
+                else:
+                    messages.error(request, "Tu n'as pas assez de klaxcoins")
+            else:
+                messages.error(request, "Veuillez réessayer plus tard")
+        else:
+            messages.error(request, "Tu dois être connecté")
+    else:
+        messages.error(request, "Erreur lors de l'envoie de la requete")
+
+
 def sendAllo(request):
     if request.method == 'POST':
         date = request.POST['date'] + " " + request.POST['time'] + ":00"
         allo_id = request.POST['allo']
-        print("\'" + date + "\'")
-        if date is not None and allo_id is not None:
+        if request.POST['date'] is not None and request.POST['time'] is not None and allo_id is not None:
             selected_allo = Allos.objects.get(id=allo_id)
-
+            counter = AllosUserCounters.objects.get(user_id=request.user)
             user = User.objects.get(pk=request.user.id)
             if user is not None:
+                addAlloCounter(selected_allo.allo_type, counter, -1)
+                counter.save()
+
                 allo = AllosRegistration()
                 allo.user_id = user
                 allo.allo_id = selected_allo
@@ -411,32 +507,76 @@ def alloCreator(request):
 
 
 def alloRegistration(request, id_allo):
-    selected_allo = Allos.objects.get(pk=id_allo)
+    user = User.objects.get(pk=request.user.id)
+    if user is not None:
+        selected_allo = Allos.objects.get(pk=id_allo)
+        counter = AllosUserCounters.objects.get(user_id_id=request.user.id)
+        allowed = alloAllowed(selected_allo.allo_type, counter)
+        return render(request, 'allos/alloRegistration.html', {'user': user, 'allo': selected_allo, 'allowed': allowed})
+    else:
+        messages.error(request, "Vous devez être connecté")
 
-    return render(request, 'allos/alloRegistration.html', {'allo': selected_allo})
+
+def alloAllowed(allo_type, counter):
+    if allo_type == "A":
+        return counter.biere
+    elif allo_type == "B":
+        return counter.gouter
+    elif allo_type == "C":
+        return counter.ptitdej
+    elif allo_type == "D":
+        return counter.menage
+    elif allo_type == "E":
+        return counter.car_wash
+    elif allo_type == "F":
+        return counter.klax
+    elif allo_type == "G":
+        return counter.bricolage
+    elif allo_type == "H":
+        return counter.cuisine
+    elif allo_type == "I":
+        return counter.courses
+    elif allo_type == "J":
+        return counter.taxi
+    else:
+        return 0
 
 
 def alloRequested(request):
-    all_request = AllosRegistration.objects.filter(made=False)
-    return render(request, 'allos/alloRequested.html', {'allos': all_request})
+    user = User.objects.get(pk=request.user.id)
+    if user is not None:
+        all_request = AllosRegistration.objects.filter(made=False)
+        done_allos = AllosRegistration.objects.filter(made=True)
+
+        return render(request, 'allos/alloRequested.html', {'user': user, 'allos': all_request, 'doneAllos': done_allos})
+    else:
+        messages.error(request, "Vous devez être connecté")
 
 
 def takeOverAllo(request):
     if request.method == 'POST':
         allo_id = request.POST['allo']
-        allo = AllosRegistration.objects.get(id=allo_id)
+        allo = AllosRegistration.objects.get(pk=allo_id)
         allo.take_over = True
+        allo.staff_id = request.user.id
         allo.save()
-    redirect('alloRequested')
+        all_request = AllosRegistration.objects.filter(made=False)
+        return render(request, 'allos/alloRequested.html', {'allos': all_request})
+    else:
+        messages.error(request, "Erreur lors du chargement")
 
 
 def dontTakeOverAllo(request):
     if request.method == 'POST':
         allo_id = request.POST['allo']
-        allo = AllosRegistration.objects.get(id=allo_id)
+        allo = AllosRegistration.objects.get(pk=allo_id)
         allo.take_over = False
+        allo.staff_id = 0
         allo.save()
-    redirect('alloRequested')
+        all_request = AllosRegistration.objects.filter(made=False)
+        return render(request, 'allos/alloRequested.html', {'allos': all_request})
+    else:
+        messages.error(request, "Erreur lors du chargement")
 
 
 def staff(request):
