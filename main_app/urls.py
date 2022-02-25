@@ -49,8 +49,8 @@ urlpatterns = [
 
         # Staff
     path("staff/", views.staff, name="staff"),
-    path("staff/betCreator/", views.addBet, name="betCreator"),
-    path("staff/eventCreator/", views.addEvent, name="eventCreator"),
+    path("staff/betCreator/", views.betCreator, name="betCreator"),
+    path("staff/eventCreator/", views.eventCreator, name="eventCreator"),
     path("staff/alloCreator/", views.alloCreator, name="alloCreator"),
     path("staff/alloRequested/", views.alloRequested, name="alloRequested")
 ]

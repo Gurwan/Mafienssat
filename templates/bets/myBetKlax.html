@@ -5,109 +5,111 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% include 'nav.html' %}
-<div class="container-fluid" id="betklax-pages">
-    <h2>Ton pocheton de klaxcoins</h2>
-      {% if user.klax_coins > 0 %}
-          <div>
-              <p><span>Tododododoo...</span> tu as {{ user.klax_coins }} <span id="yellow-span">klaxcoins</span></p>
-          </div>
-      {% else %}
-          <div>
-            <p><span>Time to soudoyer</span> car là tu n'as aucun <span id="yellow-span">klaxcoin</span> à parier (tema la bete de phrase)</p>
-          </div>
-      {% endif %}
-</div>
-<div class="container-fluid" id="betklax-pages">
-    <h1 style="text-align: center; margin-top:20px">Tous vos paris</h1>
-    {% if mybets %}
-        {%  for bet in mybets %}
-        <div class="div-du-bet">
-            <h3>{{ bet.bet_id.bet_name }}</h3>
-            <h4>Fini le {{bet.bet_id.ended | date:"d"}} {{bet.bet_id.ended  | date:"F"}} {{bet.bet_id.ended  | date:"o"}} à {{bet.bet_id.ended | date:"H"}}h{{bet.bet_id.ended | date:"i"}}</h4>
-            <h4>Montant parié : {{ bet.gains }} Klaxcoins</h4>
-            {% if bet.result == 'W' %}
-                    <h4>Sur la côte gagnante : {{ bet.bet_id.win_rate }} </h4>
-            {% else %}
-                    <h4>Sur la côte perdante : {{ bet.bet_id.lose_rate }} </h4>
-            {% endif %}
-            <label for="mise"></label><input placeholder="15" type="number" id="mise{{ bet.bet_id.id }}">
-            <br>
-            <button style="color:black; background-color: yellow; margin-bottom:10px; margin-top: 5px" class="btn btn--main" type="submit" id="{{ bet.bet_id.id }}" onclick="addGains(this.id)" value="addGains{{ bet.bet_id.id }}" name="addGains{{ bet.bet_id.id }}"> Ajouter des Klaxcoins sur le pari</button>
-            <br>
-            {% if bet.result == 'W' %}
-                <button style="background-color:red; color:white" class="btn btn--main" type="submit" id="{{ bet.bet_id.id }}" onclick="finalizeBet(this.id)" value="finalizeBet{{ bet.bet_id.id }}" name="finalizeBet{{ bet.bet_id.id }}">Bloquer la cote à {{ bet.bet_id.win_rate }}</button>
-            {% else %}
-                <button style="background-color:red; color:white" class="btn btn--main" type="submit" id="{{ bet.bet_id.id }}" onclick="finalizeBet(this.id)" value="finalizeBet{{ bet.bet_id.id }}" name="finalizeBet{{ bet.bet_id.id }}">Bloquer la cote à {{ bet.bet_id.lose_rate }}</button>
-            {% endif %}
-        </div>
-        {% endfor %}
-    {% else %}
-        <h3 style="text-align: center;">Vous n'avez misé sur aucun pari</h3>
-    {% endif %}
-    <h1 style="text-align: center; margin-top:20px"> Vos paris bloqués </h1>
-    <div class="container">
-        {% for bet in finalizedBets %}
-        <div class="div-du-bet">
-            <h3>{{ bet.bet_id.bet_name }}</h3>
-            <h4>Fini le {{bet.bet_id.ended | date:"d"}} {{bet.bet_id.ended  | date:"F"}} {{bet.bet_id.ended  | date:"o"}} à {{bet.bet_id.ended | date:"H"}}h{{bet.bet_id.ended | date:"i"}}</h4>
-            <h4>Mise pariée : {{ bet.gains }} Klaxcoins</h4>
-            {% if bet.result == 'W' %}
-                    <h4>Sur la côte gagnante : {{ bet.bet_id.win_rate }} </h4>
-            {% else %}
-                    <h4>Sur la côte perdante : {{ bet.bet_id.lose_rate }} </h4>
-            {% endif %}
-        </div>
-        {% endfor %}
+{% if user %}
+    <div class="container-fluid" id="betklax-pages">
+        <h2>Ton pocheton de klaxcoins</h2>
+          {% if user.klax_coins > 0 %}
+              <div>
+                  <p><span>{{ user.username }}</span> tu as {{ user.klax_coins }} <span id="yellow-span">klaxcoins</span></p>
+              </div>
+          {% else %}
+              <div>
+                <p><span>Time to soudoyer</span> car là tu n'as aucun <span id="yellow-span">klaxcoin</span> à parier (tema la bete de phrase)</p>
+              </div>
+          {% endif %}
     </div>
-    <script>
-        const monthNames = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
-            "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
-        ];
+    <div class="container-fluid" id="betklax-pages">
+        <h1 style="text-align: center; margin-top:20px">Tous vos paris</h1>
+        {% if mybets %}
+            {%  for bet in mybets %}
+            <div class="div-du-bet">
+                <h3>{{ bet.bet_id.bet_name }}</h3>
+                <h4>Fini le {{bet.bet_id.ended | date:"d"}} {{bet.bet_id.ended  | date:"F"}} {{bet.bet_id.ended  | date:"o"}} à {{bet.bet_id.ended | date:"H"}}h{{bet.bet_id.ended | date:"i"}}</h4>
+                <h4>Montant parié : {{ bet.gains }} Klaxcoins</h4>
+                {% if bet.result == 'W' %}
+                        <h4>Sur la côte gagnante : {{ bet.bet_id.win_rate }} </h4>
+                {% else %}
+                        <h4>Sur la côte perdante : {{ bet.bet_id.lose_rate }} </h4>
+                {% endif %}
+                <label for="mise"></label><input placeholder="15" type="number" id="mise{{ bet.bet_id.id }}">
+                <br>
+                <button style="color:black; background-color: yellow; margin-bottom:10px; margin-top: 5px" class="btn btn--main" type="submit" id="{{ bet.bet_id.id }}" onclick="addGains(this.id)" value="addGains{{ bet.bet_id.id }}" name="addGains{{ bet.bet_id.id }}"> Ajouter des Klaxcoins sur le pari</button>
+                <br>
+                {% if bet.result == 'W' %}
+                    <button style="background-color:red; color:white" class="btn btn--main" type="submit" id="{{ bet.bet_id.id }}" onclick="finalizeBet(this.id)" value="finalizeBet{{ bet.bet_id.id }}" name="finalizeBet{{ bet.bet_id.id }}">Bloquer la cote à {{ bet.bet_id.win_rate }}</button>
+                {% else %}
+                    <button style="background-color:red; color:white" class="btn btn--main" type="submit" id="{{ bet.bet_id.id }}" onclick="finalizeBet(this.id)" value="finalizeBet{{ bet.bet_id.id }}" name="finalizeBet{{ bet.bet_id.id }}">Bloquer la cote à {{ bet.bet_id.lose_rate }}</button>
+                {% endif %}
+            </div>
+            {% endfor %}
+        {% else %}
+            <h3 style="text-align: center;">Vous n'avez misé sur aucun pari</h3>
+        {% endif %}
+        <h1 style="text-align: center; margin-top:20px"> Vos paris bloqués </h1>
+        <div class="container">
+            {% for bet in finalizedBets %}
+            <div class="div-du-bet">
+                <h3>{{ bet.bet_id.bet_name }}</h3>
+                <h4>Fini le {{bet.bet_id.ended | date:"d"}} {{bet.bet_id.ended  | date:"F"}} {{bet.bet_id.ended  | date:"o"}} à {{bet.bet_id.ended | date:"H"}}h{{bet.bet_id.ended | date:"i"}}</h4>
+                <h4>Mise pariée : {{ bet.gains }} Klaxcoins</h4>
+                {% if bet.result == 'W' %}
+                        <h4>Sur la côte gagnante : {{ bet.bet_id.win_rate }} </h4>
+                {% else %}
+                        <h4>Sur la côte perdante : {{ bet.bet_id.lose_rate }} </h4>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+<script>
+    const monthNames = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+        "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+    ];
 
-        function ratingRecalculation(id){
+    function ratingRecalculation(id){
 
-            const formData = new FormData();
-            formData.append('csrfmiddlewaretoken', "{{ csrf_token }}");
-            formData.append('name', 'myBets');
-            formData.append('bet', id)
-            fetch('{% url "ratingRecalculation" %}', {
+        const formData = new FormData();
+        formData.append('csrfmiddlewaretoken', "{{ csrf_token }}");
+        formData.append('name', 'myBets');
+        formData.append('bet', id)
+        fetch('{% url "ratingRecalculation" %}', {
+                method: 'POST',
+                body: formData
+            })
+    }
+
+    function addGains(id){
+
+        let gains = document.getElementById("mise" + id).value;
+        const data = new FormData();
+        data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
+        data.append('gains', gains);
+        data.append('bet', id);
+        if(gains > 0){
+            fetch('{% url "addGains" %}', {
                     method: 'POST',
-                    body: formData
+                    body: data
                 })
         }
+        ratingRecalculation(id);
+    }
 
-        function addGains(id){
+    function finalizeBet(id){
 
-            let gains = document.getElementById("mise" + id).value;
-            const data = new FormData();
-            data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
-            data.append('gains', gains);
-            data.append('bet', id);
-            if(gains > 0){
-                fetch('{% url "addGains" %}', {
-                        method: 'POST',
-                        body: data
-                    })
-            }
-            ratingRecalculation(id);
+        let gains = document.getElementById("mise" + id).value;
+        const data = new FormData();
+        data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
+        data.append('gains', gains);
+        data.append('bet', id);
+        if(gains >= 0){
+            fetch('{% url "finalizeBet" %}', {
+                    method: 'POST',
+                    body: data
+                })
         }
-
-        function finalizeBet(id){
-
-            let gains = document.getElementById("mise" + id).value;
-            const data = new FormData();
-            data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
-            data.append('gains', gains);
-            data.append('bet', id);
-            if(gains >= 0){
-                fetch('{% url "finalizeBet" %}', {
-                        method: 'POST',
-                        body: data
-                    })
-            }
-            ratingRecalculation(id);
-            //location.reload();
-        }
-    </script>
-</div>
+        ratingRecalculation(id);
+        //location.reload();
+    }
+</script>
 {% endblock %}

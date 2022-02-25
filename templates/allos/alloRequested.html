@@ -5,7 +5,7 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% include 'nav.html' %}
-{% if user and user.is_staff %}
+{% if user.is_staff %}
     <div class="container">
         {% for allo in allos %}
             <small>{{ allo.allo_id.get_allo_type_display }} pour {{ allo.user_id.firstname }} {{ allo.user_id.lastname }} le {{allo.date | date:"d"}} {{allo.date  | date:"F"}} {{allo.date  | date:"o"}} à {{allo.date | date:"H"}}h{{allo.date | date:"i"}}</small>

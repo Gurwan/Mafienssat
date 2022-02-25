@@ -59,8 +59,9 @@ def home(request):
     return render(request, 'home.html', data)
 
 
-def addBet(request):
-    if request.user.is_staff:
+def betCreator(request):
+    try:
+        user = User.objects.get(pk=request.user.id)
         betform = AddBetForm()
         if request.method == 'POST':
             betform = AddBetForm(request.POST)
@@ -70,8 +71,8 @@ def addBet(request):
             else:
                 messages.error(request, 'Erreur lors de la création du paris')
         bets = Bets.objects.all()
-        return render(request, 'bets/betCreator.html', {'betform': betform, 'bets': bets})
-    else:
+        return render(request, 'bets/betCreator.html', {'user': user, 'betform': betform, 'bets': bets})
+    except User.DoesNotExist:
         messages.error(request, "Tu dois être membre du staff pour accéder à cette page")
 
 
@@ -100,7 +101,7 @@ def ratingRecalculation(request):
 
 
 def makeBetW(request):
-    if request.user is not None:
+    try:
         current_user = User.objects.get(pk=request.user.id)
         primary_key = request.POST['bet'] if request.POST['bet'] is not None else messages.error(request,
                                                                                                  "Votre demande ne peut aboutir actuellement, si cella perciste, veuollez contacter un admin du site")
@@ -121,171 +122,183 @@ def makeBetW(request):
                 myBet.result = 'W'
                 myBet.gains = 1
                 myBet.bet_id = bet
-                myBet.user_id = request.user
+                myBet.user_id = current_user
                 myBet.save()
+
+                return redirect('betKlax')
 
             else:
                 messages.error(request, "Tu n\'as pas asser de klax_coins espèce de rat")
         else:
             messages.error(request, "Tu as déja parié sur ce pari")
-    else:
+    except User.DoesNotExist:
         messages.error(request, "Il faut te connecter pour parier")
-
-    return redirect('betKlax')
 
 
 def makeBetL(request):
-    current_user = User.objects.get(pk=request.user.id)
-    if current_user is not None:
-        primary_key = request.POST['bet'] if request.POST['bet'] is not None else messages.error(request,
-                                                                                                 "Votre demande ne peut aboutir actuellement, si cella perciste, veuollez contacter un admin du site")
-        cdt = StoreBets.objects.filter(bet_id_id=primary_key).filter(user_id_id=current_user)
-        if cdt.count() == 0:
-            if current_user.klax_coins > 0:
-                current_user.klax_coins -= 1
-                current_user.save()
+    try:
+        current_user = User.objects.get(pk=request.user.id)
+        if current_user is not None:
+            primary_key = request.POST['bet'] if request.POST['bet'] is not None else messages.error(request,
+                                                                                                     "Votre demande ne peut aboutir actuellement, si cella perciste, veuollez contacter un admin du site")
+            cdt = StoreBets.objects.filter(bet_id_id=primary_key).filter(user_id_id=current_user)
+            if cdt.count() == 0:
+                if current_user.klax_coins > 0:
+                    current_user.klax_coins -= 1
+                    current_user.save()
 
-                bet = Bets.objects.get(id=primary_key)
-                bet.lose_gains += 1
-                bet.lose_vote += 1
-                bet.save()
+                    bet = Bets.objects.get(id=primary_key)
+                    bet.lose_gains += 1
+                    bet.lose_vote += 1
+                    bet.save()
 
-                myBet = StoreBets()
-                myBet.result = 'L'
-                myBet.gains = 1
-                myBet.bet_id = bet
-                myBet.user_id = request.user
-                myBet.save()
+                    myBet = StoreBets()
+                    myBet.result = 'L'
+                    myBet.gains = 1
+                    myBet.bet_id = bet
+                    myBet.user_id = current_user
+                    myBet.save()
+
+                    return redirect("betKlax")
+                else:
+                    messages.error(request, "Tu n\'as pas asser de klax_coins espèce de rat")
             else:
-                messages.error(request, "Tu n\'as pas asser de klax_coins espèce de rat")
+                messages.error(request, "Tu as déja parié sur ce pari")
         else:
-            messages.error(request, "Tu as déja parié sur ce pari")
-    else:
+            messages.error(request, "Il faut te connecter pour parier")
+    except User.DoesNotExist:
         messages.error(request, "Il faut te connecter pour parier")
-
-    return redirect("betKlax")
 
 
 def myBets(request):
-    current_user = request.user
-    if current_user is not None:
-        finalizedBets = StoreBets.objects.all().filter(user_id_id=current_user.id, blocked_bet=True)
+    try:
+        finalizedBets = StoreBets.objects.all().filter(user_id_id=request.user.id, blocked_bet=True)
         finalId = []
         for b in finalizedBets:
             finalId.append(b.bet_id.id)
-        mybets = StoreBets.objects.all().filter(user_id_id=current_user.id).exclude(bet_id_id__in=finalId)
-        user = User.objects.get(pk=current_user.id)
+        mybets = StoreBets.objects.all().filter(user_id_id=request.user.id).exclude(bet_id_id__in=finalId)
+        user = User.objects.get(pk=request.user.id)
 
         return render(request, 'bets/myBetKlax.html', {'mybets': mybets, 'finalizedBets': finalizedBets, 'user': user})
-    else:
+    except User.DoesNotExist:
         messages.error(request, "Connecte toi")
 
 
 def addGains(request):
-    current_user = User.objects.get(pk=request.user.id)
-    if current_user is not None:
-        bet_id = request.POST['bet']
-        gains = request.POST['gains']
-        if current_user.klax_coins >= Decimal(gains):
-            bet = StoreBets.objects.get(user_id_id=current_user.id, bet_id_id=bet_id)
-            bet.gains += Decimal(gains)
-            if bet.result == 'W':
-                bet.bet_id.win_gains += Decimal(gains)
-                print(bet.bet_id.win_gains)
-            elif bet.result == 'L':
-                bet.bet_id.lose_gains += Decimal(gains)
-                print(bet.bet_id.lose_gains)
-            else:
-                messages.error(request, "Le résultat du pari est inconnu")
-            bet.bet_id.save()
-            bet.save()
+    try:
+        current_user = User.objects.get(pk=request.user.id)
+        if current_user is not None:
+            bet_id = request.POST['bet']
+            gains = request.POST['gains']
+            if current_user.klax_coins >= Decimal(gains):
+                bet = StoreBets.objects.get(user_id_id=current_user.id, bet_id_id=bet_id)
+                bet.gains += Decimal(gains)
+                if bet.result == 'W':
+                    bet.bet_id.win_gains += Decimal(gains)
+                    print(bet.bet_id.win_gains)
+                elif bet.result == 'L':
+                    bet.bet_id.lose_gains += Decimal(gains)
+                    print(bet.bet_id.lose_gains)
+                else:
+                    messages.error(request, "Le résultat du pari est inconnu")
+                bet.bet_id.save()
+                bet.save()
 
-            current_user.klax_coins -= Decimal(gains)
-            current_user.save()
+                current_user.klax_coins -= Decimal(gains)
+                current_user.save()
+
+                return redirect("myBets")
+            else:
+                messages.error(request, "Tu n'as pas asser de KlaxCoins espèce de rat")
         else:
-            messages.error(request, "Tu n'as pas asser de KlaxCoins espèce de rat")
-    else:
+            messages.error(request, "Il faut être connecté pour acceder à cette page")
+    except User.DoesNotExist:
         messages.error(request, "Il faut être connecté pour acceder à cette page")
-    return redirect("myBets")
 
 
 def finalizeBet(request):
-    current_user = User.objects.get(pk=request.user.id)
-    if current_user is not None:
-        bet_id = request.POST['bet']
-        gains = request.POST['gains'] if request.POST['gains'] != "" else Decimal(0)
-        print(gains)
-        if current_user.klax_coins >= Decimal(gains):
-            if bet_id is not None:
-                bet = StoreBets.objects.get(bet_id_id=bet_id, user_id_id=current_user.id)
-                if bet is not None:
-                    if Decimal(gains) > Decimal(0):
-                        current_user.klax_coins -= Decimal(gains)
-                        current_user.save()
-                        bet.gains += Decimal(gains)
+    try:
+        current_user = User.objects.get(pk=request.user.id)
+        if current_user is not None:
+            bet_id = request.POST['bet']
+            gains = request.POST['gains'] if request.POST['gains'] != "" else Decimal(0)
+            print(gains)
+            if current_user.klax_coins >= Decimal(gains):
+                if bet_id is not None:
+                    bet = StoreBets.objects.get(bet_id_id=bet_id, user_id_id=current_user.id)
+                    if bet is not None:
+                        if Decimal(gains) > Decimal(0):
+                            current_user.klax_coins -= Decimal(gains)
+                            current_user.save()
+                            bet.gains += Decimal(gains)
 
-                    if bet.result == 'W':
-                        bet.bet_id.win_gains += Decimal(gains)
-                        bet.bet_rate = bet.bet_id.win_rate
-                        print("finalize w_g: ", bet.bet_id.win_gains)
-                    elif bet.result == 'L':
-                        bet.bet_id.lose_gains += Decimal(gains)
-                        bet.bet_rate = bet.bet_id.lose_rate
-                        print("finalize l_g: ", bet.bet_id.win_gains)
-                    else:
-                        messages.error(request, "Le résultat du pari est inconnu")
+                        if bet.result == 'W':
+                            bet.bet_id.win_gains += Decimal(gains)
+                            bet.bet_rate = bet.bet_id.win_rate
+                            print("finalize w_g: ", bet.bet_id.win_gains)
+                        elif bet.result == 'L':
+                            bet.bet_id.lose_gains += Decimal(gains)
+                            bet.bet_rate = bet.bet_id.lose_rate
+                            print("finalize l_g: ", bet.bet_id.win_gains)
+                        else:
+                            messages.error(request, "Le résultat du pari est inconnu")
 
-                    bet.blocked_bet = True
-                    bet.bet_id.save()
-                    bet.save()
+                        bet.blocked_bet = True
+                        bet.bet_id.save()
+                        bet.save()
+
+                        return redirect("myBets")
+                else:
+                    messages.error(request, "Contacte les admins si le problème perciste après un refresh de la page")
             else:
-                messages.error(request, "Contacte les admins si le problème perciste après un refresh de la page")
+                messages.error(request, "Tu n'as pas assez de KlaxCoins espèce de rat")
         else:
-            messages.error(request, "Tu n'as pas assez de KlaxCoins espèce de rat")
-    else:
+            messages.error(request, "Tu dois être connecté pour accéder à cette page")
+    except User.DoesNotExist:
         messages.error(request, "Tu dois être connecté pour accéder à cette page")
-
-    return redirect("myBets")
 
 
 def betKlax(request):
-    current_user = request.user
-    if current_user is not None:  # if the user is logged he see the remaining bets
-        bets_done = StoreBets.objects.filter(user_id_id=current_user.id)
+    try:  # if the user is logged he see the remaining bets
+        bets_done = StoreBets.objects.filter(user_id_id=request.user.id)
         bet = []
         for b in bets_done:
             bet.append(b.bet_id_id)
         bets = Bets.objects.exclude(id__in=bet)
-        user = User.objects.get(pk=current_user.id)
+        user = User.objects.get(pk=request.user.id)
         return redirect('myBets')
 
-    else:  # show all bets
+    except User.DoesNotExist:  # show all bets
         bets = Bets.objects.all()
         user = None
 
     return render(request, 'bets/betKlax.html', {'bets': bets, 'user': user})
 
 
-def addEvent(request):
-    if request.user.is_staff:
-        eventform = AddEventForm()
-        if request.method == 'POST':
-            eventform = AddEventForm(request.POST)
-            if eventform.is_valid():
-                eventf = eventform.save(commit=False)
-                eventf.save()
-            else:
-                messages.error(request, 'Erreur lors de la création d\'un événement')
-        events = Event.objects.all()
-        return render(request, 'events/eventCreator.html', {'eventform': eventform, 'events': events})
-    else:
+def eventCreator(request):
+    try:
+        user = User.objects.get(pk=request.user.id)
+        if user.is_staff:
+            eventform = AddEventForm()
+            if request.method == 'POST':
+                eventform = AddEventForm(request.POST)
+                if eventform.is_valid():
+                    eventf = eventform.save(commit=False)
+                    eventf.save()
+                else:
+                    messages.error(request, 'Erreur lors de la création d\'un événement')
+            events = Event.objects.all()
+            return render(request, 'events/eventCreator.html', {'user': user, 'eventform': eventform, 'events': events})
+        else:
+            messages.error(request, "Tu dois être membre du staff pour accéder à cette page")
+    except User.DoesNotExist:
         messages.error(request, "Tu dois être membre du staff pour accéder à cette page")
 
 
 def event(request):
     events = Event.objects.all()
-    if request.user is not None:
-        user = request.user
+    try:
+        user = User.objects.get(pk=request.user.id)
         registered_event = EventRegistration.objects.filter(user_id_id=user.id)
         reg_event_id = []
         for e in registered_event:
@@ -293,7 +306,7 @@ def event(request):
         if reg_event_id:
             events = Event.objects.exclude(id__in=reg_event_id)
             registered_event = Event.objects.filter(id__in=reg_event_id)
-    else:
+    except User.DoesNotExist:
         user = None
         registered_event = None
     data = {'events': events, 'user': user, 'registered': registered_event}
@@ -302,13 +315,13 @@ def event(request):
 
 
 def eventRegistration(request):
-
-    if request.user is not None:
+    try:
+        user = User.objects.get(pk=request.user.id)
         if request.method == 'POST':
             event_id = request.POST['event']
 
             try:
-                done = EventRegistration.objects.get(user_id_id=request.user.id, event_id_id=event_id)
+                done = EventRegistration.objects.get(user_id_id=user.id, event_id_id=event_id)
             except EventRegistration.DoesNotExist:
                 done = None
 
@@ -317,7 +330,7 @@ def eventRegistration(request):
 
                 reg = EventRegistration()
                 reg.event_id = this_event
-                reg.user_id = request.user
+                reg.user_id = user
                 reg.save()
 
                 if this_event.max_attendees != 0 and this_event.attendees_number < this_event.max_attendees:
@@ -329,14 +342,14 @@ def eventRegistration(request):
                 messages.error(request, "Erreur lors de l'identification de l'évènement")
         else:
             messages.error(request, "Un problème est survenu lors de votre inscripion, veuillez réessayer et si cela persiste, veuillez contacter un admin")
-    else:
+    except User.DoesNotExist:
         messages.error(request, "Vous devez être connecté pour vous inscrire à cet évènement")
+
     return redirect('event')
 
 
 def eventDeregistration(request):
-
-    if request.user is not None:
+    try:
         if request.method == 'POST':
             event_id = request.POST['event']
 
@@ -351,7 +364,7 @@ def eventDeregistration(request):
                 messages.error(request, "Erreur lors de l'identification de l'évènement")
         else:
             messages.error(request, "Un problème est survenu lors de votre inscripion, veuillez réessayer et si cela persiste, veuillez contacter un admin")
-    else:
+    except User.DoesNotExist:
         messages.error(request, "Vous devez être connecté pour vous inscrire à cet évènement")
     return redirect('event')
 
@@ -368,46 +381,57 @@ def klaxment(request):
 
 def allos(request):
     all_allos = Allos.objects.all()
-    return render(request, 'allos/allos.html', {'allos': all_allos})
+    try:
+        user = User.objects.get(pk=request.user.id)
+    except User.DoesNotExist:
+        user = None
+
+    return render(request, 'allos/allos.html', {'user': user, 'allos': all_allos})
 
 
 def myAllos(request):
-    user = User.objects.get(pk=request.user.id)
-    if user is not None:
-        counter = AllosUserCounters.objects.get(user_id_id=user.id)
-        my_allos = AllosRegistration.objects.filter(user_id_id=user.id)
-        return render(request, 'allos/myAllos.html', {'user': user, 'counter': counter, 'allos': my_allos})
-    else:
+    try:
+        user = User.objects.get(pk=request.user.id)
+        if user is not None:
+            counter = AllosUserCounters.objects.get(user_id_id=user.id)
+            my_allos = AllosRegistration.objects.filter(user_id_id=user.id)
+            return render(request, 'allos/myAllos.html', {'user': user, 'counter': counter, 'allos': my_allos})
+        else:
+            messages.error(request, "Vous devez être connecté")
+    except User.DoesNotExist:
         messages.error(request, "Vous devez être connecté")
 
 
 def buyAllos(request):
-    user = User.objects.get(pk=request.user.id)
-    if user is not None:
-        if request.method == 'POST':
-            allo_type = request.POST['allo']
-            allo_cost = request.POST['cost']
-            counter = AllosUserCounters.objects.get(user_id_id=user.id)
-            if allo_type is not None and allo_cost is not None:
-                if int(allo_cost) > 0:
-                    if user.klax_coins >= Decimal(allo_cost):
-                        user.klax_coins -= Decimal(allo_cost)
-                        user.save()
+    try:
+        user = User.objects.get(pk=request.user.id)
+        if user is not None:
+            if request.method == 'POST':
+                allo_type = request.POST['allo']
+                allo_cost = request.POST['cost']
+                counter = AllosUserCounters.objects.get(user_id_id=user.id)
+                if allo_type is not None and allo_cost is not None:
+                    if int(allo_cost) > 0:
+                        if user.klax_coins >= Decimal(allo_cost):
+                            user.klax_coins -= Decimal(allo_cost)
+                            user.save()
+                            addAlloCounter(allo_type, counter, 1)
+                            counter.save()
+
+                        else:
+                            messages.error(request, "Tu n'as pas assez de klaxcoins")
+                    else:
                         addAlloCounter(allo_type, counter, 1)
                         counter.save()
 
-                    else:
-                        messages.error(request, "Tu n'as pas assez de klaxcoins")
+                    return redirect('myAllos')
                 else:
-                    addAlloCounter(allo_type, counter, 1)
-                    counter.save()
-
-                return redirect('myAllos')
+                    messages.error(request, "Erreur lors de l'envoie de la requete")
             else:
                 messages.error(request, "Erreur lors de l'envoie de la requete")
         else:
-            messages.error(request, "Erreur lors de l'envoie de la requete")
-    else:
+            messages.error(request, "Vous devez être connecté")
+    except User.DoesNotExist:
         messages.error(request, "Vous devez être connecté")
 
 
@@ -435,85 +459,101 @@ def addAlloCounter(allo_type, counter, nb):
 
 
 def buyAlloTicket(request):
-    if request.method == 'POST':
-        user = User.objects.get(id=request.user.id)
-        if user is not None:
-            allo_id = request.POST['allo']
-            if allo_id is not None:
-                selected_allo = Allos.objects.get(id=allo_id)
-                counter = AllosUserCounters.objects.get(user_id=user)
+    try:
+        if request.method == 'POST':
+            user = User.objects.get(id=request.user.id)
+            if user is not None:
+                allo_id = request.POST['allo']
+                if allo_id is not None:
+                    selected_allo = Allos.objects.get(id=allo_id)
+                    counter = AllosUserCounters.objects.get(user_id=user)
 
-                if user.klax_coins >= selected_allo.cost:
-                    user.klax_coins -= selected_allo.cost
-                    user.save()
+                    if user.klax_coins >= selected_allo.cost:
+                        user.klax_coins -= selected_allo.cost
+                        user.save()
 
-                    addAlloCounter(selected_allo.allo_type, counter, 1)
-                    counter.save()
+                        addAlloCounter(selected_allo.allo_type, counter, 1)
+                        counter.save()
 
-                    allowed = alloAllowed(selected_allo.allo_type, counter)
+                        allowed = alloAllowed(selected_allo.allo_type, counter)
 
-                    return render(request, 'allos/alloRegistration.html', {'allo': selected_allo, 'allowed': allowed})
+                        return render(request, 'allos/alloRegistration.html', {'allo': selected_allo, 'allowed': allowed})
+                    else:
+                        messages.error(request, "Tu n'as pas assez de klaxcoins")
                 else:
-                    messages.error(request, "Tu n'as pas assez de klaxcoins")
+                    messages.error(request, "Veuillez réessayer plus tard")
             else:
-                messages.error(request, "Veuillez réessayer plus tard")
+                messages.error(request, "Tu dois être connecté")
         else:
-            messages.error(request, "Tu dois être connecté")
-    else:
-        messages.error(request, "Erreur lors de l'envoie de la requete")
+            messages.error(request, "Erreur lors de l'envoie de la requete")
+    except User.DoesNotExist:
+        messages.error(request, "Vous devez être connecté")
 
 
 def sendAllo(request):
-    if request.method == 'POST':
-        date = request.POST['date'] + " " + request.POST['time'] + ":00"
-        allo_id = request.POST['allo']
-        if request.POST['date'] is not None and request.POST['time'] is not None and allo_id is not None:
-            selected_allo = Allos.objects.get(id=allo_id)
-            counter = AllosUserCounters.objects.get(user_id=request.user)
-            user = User.objects.get(pk=request.user.id)
-            if user is not None:
-                addAlloCounter(selected_allo.allo_type, counter, -1)
-                counter.save()
+    try:
+        if request.method == 'POST':
+            date = request.POST['date'] + " " + request.POST['time'] + ":00"
+            allo_id = request.POST['allo']
+            if request.POST['date'] is not None and request.POST['time'] is not None and allo_id is not None:
+                selected_allo = Allos.objects.get(id=allo_id)
+                counter = AllosUserCounters.objects.get(user_id=request.user)
+                user = User.objects.get(pk=request.user.id)
+                if user is not None:
+                    addAlloCounter(selected_allo.allo_type, counter, -1)
+                    counter.save()
 
-                allo = AllosRegistration()
-                allo.user_id = user
-                allo.allo_id = selected_allo
-                allo.date = datetime.strptime(str(date), '%Y-%m-%d %H:%M:%S')
-                allo.save()
-                return redirect('allos')
+                    allo = AllosRegistration()
+                    allo.user_id = user
+                    allo.allo_id = selected_allo
+                    allo.date = datetime.strptime(str(date), '%Y-%m-%d %H:%M:%S')
+                    allo.save()
+                    return redirect('allos')
+                else:
+                    messages.error(request, "Utilisateur non trouvé")
             else:
-                messages.error(request, "Utilisateur non trouvé")
+                messages.error(request, "Erreur lors de l\'envoie de ta demande")
         else:
             messages.error(request, "Erreur lors de l\'envoie de ta demande")
-    else:
-        messages.error(request, "Erreur lors de l\'envoie de ta demande")
+    except User.DoesNotExist:
+        messages.error(request, "Vous devez être connecté")
 
 
 def alloCreator(request):
-    form = AlloAdminForm()
+    try:
+        user = User.objects.get(pk=request.user.id)
+        if user is not None:
+            form = AlloAdminForm()
 
-    if request.method == 'POST':
-        form = AlloAdminForm(request.POST)
-        if form.is_valid():
-            allo = form.save(commit=False)
-            allo.save()
-            return redirect('alloCreator')
+            if request.method == 'POST':
+                form = AlloAdminForm(request.POST)
+                if form.is_valid():
+                    allo = form.save(commit=False)
+                    allo.save()
+                    return redirect('alloCreator')
+                else:
+                    messages.error(request, "Erreur lors de la creation du allo")
+
+            all_allos = Allos.objects.all()
+
+            return render(request, 'allos/alloCreator.html', {'user': user, 'form': form, 'allos': all_allos})
         else:
-            messages.error(request, "Erreur lors de la creation du allo")
-
-    all_allos = Allos.objects.all()
-
-    return render(request, 'allos/alloCreator.html', {'form': form, 'allos': all_allos})
+            messages.error(request, "Vous devez être connecté")
+    except User.DoesNotExist:
+        messages.error(request, "Vous devez être connecté")
 
 
 def alloRegistration(request, id_allo):
-    user = User.objects.get(pk=request.user.id)
-    if user is not None:
-        selected_allo = Allos.objects.get(pk=id_allo)
-        counter = AllosUserCounters.objects.get(user_id_id=request.user.id)
-        allowed = alloAllowed(selected_allo.allo_type, counter)
-        return render(request, 'allos/alloRegistration.html', {'user': user, 'allo': selected_allo, 'allowed': allowed})
-    else:
+    try:
+        user = User.objects.get(pk=request.user.id)
+        if user is not None:
+            selected_allo = Allos.objects.get(pk=id_allo)
+            counter = AllosUserCounters.objects.get(user_id_id=request.user.id)
+            allowed = alloAllowed(selected_allo.allo_type, counter)
+            return render(request, 'allos/alloRegistration.html', {'user': user, 'allo': selected_allo, 'allowed': allowed})
+        else:
+            messages.error(request, "Vous devez être connecté")
+    except User.DoesNotExist:
         messages.error(request, "Vous devez être connecté")
 
 
@@ -543,27 +583,33 @@ def alloAllowed(allo_type, counter):
 
 
 def alloRequested(request):
-    user = User.objects.get(pk=request.user.id)
-    if user is not None:
-        all_request = AllosRegistration.objects.filter(made=False)
-        done_allos = AllosRegistration.objects.filter(made=True)
+    try:
+        user = User.objects.get(pk=request.user.id)
+        if user is not None:
+            all_request = AllosRegistration.objects.filter(made=False)
+            done_allos = AllosRegistration.objects.filter(made=True)
 
-        return render(request, 'allos/alloRequested.html', {'user': user, 'allos': all_request, 'doneAllos': done_allos})
-    else:
+            return render(request, 'allos/alloRequested.html', {'user': user, 'allos': all_request, 'doneAllos': done_allos})
+        else:
+            messages.error(request, "Vous devez être connecté")
+    except User.DoesNotExist:
         messages.error(request, "Vous devez être connecté")
 
 
 def takeOverAllo(request):
-    if request.method == 'POST':
-        allo_id = request.POST['allo']
-        allo = AllosRegistration.objects.get(pk=allo_id)
-        allo.take_over = True
-        allo.staff_id = request.user.id
-        allo.save()
-        all_request = AllosRegistration.objects.filter(made=False)
-        return render(request, 'allos/alloRequested.html', {'allos': all_request})
-    else:
-        messages.error(request, "Erreur lors du chargement")
+    try:
+        if request.method == 'POST':
+            allo_id = request.POST['allo']
+            allo = AllosRegistration.objects.get(pk=allo_id)
+            allo.take_over = True
+            allo.staff_id = request.user.id
+            allo.save()
+            all_request = AllosRegistration.objects.filter(made=False)
+            return render(request, 'allos/alloRequested.html', {'allos': all_request})
+        else:
+            messages.error(request, "Erreur lors du chargement")
+    except User.DoesNotExist:
+        messages.error(request, "Tu dois être connecté")
 
 
 def dontTakeOverAllo(request):
