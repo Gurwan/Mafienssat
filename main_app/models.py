@@ -76,7 +76,6 @@ class Event(models.Model):
 
 
 class EventRegistration(models.Model):
-    id = models.AutoField(primary_key=True, unique=True)
     event_id = models.ForeignKey('Event', on_delete=models.CASCADE)
     user_id = models.ForeignKey('User', on_delete=models.CASCADE)
 
