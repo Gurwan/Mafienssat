@@ -32,7 +32,7 @@ class AddEventForm(ModelForm):
 class AlloAdminForm(ModelForm):
     class Meta:
         model = Allos
-        fields = ['name', 'description', 'cost']
+        fields = ['name', 'allo_type', 'description', 'cost', 'start_date', 'end_date']
 
 
 class AlloForm(ModelForm):

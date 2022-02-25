@@ -373,6 +373,7 @@ def sendAllo(request):
     if request.method == 'POST':
         date = request.POST['date'] + " " + request.POST['time'] + ":00"
         allo_id = request.POST['allo']
+        print("\'" + date + "\'")
         if date is not None and allo_id is not None:
             selected_allo = Allos.objects.get(id=allo_id)
 
@@ -381,7 +382,7 @@ def sendAllo(request):
                 allo = AllosRegistration()
                 allo.user_id = user
                 allo.allo_id = selected_allo
-                allo.date = datetime.strptime(date, '%Y-%m-%d %H:%M:%S')
+                allo.date = datetime.strptime(str(date), '%Y-%m-%d %H:%M:%S')
                 allo.save()
                 return redirect('allos')
             else:

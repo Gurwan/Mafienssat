@@ -8,8 +8,8 @@
     <h1 style="text-align: center; margin-top:20px">Faire la demande pour {{ allo.name }}</h1>
     <div class="container">
 
-        <label for="date">Date souhaitée:</label><input type="date" id="date">
-        <label for="time">Heure souhaitée:</label><input type="time" id="time">
+        <label for="date">Date souhaitée:</label><input type="date" id="date" min="{{ allo.start_date.year }}-{{ allo.start_date.month }}-{{ allo.start_date.day }}" max="{{ allo.end_date.date }}">
+        <label for="time">Heure souhaitée:</label><input type="time" id="time" min="{{ allo.start_date.hour }}:{{ allo.start_date.minute }}" max="{{ allo.end_date.hour }}:{{ allo.end_date.minute }}">
         <br>
         <button style="background-color:red; color:white" class="btn btn--main" type="submit" id="{{ allo.id }}" onclick="sendAllo(this.id)" value="sendAllo" name="sendAllo">
             <p>Envoyer la demande</p> <br>
@@ -20,10 +20,21 @@
     <h1 style="text-align: center; margin-top:20px">Erreur lors du chargement réessaye</h1>
 {% endif %}
 <script>
+    function setRightFormat(val){
+
+        if(val < 9){
+
+            return "0" + val.toString();
+        }
+        else{
+
+            return val.toString()
+        }
+    }
     function sendAllo(id){
         let date = document.getElementById("date").value;
         let time = document.getElementById("time").value;
-        console.log(time);
+
         const data = new FormData();
         data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
         data.append('date', date);

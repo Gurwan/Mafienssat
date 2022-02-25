@@ -59,16 +59,16 @@ class Event(models.Model):
     event_description = models.CharField(max_length=1024)
     TYPE = (
         ('A', 'Annonce'),
-        ('C', 'Chasse au trésor'),
-        ('E', 'E-Sport'),
-        ('J', 'Jeux'),
-        ('P', 'Prévention'),
-        ('K', 'Ker\'mess'),
-        ('So', 'Soirée'),
-        ('Sp', 'Sport'),
-        ('T', 'Tournoi')
+        ('B', 'E-Sport'),
+        ('C', 'Jeux'),
+        ('D', 'Prévention'),
+        ('E', 'Ker\'mess'),
+        ('F', 'Soirée'),
+        ('G', 'Sport'),
+        ('H', 'Tournoi'),
+        ('I', '12 Traveaux du Klax')
     )
-    event_type = models.CharField(max_length=2, choices=TYPE, blank=True, help_text='Which type of event')
+    event_type = models.CharField(max_length=1, choices=TYPE, blank=True, help_text='Which type of event')
     event_date = models.DateTimeField(help_text='YYYY-MM-DD HH:MM:SS')
     attendees_number = models.IntegerField(default=0)
     max_attendees = models.IntegerField(null=True)
@@ -83,6 +83,19 @@ class EventRegistration(models.Model):
 class Allos(models.Model):
     id = models.AutoField(primary_key=True, unique=True)
     name = models.CharField(max_length=256)
+    TYPE = (
+        ('A', 'Bières'),
+        ('B', 'Goûter'),
+        ('D', 'P\'tit dej'),
+        ('E', 'Ménage'),
+        ('F', 'Chicha'),
+        ('G', 'Car wash'),
+        ('H', 'Le klaxeur fou'),
+        ('I', 'Bricolage')
+    )
+    allo_type = models.CharField(max_length=1, choices=TYPE, blank=True, help_text='Which type of allo')
+    start_date = models.DateTimeField(help_text='YYYY-MM-DD HH:MM:SS')
+    end_date = models.DateTimeField(help_text='YYYY-MM-DD HH:MM:SS')
     description = models.CharField(max_length=1024)
     cost = models.DecimalField(max_digits=12, decimal_places=2, default=1.00)
 
@@ -90,6 +103,19 @@ class Allos(models.Model):
 class AllosRegistration(models.Model):
     allo_id = models.ForeignKey('Allos', on_delete=models.CASCADE)
     user_id = models.ForeignKey('User', on_delete=models.CASCADE)
-    date = models.DateField(help_text='YYYY-MM-DD HH:MM:SS')
+    date = models.DateTimeField(help_text='YYYY-MM-DD HH:MM:SS')
     take_over = models.BooleanField(default=False)
     made = models.BooleanField(default=False)
+    staff_id = models.IntegerField(default=0)
+
+
+class AllosUserCounters(models.Model):
+    user_id = models.ForeignKey('User', on_delete=models.CASCADE)
+    biere = models.IntegerField(default=1)
+    gouter = models.IntegerField(default=0)
+    ptitdej = models.IntegerField(default=0)
+    menage = models.IntegerField(default=0)
+    chicha = models.IntegerField(default=0)
+    car_wash = models.IntegerField(default=1)
+    klax = models.IntegerField(default=0)
+    bricolage = models.IntegerField(default=1)
