@@ -20,7 +20,7 @@
 <h1 style="text-align: center; margin-top:20px">Paris en cours</h1>
 <div class="container">
     {% for bet in bets %}
-        <small>{{ bet.bet_name }}: fini le {{ bet.ended }} <br></small>
+        <small>{{ bet.bet_name }}: fini le {{bet.ended | date:"d"}} {{bet.ended  | date:"F"}} {{bet.ended  | date:"o"}} à {{bet.ended | date:"H"}}h{{bet.ended | date:"i"}} <br></small>
     {% endfor %}
 </div>
 {% endblock %}
