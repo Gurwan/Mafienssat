@@ -33,6 +33,26 @@
     </div>
 </div>
 
+<footer>
+    <div class="row">
+        <div class="col" id="partners" onclick="goFooter(this.id)">
+            <p>Partners</p>
+        </div>
+
+        <div class="col" id="credits" onclick="goFooter(this.id)">
+            <p>Crédits</p>
+        </div>
+
+        <div class="col" id="values" onclick="goFooter(this.id)">
+            <p>Nos Valeurs</p>
+        </div>
+
+        <div class="col" id="promises" onclick="goFooter(this.id)">
+            <p>Promesses de Campagne</p>
+        </div>
+    </div>
+</footer>
+
 <script>
     function goEvent(){
         window.location.href = window.location.href + "event"
@@ -46,6 +66,11 @@
 
         window.location.href = window.location.href + "betKlax/"
     }
-  
+
+    function goFooter(footer_name){
+
+        console.log(footer_name)
+        window.location.href = window.location.href + footer_name + "/"
+    }
 </script>
 {% endblock %}
