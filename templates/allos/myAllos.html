@@ -6,6 +6,19 @@
 {% load static %}
 {% include 'nav.html' %}
 {% if user %}
+    <div class="container-fluid" id="betklax-pages">
+        <h2>Ton pocheton de klaxcoins</h2>
+          {% if user.klax_coins > 0 %}
+              <div>
+                  <p><span>{{ user.username }}</span> tu as {{ user.klax_coins }} <span id="yellow-span">klaxcoins</span></p>
+              </div>
+          {% else %}
+              <div>
+                <p><span>Time to soudoyer</span> car là tu n'as aucun <span id="yellow-span">klaxcoin</span> à parier (tema la bete de phrase)</p>
+              </div>
+          {% endif %}
+    </div> <br>
+
     <h1 style="text-align: center; margin-top:20px">Vos allo a disposition</h1>
     {% if counter %} <!-- TODO ajuster les prix ! -->
         <small>Bières à domicile: {{ counter.biere }}</small> <br>
