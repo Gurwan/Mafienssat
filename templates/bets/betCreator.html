@@ -4,24 +4,26 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% include 'nav.html' %}
-<div class="container">
-  <h1 style="text-align: center; margin-top:20px">Ajout d'un nouveau pari</h1>
-    <form class="form" action="" method="POST">
-      {% csrf_token %}
-      {% bootstrap_form betform %}
+{% if user.is_staff %}
+    <div class="container">
+      <h1 style="text-align: center; margin-top:20px">Ajout d'un nouveau pari</h1>
+        <form class="form" action="" method="POST">
+          {% csrf_token %}
+          {% bootstrap_form betform %}
 
-      {% buttons %}
-      <button class="btn btn--main btn btn-primary" type="submit">
-        Ajouter le pari
-      </button>
-      {% endbuttons %}
-    </form>
-</div>
-<h1 style="text-align: center; margin-top:20px">Paris en cours</h1>
-<div class="container">
-    {% for bet in bets %}
-        <small>{{ bet.bet_name }}: fini le {{ bet.ended }} <br></small>
-    {% endfor %}
-</div>
+          {% buttons %}
+          <button class="btn btn--main btn btn-primary" type="submit">
+            Ajouter le pari
+          </button>
+          {% endbuttons %}
+        </form>
+    </div>
+    <h1 style="text-align: center; margin-top:20px">Paris en cours</h1>
+    <div class="container">
+        {% for bet in bets %}
+            <small>{{ bet.bet_name }}: fini le {{bet.ended | date:"d"}} {{bet.ended  | date:"F"}} {{bet.ended  | date:"o"}} à {{bet.ended | date:"H"}}h{{bet.ended | date:"i"}} <br></small>
+        {% endfor %}
+    </div>
+{% endif %}
 {% endblock %}
 

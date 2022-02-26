@@ -5,21 +5,23 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% include 'nav.html' %}
-<div class="container">
-    {% for allo in allos %}
-        <small>{{ allo.allo_id.name }} pour {{ allo.user_id.firstname }} {{ allo.user_id.lastname }} le {{ allo.date }}</small>
-        <br>
-        {% if allo.take_over %}
-            <button class="button_take_over" type="submit" id="{{ allo.id }}" onclick="dontTakeOver(this.id)" value="takeOver" name="takeOver">
-                Ne plus prendre en charge ce allo
-            </button>
-        {% else %}
-            <button class="button_take_over" type="submit" id="{{ allo.id }}" onclick="takeOver(this.id)" value="takeOver" name="takeOver">
-                Prendre en charge ce allo
-            </button>
-        {% endif %}
-    {% endfor %}
-</div>
+{% if user.is_staff %}
+    <div class="container">
+        {% for allo in allos %}
+            <small>{{ allo.allo_id.get_allo_type_display }} pour {{ allo.user_id.firstname }} {{ allo.user_id.lastname }} le {{allo.date | date:"d"}} {{allo.date  | date:"F"}} {{allo.date  | date:"o"}} à {{allo.date | date:"H"}}h{{allo.date | date:"i"}}</small>
+            {% if allo.take_over %}
+                <button class="button_take_over" type="submit" id="{{ allo.id }}" onclick="dontTakeOver(this.id)" value="takeOver" name="takeOver">
+                    Ne plus prendre en charge ce allo
+                </button>
+            {% else %}
+                <button class="button_take_over" type="submit" id="{{ allo.id }}" onclick="takeOver(this.id)" value="takeOver" name="takeOver">
+                    Prendre en charge ce allo
+                </button>
+            {% endif %}
+            <br><br>
+        {% endfor %}
+    </div>
+{% endif %}
 <script>
     function takeOver(id){
         const data = new FormData();

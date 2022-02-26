@@ -82,16 +82,17 @@ class EventRegistration(models.Model):
 
 class Allos(models.Model):
     id = models.AutoField(primary_key=True, unique=True)
-    name = models.CharField(max_length=256)
     TYPE = (
         ('A', 'Bières'),
         ('B', 'Goûter'),
-        ('D', 'P\'tit dej'),
-        ('E', 'Ménage'),
-        ('F', 'Chicha'),
-        ('G', 'Car wash'),
-        ('H', 'Le klaxeur fou'),
-        ('I', 'Bricolage')
+        ('C', 'P\'tit dej'),
+        ('D', 'Ménage'),
+        ('E', 'Car wash'),
+        ('F', 'Le klaxeur fou'),
+        ('G', 'Bricolage'),
+        ('H', 'Cuisine'),
+        ('I', 'Courses'),
+        ('J', 'Taxi')
     )
     allo_type = models.CharField(max_length=1, choices=TYPE, blank=True, help_text='Which type of allo')
     start_date = models.DateTimeField(help_text='YYYY-MM-DD HH:MM:SS')
@@ -115,7 +116,9 @@ class AllosUserCounters(models.Model):
     gouter = models.IntegerField(default=0)
     ptitdej = models.IntegerField(default=0)
     menage = models.IntegerField(default=0)
-    chicha = models.IntegerField(default=0)
     car_wash = models.IntegerField(default=1)
     klax = models.IntegerField(default=0)
     bricolage = models.IntegerField(default=1)
+    cuisine = models.IntegerField(default=0)
+    courses = models.IntegerField(default=0)
+    taxi = models.IntegerField(default=0)
