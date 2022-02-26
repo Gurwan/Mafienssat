@@ -73,6 +73,7 @@ class Event(models.Model):
     attendees_number = models.IntegerField(default=0)
     max_attendees = models.IntegerField(null=True)
     associated_bet = models.BooleanField(default=False)
+    associated_html = models.BooleanField(default=False)
 
 
 class EventRegistration(models.Model):
