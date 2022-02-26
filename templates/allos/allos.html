@@ -18,19 +18,11 @@
             <small>Coût: {{ allo.cost }} klaxcoins </small> <br>
         {% endif %}
         {% if user %}
-            <button class="button_make_allo" type="submit" id="{{ allo.id }}" onclick="requestAllo(this.id)" value="alloRegistration" name="alloRegistration">
+            <a class="button_make_allo" type="submit" id="{{ allo.id }}" value="alloRegistration" name="alloRegistration" href="{% url 'alloRegistration' allo.id %}">
                 <p id="label">Envoyer une demande</p>
-            </button>
+            </a>
         {% endif %}
         <br> <br>
     {% endfor %}
 </div>
-<script>
-    function requestAllo(id_allo){
-        const data = new FormData();
-        data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
-        data.append('allo', id_allo);
-        location.replace("http://localhost:8000/alloRegistration/"+id_allo);
-    } 
-</script>
 {% endblock %}
