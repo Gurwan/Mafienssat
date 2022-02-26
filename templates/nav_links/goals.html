@@ -11,21 +11,32 @@
                 </div>
             </div>
             <div class="col">
-                <li>Cleanwalk de Lannion et/ou d'une plage</li>
-                <li>Baignade dans le leguer 2/3 membres choisis au hasard</li>
-                <li>Record de vitesse de descente de bières par au moins 5 membres /par les plus motivés (si notre meilleur joueur est battu par qqn don de klaxcoin)</li>
-                <li>Trends Tiktok par des gens sélectionnés au hasard/ par la communauté</li>
-                <li>Recette pompette </li>
-                <li>Teinture 2/3 membres choisis par la communauté</li>
-                <li>Live 24h</li>
-                <li>Calendrier dieux du stade</li>
+                <div class="200" id="goal-1" color="" style="font-size: 20px">Calendrier dieux du stade</div> <br>
+                <div class="150" id="goal-2" color="" style="font-size: 20px">Live 24h</div> <br>
+                <div class="120" id="goal-3" color="" style="font-size: 20px">Teinture 2/3 membres choisis par la communauté</div> <br>
+                <div class="100" id="goal-4" color="" style="font-size: 20px">Recette pompette </div> <br>
+                <div class="75" id="goal-5" color="" style="font-size: 20px">Trends Tiktok par des gens sélectionnés au hasard/ par la communauté</div> <br>
+                <div class="60" id="goal-6" color="" style="font-size: 20px">Record de vitesse de descente de bières par au moins 5 membres /par les plus motivés (si notre meilleur joueur est battu par qqn don de klaxcoin)</div> <br>
+                <div class="45" id="goal-7" color="" style="font-size: 20px">Baignade dans le leguer 2/3 membres choisis au hasard</div> <br>
+                <div class="20" id="goal-8" color="" style="font-size: 20px">Cleanwalk de Lannion et/ou d'une plage</div> <br>
             </div>
         </div>
-       
-       
-    </div>
-    <div>
-        
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        for(let i = 1; i < 9; ++i){
+            console.log({{ registered }})
+            let id_goal = document.getElementById("goal-" + i.toString()).className
+            if(parseInt(id_goal) >= {{ registered }}){
+
+                document.getElementById("goal-" + i.toString()).style.color = "#FF0000"
+            }
+            else{
+
+                document.getElementById("goal-" + i.toString()).style.color = "#00FF00"
+            }
+        }
+    })
+</script>
 {% endblock %}
