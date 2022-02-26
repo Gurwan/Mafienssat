@@ -449,13 +449,9 @@ def addAlloCounter(allo_type, counter, nb):
     elif allo_type == "F":
         counter.klax += nb
     elif allo_type == "G":
-        counter.bricolage += nb
-    elif allo_type == "H":
         counter.cuisine += nb
-    elif allo_type == "I":
+    elif allo_type == "H":
         counter.courses += nb
-    elif allo_type == "J":
-        counter.taxi += nb
 
 
 def buyAlloTicket(request):
@@ -508,7 +504,10 @@ def sendAllo(request):
                     allo.allo_id = selected_allo
                     allo.date = datetime.strptime(str(date), '%Y-%m-%d %H:%M:%S')
                     allo.save()
-                    return redirect('allos')
+
+                    all_allos = Allos.objects.all()
+
+                    return render(request, 'allos/allos.html', {'user': user, 'allos': all_allos})
                 else:
                     messages.error(request, "Utilisateur non trouvé")
             else:
@@ -546,14 +545,15 @@ def alloCreator(request):
 def alloRegistration(request, id_allo):
     try:
         user = User.objects.get(pk=request.user.id)
-        if user is not None:
-            selected_allo = Allos.objects.get(pk=id_allo)
-            counter = AllosUserCounters.objects.get(user_id_id=request.user.id)
-            allowed = alloAllowed(selected_allo.allo_type, counter)
-            return render(request, 'allos/alloRegistration.html', {'user': user, 'allo': selected_allo, 'allowed': allowed})
-        else:
-            messages.error(request, "Vous devez être connecté")
     except User.DoesNotExist:
+        user = None
+
+    if user is not None:
+        selected_allo = Allos.objects.get(pk=id_allo)
+        counter = AllosUserCounters.objects.get(user_id_id=user.id)
+        allowed = alloAllowed(selected_allo.allo_type, counter)
+        return render(request, 'allos/alloRegistration.html', {'user': user, 'allo': selected_allo, 'allowed': allowed})
+    else:
         messages.error(request, "Vous devez être connecté")
 
 
@@ -571,13 +571,9 @@ def alloAllowed(allo_type, counter):
     elif allo_type == "F":
         return counter.klax
     elif allo_type == "G":
-        return counter.bricolage
-    elif allo_type == "H":
         return counter.cuisine
-    elif allo_type == "I":
+    elif allo_type == "H":
         return counter.courses
-    elif allo_type == "J":
-        return counter.taxi
     else:
         return 0
 
@@ -630,7 +626,11 @@ def staff(request):
 
 
 def goals(request):
-    return render(request, 'nav_links/goals.html')
+    try:
+        registered = User.objects.filter(is_staff=False, is_superuser=False).count()
+    except User.DoesNotExist:
+        registered = 0
+    return render(request, 'nav_links/goals.html', {'registered': registered})
 
 
 def partners(request):
