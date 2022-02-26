@@ -89,10 +89,8 @@ class Allos(models.Model):
         ('D', 'Ménage'),
         ('E', 'Car wash'),
         ('F', 'Le klaxeur fou'),
-        ('G', 'Bricolage'),
-        ('H', 'Cuisine'),
-        ('I', 'Courses'),
-        ('J', 'Taxi')
+        ('G', 'Cuisine'),
+        ('H', 'Courses')
     )
     allo_type = models.CharField(max_length=1, choices=TYPE, blank=True, help_text='Which type of allo')
     start_date = models.DateTimeField(help_text='YYYY-MM-DD HH:MM:SS')
