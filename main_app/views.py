@@ -59,6 +59,31 @@ def home(request):
     return render(request, 'home.html', data)
 
 
+def homeBetKlax(request):
+    try:
+        user = User.objects.get(pk=request.user.id)
+    except User.DoesNotExist:
+        user = None
+
+    return render(request, 'bets/homeBets.html', {'user': user})
+
+
+def betKlax(request):
+    try:  # if the user is logged he see the remaining bets
+        bets_done = StoreBets.objects.filter(user_id_id=request.user.id)
+        bet = []
+        for b in bets_done:
+            bet.append(b.bet_id_id)
+        bets = Bets.objects.exclude(id__in=bet)
+        user = User.objects.get(pk=request.user.id)
+
+    except User.DoesNotExist:  # show all bets
+        bets = Bets.objects.all()
+        user = None
+
+    return render(request, 'bets/betKlax.html', {'bets': bets, 'user': user})
+
+
 def betCreator(request):
     try:
         user = User.objects.get(pk=request.user.id)
@@ -258,23 +283,6 @@ def finalizeBet(request):
         messages.error(request, "Tu dois être connecté pour accéder à cette page")
 
 
-def betKlax(request):
-    try:  # if the user is logged he see the remaining bets
-        bets_done = StoreBets.objects.filter(user_id_id=request.user.id)
-        bet = []
-        for b in bets_done:
-            bet.append(b.bet_id_id)
-        bets = Bets.objects.exclude(id__in=bet)
-        user = User.objects.get(pk=request.user.id)
-        return redirect('myBets')
-
-    except User.DoesNotExist:  # show all bets
-        bets = Bets.objects.all()
-        user = None
-
-    return render(request, 'bets/betKlax.html', {'bets': bets, 'user': user})
-
-
 def eventCreator(request):
     try:
         user = User.objects.get(pk=request.user.id)
@@ -312,6 +320,37 @@ def event(request):
     data = {'events': events, 'user': user, 'registered': registered_event}
 
     return render(request, 'events/event.html', data)
+
+
+def readFileForHTML(file_name):
+    file = open(file_name)
+    all_lines = file.read().splitlines()
+    infos = []
+    indexes = []
+    i = 0
+    for line in all_lines:
+        if line != '':
+            infos.append(line)
+            indexes.append(i)
+            i += 1
+
+    toReturn = [infos, indexes]
+    return toReturn
+
+
+def eventHTML(request, id_event):
+    try:
+        event_name = Event.objects.get(pk=id_event).event_name
+    except Event.DoesNotExist:
+        event_name = None
+
+    if event_name is not None:
+
+        infos = readFileForHTML("static/events/" + event_name + ".txt")
+
+        return render(request, 'events/eventPresentation.html', {'event': event_name, 'texts': infos[0], 'indexes': infos[1]})
+    else:
+        messages.error(request, "Erreur lors de l'envoie de la requête")
 
 
 def eventRegistration(request):
@@ -374,9 +413,18 @@ def liste(request):
 
 
 def klaxment(request):
-    userList = User.objects.all().order_by('-klax_coins')  # va chercher tous les utilisateurs du site
+    userList = User.objects.filter(is_staff=False, is_superuser=False).order_by('-klax_coins')  # va chercher tous les utilisateurs du site
     data = {'userList': userList}
     return render(request, 'nav_links/klaxment.html', data)
+
+
+def homeAllos(request):
+    try:
+        user = User.objects.get(pk=request.user.id)
+    except User.DoesNotExist:
+        user = None
+
+    return render(request, 'allos/homeAllos.html', {'user': user})
 
 
 def allos(request):
@@ -449,13 +497,9 @@ def addAlloCounter(allo_type, counter, nb):
     elif allo_type == "F":
         counter.klax += nb
     elif allo_type == "G":
-        counter.bricolage += nb
-    elif allo_type == "H":
         counter.cuisine += nb
-    elif allo_type == "I":
+    elif allo_type == "H":
         counter.courses += nb
-    elif allo_type == "J":
-        counter.taxi += nb
 
 
 def buyAlloTicket(request):
@@ -508,7 +552,10 @@ def sendAllo(request):
                     allo.allo_id = selected_allo
                     allo.date = datetime.strptime(str(date), '%Y-%m-%d %H:%M:%S')
                     allo.save()
-                    return redirect('allos')
+
+                    all_allos = Allos.objects.all()
+
+                    return render(request, 'allos/allos.html', {'user': user, 'allos': all_allos})
                 else:
                     messages.error(request, "Utilisateur non trouvé")
             else:
@@ -544,16 +591,18 @@ def alloCreator(request):
 
 
 def alloRegistration(request, id_allo):
-    try:
+
+    if request.user.is_authenticated:
         user = User.objects.get(pk=request.user.id)
-        if user is not None:
-            selected_allo = Allos.objects.get(pk=id_allo)
-            counter = AllosUserCounters.objects.get(user_id_id=request.user.id)
-            allowed = alloAllowed(selected_allo.allo_type, counter)
-            return render(request, 'allos/alloRegistration.html', {'user': user, 'allo': selected_allo, 'allowed': allowed})
-        else:
-            messages.error(request, "Vous devez être connecté")
-    except User.DoesNotExist:
+    else:
+        user = None
+
+    if user is not None:
+        selected_allo = Allos.objects.get(pk=id_allo)
+        counter = AllosUserCounters.objects.get(user_id_id=user.id)
+        allowed = alloAllowed(selected_allo.allo_type, counter)
+        return render(request, 'allos/alloRegistration.html', {'user': user, 'allo': selected_allo, 'allowed': allowed})
+    else:
         messages.error(request, "Vous devez être connecté")
 
 
@@ -571,13 +620,9 @@ def alloAllowed(allo_type, counter):
     elif allo_type == "F":
         return counter.klax
     elif allo_type == "G":
-        return counter.bricolage
-    elif allo_type == "H":
         return counter.cuisine
-    elif allo_type == "I":
+    elif allo_type == "H":
         return counter.courses
-    elif allo_type == "J":
-        return counter.taxi
     else:
         return 0
 
@@ -630,7 +675,11 @@ def staff(request):
 
 
 def goals(request):
-    return render(request, 'nav_links/goals.html')
+    try:
+        registered = User.objects.filter(is_staff=False, is_superuser=False).count()
+    except User.DoesNotExist:
+        registered = 0
+    return render(request, 'nav_links/goals.html', {'registered': registered})
 
 
 def partners(request):

@@ -30,10 +30,12 @@ class Bets(models.Model):
     win_rate = models.DecimalField(max_digits=4, decimal_places=2, default=2.00)
     win_vote = models.IntegerField(default=0)
     win_gains = models.DecimalField(max_digits=12, decimal_places=2, default=1.00)
+    win_name = models.CharField(max_length=128, null=False, default="Oui")
 
     lose_rate = models.DecimalField(max_digits=4, decimal_places=2, default=2.00)
     lose_vote = models.IntegerField(default=0)
     lose_gains = models.DecimalField(max_digits=12, decimal_places=2, default=1.00)
+    lose_name = models.CharField(max_length=128, null=False, default="Non")
 
     created = models.DateTimeField(auto_now_add=True)
     ended = models.DateTimeField(help_text='YYYY-MM-DD HH:MM:SS')
@@ -59,20 +61,17 @@ class Event(models.Model):
     event_description = models.CharField(max_length=1024)
     TYPE = (
         ('A', 'Annonce'),
-        ('B', 'E-Sport'),
-        ('C', 'Jeux'),
-        ('D', 'Prévention'),
-        ('E', 'Ker\'mess'),
-        ('F', 'Soirée'),
-        ('G', 'Sport'),
-        ('H', 'Tournoi'),
-        ('I', '12 Traveaux du Klax')
+        ('B', 'Prévention'),
+        ('C', 'Ker\'mess'),
+        ('D', 'Soirée'),
+        ('E', '12 Travaux du Klax')
     )
     event_type = models.CharField(max_length=1, choices=TYPE, blank=True, help_text='Which type of event')
     event_date = models.DateTimeField(help_text='YYYY-MM-DD HH:MM:SS')
     attendees_number = models.IntegerField(default=0)
     max_attendees = models.IntegerField(null=True)
     associated_bet = models.BooleanField(default=False)
+    associated_html = models.BooleanField(default=False)
 
 
 class EventRegistration(models.Model):
@@ -89,10 +88,8 @@ class Allos(models.Model):
         ('D', 'Ménage'),
         ('E', 'Car wash'),
         ('F', 'Le klaxeur fou'),
-        ('G', 'Bricolage'),
-        ('H', 'Cuisine'),
-        ('I', 'Courses'),
-        ('J', 'Taxi')
+        ('G', 'Cuisine'),
+        ('H', 'Courses')
     )
     allo_type = models.CharField(max_length=1, choices=TYPE, blank=True, help_text='Which type of allo')
     start_date = models.DateTimeField(help_text='YYYY-MM-DD HH:MM:SS')
@@ -118,7 +115,5 @@ class AllosUserCounters(models.Model):
     menage = models.IntegerField(default=0)
     car_wash = models.IntegerField(default=1)
     klax = models.IntegerField(default=0)
-    bricolage = models.IntegerField(default=1)
     cuisine = models.IntegerField(default=0)
     courses = models.IntegerField(default=0)
-    taxi = models.IntegerField(default=0)

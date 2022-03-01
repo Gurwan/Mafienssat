@@ -9,16 +9,18 @@ urlpatterns = [
     path("register/", views.registerUser, name="register"),
 
         # Betklax
-    path("betKlax/", views.betKlax, name="betKlax"),
-    path("ratingRecalculation", views.ratingRecalculation, name="ratingRecalculation"),
-    path('makeBetW', views.makeBetW, name='makeBetW'),
-    path('makeBetL', views.makeBetL, name='makeBetL'),
-    path("myBets/", views.myBets, name="myBets"),
-    path("addGains", views.addGains, name="addGains"),
-    path("finalizeBet", views.finalizeBet, name="finalizeBet"),
+    path("home_betKlax/", views.homeBetKlax, name="homeBetKlax"),
+    path("home_betKlax/betKlax/", views.betKlax, name="betKlax"),
+    path("home_betKlax/ratingRecalculation", views.ratingRecalculation, name="ratingRecalculation"),
+    path('home_betKlax/makeBetW', views.makeBetW, name='makeBetW'),
+    path('home_betKlax/makeBetL', views.makeBetL, name='makeBetL'),
+    path("home_betKlax/myBets/", views.myBets, name="myBets"),
+    path("home_betKlax/addGains", views.addGains, name="addGains"),
+    path("home_betKlax/finalizeBet", views.finalizeBet, name="finalizeBet"),
 
         # Event
     path("event/", views.event, name="event"),
+    path("event/<int:id_event>/", views.eventHTML, name="eventHTML"),
     path("eventRegistration", views.eventRegistration, name="eventRegistration"),
     path("eventDeregistration", views.eventDeregistration, name="eventDeregistration"),
 
@@ -32,14 +34,15 @@ urlpatterns = [
     path("goals/", views.goals, name="goals"),
 
         # Allos
-    path("allos/", views.allos, name="allos"),
-    path("myAllos/", views.myAllos, name="myAllos"),
-    path("byAllos", views.buyAllos, name="byAllos"),
-    path("sendAllo", views.sendAllo, name="sendAllo"),
-    path("buyAlloTicket", views.buyAlloTicket, name="buyAlloTicket"),
-    path("alloRegistration/<int:id_allo>/", views.alloRegistration, name="alloRegistration"),
-    path("takeOverAllo", views.takeOverAllo, name="takeOverAllo"),
-    path("dontTakeOverAllo", views.dontTakeOverAllo, name="dontTakeOverAllo"),
+    path("home_allos/", views.homeAllos, name="homeAllos"),
+    path("home_allos/allos/", views.allos, name="allos"),
+    path("home_allos/myAllos/", views.myAllos, name="myAllos"),
+    path("home_allos/buyAllos", views.buyAllos, name="buyAllos"),
+    path("home_allos/sendAllo", views.sendAllo, name="sendAllo"),
+    path("home_allos/buyAlloTicket", views.buyAlloTicket, name="buyAlloTicket"),
+    path("home_allos/alloRegistration/<int:id_allo>/", views.alloRegistration, name="alloRegistration"),
+    path("home_allos/takeOverAllo", views.takeOverAllo, name="takeOverAllo"),
+    path("home_allos/dontTakeOverAllo", views.dontTakeOverAllo, name="dontTakeOverAllo"),
 
         # Footer
     path("partners/", views.partners, name="partners"),

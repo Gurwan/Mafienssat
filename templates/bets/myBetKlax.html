@@ -27,9 +27,9 @@
                 <h4>Fini le {{bet.bet_id.ended | date:"d"}} {{bet.bet_id.ended  | date:"F"}} {{bet.bet_id.ended  | date:"o"}} à {{bet.bet_id.ended | date:"H"}}h{{bet.bet_id.ended | date:"i"}}</h4>
                 <h4>Montant parié : {{ bet.gains }} Klaxcoins</h4>
                 {% if bet.result == 'W' %}
-                        <h4>Sur la côte gagnante : {{ bet.bet_id.win_rate }} </h4>
+                        <h4>Sur la côte {{ bet.bet_id.win_name }} : {{ bet.bet_id.win_rate }} </h4>
                 {% else %}
-                        <h4>Sur la côte perdante : {{ bet.bet_id.lose_rate }} </h4>
+                        <h4>Sur la côte {{ bet.bet_id.lose_name }} : {{ bet.bet_id.lose_rate }} </h4>
                 {% endif %}
                 <label for="mise"></label><input placeholder="15" type="number" id="mise{{ bet.bet_id.id }}">
                 <br>

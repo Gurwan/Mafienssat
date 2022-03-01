@@ -6,6 +6,19 @@
 {% load static %}
 {% include 'nav.html' %}
 {% if user %}
+    <div class="container-fluid" id="betklax-pages">
+        <h2>Ton pocheton de klaxcoins</h2>
+          {% if user.klax_coins > 0 %}
+              <div>
+                  <p><span>{{ user.username }}</span> tu as {{ user.klax_coins }} <span id="yellow-span">klaxcoins</span></p>
+              </div>
+          {% else %}
+              <div>
+                <p><span>Time to soudoyer</span> car là tu n'as aucun <span id="yellow-span">klaxcoin</span> à parier (tema la bete de phrase)</p>
+              </div>
+          {% endif %}
+    </div> <br>
+
     <h1 style="text-align: center; margin-top:20px">Vos allo a disposition</h1>
     {% if counter %} <!-- TODO ajuster les prix ! -->
         <small>Bières à domicile: {{ counter.biere }}</small> <br>
@@ -50,30 +63,16 @@
             </button> <br>
         {% endif %}
 
-        <small>Bricolage: {{ counter.bricolage }}</small> <br>
-        {% if counter.bricolage == 0 %}
-            <button class="button_take_over" type="submit" id="G-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
-                <p>Acheter ce allo 20 klaxcoins</p>
-            </button> <br>
-        {% endif %}
-
         <small>Cuisine: {{ counter.cuisine }}</small> <br>
         {% if counter.cuisine == 0 %}
-            <button class="button_take_over" type="submit" id="H-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
+            <button class="button_take_over" type="submit" id="G-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
                 <p>Acheter ce allo 20 klaxcoins</p>
             </button> <br>
         {% endif %}
 
         <small>Courses: {{ counter.courses }}</small> <br>
         {% if counter.courses == 0 %}
-            <button class="button_take_over" type="submit" id="I-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
-                <p>Acheter ce allo 20 klaxcoins</p>
-            </button> <br>
-        {% endif %}
-
-        <small>Taxi: {{ counter.taxi }}</small> <br>
-        {% if counter.taxi == 0 %}
-            <button class="button_take_over" type="submit" id="J-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
+            <button class="button_take_over" type="submit" id="H-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
                 <p>Acheter ce allo 20 klaxcoins</p>
             </button> <br>
         {% endif %}
@@ -107,7 +106,7 @@
         data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
         data.append('allo', id.split("-")[0]);
         data.append('cost', id.split("-")[1]);
-        fetch('{% url "byAllos" %}', {
+        fetch('{% url "buyAllos" %}', {
                 method: 'POST',
                 body: data
             })
