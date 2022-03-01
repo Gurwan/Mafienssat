@@ -266,7 +266,6 @@ def betKlax(request):
             bet.append(b.bet_id_id)
         bets = Bets.objects.exclude(id__in=bet)
         user = User.objects.get(pk=request.user.id)
-        return redirect('myBets')
 
     except User.DoesNotExist:  # show all bets
         bets = Bets.objects.all()
@@ -312,6 +311,37 @@ def event(request):
     data = {'events': events, 'user': user, 'registered': registered_event}
 
     return render(request, 'events/event.html', data)
+
+
+def readFileForHTML(file_name):
+    file = open(file_name)
+    all_lines = file.read().splitlines()
+    infos = []
+    indexes = []
+    i = 0
+    for line in all_lines:
+        if line != '':
+            infos.append(line)
+            indexes.append(i)
+            i += 1
+
+    toReturn = [infos, indexes]
+    return toReturn
+
+
+def eventHTML(request, id_event):
+    try:
+        event_name = Event.objects.get(pk=id_event).event_name
+    except Event.DoesNotExist:
+        event_name = None
+
+    if event_name is not None:
+
+        infos = readFileForHTML("static/events/" + event_name + ".txt")
+
+        return render(request, 'events/eventPresentation.html', {'event': event_name, 'texts': infos[0], 'indexes': infos[1]})
+    else:
+        messages.error(request, "Erreur lors de l'envoie de la requête")
 
 
 def eventRegistration(request):
@@ -374,7 +404,7 @@ def liste(request):
 
 
 def klaxment(request):
-    userList = User.objects.all().order_by('-klax_coins')  # va chercher tous les utilisateurs du site
+    userList = User.objects.filter(is_staff=False, is_superuser=False).order_by('-klax_coins')  # va chercher tous les utilisateurs du site
     data = {'userList': userList}
     return render(request, 'nav_links/klaxment.html', data)
 
@@ -543,9 +573,10 @@ def alloCreator(request):
 
 
 def alloRegistration(request, id_allo):
-    try:
+
+    if request.user.is_authenticated:
         user = User.objects.get(pk=request.user.id)
-    except User.DoesNotExist:
+    else:
         user = None
 
     if user is not None:
