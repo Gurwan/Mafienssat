@@ -1,0 +1,30 @@
+{% extends 'main.html' %}
+{% block content %}
+{% load static %}
+{% include 'nav.html' %}
+{% if event and texts %}
+    <h1 style="text-align: center; margin-top:20px"> {{ event }}</h1>
+    <div class="{{ event }}">
+        {% for index in indexes %}
+            <div class="" id="{{ index }}">
+                <script>
+                    $(document).ready(function(){
+
+                        let index = document.getElementById({{ index }}).id;
+                        let lines = {{ texts }};
+                        let line = lines[index]
+                        console.log(index)
+                        console.log(lines)
+                        console.log(line)
+                        document.getElementById({{ index }}).className = line.split("**")[1]
+                        document.getElementById({{ index }}).innerHTML = line.split("**")[0]
+                    });
+                </script>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+<script>
+
+</script>
+{% endblock %}
