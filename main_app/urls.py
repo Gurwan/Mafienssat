@@ -19,6 +19,7 @@ urlpatterns = [
 
         # Event
     path("event/", views.event, name="event"),
+    path("event/<int:id_event>/", views.eventHTML, name="eventHTML"),
     path("eventRegistration", views.eventRegistration, name="eventRegistration"),
     path("eventDeregistration", views.eventDeregistration, name="eventDeregistration"),
 
