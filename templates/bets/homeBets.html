@@ -1,0 +1,41 @@
+{% extends 'main.html' %}
+{% block content %}
+{% load static %}
+{% include 'nav.html' %}
+
+<div class="container">
+    <div id="main_title">
+        <h1>Bienvenue dans l'espace <span>BetKlax</span>.</h1>
+    </div>
+</div>
+
+<div class="container">
+    <p> TODO Ajouter les explications ainsi que les règles</p>
+</div>
+
+<div class="container-fluid" id="choices">
+    <div id="main_col">
+        <div class="row">
+            <div class="col" id="left" onclick="goBets()">
+                <h2>Les paris en cours</h2>
+            </div>
+            {% if user %}
+                <div class="col" id="right" onclick="goMyBets()">
+                    <h2>Vos paris enregistrés</h2>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+    function goBets(){
+        window.location.href = window.location.href + "betKlax"
+    }
+
+    function goMyBets(){
+        window.location.href = window.location.href + "myBets"
+    }
+</script>
+
+{% endblock %}

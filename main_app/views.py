@@ -59,6 +59,31 @@ def home(request):
     return render(request, 'home.html', data)
 
 
+def homeBetKlax(request):
+    try:
+        user = User.objects.get(pk=request.user.id)
+    except User.DoesNotExist:
+        user = None
+
+    return render(request, 'bets/homeBets.html', {'user': user})
+
+
+def betKlax(request):
+    try:  # if the user is logged he see the remaining bets
+        bets_done = StoreBets.objects.filter(user_id_id=request.user.id)
+        bet = []
+        for b in bets_done:
+            bet.append(b.bet_id_id)
+        bets = Bets.objects.exclude(id__in=bet)
+        user = User.objects.get(pk=request.user.id)
+
+    except User.DoesNotExist:  # show all bets
+        bets = Bets.objects.all()
+        user = None
+
+    return render(request, 'bets/betKlax.html', {'bets': bets, 'user': user})
+
+
 def betCreator(request):
     try:
         user = User.objects.get(pk=request.user.id)
@@ -258,22 +283,6 @@ def finalizeBet(request):
         messages.error(request, "Tu dois être connecté pour accéder à cette page")
 
 
-def betKlax(request):
-    try:  # if the user is logged he see the remaining bets
-        bets_done = StoreBets.objects.filter(user_id_id=request.user.id)
-        bet = []
-        for b in bets_done:
-            bet.append(b.bet_id_id)
-        bets = Bets.objects.exclude(id__in=bet)
-        user = User.objects.get(pk=request.user.id)
-
-    except User.DoesNotExist:  # show all bets
-        bets = Bets.objects.all()
-        user = None
-
-    return render(request, 'bets/betKlax.html', {'bets': bets, 'user': user})
-
-
 def eventCreator(request):
     try:
         user = User.objects.get(pk=request.user.id)
@@ -407,6 +416,15 @@ def klaxment(request):
     userList = User.objects.filter(is_staff=False, is_superuser=False).order_by('-klax_coins')  # va chercher tous les utilisateurs du site
     data = {'userList': userList}
     return render(request, 'nav_links/klaxment.html', data)
+
+
+def homeAllos(request):
+    try:
+        user = User.objects.get(pk=request.user.id)
+    except User.DoesNotExist:
+        user = None
+
+    return render(request, 'allos/homeAllos.html', {'user': user})
 
 
 def allos(request):

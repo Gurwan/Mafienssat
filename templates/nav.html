@@ -15,15 +15,21 @@
                   <li><a href="{% url 'klaxment' %}">Klaxment</a></li>
                   <li><a href="{% url 'goals' %}">Goals</a></li>
                   <li><a href="{% url 'event' %}">Events</a></li>
-                  <li><a href="{% url 'betKlax' %}">BetKlax</a></li>
+                  <li><a href="{% url 'homeBetKlax' %}">BetKlax</a></li>
               {% else %}
                   <li><a href="{% url 'klaxment' %}">Klaxment</a></li>
                   <li><a href="{% url 'goals' %}">Goals</a></li>
                   <li><a href="{% url 'event' %}">Events</a></li>
-                  <li><a href="{% url 'betKlax' %}">BetKlax</a></li>
-                  <li><a href="{% url 'myBets' %}">Mes BetKlax</a></li>
-                  <li><a href="{% url 'allos' %}">Allo ? Tu m'entends</a></li>
-                  <li><a href="{% url 'myAllos' %}">Vos allos</a></li>
+                  <li> <!-- Todo Ajouter un menu déroulant proposant les trois possibilités -->
+                      <a href="{% url 'homeAllos' %}">Acceuil allos</a>
+                      <a href="{% url 'allos' %}">Allos ? Tu m'entends</a>
+                      <a href="{% url 'myAllos' %}">Vos allos</a>
+                  </li>
+                  <li> <!-- Todo Ajouter un menu déroulant proposant les trois possibilités -->
+                      <a href="{% url 'homeBetKlax' %}">Acceuil BetKlax</a>
+                      <a href="{% url 'betKlax' %}">BetKlax</a>
+                      <a href="{% url 'myBets' %}">Vos BetKlax</a>
+                  </li>
                   {% if request.user.is_staff %}
                       <li><a style=" color: rgba(255,0,0,0.98);" href="{% url 'staff' %}">Staff</a></li>
                   {% endif %}

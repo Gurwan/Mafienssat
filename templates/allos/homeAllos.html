@@ -1,0 +1,42 @@
+{% extends 'main.html' %}
+{% block content %}
+{% load static %}
+{% include 'nav.html' %}
+{%  if user %}
+    <div class="container">
+        <div id="main_title">
+            <h1>Bienvenue dans l'espace <span>Allo</span>.</h1>
+        </div>
+    </div>
+
+    <div class="container">
+        <p> TODO Ajouter les explications ainsi que les règles</p>
+    </div>
+
+    <div class="container-fluid" id="choices">
+        <div id="main_col">
+            <div class="row">
+                <div class="col" id="left" onclick="goAllos()">
+                    <h2>Les allos à votre disposition</h2>
+                </div>
+                {% if user %}
+                    <div class="col" id="right" onclick="goMyAllos()">
+                        <h2>Vos allos enregistrés</h2>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+<script>
+    function goAllos(){
+        window.location.href = window.location.href + "allos"
+    }
+
+    function goMyAllos(){
+        window.location.href = window.location.href + "myAllos"
+    }
+</script>
+
+{% endblock %}

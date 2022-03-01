@@ -106,7 +106,7 @@
         data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
         data.append('allo', id.split("-")[0]);
         data.append('cost', id.split("-")[1]);
-        fetch('{% url "byAllos" %}', {
+        fetch('{% url "buyAllos" %}', {
                 method: 'POST',
                 body: data
             })
