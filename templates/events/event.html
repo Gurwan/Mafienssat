@@ -19,7 +19,6 @@
             </div>
         
             <p>{{event.event_description}}</p>
-            
         </div>
         <div class="container-fluid" id="choices">
             <div id="main_col_event">
@@ -36,6 +35,11 @@
                             </div>
                         {% endif %}
                     {% endif %}
+                    {% if event.associated_html %}
+                        <a class="row" id="html-{{ event.id }}" style="background-color: #522699" href="{% url 'eventHTML' event.id %}">
+                            <h2>Plus d'informaions sur l'évènement</h2>
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -50,12 +54,11 @@
                 <h2 id="name">{{event.event_name}}</h2>
                 <h3 id="date">Le {{event.event_date | date:"d"}} {{event.event_date | date:"F"}} {{event.event_date | date:"o"}} à {{event.event_date | date:"H"}}h{{event.event_date | date:"i"}}</h3>
                 <div>
-                    <h4>{{event.event_type.title}}</h4> <br> <!-- TODO faire en sorte de pouvoir afficher le nom de l'event et pas l'acronyme -->
+                    <h4>{{event.get_event_type_display }}</h4> <br>
                     {% if event.max_attendees != 0 %}
                         <h4>{{event.attendees_number}} inscrits sur {{event.max_attendees}} places disponibles</h4>
                     {% endif %}
                 </div>
-
                 <p>{{event.event_description}}</p>
             </div>
             <div class="container-fluid" id="choices">
@@ -72,6 +75,12 @@
                     </div>
                 </div>
             </div>
+
+            {% if event.associated_html %}
+                <a class="row" id="html-{{ event.id }}" style="background-color: #522699" href="{% url 'eventHTML' event.id %}">
+                    <h2>Plus d'informaions sur l'évènement</h2>
+                </a>
+            {% endif %}
         {% endfor %}
     {% else %}
         <h1>Aucun <span>événements</span> enregistrés</h1>
