@@ -20,24 +20,27 @@ class UserForm(UserCreationForm):
 class AddBetForm(ModelForm):
     class Meta:
         model = Bets
-        fields = ['bet_name', 'ended']
+        fields = ['bet_name', 'ended', 'win_name', 'lose_name']
         labels = {
             'bet_name': 'Nom du pari',
-            'ended': 'Date et heure de fin pour parier au format YYYY-MM-DD HH:MM:SS'
+            'ended': 'Date et heure de fin pour parier au format YYYY-MM-DD HH:MM:SS',
+            'win_name': 'Nom du bouton de victoire du pari (par défaut Oui)',
+            'lose_name': 'Nom du bouton de défaite du pari (par défaut Non)'
         }
 
 
 class AddEventForm(ModelForm):
     class Meta:
         model = Event
-        fields = ['event_name', 'event_type', 'event_description', 'event_date', 'max_attendees', 'associated_bet']
+        fields = ['event_name', 'event_type', 'event_description', 'event_date', 'max_attendees', 'associated_bet', 'associated_html']
         labels = {
             'event_name': 'Nom de l\'event',
             'event_type': 'Type de l\'event',
             'event_description': 'Description succincte de l\'event',
             'event_date': 'Date et heure de l\'event au format YYYY-MM-DD HH:MM:SS',
-            'max_attendees' : 'Nombre maximum de participant 0 si pas de jauge',
-            'associated_bet': 'À cocher si il y a un pari associé'
+            'max_attendees': 'Nombre maximum de participant 0 si pas de jauge',
+            'associated_bet': 'À cocher s\'il y a un pari associé',
+            'associated_html': 'À cocher s\'il y a une page associée à cet event'
         }
 
 
