@@ -1,0 +1,29 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<footer>
+    <div class="row">
+        <div class="col" id="partners" onclick="goFooter(this.id)">
+            <p>Partenaires</p>
+        </div>
+
+        <div class="col" id="credits" onclick="goFooter(this.id)">
+            <p>Crédits</p>
+        </div>
+
+        <div class="col" id="values" onclick="goFooter(this.id)">
+            <p>Nos valeurs</p>
+        </div>
+
+        <div class="col" id="promises" onclick="goFooter(this.id)">
+            <p>Promesses de campagne</p>
+        </div>
+    </div>
+</footer>
+<script>
+    function goFooter(footer_name){
+        console.log(footer_name)
+        window.location.href = window.location.href + footer_name + "/"
+    }
+</script>
+{% endblock %}

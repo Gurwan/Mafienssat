@@ -2,56 +2,23 @@
 {% block content %}
 {% load static %}
 {% include 'nav.html' %}
-<div class="container">
-    <div id="main_title">
-        <h1>Mafienssat débarque pour vous <span>faire des bisous</span>.</h1>
-    </div>
-</div>
-
-<div class="container-fluid" id="choices">
-    <div id="main_col">
-        <div class="row">
-            <div class="col" id="left" onclick="goEvent()">
-                <h2>Prochain événement</h2>
-                <p>(En cliquant ici tu peux t'inscrire ou parier sur le prochain événement)</p>
-            </div>
-            <div class="col" id="right" onclick="goListe()">
-                <h2>Découvre la liste</h2>
-                <p>(Le troisième membre du BDA va vous surprendre 😈)</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container">
-    <div id="betklax_title">
-        <h1>Mais attend c'est quoi <span onclick="playAudio()">BetKlax</span> ?</h1>
-        <p>Parier avec vos Klaxcoins sur le vainqueur du prochain événement et empochez votre mise si elle est gagnante !</p>
-        <p>Les participants aux épreuves gagneront bien entendu des Klaxcoins en fonction de leurs performances</p>
-        <p>La personne détenant le plus de Klaxcoins à la fin des campagnes gagnera ...</p>
-        <p><span>100 Klaxcoins offert à l'inscription !</span></p>
-    </div>
-</div>
-
-<footer>
+<div class="container-fluid" id="main_page_id">
     <div class="row">
-        <div class="col" id="partners" onclick="goFooter(this.id)">
-            <p>Partners</p>
-        </div>
-
-        <div class="col" id="credits" onclick="goFooter(this.id)">
-            <p>Crédits</p>
-        </div>
-
-        <div class="col" id="values" onclick="goFooter(this.id)">
-            <p>Nos Valeurs</p>
-        </div>
-
-        <div class="col" id="promises" onclick="goFooter(this.id)">
-            <p>Promesses de Campagne</p>
+        <div class="col-12" id="liste_id_main" onclick="goListe()">
+            <h1>Découvre la liste</h1>
         </div>
     </div>
-</footer>
+    <div class="row">
+        <div class="col-3" id="pub_id_main">
+            <h1>Pub agrandis ton klax</h1>
+        </div>
+        <div class="col-9" id="event_id_main" onclick="goEvent()">
+            <h1>Prochain événement</h1>
+        </div>
+    </div>
+</div>
+
+{% include 'footer.html' %}
 
 <script>
     function goEvent(){
@@ -60,16 +27,6 @@
 
     function goListe(){
         window.location.href = window.location.href + "liste"
-    }
-
-    function goBet(){
-
-        window.location.href = window.location.href + "betKlax/"
-    }
-
-    function goFooter(footer_name){
-        console.log(footer_name)
-        window.location.href = window.location.href + footer_name + "/"
     }
 </script>
 {% endblock %}

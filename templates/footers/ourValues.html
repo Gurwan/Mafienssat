@@ -13,30 +13,6 @@
     </div>
 </div>
 
-<footer>
-    <div class="row">
-        <div class="col" id="partners" onclick="goFooter(this.id)">
-            <p>Partners</p>
-        </div>
+{% include 'footer.html' %}
 
-        <div class="col" id="credits" onclick="goFooter(this.id)">
-            <p>Crédits</p>
-        </div>
-
-        <div class="col" id="values" onclick="goFooter(this.id)">
-            <p>Nos valeurs</p>
-        </div>
-
-        <div class="col" id="promises" onclick="goFooter(this.id)">
-            <p>Promesses de Campagne</p>
-        </div>
-    </div>
-</footer>
-
-<script>
-    function goFooter(footer_name){
-
-        window.location.href = "http://localhost:8000/" + footer_name + "/" // TODO remplacer le lien une fois le site déployer ou trouver un autre méthode
-    }
-</script>
 {% endblock %}
