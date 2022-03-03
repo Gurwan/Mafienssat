@@ -31,7 +31,7 @@
                 {% else %}
                         <h4>Sur la côte {{ bet.bet_id.lose_name }} : {{ bet.bet_id.lose_rate }} </h4>
                 {% endif %}
-                <label for="mise"></label><input placeholder="15" type="number" id="mise{{ bet.bet_id.id }}">
+                <label for="mise"></label><input placeholder="15" type="number" id="{{ bet.bet_id.id }}">
                 <br>
                 <button style="color:black; background-color: yellow; margin-bottom:10px; margin-top: 5px" class="btn btn--main" type="submit" id="{{ bet.bet_id.id }}" onclick="addGains(this.id)" value="addGains{{ bet.bet_id.id }}" name="addGains{{ bet.bet_id.id }}"> Ajouter des Klaxcoins sur le pari</button>
                 <br>
@@ -109,7 +109,6 @@
                 })
         }
         ratingRecalculation(id);
-        //location.reload();
     }
 </script>
 {% endblock %}

@@ -4,29 +4,19 @@
 {% include 'nav.html' %}
 <div class="container-fluid" id="main_page_id">
     <div class="row">
-        <div class="col-12" id="liste_id_main" onclick="goListe()">
+        <a class="col-12" id="liste_id_main" href="{% url "liste" %}">
             <h1>Découvre la liste</h1>
-        </div>
+        </a>
     </div>
     <div class="row">
         <div class="col-3" id="pub_id_main">
             <h1>Pub agrandis ton klax</h1>
         </div>
-        <div class="col-9" id="event_id_main" onclick="goEvent()">
+        <a class="col-9" id="event_id_main" href="{% url "event" %}">
             <h1>Prochain événement</h1>
-        </div>
+        </a>
     </div>
 </div>
 
 {% include 'footer.html' %}
-
-<script>
-    function goEvent(){
-        window.location.href = window.location.href + "event"
-    }
-
-    function goListe(){
-        window.location.href = window.location.href + "liste"
-    }
-</script>
 {% endblock %}

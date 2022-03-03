@@ -8,7 +8,7 @@
     </div>
     {% for event in events %}
         <div id="next-event">
-            <img class="img-fluid" src="{% static 'img/background.jpg' %}"/>
+            <img class="img-fluid" src="{% static 'img/event/background.jpg' %}"/>
             <h2 id="name">{{event.event_name}}</h2>
             <h3 id="date">Le {{event.event_date | date:"d"}} {{event.event_date | date:"F"}} {{event.event_date | date:"o"}} à {{event.event_date | date:"H"}}h{{event.event_date | date:"i"}}</h3>
             <div>
@@ -25,20 +25,20 @@
                 <div class="row">
                     {% if user %}
                         {% if event.attendees_number < event.max_attendees and event.max_attendees != 0 %}
-                            <div class="col" id="event-{{ event.id }}" onclick="goEvent(this.id)" style="background-color: #522699">
+                            <a class="col btn" style="background-color: #522699" href="{% url "eventRegistration" event_id=event.id %}" value="goEvent{{ event.id }}">
                                 <h2>Participer à l'événement</h2>
-                            </div>
+                            </a>
                         {% endif %}
                         {% if event.associated_bet %}
-                            <div class="col" id="bet" onclick="goBet()" style=" background-color: #a7662a">
+                            <a class="col btn" style="background-color: #a7662a" href="{% url "homeBetKlax" %}" value="goBet{{ event.id }}">
                                 <h2>Parier sur l'événement</h2>
-                            </div>
+                            </a>
                         {% endif %}
                     {% endif %}
                     {% if event.associated_html %}
-                        <a class="row" id="html-{{ event.id }}" style="background-color: #522699" href="{% url 'eventHTML' event.id %}">
+                        <a class="row btn" style="background-color: #522699" href="{% url "eventHTML" id_event=event.id %}" value="moreInformation{{ event.id }}">
                             <h2>Plus d'informaions sur l'évènement</h2>
-                        </a>
+                        </a>  <!-- Todo changer le type en bouton -->
                     {% endif %}
                 </div>
             </div>
@@ -64,50 +64,26 @@
             <div class="container-fluid" id="choices">
                 <div id="main_col_event">
                     <div class="row">
-                        <div class="col" id="event-{{ event.id }}" onclick="dontGoEvent(this.id)" style="background-color: #522699">
+                        <a class="col btn" style="background-color: #522699" value="dontGoEvent{{ event.id }}" href="{% url "eventUnregistration" event_id=event.id %}">
                             <h2>Ne plus participer à l'événement</h2>
-                        </div>
+                        </a>
                         {% if event.associated_bet %}
-                            <div class="col" id="bet" onclick="goBet()" style=" background-color: #a7662a">
+                            <a class="col btn" style="background-color: #a7662a" value="goBet" href="{% url "homeBetKlax" %}">
                                 <h2>Parier sur l'événement</h2>
-                            </div>
+                            </a>
+                        {% endif %}
+                        {% if event.associated_html %}
+                            <a class="row btn" id="html-{{ event.id }}" style="background-color: #522699" href="{% url "eventHTML" id_event=event.id %}">
+                                <h2>Plus d'informaions sur l'évènement</h2>
+                            </a> <!-- Todo changer le type en bouton -->
                         {% endif %}
                     </div>
                 </div>
             </div>
-
-            {% if event.associated_html %}
-                <a class="row" id="html-{{ event.id }}" style="background-color: #522699" href="{% url 'eventHTML' event.id %}">
-                    <h2>Plus d'informaions sur l'évènement</h2>
-                </a>
-            {% endif %}
         {% endfor %}
     {% else %}
         <h1>Aucun <span>événements</span> enregistrés</h1>
     {% endif %}
 {% endif %}
-    <script>
-        function goEvent(id){
-
-            const data = new FormData();
-            data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
-            data.append('event', id.split("-")[1]);
-            fetch('{% url "eventRegistration" %}', {
-                        method: 'POST',
-                        body: data
-                    })
-        }
-
-        function dontGoEvent(id){
-
-            const data = new FormData();
-            data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
-            data.append('event', id.split("-")[1]);
-            fetch('{% url "eventDeregistration" %}', {
-                        method: 'POST',
-                        body: data
-                    })
-        }
-    </script>
 </div>
 {% endblock %}

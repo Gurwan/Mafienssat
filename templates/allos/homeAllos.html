@@ -15,28 +15,17 @@
 
     <div class="container-fluid" id="choices">
         <div id="main_col">
-            <div class="row">
-                <div class="col" id="left" onclick="goAllos()">
+            <div class="row"> <!-- Todo Faire en sorte de ne plus voir le lien hypertext -->
+                <a class="col btn" style="color:white" id="left" href="{% url "allos" %}">
                     <h2>Les allos à votre disposition</h2>
-                </div>
+                </a>
                 {% if user %}
-                    <div class="col" id="right" onclick="goMyAllos()">
+                    <a class="col btn" style="color:white" href="{% url "myAllos" %}">
                         <h2>Vos allos enregistrés</h2>
-                    </div>
+                    </a>
                 {% endif %}
             </div>
         </div>
     </div>
 {% endif %}
-
-<script>
-    function goAllos(){
-        window.location.href = window.location.href + "allos"
-    }
-
-    function goMyAllos(){
-        window.location.href = window.location.href + "myAllos"
-    }
-</script>
-
 {% endblock %}

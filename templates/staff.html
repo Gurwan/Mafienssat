@@ -4,43 +4,26 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% include 'nav.html' %}
-<div class="container-fluid">
+<div class="container-fluid"> <!-- Todo Faire en sorte de ne pas voir le lien hypertext-->
   <div id="main_col">
       <div class="row">
-          <div class="col" id="left" onclick="goBetCreator()">
+          <a class="col" id="left" href="{% url "betCreator" %}">
               <h2>Créer un betKlax</h2>
-          </div>
-          <div class="col" id="right" onclick="goEventCreator()">
+          </a>
+          <a class="col" id="right" href="{% url "eventCreator" %}">
               <h2>Créer un événement</h2>
-          </div>
+          </a>
       </div>
       <br>
       <div class="row">
-          <div class="col" id="left" onclick="goAlloCreator()">
+          <a class="col" id="left" href="{% url "alloCreator" %}">
               <h2>Créer un allo</h2>
-          </div>
-          <div class="col" id="right" onclick="goAlloRequested()">
+          </a>
+          <a class="col" id="right" href="{% url "alloRequested" %}">
               <h2>Gérer les allos</h2>
-          </div>
+          </a>
       </div>
   </div>
 </div>
-<script>
-    function goBetCreator(){
-        window.location.href = window.location.href + "betCreator"
-    }
-
-    function goEventCreator(){
-        window.location.href = window.location.href + "eventCreator"
-    }
-    
-    function goAlloCreator(){
-        window.location.href = window.location.href + "alloCreator"
-    }
-
-    function goAlloRequested(){
-        window.location.href = window.location.href + "alloRequested"
-    }
-</script>
 {% endblock %}
 

@@ -20,7 +20,7 @@
     </div> <br>
 
     <h1 style="text-align: center; margin-top:20px">Vos allo a disposition</h1>
-    {% if counter %} <!-- TODO ajuster les prix ! -->
+    {% if counter %} <!-- TODO ajuster les prix ! + Faire en sorte de n'afficher que les types des allos en cours -->
         <small>Bières à domicile: {{ counter.biere }}</small> <br>
         {% if counter.biere == 0 %}
             <button class="button_take_over" type="submit" id="A-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">

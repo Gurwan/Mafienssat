@@ -6,41 +6,20 @@
 {% bootstrap_javascript %}
 {% include 'nav.html' %}
 {% if user.is_staff %}
-    <div class="container">
+    <div class="container"> <!-- Todo Faire en sorte de ne plus voirle lien hypertext -->
         {% for allo in allos %}
             <small>{{ allo.allo_id.get_allo_type_display }} pour {{ allo.user_id.firstname }} {{ allo.user_id.lastname }} le {{allo.date | date:"d"}} {{allo.date  | date:"F"}} {{allo.date  | date:"o"}} à {{allo.date | date:"H"}}h{{allo.date | date:"i"}}</small>
             {% if allo.take_over %}
-                <button class="button_take_over" type="submit" id="{{ allo.id }}" onclick="dontTakeOver(this.id)" value="takeOver" name="takeOver">
+                <a class="button_take_over" href="{% url "dontTakeOverAllo" id_dontTake_allo=allo.id %}" value="dontTakeOver{{ allo.id }}">
                     Ne plus prendre en charge ce allo
-                </button>
+                </a>
             {% else %}
-                <button class="button_take_over" type="submit" id="{{ allo.id }}" onclick="takeOver(this.id)" value="takeOver" name="takeOver">
+                <a class="button_take_over" href="{% url "takeOverAllo" id_take_allo=allo.id %}" value="takeOver{{ allo.id }}">
                     Prendre en charge ce allo
-                </button>
+                </a>
             {% endif %}
             <br><br>
         {% endfor %}
     </div>
 {% endif %}
-<script>
-    function takeOver(id){
-        const data = new FormData();
-        data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
-        data.append('allo', id);
-        fetch('{% url "takeOverAllo" %}', {
-                method: 'POST',
-                body: data
-            })
-    }
-
-    function dontTakeOver(id){
-        const data = new FormData();
-        data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
-        data.append('allo', id);
-        fetch('{% url "dontTakeOverAllo" %}', {
-                method: 'POST',
-                body: data
-            })
-    }
-</script>
 {% endblock %}

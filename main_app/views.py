@@ -125,20 +125,17 @@ def ratingRecalculation(request):
         messages.error(request, "Problème rencontré lors du recalcul des cotes")
 
 
-def makeBetW(request):
+def makeBetW(request, id_bet):
     try:
-        current_user = User.objects.get(pk=request.user.id)
-        primary_key = request.POST['bet'] if request.POST['bet'] is not None else messages.error(request,
-                                                                                                 "Votre demande ne peut aboutir actuellement, si cella perciste, veuollez contacter un admin du site")
-
-        cdt = StoreBets.objects.filter(bet_id_id=primary_key).filter(user_id_id=current_user)
+        user = User.objects.get(pk=request.user.id)
+        cdt = StoreBets.objects.filter(bet_id_id=id_bet).filter(user_id_id=user)
         if cdt.count() == 0:
-            if current_user.klax_coins > 0:
+            if user.klax_coins > 0:
 
-                current_user.klax_coins -= 1
-                current_user.save()
+                user.klax_coins -= 1
+                user.save()
 
-                bet = Bets.objects.get(id=primary_key)
+                bet = Bets.objects.get(id=id_bet)
                 bet.win_gains += 1
                 bet.win_vote += 1
                 bet.save()
@@ -147,11 +144,10 @@ def makeBetW(request):
                 myBet.result = 'W'
                 myBet.gains = 1
                 myBet.bet_id = bet
-                myBet.user_id = current_user
+                myBet.user_id = user
                 myBet.save()
 
-                return redirect('betKlax')
-
+                return redirect("betKlax")
             else:
                 messages.error(request, "Tu n\'as pas asser de klax_coins espèce de rat")
         else:
@@ -160,19 +156,17 @@ def makeBetW(request):
         messages.error(request, "Il faut te connecter pour parier")
 
 
-def makeBetL(request):
+def makeBetL(request, id_bet):
     try:
-        current_user = User.objects.get(pk=request.user.id)
-        if current_user is not None:
-            primary_key = request.POST['bet'] if request.POST['bet'] is not None else messages.error(request,
-                                                                                                     "Votre demande ne peut aboutir actuellement, si cella perciste, veuollez contacter un admin du site")
-            cdt = StoreBets.objects.filter(bet_id_id=primary_key).filter(user_id_id=current_user)
+        user = User.objects.get(pk=request.user.id)
+        cdt = StoreBets.objects.filter(bet_id_id=id_bet).filter(user_id_id=user)
+        if user is not None:
             if cdt.count() == 0:
-                if current_user.klax_coins > 0:
-                    current_user.klax_coins -= 1
-                    current_user.save()
+                if user.klax_coins > 0:
+                    user.klax_coins -= 1
+                    user.save()
 
-                    bet = Bets.objects.get(id=primary_key)
+                    bet = Bets.objects.get(id=id_bet)
                     bet.lose_gains += 1
                     bet.lose_vote += 1
                     bet.save()
@@ -181,7 +175,7 @@ def makeBetL(request):
                     myBet.result = 'L'
                     myBet.gains = 1
                     myBet.bet_id = bet
-                    myBet.user_id = current_user
+                    myBet.user_id = user
                     myBet.save()
 
                     return redirect("betKlax")
@@ -338,9 +332,9 @@ def readFileForHTML(file_name):
     return toReturn
 
 
-def eventHTML(request, id_event):
+def eventHTML(request, event_id):
     try:
-        event_name = Event.objects.get(pk=id_event).event_name
+        event_name = Event.objects.get(pk=event_id).event_name
     except Event.DoesNotExist:
         event_name = None
 
@@ -353,59 +347,66 @@ def eventHTML(request, id_event):
         messages.error(request, "Erreur lors de l'envoie de la requête")
 
 
-def eventRegistration(request):
+def eventRegistration(request, event_id):
+
     try:
         user = User.objects.get(pk=request.user.id)
-        if request.method == 'POST':
-            event_id = request.POST['event']
-
-            try:
-                done = EventRegistration.objects.get(user_id_id=user.id, event_id_id=event_id)
-            except EventRegistration.DoesNotExist:
-                done = None
-
-            if done is None and event_id is not None:
-                this_event = Event.objects.get(pk=event_id)
-
-                reg = EventRegistration()
-                reg.event_id = this_event
-                reg.user_id = user
-                reg.save()
-
-                if this_event.max_attendees != 0 and this_event.attendees_number < this_event.max_attendees:
-                    this_event.attendees_number += 1
-                    this_event.save()
-                else:
-                    messages.error(request, "Cet évènement est déja complet")
-            else:
-                messages.error(request, "Erreur lors de l'identification de l'évènement")
-        else:
-            messages.error(request, "Un problème est survenu lors de votre inscripion, veuillez réessayer et si cela persiste, veuillez contacter un admin")
     except User.DoesNotExist:
+        user = None
         messages.error(request, "Vous devez être connecté pour vous inscrire à cet évènement")
 
-    return redirect('event')
-
-
-def eventDeregistration(request):
     try:
-        if request.method == 'POST':
-            event_id = request.POST['event']
+        done = EventRegistration.objects.get(user_id_id=user.id, event_id_id=event_id)
+    except EventRegistration.DoesNotExist:
+        done = None
 
-            if event_id is not None:
-                this_event = Event.objects.get(pk=event_id)
-                this_event.attendees_number -= 1
-                this_event.save()
+    try:
+        this_event = Event.objects.get(pk=event_id)
+    except Event.DoesNotExist:
+        this_event = None
 
-                done = EventRegistration.objects.get(user_id_id=request.user.id, event_id_id=event_id)
-                done.delete()
-            else:
-                messages.error(request, "Erreur lors de l'identification de l'évènement")
+    if done is None and user is not None and this_event is not None:
+
+        if this_event.max_attendees != 0 and this_event.attendees_number < this_event.max_attendees:
+            this_event.attendees_number += 1
+            this_event.save()
+
+            reg = EventRegistration()
+            reg.event_id = this_event
+            reg.user_id = user
+            reg.save()
+
+            return redirect('event')
         else:
-            messages.error(request, "Un problème est survenu lors de votre inscripion, veuillez réessayer et si cela persiste, veuillez contacter un admin")
+            messages.error(request, "Cet évènement est déja complet")
+    else:
+        messages.error(request, "Erreur lors de l'identification de l'évènement")
+
+
+def eventUnregistration(request, event_id):
+    try:
+        this_event = Event.objects.get(pk=event_id)
+    except Event.DoesNotExist:
+        this_event = None
+
+    try:
+        user = User.objects.get(pk=request.user.id)
     except User.DoesNotExist:
-        messages.error(request, "Vous devez être connecté pour vous inscrire à cet évènement")
-    return redirect('event')
+        user = None
+
+    if this_event is not None and user is not None:
+        if event_id is not None:
+            this_event.attendees_number -= 1
+            this_event.save()
+
+            done = EventRegistration.objects.get(user_id_id=request.user.id, event_id_id=event_id)
+            done.delete()
+
+            return redirect('event')
+        else:
+            messages.error(request, "Erreur lors de l'identification de l'évènement")
+    else:
+        messages.error(request, "Un problème est survenu lors de votre inscripion, veuillez réessayer et si cela persiste, veuillez contacter un admin")
 
 
 def liste(request):
@@ -502,36 +503,35 @@ def addAlloCounter(allo_type, counter, nb):
         counter.courses += nb
 
 
-def buyAlloTicket(request):
+def buyAlloTicket(request, allo_ticket_id):
     try:
-        if request.method == 'POST':
-            user = User.objects.get(id=request.user.id)
-            if user is not None:
-                allo_id = request.POST['allo']
-                if allo_id is not None:
-                    selected_allo = Allos.objects.get(id=allo_id)
-                    counter = AllosUserCounters.objects.get(user_id=user)
-
-                    if user.klax_coins >= selected_allo.cost:
-                        user.klax_coins -= selected_allo.cost
-                        user.save()
-
-                        addAlloCounter(selected_allo.allo_type, counter, 1)
-                        counter.save()
-
-                        allowed = alloAllowed(selected_allo.allo_type, counter)
-
-                        return render(request, 'allos/alloRegistration.html', {'allo': selected_allo, 'allowed': allowed})
-                    else:
-                        messages.error(request, "Tu n'as pas assez de klaxcoins")
-                else:
-                    messages.error(request, "Veuillez réessayer plus tard")
-            else:
-                messages.error(request, "Tu dois être connecté")
-        else:
-            messages.error(request, "Erreur lors de l'envoie de la requete")
+        user = User.objects.get(id=request.user.id)
     except User.DoesNotExist:
-        messages.error(request, "Vous devez être connecté")
+        user = None
+
+    try:
+        selected_allo = Allos.objects.get(id=allo_ticket_id)
+    except Allos.DoesNotExist:
+        selected_allo = None
+
+    if user is not None and selected_allo is not None:
+
+        counter = AllosUserCounters.objects.get(user_id=user)
+
+        if user.klax_coins >= selected_allo.cost:
+            user.klax_coins -= selected_allo.cost
+            user.save()
+
+            addAlloCounter(selected_allo.allo_type, counter, 1)
+            counter.save()
+
+            allowed = alloAllowed(selected_allo.allo_type, counter)
+
+            return render(request, 'allos/alloRegistration.html', {'allo': selected_allo, 'allowed': allowed})
+        else:
+            messages.error(request, "Tu n'as pas assez de klaxcoins")
+    else:
+        messages.error(request, "Tu dois être connecté")
 
 
 def sendAllo(request):
@@ -641,31 +641,42 @@ def alloRequested(request):
         messages.error(request, "Vous devez être connecté")
 
 
-def takeOverAllo(request):
+def takeOverAllo(request, id_take_allo):
     try:
-        if request.method == 'POST':
-            allo_id = request.POST['allo']
-            allo = AllosRegistration.objects.get(pk=allo_id)
-            allo.take_over = True
-            allo.staff_id = request.user.id
-            allo.save()
-            all_request = AllosRegistration.objects.filter(made=False)
-            return render(request, 'allos/alloRequested.html', {'allos': all_request})
-        else:
-            messages.error(request, "Erreur lors du chargement")
+        allo = AllosRegistration.objects.get(pk=id_take_allo)
+    except AllosRegistration.DoesNotExist:
+        allo = None
+    try:
+        user = User.objects.get(pk=request.user.id)
     except User.DoesNotExist:
-        messages.error(request, "Tu dois être connecté")
+        user = None
+
+    if allo is not None and user is not None:
+        allo.take_over = True
+        allo.staff_id = request.user.id
+        allo.save()
+
+        return redirect('alloRequested')
+    else:
+        messages.error(request, "Erreur lors du chargement")
 
 
-def dontTakeOverAllo(request):
-    if request.method == 'POST':
-        allo_id = request.POST['allo']
-        allo = AllosRegistration.objects.get(pk=allo_id)
+def dontTakeOverAllo(request, id_dontTake_allo):
+    try:
+        allo = AllosRegistration.objects.get(pk=id_dontTake_allo)
+    except AllosRegistration.DoesNotExist:
+        allo = None
+    try:
+        user = User.objects.get(pk=request.user.id)
+    except User.DoesNotExist:
+        user = None
+
+    if allo is not None and user is not None:
         allo.take_over = False
         allo.staff_id = 0
         allo.save()
-        all_request = AllosRegistration.objects.filter(made=False)
-        return render(request, 'allos/alloRequested.html', {'allos': all_request})
+
+        return redirect('alloRequested')
     else:
         messages.error(request, "Erreur lors du chargement")
 
