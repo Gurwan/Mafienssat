@@ -444,7 +444,13 @@ def myAllos(request):
         if user is not None:
             counter = AllosUserCounters.objects.get(user_id_id=user.id)
             my_allos = AllosRegistration.objects.filter(user_id_id=user.id)
-            return render(request, 'allos/myAllos.html', {'user': user, 'counter': counter, 'allos': my_allos})
+
+            all_allos = Allos.objects.all()
+            types = []
+            for allo in all_allos:
+                types.append(allo.allo_type)
+
+            return render(request, 'allos/myAllos.html', {'user': user, 'counter': counter, 'allos': my_allos, 'allos_types': types})
         else:
             messages.error(request, "Vous devez être connecté")
     except User.DoesNotExist:

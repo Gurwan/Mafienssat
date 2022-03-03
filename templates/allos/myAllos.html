@@ -21,61 +21,75 @@
 
     <h1 style="text-align: center; margin-top:20px">Vos allo a disposition</h1>
     {% if counter %} <!-- TODO ajuster les prix ! + Faire en sorte de n'afficher que les types des allos en cours -->
-        <small>Bières à domicile: {{ counter.biere }}</small> <br>
-        {% if counter.biere == 0 %}
-            <button class="button_take_over" type="submit" id="A-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
-                <p>Acheter ce allo 20 klaxcoins</p>
-            </button> <br>
-        {% endif %}
 
-        <small>Goûter: {{ counter.gouter }}</small> <br>
-        {% if counter.gouter == 0 %}
-            <button class="button_take_over" type="submit" id="B-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
-                <p>Acheter ce allo 20 klaxcoins</p>
-            </button> <br>
-        {% endif %}
+        {% for type in allos_types %}
+            {% if type == 'A' %}
+                <small>Bières à domicile: {{ counter.biere }}</small> <br>
+                {% if counter.biere == 0 %}
+                    <button class="button_take_over" type="submit" id="A-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
+                        <p>Acheter ce allo 20 klaxcoins</p>
+                    </button> <br>
+                {% endif %}
 
-        <small>P'tit dej: {{ counter.ptitdej }}</small> <br>
-        {% if counter.ptitdej == 0 %}
-            <button class="button_take_over" type="submit" id="C-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
-                <p>Acheter ce allo 20 klaxcoins</p>
-            </button> <br>
-        {% endif %}
+            {% elif type == 'B' %}
+                <small>Goûter: {{ counter.gouter }}</small> <br>
+                {% if counter.gouter == 0 %}
+                    <button class="button_take_over" type="submit" id="B-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
+                        <p>Acheter ce allo 20 klaxcoins</p>
+                    </button> <br>
+                {% endif %}
 
-        <small>Ménage: {{ counter.menage }}</small> <br>
-        {% if counter.menage == 0 %}
-            <button class="button_take_over" type="submit" id="D-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
-                <p>Acheter ce allo 20 klaxcoins</p>
-            </button> <br>
-        {% endif %}
+            {% elif type == 'C' %}
+                <small>P'tit dej: {{ counter.ptitdej }}</small> <br>
+                {% if counter.ptitdej == 0 %}
+                    <button class="button_take_over" type="submit" id="C-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
+                        <p>Acheter ce allo 20 klaxcoins</p>
+                    </button> <br>
+                {% endif %}
 
-        <small>Car wash: {{ counter.car_wash }}</small> <br>
-        {% if counter.car_wash == 0 %}
-            <button class="button_take_over" type="submit" id="E-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
-                <p>Acheter ce allo 20 klaxcoins</p>
-            </button> <br>
-        {% endif %}
+            {% elif type == 'D' %}
+                <small>Ménage: {{ counter.menage }}</small> <br>
+                {% if counter.menage == 0 %}
+                    <button class="button_take_over" type="submit" id="D-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
+                        <p>Acheter ce allo 20 klaxcoins</p>
+                    </button> <br>
+                {% endif %}
 
-        <small>Klaxeur fou: {{ counter.klax }}</small> <br>
-        {% if counter.klax == 0 %}
-            <button class="button_take_over" type="submit" id="F-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
-                <p>Acheter ce allo 20 klaxcoins</p>
-            </button> <br>
-        {% endif %}
+            {% elif type == 'E' %}
+                <small>Car wash: {{ counter.car_wash }}</small> <br>
+                {% if counter.car_wash == 0 %}
+                    <button class="button_take_over" type="submit" id="E-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
+                        <p>Acheter ce allo 20 klaxcoins</p>
+                    </button> <br>
+                {% endif %}
 
-        <small>Cuisine: {{ counter.cuisine }}</small> <br>
-        {% if counter.cuisine == 0 %}
-            <button class="button_take_over" type="submit" id="G-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
-                <p>Acheter ce allo 20 klaxcoins</p>
-            </button> <br>
-        {% endif %}
+            {% elif type == 'F' %}
+                <small>Klaxeur fou: {{ counter.klax }}</small> <br>
+                {% if counter.klax == 0 %}
+                    <button class="button_take_over" type="submit" id="F-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
+                        <p>Acheter ce allo 20 klaxcoins</p>
+                    </button> <br>
+                {% endif %}
 
-        <small>Courses: {{ counter.courses }}</small> <br>
-        {% if counter.courses == 0 %}
-            <button class="button_take_over" type="submit" id="H-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
-                <p>Acheter ce allo 20 klaxcoins</p>
-            </button> <br>
-        {% endif %}
+            {% elif type == 'G' %}
+                <small>Cuisine: {{ counter.cuisine }}</small> <br>
+                {% if counter.cuisine == 0 %}
+                    <button class="button_take_over" type="submit" id="G-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
+                        <p>Acheter ce allo 20 klaxcoins</p>
+                    </button> <br>
+                {% endif %}
+
+            {% elif type == 'H' %}
+                <small>Courses: {{ counter.courses }}</small> <br>
+                {% if counter.courses == 0 %}
+                    <button class="button_take_over" type="submit" id="H-20" onclick="buyAllo(this.id)" value="buyAllo" name="buyAllo">
+                        <p>Acheter ce allo 20 klaxcoins</p>
+                    </button> <br>
+                {% endif %}
+
+            {% endif %}
+        {% endfor %}
+
     {% else %}
         <small>Erreur lors du chargement de vos donnés</small>
     {% endif %}
