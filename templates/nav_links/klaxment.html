@@ -1,9 +1,9 @@
 {% extends 'main.html' %}
 {% block content %}
 {% include 'nav.html' %}
-<div class="container">
-    <div id="main_title">
-        <h1>Klaxment <span>officiel</span></h1>
+<div class="row" id="klaxment_id">
+    <div id="main_title" class="col-9">
+        <h1>Klaxment officiel</h1>
         <div id="klaxment_list">
             {% for user in userList %}
                 {% if forloop.counter == 1 %}
@@ -17,6 +17,9 @@
                 {% endif %}
             {% endfor %}
         </div>
+    </div>
+    <div id="pub_id_klaxment" class="col-3">
+
     </div>
     <div>
         
