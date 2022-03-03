@@ -55,5 +55,5 @@ urlpatterns = [
     path("staff/alloCreator/", views.alloCreator, name="alloCreator"),
     path("staff/alloRequested/", views.alloRequested, name="alloRequested"),
     path("staff/alloRequested/takeOverAllo/<int:id_take_allo>/", views.takeOverAllo, name="takeOverAllo"),
-    path("home_allos/dontTakeOverAllo/<int:id_dontTake_allo>/", views.dontTakeOverAllo, name="dontTakeOverAllo")
+    path("staff/alloRequested/dontTakeOverAllo/<int:id_dontTake_allo>/", views.dontTakeOverAllo, name="dontTakeOverAllo")
 ]
