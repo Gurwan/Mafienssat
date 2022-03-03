@@ -367,23 +367,20 @@ def event(request):
 def readFileForHTML(file_name):
     file = open(file_name)
     all_lines = file.read().splitlines()
-    infos = []
-    indexes = []
+    toReturn = []
     i = 0
     for line in all_lines:
         if line != '':
-            infos.append(line)
-            indexes.append(i)
+            line = line.split("**")
+            toReturn.append({'index': str(i), 'class': line[0], 'info': line[1]})
             i += 1
-
-    toReturn = [infos, indexes]
 
     return toReturn
 
 
-def eventHTML(request, event_id):
+def eventHTML(request, id_event):
     try:
-        event_name = Event.objects.get(pk=event_id).event_name
+        event_name = Event.objects.get(pk=id_event).event_name
     except Event.DoesNotExist:
         event_name = None
 
@@ -391,7 +388,7 @@ def eventHTML(request, event_id):
 
         infos = readFileForHTML("static/events/" + event_name + ".txt")
 
-        return render(request, 'events/eventPresentation.html', {'event': event_name, 'texts': infos[0], 'indexes': infos[1]})
+        return render(request, 'events/eventPresentation.html', {'event': event_name, 'infos': infos})
     else:
         messages.error(request, "Erreur lors de l'envoie de la requête")
 
