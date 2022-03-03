@@ -15,27 +15,16 @@
 
 <div class="container-fluid" id="choices">
     <div id="main_col">
-        <div class="row">
-            <div class="col" id="left" onclick="goBets()">
+        <div class="row"> <!-- Todo Faire ensorte de ne plus voir le lien hypertext -->
+            <a class="col" id="left" href="{% url "betKlax" %}">
                 <h2>Les paris en cours</h2>
-            </div>
+            </a>
             {% if user %}
-                <div class="col" id="right" onclick="goMyBets()">
+                <a class="col" id="right" href="{% url "myBets" %}">
                     <h2>Vos paris enregistrés</h2>
-                </div>
+                </a>
             {% endif %}
         </div>
     </div>
 </div>
-
-<script>
-    function goBets(){
-        window.location.href = window.location.href + "betKlax"
-    }
-
-    function goMyBets(){
-        window.location.href = window.location.href + "myBets"
-    }
-</script>
-
 {% endblock %}

@@ -1,23 +1,23 @@
 {% extends 'main.html' %}
 {% load static %}
 {% block content %}
-<footer>
+<footer> <!-- Todo Faire en sorte de ne pas voir le lien hypertext-->
     <div class="row">
-        <div class="col" id="partners" onclick="goFooter(this.id)">
+        <a class="col" id="partners" href="{% url "partners" %}">
             <p>Partenaires</p>
-        </div>
+        </a>
 
-        <div class="col" id="credits" onclick="goFooter(this.id)">
+        <a class="col" id="credits" href="{% url "credits" %}">
             <p>Crédits</p>
-        </div>
+        </a>
 
-        <div class="col" id="values" onclick="goFooter(this.id)">
+        <a class="col" id="values" href="{% url "values" %}">
             <p>Nos valeurs</p>
-        </div>
+        </a>
 
-        <div class="col" id="promises" onclick="goFooter(this.id)">
+        <a class="col" id="promises" href="{% url "promises" %}">
             <p>Promesses de campagne</p>
-        </div>
+        </a>
     </div>
 </footer>
 <script>
