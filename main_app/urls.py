@@ -44,7 +44,7 @@ urlpatterns = [
 
         # Footer
     path("partners/", views.partners, name="partners"),
-    path("credits/", views.ourCredits, name="credits"),
+    path("thanks/", views.ourThanks, name="thanks"),
     path("values/", views.ourValues, name="values"),
     path("promises/", views.promises, name="promises"),
 

@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from decimal import *
 from datetime import datetime
 from .models import User, Bets, StoreBets, Event, EventRegistration, AllosRegistration, Allos, AllosUserCounters
-from .forms import UserForm, AddBetForm, AddEventForm, AlloAdminForm, AlloForm
+from .forms import UserForm, AddBetForm, AddEventForm, AlloAdminForm
 
 
 def loginPage(request):
@@ -372,7 +372,7 @@ def readFileForHTML(file_name):
     for line in all_lines:
         if line != '':
             line = line.split("**")
-            toReturn.append({'index': str(i), 'class': line[0], 'info': line[1]})
+            toReturn.append({'index': str(i), 'infoClass': line[0], 'info': line[1]})
             i += 1
 
     return toReturn
@@ -755,8 +755,8 @@ def partners(request):
     return render(request, 'footers/partners.html')
 
 
-def ourCredits(request):
-    return render(request, 'footers/credits.html')
+def ourThanks(request):
+    return render(request, 'footers/thanks.html')
 
 
 def promises(request):

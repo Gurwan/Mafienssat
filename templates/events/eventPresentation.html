@@ -8,14 +8,11 @@
     <div class="{{ event }}">
         {% for index in index_list %}
             {% for info in index.list %}
-                <div class="{{ index.class }}" id="{{ info.index }}">
+                <div class="{{ index.infoClass }}" id="{{ info.index }}">
                     {{ info.info }}
                 </div>
             {% endfor %}
         {% endfor %}
     </div>
 {% endif %}
-<script>
-
-</script>
 {% endblock %}
