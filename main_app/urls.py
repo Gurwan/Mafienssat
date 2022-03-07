@@ -51,8 +51,11 @@ urlpatterns = [
         # Staff
     path("staff/", views.staff, name="staff"),
     path("staff/betCreator/", views.betCreator, name="betCreator"),
+    path("staff/betCreator/setVisbleBet/<int:id_bet>/", views.setVisibleBet, name="setVisibleBet"),
     path("staff/eventCreator/", views.eventCreator, name="eventCreator"),
+    path("staff/eventCreator/setVisbleEvent/<int:id_event>/", views.setVisibleEvent, name="setVisibleEvent"),
     path("staff/alloCreator/", views.alloCreator, name="alloCreator"),
+    path("staff/alloCreator/setVisbleAllo/<int:id_allo>/", views.setVisibleAllo, name="setVisibleAllo"),
     path("staff/alloRequested/", views.alloRequested, name="alloRequested"),
     path("staff/alloRequested/takeOverAllo/<int:id_take_allo>/", views.takeOverAllo, name="takeOverAllo"),
     path("staff/alloRequested/dontTakeOverAllo/<int:id_dontTake_allo>/", views.dontTakeOverAllo, name="dontTakeOverAllo")
