@@ -380,7 +380,7 @@ def event(request):
         user = None
 
     try:
-        registered_event = EventsRegistration.objects.filter(user_id_id=user.id)
+        registered_event = EventsRegistration.objects.filter(user_id_id=request.user.id)
     except EventsRegistration.DoesNotExist:
         registered_event = None
 
