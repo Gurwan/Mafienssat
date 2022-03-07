@@ -22,6 +22,14 @@
     <div class="container">
         {% for event in events %}
             <small>{{ event.event_name }}: fini le {{ event.event_date }} <br></small>
+            {% if event.visible %}
+                <small>Cet event est visible pour tous le monde</small>
+            {% else %}
+                <small>Ce allo n'est pas visible pour tous le monde</small> <br>
+                <a class="row btn" style="background-color: #522699" href="{% url "setVisibleEvent" id_event=event.id %}" value="setVisibleEvent{{ event.id }}">
+                    Mettre en ligne l'event
+                </a>
+            {% endif %}
         {% endfor %}
     </div>
 {% endif %}
