@@ -1,5 +1,6 @@
 {% extends 'main.html' %}
 {% block content %}
+{% load static %}
 {% include 'nav.html' %}
 <div class="row" id="klaxment_id">
     <div id="main_title" class="col-9">
@@ -19,10 +20,26 @@
         </div>
     </div>
     <div id="pub_id_klaxment" class="col-3">
-
-    </div>
-    <div>
-        
+        <img id="gif_gros_klax_id" width="200px" height="750px" src="{% static 'img/pub_gros_klax.gif' %}">
+        <img id="gif_big_klax_id" style="display:none" width="200px" height="750px" src="{% static 'img/pub_big_klax.gif' %}">
+        <img id="gif_chaud_klaxeurs_id" style="display:none" width="200px" height="750px" src="{% static 'img/pub_chaud_klaxeurs.gif' %}">
     </div>
 </div>
+<script>
+    setInterval(function () {
+        let e1 = document.getElementById("gif_gros_klax_id").style.display; 
+        let e2 = document.getElementById("gif_big_klax_id").style.display; 
+        let e3 = document.getElementById("gif_chaud_klaxeurs_id").style.display; 
+        if(e1 == "block"){
+            document.getElementById("gif_big_klax_id").style.display = "block";
+            document.getElementById("gif_gros_klax_id").style.display = "none";
+        } else if(e2 == "block"){
+            document.getElementById("gif_chaud_klaxeurs_id").style.display = "block";
+            document.getElementById("gif_big_klax_id").style.display = "none";
+        } else {
+            document.getElementById("gif_gros_klax_id").style.display = "block";
+            document.getElementById("gif_chaud_klaxeurs_id").style.display = "none";
+        }
+    }, 13000);
+</script>
 {% endblock %}
