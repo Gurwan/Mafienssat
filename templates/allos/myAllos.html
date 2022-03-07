@@ -1,23 +1,25 @@
 {% extends 'main.html' %}
 {% block content %}
 {% load bootstrap5 %}
+{% load static %}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
-{% load static %}
 {% include 'nav.html' %}
 {% if user %}
+
     <div class="container-fluid" id="betklax-pages">
         <h2>Ton pocheton de klaxcoins</h2>
           {% if user.klax_coins > 0 %}
               <div>
-                  <p><span>{{ user.username }}</span> tu as {{ user.klax_coins }} <span id="yellow-span">klaxcoins</span></p>
+                  <p><span>Ton solde de Klaxcoins : </span>{{ user.klax_coins }} <img class="img-fluid" height="75" width="75" src="{% static 'klax_or.png' %}" alt=""/></p>
               </div>
           {% else %}
               <div>
-                <p><span>Time to soudoyer</span> car là tu n'as aucun <span id="yellow-span">klaxcoin</span> à parier (tema la bete de phrase)</p>
+                <p><span>Time to soudoyer</span> car là tu n'as aucun <img class="img-fluid" height="75" width="75" src="{% static 'klax_or.png' %}" alt=""/> à parier</p>
               </div>
           {% endif %}
-    </div> <br>
+    </div>
+    <br>
 
     <h1 style="text-align: center; margin-top:20px">Vos allo a disposition</h1>
     {% if counter %} <!-- TODO ajuster les prix ! + Faire en sorte de n'afficher que les types des allos en cours -->
