@@ -37,6 +37,7 @@ urlpatterns = [
     path("home_allos/", views.homeAllos, name="homeAllos"),
     path("home_allos/allos/", views.allos, name="allos"),
     path("home_allos/myAllos/", views.myAllos, name="myAllos"),
+    path("home_allos/myAllos/removeAllo/<int:id_allo>/", views.removeAllo, name="removeAllo"),
     path("home_allos/buyAllos", views.buyAllos, name="buyAllos"),
     path("home_allos/sendAllo", views.sendAllo, name="sendAllo"),
     path("home_allos/buyAlloTicket/<int:allo_ticket_id>/", views.buyAlloTicket, name="buyAlloTicket"),
