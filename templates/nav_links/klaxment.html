@@ -1,5 +1,6 @@
 {% extends 'main.html' %}
 {% block content %}
+{% load static %}
 {% include 'nav.html' %}
 <div class="row" id="klaxment_id">
     <div id="main_title" class="col-9">
@@ -7,11 +8,11 @@
         <div id="klaxment_list">
             {% for user in userList %}
                 {% if forloop.counter == 1 %}
-                    <h2><span>Première place </span> {{user.firstname}} {{user.lastname}} - {{user.klax_coins}}</h2>
+                    <h2><span>Première place </span> {{user.firstname}} {{user.lastname}} - {{user.klax_coins}} <img class="img-fluid" height="75" width="75" src="{% static 'klax_or.png' %}" alt=""/></h2>
                 {% elif forloop.counter == 2 %}
-                    <h3><span>Deuxième place </span>  {{user.firstname}} {{user.lastname}} - {{user.klax_coins}}</h3>
+                    <h3><span>Deuxième place </span>  {{user.firstname}} {{user.lastname}} - {{user.klax_coins}} <img class="img-fluid" height="75" width="75" src="{% static 'klax_argent.png' %}" alt=""/></h3>
                 {% elif forloop.counter == 3 %}
-                    <h4><span>Troisième place :</span> {{user.firstname}} {{user.lastname}} - {{user.klax_coins}}</h4>
+                    <h4><span>Troisième place :</span> {{user.firstname}} {{user.lastname}} - {{user.klax_coins}} <img class="img-fluid" height="75" width="75" src="{% static 'klax_bronze.png' %}" alt=""/></h4>
                 {% elif forloop.counter <= 10 %}
                     <h5><span>{{forloop.counter}}ème place :</span> {{user.firstname}} {{user.lastname}} - {{user.klax_coins}}</h5>    
                 {% endif %}
@@ -19,9 +20,6 @@
         </div>
     </div>
     <div id="pub_id_klaxment" class="col-3">
-
-    </div>
-    <div>
         
     </div>
 </div>
