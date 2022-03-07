@@ -7,8 +7,8 @@
             <p>Partenaires</p>
         </a>
 
-        <a class="col" id="credits" href="{% url "credits" %}">
-            <p>Crédits</p>
+        <a class="col" id="thanks" href="{% url "thanks" %}">
+            <p>Remerciements</p>
         </a>
 
         <a class="col" id="values" href="{% url "values" %}">
@@ -20,9 +20,4 @@
         </a>
     </div>
 </footer>
-<script>
-    function goFooter(footer_name){
-        window.location.href = window.location.href + footer_name + "/"
-    }
-</script>
 {% endblock %}
