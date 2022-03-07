@@ -654,6 +654,33 @@ def sendAllo(request):
     return render(request, 'allos/allos.html', {'user': user, 'allos': all_allos})
 
 
+def removeAllo(request, id_allo):
+    try:
+        user = User.objects.get(pk=request.user.id)
+    except User.DoesNotExist:
+        user = None
+
+    if user is not None:
+
+        try:
+            allo = AllosRegistration.objects.get(pk=id_allo, user_id_id=user.id)
+        except AllosRegistration.DoesNotExist:
+            allo = None
+
+        if allo is not None:
+
+            user.klax_coins += allo.allo_id.cost
+            user.save()
+
+            allo.delete()
+
+            return redirect('myAllos')
+        else:
+            messages.error(request, "Erreur lors de l'envoie de la requête")
+    else:
+        messages.error(request, "Vous devez être connecté")
+
+
 def alloCreator(request):
     try:
         user = User.objects.get(pk=request.user.id)

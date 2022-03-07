@@ -109,6 +109,9 @@
                 {% endif %}
             {% else %}
                 <small>Etat: Envoyé</small> <br>
+                <a class="row btn" style="background-color: #522699" href="{% url "removeAllo" id_allo=allo.id %}" value="removeAllo{{ allo.id }}">
+                    Annuler la demande
+                </a> <br>
             {% endif %}
             <br>
         {% endfor %}
