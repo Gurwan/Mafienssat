@@ -7,42 +7,44 @@
         <h1>Prochains <span>événements</span></h1>
     </div>
     {% for event in events %}
-        <div id="next-event">
-            <img class="img-fluid" src="{% static 'img/event/background.jpg' %}"/>
-            <h2 id="name">{{event.event_name}}</h2>
-            <h3 id="date">Le {{event.event_date | date:"d"}} {{event.event_date | date:"F"}} {{event.event_date | date:"o"}} à {{event.event_date | date:"H"}}h{{event.event_date | date:"i"}}</h3>
-            <div>
-                <h4>{{event.get_event_type_display}}</h4> <br>
-                {% if event.max_attendees != 0 %}
-                    <h4>{{event.attendees_number}} inscrits sur {{event.max_attendees}} places disponibles</h4>
-                {% endif %}
-            </div>
-        
-            <p>{{event.event_description}}</p>
-        </div>
-        <div class="container-fluid" id="choices">
-            <div id="main_col_event">
-                <div class="row">
-                    {% if user %}
-                        {% if event.attendees_number < event.max_attendees and event.max_attendees != 0 %}
-                            <a class="col btn" style="background-color: #522699" href="{% url "eventRegistration" event_id=event.id %}" value="goEvent{{ event.id }}">
-                                <h2>Participer à l'événement</h2>
-                            </a>
-                        {% endif %}
-                        {% if event.associated_bet %}
-                            <a class="col btn" style="background-color: #a7662a" href="{% url "homeBetKlax" %}" value="goBet{{ event.id }}">
-                                <h2>Parier sur l'événement</h2>
-                            </a>
-                        {% endif %}
-                    {% endif %}
-                    {% if event.associated_html %}
-                        <a class="row btn" style="background-color: #522699" href="{% url "eventHTML" id_event=event.id %}" value="moreInformation{{ event.id }}">
-                            <h2>Plus d'informaions sur l'évènement</h2>
-                        </a>  <!-- Todo changer le type en bouton -->
+        {% if event.visible %}
+            <div id="next-event">
+                <img class="img-fluid" src="{% static 'img/event/background.jpg' %}"/>
+                <h2 id="name">{{event.event_name}}</h2>
+                <h3 id="date">Le {{event.event_date | date:"d"}} {{event.event_date | date:"F"}} {{event.event_date | date:"o"}} à {{event.event_date | date:"H"}}h{{event.event_date | date:"i"}}</h3>
+                <div>
+                    <h4>{{event.get_event_type_display}}</h4> <br>
+                    {% if event.max_attendees != 0 %}
+                        <h4>{{event.attendees_number}} inscrits sur {{event.max_attendees}} places disponibles</h4>
                     {% endif %}
                 </div>
+
+                <p>{{event.event_description}}</p>
             </div>
-        </div>
+            <div class="container-fluid" id="choices">
+                <div id="main_col_event">
+                    <div class="row">
+                        {% if user %}
+                            {% if event.attendees_number < event.max_attendees and event.max_attendees != 0 %}
+                                <a class="col btn" style="background-color: #522699" href="{% url "eventRegistration" event_id=event.id %}" value="goEvent{{ event.id }}">
+                                    <h2>Participer à l'événement</h2>
+                                </a>
+                            {% endif %}
+                            {% if event.associated_bet %}
+                                <a class="col btn" style="background-color: #a7662a" href="{% url "homeBetKlax" %}" value="goBet{{ event.id }}">
+                                    <h2>Parier sur l'événement</h2>
+                                </a>
+                            {% endif %}
+                        {% endif %}
+                        {% if event.associated_html %}
+                            <a class="row btn" style="background-color: #522699" href="{% url "eventHTML" id_event=event.id %}" value="moreInformation{{ event.id }}">
+                                <h2>Plus d'informaions sur l'évènement</h2>
+                            </a>  <!-- Todo changer le type en bouton -->
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
     {% endfor %}
 
 {% if user %}

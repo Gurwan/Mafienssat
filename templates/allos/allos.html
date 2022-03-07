@@ -10,19 +10,21 @@
         <h1>Les <span>Allo</span> à votre disposition</h1>
     </div>
     {% for allo in allos %}
-        <small>{{ allo.get_allo_type_display }}</small> <br>
-        <small>{{ allo.description }}</small> <br>
-        <small>Disponible du {{allo.start_date | date:"d"}} {{allo.start_date  | date:"F"}} {{allo.start_date  | date:"o"}} à {{allo.start_date | date:"H"}}h{{allo.start_date | date:"i"}}</small>
-        <small>au {{allo.end_date | date:"d"}} {{allo.end_date  | date:"F"}} {{allo.end_date  | date:"o"}} à {{allo.end_date | date:"H"}}h{{allo.end_date | date:"i"}}</small> <br>
-        {% if allo.cost > 0 %}
-            <small>Coût: {{ allo.cost }} klaxcoins </small> <br>
+        {% if allo.visible %}
+            <small>{{ allo.get_allo_type_display }}</small> <br>
+            <small>{{ allo.description }}</small> <br>
+            <small>Disponible du {{allo.start_date | date:"d"}} {{allo.start_date  | date:"F"}} {{allo.start_date  | date:"o"}} à {{allo.start_date | date:"H"}}h{{allo.start_date | date:"i"}}</small>
+            <small>au {{allo.end_date | date:"d"}} {{allo.end_date  | date:"F"}} {{allo.end_date  | date:"o"}} à {{allo.end_date | date:"H"}}h{{allo.end_date | date:"i"}}</small> <br>
+            {% if allo.cost > 0 %}
+                <small>Coût: {{ allo.cost }} klaxcoins </small> <br>
+            {% endif %}
+            {% if user %}
+                <a class="button_make_allo" value="alloRegistration{{ allo.id }}" href="{% url 'alloRegistration' allo.id %}">
+                    <p id="label">Envoyer une demande</p>
+                </a>
+            {% endif %}
+            <br> <br>
         {% endif %}
-        {% if user %}
-            <a class="button_make_allo" value="alloRegistration{{ allo.id }}" href="{% url 'alloRegistration' allo.id %}">
-                <p id="label">Envoyer une demande</p>
-            </a>
-        {% endif %}
-        <br> <br>
     {% endfor %}
 </div>
 {% endblock %}
