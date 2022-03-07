@@ -40,9 +40,11 @@ class Bets(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     ended = models.DateTimeField(help_text='YYYY-MM-DD HH:MM:SS')
 
+    visible = models.BooleanField(default=False)
+
 
 class StoreBets(models.Model):
-    bet_id = models.ForeignKey('Bets', on_delete=models.PROTECT)
+    bet_id = models.ForeignKey('Bets', on_delete=models.CASCADE)
     user_id = models.ForeignKey('User', on_delete=models.CASCADE)
     RESULT = (
         ('W', 'Win'),
@@ -73,8 +75,10 @@ class Event(models.Model):
     associated_bet = models.BooleanField(default=False)
     associated_html = models.BooleanField(default=False)
 
+    visible = models.BooleanField(default=False)
 
-class EventRegistration(models.Model):
+
+class EventsRegistration(models.Model):
     event_id = models.ForeignKey('Event', on_delete=models.CASCADE)
     user_id = models.ForeignKey('User', on_delete=models.CASCADE)
 
@@ -96,6 +100,8 @@ class Allos(models.Model):
     end_date = models.DateTimeField(help_text='YYYY-MM-DD HH:MM:SS')
     description = models.CharField(max_length=1024)
     cost = models.DecimalField(max_digits=12, decimal_places=2, default=1.00)
+
+    visible = models.BooleanField(default=False)
 
 
 class AllosRegistration(models.Model):
