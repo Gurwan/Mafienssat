@@ -1,4 +1,5 @@
 from django.forms import ModelForm
+from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import User, Bets, Event, Allos, AllosRegistration
 
@@ -61,3 +62,8 @@ class AlloForm(ModelForm):
     class Meta:
         model = AllosRegistration
         fields = ['date']
+
+
+class SendEmailForms(forms.Form):
+    date = forms.DateTimeField()
+

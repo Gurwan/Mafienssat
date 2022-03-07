@@ -3,8 +3,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from decimal import *
 from datetime import datetime
-from .models import User, Bets, StoreBets, Event, EventRegistration, AllosRegistration, Allos, AllosUserCounters
-from .forms import UserForm, AddBetForm, AddEventForm, AlloAdminForm
+from .models import User, Bets, StoreBets, Event, EventsRegistration, AllosRegistration, Allos, AllosUserCounters
+from .forms import UserForm, AddBetForm, AddEventForm, AlloAdminForm, SendEmailForms
+from . import forms
 
 
 def loginPage(request):
@@ -100,6 +101,22 @@ def betCreator(request):
         return render(request, 'bets/betCreator.html', {'user': user, 'betform': betform, 'bets': bets})
     except User.DoesNotExist:
         messages.error(request, "Tu dois être membre du staff pour accéder à cette page")
+
+
+def setVisibleBet(request, id_bet):
+    try:
+        bet = Bets.objects.get(pk=id_bet)
+    except Bets.DoesNotExist:
+        bet = None
+
+    if bet is not None:
+        bet.visible = True
+        bet.save()
+
+        return redirect('betCreator')
+
+    else:
+        messages.error(request, "Erreur lors de l'envoi de la requête")
 
 
 def ratingRecalculation(request):
@@ -339,6 +356,22 @@ def eventCreator(request):
         messages.error(request, "Vous devez être connecté pour accéder à cette page")
 
 
+def setVisibleEvent(request, id_event):
+    try:
+        this_event = Event.objects.get(pk=id_event)
+    except Event.DoesNotExist:
+        this_event = None
+
+    if this_event is not None:
+        this_event.visible = True
+        this_event.save()
+
+        return redirect('eventCreator')
+
+    else:
+        messages.error(request, "Erreur lors de l'envoi de la requête")
+
+
 def event(request):
     events = Event.objects.all()
     try:
@@ -347,8 +380,8 @@ def event(request):
         user = None
 
     try:
-        registered_event = EventRegistration.objects.filter(user_id_id=user.id)
-    except EventRegistration.DoesNotExist:
+        registered_event = EventsRegistration.objects.filter(user_id_id=user.id)
+    except EventsRegistration.DoesNotExist:
         registered_event = None
 
     if registered_event is not None:
@@ -401,8 +434,8 @@ def eventRegistration(request, event_id):
         user = None
 
     try:
-        done = EventRegistration.objects.get(user_id_id=user.id, event_id_id=event_id)
-    except EventRegistration.DoesNotExist:
+        done = EventsRegistration.objects.get(user_id_id=user.id, event_id_id=event_id)
+    except EventsRegistration.DoesNotExist:
         done = None
 
     try:
@@ -416,7 +449,7 @@ def eventRegistration(request, event_id):
             this_event.attendees_number += 1
             this_event.save()
 
-            reg = EventRegistration()
+            reg = EventsRegistration()
             reg.event_id = this_event
             reg.user_id = user
             reg.save()
@@ -444,7 +477,7 @@ def eventUnregistration(request, event_id):
             this_event.attendees_number -= 1
             this_event.save()
 
-            done = EventRegistration.objects.get(user_id_id=request.user.id, event_id_id=event_id)
+            done = EventsRegistration.objects.get(user_id_id=request.user.id, event_id_id=event_id)
             done.delete()
 
             return redirect('event')
@@ -646,6 +679,22 @@ def alloCreator(request):
         messages.error(request, "Vous devez être connecté")
 
 
+def setVisibleAllo(request, id_allo):
+    try:
+        allo = Allos.objects.get(pk=id_allo)
+    except Allos.DoesNotExist:
+        allo = None
+
+    if allo is not None:
+        allo.visible = True
+        allo.save()
+
+        return redirect('alloCreator')
+
+    else:
+        messages.error(request, "Erreur lors de l'envoi de la requête")
+
+
 def alloRegistration(request, id_allo):
 
     try:
@@ -736,6 +785,24 @@ def dontTakeOverAllo(request, id_dontTake_allo):
         return redirect('alloRequested')
     else:
         messages.error(request, "Erreur lors du chargement")
+
+
+""" 
+def sendAlloEmailConfirmation(request, id_allo):
+    if request.method == 'POST':
+        try:
+            date = SendEmailForms(request.POST)
+        except request.POST is None:
+            date = None
+
+        if date.is_valid():
+
+
+        else:
+            messages.error(request, "La requète est vide, veuillez réessayer")
+    else:
+        messages.error(request, "Erreur lors de l'envoie de la requête")
+"""
 
 
 def staff(request):

@@ -131,3 +131,12 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# DataFlair Email
+EMAIL_BACKEND = 'django.core.email.smtp.EmailBackend'
+EMAIL_HOST = 'stmp.gmail.com'
+EMAIL_HOST_USER = 'mafienssat.dontreply@gmail.com'
+EMAIL_HOST_PASSWORD = '6mqfHKwZ6ZY6VvL'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
