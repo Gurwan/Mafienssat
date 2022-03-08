@@ -20,7 +20,7 @@
 
 
 body {
-    background-color: black; /*; 666666 ou 0f0f3d*/
+    background-color: #666666; /*; 666666 ou 0f0f3d*/
     color: white;
 }
 
@@ -213,6 +213,9 @@ body {
     font-weight:normal;
     font-style:normal;
     background-color: white;
+    height: 100%;  
+    display: flex;
+    flex-flow: column;
 }
 
 #main_col .row .col {
@@ -326,11 +329,14 @@ body {
     display: inline-block;
     background-color: yellow;
     font-family: 'Corleone', Arial, sans-serif;
+    padding: 10px;
+    color:#000;
 }
 
 .button_rate #rate {
     font-family: 'Bolf', Arial, sans-serif;
     font-weight: bold;
+    color: #000!important;
 }
 
 .loadbar {
@@ -481,7 +487,10 @@ h6 {
 footer {
     width: 100%;
     height: 65px;
-    position: relative;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
     line-height: 65px;
     font-size: 25px;
     text-align: center;
@@ -500,6 +509,21 @@ footer .row {
 @media screen and (max-width: 900px) {
   footer .row {
       display: block;
+      background-color: black;
+  }
+  footer {
+    width: 100%;
+    height: 65px;
+    position: relative;
+    line-height: 65px;
+    font-size: 25px;
+    text-align: center;
+    font-family: 'Corleone', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+    background-color: #000000;
+    padding-right: 0;
+    margin-right: 0;
   }
 }
 
@@ -661,9 +685,10 @@ footer .row {
 }
 
 #pub_id_main {
-    background-color: rgb(98,34,35);
     width: 225px!important;
     height: 750px!important;
+    padding-left:0 ;
+    margin-left: 0;
 }
 
 #pub_id_main h1 {

@@ -28,9 +28,9 @@
             <small>au {{allo.end_date | date:"d"}} {{allo.end_date  | date:"F"}} {{allo.end_date  | date:"o"}} à {{allo.end_date | date:"H"}}h{{allo.end_date | date:"i"}}</small> <br>
             <br>
             {% if allo.visible %}
-                <small>Ce allo est visible pour tous le monde</small>
+                <small>Ce allo est visible pour tout le monde</small>
             {% else %}
-                <small>Ce allo n'est pas visible pour tous le monde</small> <br>
+                <small>Ce allo n'est pas visible pour tout le monde</small> <br>
                 <a class="row btn" style="background-color: #522699" href="{% url "setVisibleAllo" id_allo=allo.id %}" value="setVisibleAllo{{ allo.id }}">
                     Mettre en ligne le allo
                 </a>
