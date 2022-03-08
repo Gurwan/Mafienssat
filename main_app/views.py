@@ -119,35 +119,23 @@ def setVisibleBet(request, id_bet):
         messages.error(request, "Erreur lors de l'envoi de la requête")
 
 
-def ratingRecalculation(request):
-    if request.method == 'POST':
-        bet_id = request.POST['bet']
-        try:
-            bet = Bets.objects.all().get(pk=bet_id)
+def ratingRecalculation(id_bet):
+    try:
+        bet = Bets.objects.all().get(pk=id_bet)
+    except Bets.DoesNotExist:
+        bet = None
 
-        except Bets.DoesNotExist:
-            bet = None
+    if bet is not None:
+        w_gains = float(bet.win_gains) + float(1)
+        l_gains = float(bet.lose_gains) + float(1)
 
-        if bet is not None:
-            w_gains = float(bet.win_gains) + float(1)
-            l_gains = float(bet.lose_gains) + float(1)
-            print(w_gains, l_gains)
+        w_rate = (w_gains + l_gains) / w_gains
+        l_rate = (w_gains + l_gains) / l_gains
+        bet.win_rate = Decimal(w_rate)
+        bet.lose_rate = Decimal(l_rate)
+        bet.save()
 
-            w_rate = (w_gains + l_gains)/w_gains
-            l_rate = (w_gains + l_gains)/l_gains
-            bet.win_rate = Decimal(w_rate)
-            bet.lose_rate = Decimal(l_rate)
-            bet.save()
-            print(w_rate, l_rate)
-            name = request.POST['name']
-            if name is not None:
-                return redirect(name)
-            else:
-                return redirect('home')
-        else:
-            messages.error(request, "Pari non reconnu veuillez réessayer")
-    else:
-        messages.error(request, "Problème rencontré lors del'envoi de la requète")
+        return redirect('myBets')
 
 
 def makeBetW(request, id_bet):
@@ -253,24 +241,20 @@ def myBets(request):
         return render(request, 'bets/myBetKlax.html', {'mybets': mybets, 'finalizedBets': finalizedBets, 'user': user})
 
 
-def addGains(request):
+def addGains(request, id_bet, gains):
     try:
         current_user = User.objects.get(pk=request.user.id)
     except User.DoesNotExist:
         current_user = None
 
-    if request.method == 'POST' and current_user is not None:
-        bet_id = request.POST['bet']
-        gains = request.POST['gains']
+    if current_user is not None:
         if current_user.klax_coins >= Decimal(gains):
-            bet = StoreBets.objects.get(user_id_id=current_user.id, bet_id_id=bet_id)
+            bet = StoreBets.objects.get(user_id_id=current_user.id, bet_id_id=id_bet)
             bet.gains += Decimal(gains)
             if bet.result == 'W':
                 bet.bet_id.win_gains += Decimal(gains)
-                print(bet.bet_id.win_gains)
             elif bet.result == 'L':
                 bet.bet_id.lose_gains += Decimal(gains)
-                print(bet.bet_id.lose_gains)
             else:
                 messages.error(request, "Le résultat du pari est inconnu")
             bet.bet_id.save()
@@ -279,6 +263,8 @@ def addGains(request):
             current_user.klax_coins -= Decimal(gains)
             current_user.save()
 
+            ratingRecalculation(id_bet)
+
             return redirect("myBets")
         else:
             messages.error(request, "Tu n'as pas asser de KlaxCoins espèce de rat")
@@ -286,19 +272,18 @@ def addGains(request):
         messages.error(request, "Il faut être connecté pour acceder à cette page")
 
 
-def finalizeBet(request):
+def finalizeBet(request, id_bet):
     try:
         current_user = User.objects.get(pk=request.user.id)
     except User.DoesNotExist:
         current_user = None
 
     if current_user is not None:
-        bet_id = request.POST['bet']
         gains = request.POST['gains'] if request.POST['gains'] != "" else Decimal(0)
         if current_user.klax_coins >= Decimal(gains):
-            if bet_id is not None:
+            if id_bet is not None:
                 try:
-                    bet = StoreBets.objects.get(bet_id_id=bet_id, user_id_id=current_user.id)
+                    bet = StoreBets.objects.get(bet_id_id=id_bet, user_id_id=current_user.id)
                 except StoreBets.DoesNotExist:
                     bet = None
 
@@ -320,6 +305,8 @@ def finalizeBet(request):
                     bet.blocked_bet = True
                     bet.bet_id.save()
                     bet.save()
+
+                    ratingRecalculation(id_bet)
 
                     return redirect("myBets")
             else:
