@@ -22,11 +22,9 @@
     <h1 style="text-align: center; margin-top:20px">Allos proposés</h1>
     <div class="container">
         {% for allo in allos %}
-            <small>{{ allo.get_allo_type_display }} au prix de {{ allo.cost }} klaxcoins</small>
-            <br>
+            <small>{{ allo.get_allo_type_display }} au prix de {{ allo.cost }} klaxcoins</small><br>
             <small>Disponible du {{allo.start_date | date:"d"}} {{allo.start_date  | date:"F"}} {{allo.start_date  | date:"o"}} à {{allo.start_date | date:"H"}}h{{allo.start_date | date:"i"}}</small>
             <small>au {{allo.end_date | date:"d"}} {{allo.end_date  | date:"F"}} {{allo.end_date  | date:"o"}} à {{allo.end_date | date:"H"}}h{{allo.end_date | date:"i"}}</small> <br>
-            <br>
             {% if allo.visible %}
                 <small>Ce allo est visible pour tous le monde</small>
             {% else %}
@@ -35,6 +33,7 @@
                     Mettre en ligne le allo
                 </a>
             {% endif %}
+            <br> <br>
         {% endfor %}
     </div>
 {% endif %}
