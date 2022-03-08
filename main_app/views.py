@@ -494,13 +494,31 @@ def homeAllos(request):
 
 
 def allos(request):
-    all_allos = Allos.objects.all()
+
     try:
         user = User.objects.get(pk=request.user.id)
     except User.DoesNotExist:
         user = None
 
-    return render(request, 'allos/allos.html', {'user': user, 'allos': all_allos})
+    if user is not None:
+        try:
+            registered_allo = AllosRegistration.objects.filter(user_id=user)
+        except AllosRegistration.DoesNotExist:
+            registered_allo = None
+
+        if registered_allo is not None:
+            ids = []
+            for a in registered_allo:
+                ids.append(a.id)
+
+            unregistered_allos = Allos.objects.exclude(id__in=ids)
+
+        else:
+            unregistered_allos = Allos.objects.all()
+    else:
+        unregistered_allos = Allos.objects.all()
+
+    return render(request, 'allos/allos.html', {'user': user, 'allos': unregistered_allos})
 
 
 def myAllos(request):
@@ -523,34 +541,29 @@ def myAllos(request):
         messages.error(request, "Vous devez être connecté")
 
 
-def buyAllos(request):
+def buyAllos(request, allo_type, allo_cost):
     try:
         user = User.objects.get(pk=request.user.id)
     except User.DoesNotExist:
         user = None
 
     if user is not None:
-        if request.method == 'POST':
-            allo_type = request.POST['allo']
-            allo_cost = request.POST['cost']
-            counter = AllosUserCounters.objects.get(user_id_id=user.id)
-            if allo_type is not None and allo_cost is not None:
-                if int(allo_cost) > 0:
-                    if user.klax_coins >= Decimal(allo_cost):
-                        user.klax_coins -= Decimal(allo_cost)
-                        user.save()
-                        addAlloCounter(allo_type, counter, 1)
-                        counter.save()
-
-                    else:
-                        messages.error(request, "Tu n'as pas assez de klaxcoins")
-                else:
+        counter = AllosUserCounters.objects.get(user_id_id=user.id)
+        if allo_type is not None and allo_cost is not None:
+            if int(allo_cost) > 0:
+                if user.klax_coins >= Decimal(allo_cost):
+                    user.klax_coins -= Decimal(allo_cost)
+                    user.save()
                     addAlloCounter(allo_type, counter, 1)
                     counter.save()
 
-                return redirect('myAllos')
+                else:
+                    messages.error(request, "Tu n'as pas assez de klaxcoins")
             else:
-                messages.error(request, "Erreur lors de l'envoie de la requete")
+                addAlloCounter(allo_type, counter, 1)
+                counter.save()
+
+            return redirect('myAllos')
         else:
             messages.error(request, "Erreur lors de l'envoie de la requete")
     else:
@@ -607,38 +620,30 @@ def buyAlloTicket(request, allo_ticket_id):
         messages.error(request, "Tu dois être connecté")
 
 
-def sendAllo(request):
+def sendAllo(request, date, time, allo_id):
     try:
         user = User.objects.get(pk=request.user.id)
-        if request.method == 'POST':
-            date = request.POST['date'] + " " + request.POST['time'] + ":00"
-            allo_id = request.POST['allo']
-            if request.POST['date'] is not None and request.POST['time'] is not None and allo_id is not None:
-                selected_allo = Allos.objects.get(id=allo_id)
-                counter = AllosUserCounters.objects.get(user_id=request.user)
-                if user is not None:
-                    addAlloCounter(selected_allo.allo_type, counter, -1)
-                    counter.save()
-
-                    allo = AllosRegistration()
-                    allo.user_id = user
-                    allo.allo_id = selected_allo
-                    allo.date = datetime.strptime(str(date), '%Y-%m-%d %H:%M:%S')
-                    allo.save()
-
-                else:
-                    messages.error(request, "Utilisateur non trouvé")
-            else:
-                messages.error(request, "Erreur lors de l\'envoie de ta demande")
-        else:
-            messages.error(request, "Erreur lors de l\'envoie de ta demande")
     except User.DoesNotExist:
         user = None
-        messages.error(request, "Vous devez être connecté")
 
-    all_allos = Allos.objects.all()
+    if user is not None and date is not None and time is not None and allo_id is not None:
+        date_time = date + " " + time + ":00"
+        selected_allo = Allos.objects.get(id=allo_id)
+        counter = AllosUserCounters.objects.get(user_id=request.user)
 
-    return render(request, 'allos/allos.html', {'user': user, 'allos': all_allos})
+        addAlloCounter(selected_allo.allo_type, counter, -1)
+        counter.save()
+
+        allo = AllosRegistration()
+        allo.user_id = user
+        allo.allo_id = selected_allo
+        allo.date = datetime.strptime(str(date_time), '%Y-%m-%d %H:%M:%S')
+        allo.save()
+
+        return redirect('allos')
+
+    else:
+        messages.error(request, "Utilisateur non trouvé")
 
 
 def removeAllo(request, id_allo):

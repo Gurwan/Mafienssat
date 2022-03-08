@@ -73,9 +73,9 @@
 
         let right_id = id.split("-")[2]
         let gains = document.getElementById("mise" + right_id).value;
-        let hrefgain = document.getElementById("btn-href-" + right_id).href;
+        let hrefGain = document.getElementById("btn-href-" + right_id).href;
 
-        document.getElementById("btn-href-" + right_id).href = hrefgain.replace("%200", "%20" + gains)
+        document.getElementById("btn-href-" + right_id).href = hrefGain.replace("%200", "%20" + gains)
     }
 </script>
 {% endblock %}
