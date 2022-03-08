@@ -531,7 +531,7 @@ def myAllos(request):
         counter = AllosUserCounters.objects.get(user_id_id=user.id)
         my_allos = AllosRegistration.objects.filter(user_id_id=user.id)
 
-        all_allos = Allos.objects.all()
+        all_allos = Allos.objects.filter(visible=True)
         types = []
         for allo in all_allos:
             types.append(allo.allo_type)
