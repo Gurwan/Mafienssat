@@ -4,7 +4,7 @@
 {% include 'nav.html' %}
 <div class="row" id="klaxment_id">
     <div id="main_title" class="col-9">
-        <h1>Klaxment officiel</h1>
+        <h1 class="arced" id="arced">Klaxment officiel</h1>
         <div id="klaxment_list">
             {% for user in userList %}
                 {% if forloop.counter == 1 %}
@@ -25,7 +25,12 @@
         <img id="gif_chaud_klaxeurs_id" style="display:none" width="200px" height="750px" src="{% static 'img/pub_chaud_klaxeurs.gif' %}">
     </div>
 </div>
+<script src="{% static 'js/circletype.min.js' %}"></script>
 <script>
+    $(document).ready(function(){
+        const circleType = new CircleType(document.getElementById('arced'));
+        circleType.radius(300).dir(1);
+    })
     setInterval(function () {
         let e1 = document.getElementById("gif_gros_klax_id").style.display; 
         let e2 = document.getElementById("gif_big_klax_id").style.display; 

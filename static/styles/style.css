@@ -717,9 +717,9 @@ a, a:hover, a:focus, a:active {
 
 #klaxment_id {
     background-color: rgb(247, 226, 226);
-    width: 100%;
-    height: 100%;
+
     margin: 0;
+    padding: 0;
     color: black;
 }
 
@@ -728,7 +728,8 @@ a, a:hover, a:focus, a:active {
 }
 
 #pub_id_klaxment {
-    background-color: rgb(98,34,35);
+    padding-left:0 ;
+    margin-left: 0;
     width: 225px!important;
     height: 750px!important;
 }
@@ -786,4 +787,30 @@ a, a:hover, a:focus, a:active {
   /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+.arced > span:nth-child(1) {
+    -webkit-transform: translateX(-1px) translateY(68px) rotate(-178deg);
+       -moz-transform: translateX(-1px) translateY(68px) rotate(-178deg);
+        -ms-transform: translateX(-1px) translateY(68px) rotate(-178deg);
+         -o-transform: translateX(-1px) translateY(68px) rotate(-178deg);
+            transform: translateX(-1px) translateY(68px) rotate(-178deg);
+
+    -webkit-transition-delay: 0s;
+       -moz-transition-delay: 0s;
+         -o-transition-delay: 0s;
+            transition-delay: 0s;
+}
+
+.arced > span:nth-child(2) {
+    -webkit-transform: translateX(-3px) translateY(39px) rotate(-13deg);
+       -moz-transform: translateX(-3px) translateY(39px) rotate(-13deg);
+        -ms-transform: translateX(-3px) translateY(39px) rotate(-13deg);
+         -o-transform: translateX(-3px) translateY(39px) rotate(-13deg);
+            transform: translateX(-3px) translateY(39px) rotate(-13deg);
+
+    -webkit-transition-delay: .04s;
+       -moz-transition-delay: .04s;
+         -o-transition-delay: .04s;
+            transition-delay: .04s;
 }
