@@ -7,18 +7,32 @@
 {% include 'nav.html' %}
 {% if user.is_staff %}
     <div class="container"> <!-- Todo Faire en sorte de ne plus voirle lien hypertext -->
+        <h1 style="text-align: center; margin-top:20px">Les allos à approuver</h1>
         {% for allo in allos %}
-            <small>{{ allo.allo_id.get_allo_type_display }} pour {{ allo.user_id.firstname }} {{ allo.user_id.lastname }} le {{allo.date | date:"d"}} {{allo.date  | date:"F"}} {{allo.date  | date:"o"}} à {{allo.date | date:"H"}}h{{allo.date | date:"i"}}</small>
+            <small>{{ allo.allo_id.get_allo_type_display }} pour {{ allo.user_id.first_name }} {{ allo.user_id.last_name }} le {{allo.date | date:"d"}} {{allo.date  | date:"F"}} {{allo.date  | date:"o"}} à {{allo.date | date:"H"}}h{{allo.date | date:"i"}}</small> <br>
             {% if allo.take_over %}
-                <a class="button_take_over" href="{% url "dontTakeOverAllo" id_dontTake_allo=allo.id %}" value="dontTakeOver{{ allo.id }}">
-                    Ne plus prendre en charge ce allo
-                </a>
+                {% if not allo.made %}
+                    <a class="button_take_over" href="{% url "dontTakeOverAllo" id_dontTake_allo=allo.id %}" value="dontTakeOver{{ allo.id }}">
+                        Ne plus prendre en charge ce allo
+                    </a><br>
+
+                    <a class="button_take_over" href="{% url "finalizeAllo" id_finalized_allo=allo.id %}" value="finalizeAllo{{ allo.id }}">
+                        Mettre ce allo terminé
+                    </a>
+                {% endif %}
             {% else %}
                 <a class="button_take_over" href="{% url "takeOverAllo" id_take_allo=allo.id %}" value="takeOver{{ allo.id }}">
                     Prendre en charge ce allo
                 </a>
             {% endif %}
             <br><br>
+        {% endfor %}
+    </div>
+
+    <div class="container">
+        <h1 style="text-align: center; margin-top:20px">Les allos réalisés</h1>
+        {% for allo in doneAllos %}
+            <small>{{ allo.allo_id.get_allo_type_display }} pour {{ allo.user_id.first_name }} {{ allo.user_id.last_name }} le {{allo.date | date:"d"}} {{allo.date  | date:"F"}} {{allo.date  | date:"o"}} à {{allo.date | date:"H"}}h{{allo.date | date:"i"}}</small> <br> <br>
         {% endfor %}
     </div>
 {% endif %}

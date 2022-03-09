@@ -7,10 +7,10 @@ from .models import User, Bets, Event, Allos, AllosRegistration
 class UserForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['firstname', 'lastname', 'username', 'email', 'sector', 'password1', 'password2']
+        fields = ['first_name', 'last_name', 'username', 'email', 'sector', 'password1', 'password2']
         labels = {
-            'firstname': 'Prénom',
-            'lastname': 'Nom',
+            'first_name': 'Prénom',
+            'last_name': 'Nom',
             'username': 'Pseudo',
             'sector': 'Filière',
             'password1': 'Mot de passe',

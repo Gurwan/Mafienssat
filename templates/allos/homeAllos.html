@@ -2,30 +2,28 @@
 {% block content %}
 {% load static %}
 {% include 'nav.html' %}
-{%  if user %}
-    <div class="container">
-        <div id="main_title">
-            <h1>Bienvenue dans l'espace <span>Allo</span>.</h1>
-        </div>
+<div class="container">
+    <div id="main_title">
+        <h1>Bienvenue dans l'espace <span>Allo</span>.</h1>
     </div>
+</div>
 
-    <div class="container">
-        <p> TODO Ajouter les explications ainsi que les règles</p>
-    </div>
+<div class="container">
+    <p> TODO Ajouter les explications ainsi que les règles</p>
+</div>
 
-    <div class="container-fluid" id="choices">
-        <div id="main_col">
-            <div class="row"> <!-- Todo Faire en sorte de ne plus voir le lien hypertext -->
-                <a class="col btn" style="color:white" id="left" href="{% url "allos" %}">
-                    <h2>Les allos à votre disposition</h2>
+<div class="container-fluid" id="choices">
+    <div id="main_col">
+        <div class="row"> <!-- Todo Faire en sorte de ne plus voir le lien hypertext -->
+            <a class="col btn" style="color:white" id="left" href="{% url "allos" %}">
+                <h2>Les allos à votre disposition</h2>
+            </a>
+            {% if user %}
+                <a class="col btn" style="color:white" id="right" href="{% url "myAllos" %}">
+                    <h2>Vos allos enregistrés</h2>
                 </a>
-                {% if user %}
-                    <a class="col btn" style="color:white" id="right" href="{% url "myAllos" %}">
-                        <h2>Vos allos enregistrés</h2>
-                    </a>
-                {% endif %}
-            </div>
+            {% endif %}
         </div>
     </div>
-{% endif %}
+</div>
 {% endblock %}

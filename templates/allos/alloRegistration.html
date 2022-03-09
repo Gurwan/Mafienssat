@@ -27,9 +27,9 @@
         <label for="time">Heure souhaitée:</label><input type="time" id="time" min="{{ allo.start_date.hour }}:{{ allo.start_date.minute }}" max="{{ allo.end_date.hour }}:{{ allo.end_date.minute }}">
         <br>
         {% if allowed > 0 %}
-            <button style="background-color:red; color:white" class="btn btn--main" type="submit" id="{{ allo.id }}" onclick="sendAllo(this.id)" value="sendAllo" name="sendAllo">
-                <p>Envoyer la demande</p>
-            </button>
+            <a class="btn btn--main" id="btn-href-{{ allo.id }}" href="{% url "sendAllo" date="a" time="b" allo_id=allo.id %}" onclick="sendAllo(this.id)" style="background-color:red; color:white">
+                Envoyer la demande
+            </a>
         {% else %} <!-- Todo Faire en sorte de ne plus voir le lien hypertext -->
             <a style="background-color:red; color:white" class="btn btn--main" href="{% url "buyAlloTicket" allo.id %}" value="buyTicket{{ allo.id }}">
                 <p>Acheter un ticket</p>
@@ -79,18 +79,18 @@
     });
 
     function sendAllo(id){
+
+        let right_id = id.split("-")[2]
         let date = document.getElementById("date").value;
         let time = document.getElementById("time").value;
 
-        const data = new FormData();
-        data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
-        data.append('date', date);
-        data.append('time', time);
-        data.append('allo', id);
-        fetch('{% url "sendAllo" %}', {
-                    method: 'POST',
-                    body: data
-                })
+        let hrefAllo = document.getElementById("btn-href-" + right_id).href
+        //http://127.0.0.1:8000/home_allos/sendAllo/%5Ba,%20b,%201%5D/
+
+        console.log(hrefAllo)
+        hrefAllo = hrefAllo.replace("%5Ba", "%5B" + date)
+        hrefAllo = hrefAllo.replace("%20b", "%20" + time)
+        document.getElementById("btn-href-" + right_id).href = hrefAllo
     }
 </script>
 {% endblock %}

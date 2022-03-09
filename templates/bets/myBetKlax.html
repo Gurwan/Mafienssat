@@ -31,14 +31,20 @@
                 {% else %}
                         <h4>Sur la côte {{ bet.bet_id.lose_name }} : {{ bet.bet_id.lose_rate }} </h4>
                 {% endif %}
-                <label for="mise"></label><input placeholder="15" type="number" id="{{ bet.bet_id.id }}">
+                <label for="mise"></label><input placeholder="15" type="number" id="mise{{ bet.bet_id.id }}">
                 <br>
-                <button style="color:black; background-color: yellow; margin-bottom:10px; margin-top: 5px" class="btn btn--main" type="submit" id="{{ bet.bet_id.id }}" onclick="addGains(this.id)" value="addGains{{ bet.bet_id.id }}" name="addGains{{ bet.bet_id.id }}"> Ajouter des Klaxcoins sur le pari</button>
+                <a class="btn btn--main" id="btn-href-{{ bet.bet_id.id }}" href="{% url "addGains" id_bet=bet.bet_id.id gains=0 %}" onclick="addGains(this.id)" style="color:black; background-color: yellow; margin-bottom:10px; margin-top: 5px">
+                    Ajouter des Klaxcoins sur le pari
+                </a>
                 <br>
                 {% if bet.result == 'W' %}
-                    <button style="background-color:red; color:white" class="btn btn--main" type="submit" id="{{ bet.bet_id.id }}" onclick="finalizeBet(this.id)" value="finalizeBet{{ bet.bet_id.id }}" name="finalizeBet{{ bet.bet_id.id }}">Bloquer la cote à {{ bet.bet_id.win_rate }}</button>
+                    <a class="btn btn--main" style="background-color:red; color:white" href="{% url "finalizeBet" id_bet=bet.bet_id.id %}" value="finalizeBet{{ bet.bet_id.id }}">
+                        Bloquer la cote à {{ bet.bet_id.win_rate }}
+                    </a>
                 {% else %}
-                    <button style="background-color:red; color:white" class="btn btn--main" type="submit" id="{{ bet.bet_id.id }}" onclick="finalizeBet(this.id)" value="finalizeBet{{ bet.bet_id.id }}" name="finalizeBet{{ bet.bet_id.id }}">Bloquer la cote à {{ bet.bet_id.lose_rate }}</button>
+                    <a class="btn btn--main" style="background-color:red; color:white" href="{% url "finalizeBet" id_bet=bet.bet_id.id %}" value="finalizeBet{{ bet.bet_id.id }}">
+                        Bloquer la cote à {{ bet.bet_id.lose_rate }}
+                    </a>
                 {% endif %}
             </div>
             {% endfor %}
@@ -63,52 +69,13 @@
     </div>
 {% endif %}
 <script>
-    const monthNames = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
-        "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
-    ];
-
-    function ratingRecalculation(id){
-
-        const formData = new FormData();
-        formData.append('csrfmiddlewaretoken', "{{ csrf_token }}");
-        formData.append('name', 'myBets');
-        formData.append('bet', id)
-        fetch('{% url "ratingRecalculation" %}', {
-                method: 'POST',
-                body: formData
-            })
-    }
-
     function addGains(id){
 
-        let gains = document.getElementById("mise" + id).value;
-        const data = new FormData();
-        data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
-        data.append('gains', gains);
-        data.append('bet', id);
-        if(gains > 0){
-            fetch('{% url "addGains" %}', {
-                    method: 'POST',
-                    body: data
-                })
-        }
-        ratingRecalculation(id);
-    }
+        let right_id = id.split("-")[2]
+        let gains = document.getElementById("mise" + right_id).value;
+        let hrefGain = document.getElementById("btn-href-" + right_id).href;
 
-    function finalizeBet(id){
-
-        let gains = document.getElementById("mise" + id).value;
-        const data = new FormData();
-        data.append('csrfmiddlewaretoken', "{{ csrf_token }}");
-        data.append('gains', gains);
-        data.append('bet', id);
-        if(gains >= 0){
-            fetch('{% url "finalizeBet" %}', {
-                    method: 'POST',
-                    body: data
-                })
-        }
-        ratingRecalculation(id);
+        document.getElementById("btn-href-" + right_id).href = hrefGain.replace("%200", "%20" + gains)
     }
 </script>
 {% endblock %}

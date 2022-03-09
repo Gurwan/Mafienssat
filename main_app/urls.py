@@ -15,8 +15,8 @@ urlpatterns = [
     path('home_betKlax/makeBetW/<int:id_bet>/', views.makeBetW, name='makeBetW'),
     path('home_betKlax/makeBetL/<int:id_bet>/', views.makeBetL, name='makeBetL'),
     path("home_betKlax/myBets/", views.myBets, name="myBets"),
-    path("home_betKlax/addGains", views.addGains, name="addGains"),
-    path("home_betKlax/finalizeBet", views.finalizeBet, name="finalizeBet"),
+    path("home_betKlax/addGains/[<int:id_bet>, <int:gains>]/", views.addGains, name="addGains"),
+    path("home_betKlax/finalizeBet/<int:id_bet>", views.finalizeBet, name="finalizeBet"),
 
         # Event
     path("event/", views.event, name="event"),
@@ -38,8 +38,8 @@ urlpatterns = [
     path("home_allos/allos/", views.allos, name="allos"),
     path("home_allos/myAllos/", views.myAllos, name="myAllos"),
     path("home_allos/myAllos/removeAllo/<int:id_allo>/", views.removeAllo, name="removeAllo"),
-    path("home_allos/buyAllos", views.buyAllos, name="buyAllos"),
-    path("home_allos/sendAllo", views.sendAllo, name="sendAllo"),
+    path("home_allos/buyAllos/[<str:allo_type>, <int:allo_cost>]", views.buyAllos, name="buyAllos"),
+    path("home_allos/sendAllo/[<str:date>, <str:time>, <int:allo_id>]/", views.sendAllo, name="sendAllo"),
     path("home_allos/buyAlloTicket/<int:allo_ticket_id>/", views.buyAlloTicket, name="buyAlloTicket"),
     path("home_allos/alloRegistration/<int:id_allo>/", views.alloRegistration, name="alloRegistration"),
 
@@ -59,5 +59,6 @@ urlpatterns = [
     path("staff/alloCreator/setVisbleAllo/<int:id_allo>/", views.setVisibleAllo, name="setVisibleAllo"),
     path("staff/alloRequested/", views.alloRequested, name="alloRequested"),
     path("staff/alloRequested/takeOverAllo/<int:id_take_allo>/", views.takeOverAllo, name="takeOverAllo"),
+    path("staff/alloRequested/finalizeAllo/<int:id_finalized_allo>/", views.finalizeAllo, name="finalizeAllo"),
     path("staff/alloRequested/dontTakeOverAllo/<int:id_dontTake_allo>/", views.dontTakeOverAllo, name="dontTakeOverAllo")
 ]
