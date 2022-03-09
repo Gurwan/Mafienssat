@@ -786,6 +786,28 @@ def takeOverAllo(request, id_take_allo):
         messages.error(request, "Erreur lors du chargement")
 
 
+def finalizeAllo(request, id_finalized_allo):
+    print("ok")
+    try:
+        allo = AllosRegistration.objects.get(pk=id_finalized_allo)
+    except AllosRegistration.DoesNotExist:
+        allo = None
+    try:
+        user = User.objects.get(pk=request.user.id)
+    except User.DoesNotExist:
+        user = None
+
+    if allo is not None and user is not None:
+        print(id_finalized_allo)
+        allo.made = True
+        allo.staff_id = request.user.id
+        allo.save()
+
+        return redirect('alloRequested')
+    else:
+        messages.error(request, "Erreur lors du chargement")
+
+
 def dontTakeOverAllo(request, id_dontTake_allo):
     try:
         allo = AllosRegistration.objects.get(pk=id_dontTake_allo)

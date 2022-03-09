@@ -59,5 +59,6 @@ urlpatterns = [
     path("staff/alloCreator/setVisbleAllo/<int:id_allo>/", views.setVisibleAllo, name="setVisibleAllo"),
     path("staff/alloRequested/", views.alloRequested, name="alloRequested"),
     path("staff/alloRequested/takeOverAllo/<int:id_take_allo>/", views.takeOverAllo, name="takeOverAllo"),
+    path("staff/alloRequested/finalizeAllo/<int:id_finalized_allo>/", views.finalizeAllo, name="finalizeAllo"),
     path("staff/alloRequested/dontTakeOverAllo/<int:id_dontTake_allo>/", views.dontTakeOverAllo, name="dontTakeOverAllo")
 ]
