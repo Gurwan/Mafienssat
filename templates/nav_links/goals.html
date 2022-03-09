@@ -3,22 +3,194 @@
 {% include 'nav.html' %}
 <div class="container">
     <div id="main_title">
-        <h1>Register <span>goals</span></h1>
-        <div class="row">
-            <div class="col">
-                <div class="loadbar">
-                    <strong class="bar" style='height:30%;'></strong>
-                </div>
+        <h1 id="h1_goals">Register <span>goals</span></h1>
+        <div id="goals_list">
+            <div class="this_goal">
+                {% if registered < 20 %}
+                    <p class="compteur_goals">{{registered}}/<span>20</span></p>
+                    <p class="title_goals">Cleanwalk de Lannion et/ou d'une plage</p>
+                {% elif registered >= 20 and registered < 45 %}
+                    <p class="compteur_goals">{{registered}}/<span>45</span></p>
+                    <p class="title_goals">Baignade dans le leguer 2/3 membres choisis au hasard</p>
+                {% elif registered >= 45 and registered < 60 %}
+                    <p class="compteur_goals">{{registered}}/<span>60</span></p>
+                    <p class="title_goals">Record de vitesse de descente de bières par au moins 5 membres /par les plus motivés (si notre meilleur joueur est battu par qqn don de klaxcoin)</p>
+                {% elif registered >= 60 and registered < 75 %}
+                    <p class="compteur_goals">{{registered}}/<span>75</span></p>
+                    <p class="title_goals">Trends Tiktok par des gens sélectionnés au hasard/par la communauté</p>
+                {% elif registered >= 75 and registered < 100 %}
+                    <p class="compteur_goals">{{registered}}/<span>100</span></p>
+                    <p class="title_goals">Recette pompette</p>
+                {% elif registered >= 100 and registered < 120 %}
+                    <p class="compteur_goals">{{registered}}/<span>120</span></p>
+                    <p class="title_goals">Teinture 2/3 membres choisis par la communauté</p>
+                {% elif registered >= 120 and registered < 150 %}
+                    <p class="compteur_goals">{{registered}}/<span>150</span></p>
+                    <p class="title_goals">Live 24h</p>
+                {% elif registered >= 150 and registered < 200 %}
+                    <p class="compteur_goals">{{registered}}/<span>200</span></p>
+                    <p class="title_goals">Calendrier dieux du stade</p>          
+                {% else %}
+                    <p class="compteur_goals green">{{registered}}/<span class="green">200</span></p>
+                    <p class="title_goals">Bravo vous avez atteint le dernier palier ! Votez Mafienssat</p>             
+                {% endif %}
             </div>
-            <div class="col">
-                <div class="200" id="goal-1" color="" style="font-size: 20px">Calendrier dieux du stade</div> <br>
-                <div class="150" id="goal-2" color="" style="font-size: 20px">Live 24h</div> <br>
-                <div class="120" id="goal-3" color="" style="font-size: 20px">Teinture 2/3 membres choisis par la communauté</div> <br>
-                <div class="100" id="goal-4" color="" style="font-size: 20px">Recette pompette </div> <br>
-                <div class="75" id="goal-5" color="" style="font-size: 20px">Trends Tiktok par des gens sélectionnés au hasard/ par la communauté</div> <br>
-                <div class="60" id="goal-6" color="" style="font-size: 20px">Record de vitesse de descente de bières par au moins 5 membres /par les plus motivés (si notre meilleur joueur est battu par qqn don de klaxcoin)</div> <br>
-                <div class="45" id="goal-7" color="" style="font-size: 20px">Baignade dans le leguer 2/3 membres choisis au hasard</div> <br>
-                <div class="20" id="goal-8" color="" style="font-size: 20px">Cleanwalk de Lannion et/ou d'une plage</div> <br>
+            <div class="next_goal">
+                {% if registered < 20 %}
+                    <p class="compteur_next_goals">{{registered}}/<span>20</span></p>
+                    <p class="title_next_goals">Cleanwalk de Lannion et/ou d'une plage</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>45</span></p>
+                    <p class="title_next_goals">Baignade dans le Leguer 2/3 membres choisis au hasard</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>60</span></p>
+                    <p class="title_next_goals">Record de vitesse de descente de bières par au moins 5 membres /par les plus motivés (si notre meilleur joueur est battu par qqn don de klaxcoin)</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>75</span></p>
+                    <p class="title_next_goals">Trends Tiktok par des gens sélectionnés au hasard/par la communauté</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>100</span></p>
+                    <p class="title_next_goals">Recette pompette</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>120</span></p>
+                    <p class="title_next_goals">Teinture 2/3 membres choisis par la communauté</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>150</span></p>
+                    <p class="title_next_goals">Live 24h</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>200</span></p>
+                    <p class="title_next_goals">Calendrier dieux du stade</p> 
+                {% elif registered >= 20 and registered < 45 %}
+                    <p class="compteur_next_goals green">{{registered}}/<span>20</span></p>
+                    <p class="title_next_goals">Cleanwalk de Lannion et/ou d'une plage</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>45</span></p>
+                    <p class="title_next_goals">Baignade dans le Leguer 2/3 membres choisis au hasard</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>60</span></p>
+                    <p class="title_next_goals">Record de vitesse de descente de bières par au moins 5 membres /par les plus motivés (si notre meilleur joueur est battu par qqn don de klaxcoin)</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>75</span></p>
+                    <p class="title_next_goals">Trends Tiktok par des gens sélectionnés au hasard/par la communauté</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>100</span></p>
+                    <p class="title_next_goals">Recette pompette</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>120</span></p>
+                    <p class="title_next_goals">Teinture 2/3 membres choisis par la communauté</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>150</span></p>
+                    <p class="title_next_goals">Live 24h</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>200</span></p>
+                    <p class="title_next_goals">Calendrier dieux du stade</p> 
+                {% elif registered >= 45 and registered < 60 %}
+                    <p class="compteur_next_goals green">{{registered}}/<span>20</span></p>
+                    <p class="title_next_goals">Cleanwalk de Lannion et/ou d'une plage</p>
+                    <p class="compteur_next_goals green">{{registered}}/<span>45</span></p>
+                    <p class="title_next_goals">Baignade dans le Leguer 2/3 membres choisis au hasard</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>60</span></p>
+                    <p class="title_next_goals">Record de vitesse de descente de bières par au moins 5 membres /par les plus motivés (si notre meilleur joueur est battu par qqn don de klaxcoin)</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>75</span></p>
+                    <p class="title_next_goals">Trends Tiktok par des gens sélectionnés au hasard/par la communauté</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>100</span></p>
+                    <p class="title_next_goals">Recette pompette</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>120</span></p>
+                    <p class="title_next_goals">Teinture 2/3 membres choisis par la communauté</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>150</span></p>
+                    <p class="title_next_goals">Live 24h</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>200</span></p>
+                    <p class="title_next_goals">Calendrier dieux du stade</p> 
+                {% elif registered >= 60 and registered < 75 %}
+                    <p class="compteur_next_goals green">{{registered}}/<span>20</span></p>
+                    <p class="title_next_goals">Cleanwalk de Lannion et/ou d'une plage</p>
+                    <p class="compteur_next_goals green">{{registered}}/<span>45</span></p>
+                    <p class="title_next_goals">Baignade dans le Leguer 2/3 membres choisis au hasard</p>
+                    <p class="compteur_next_goals green">{{registered}}/<span>60</span></p>
+                    <p class="title_next_goals">Record de vitesse de descente de bières par au moins 5 membres /par les plus motivés (si notre meilleur joueur est battu par qqn don de klaxcoin)</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>75</span></p>
+                    <p class="title_next_goals">Trends Tiktok par des gens sélectionnés au hasard/par la communauté</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>100</span></p>
+                    <p class="title_next_goals">Recette pompette</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>120</span></p>
+                    <p class="title_next_goals">Teinture 2/3 membres choisis par la communauté</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>150</span></p>
+                    <p class="title_next_goals">Live 24h</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>200</span></p>
+                    <p class="title_next_goals">Calendrier dieux du stade</p> 
+                {% elif registered >= 75 and registered < 100 %}
+                    <p class="compteur_next_goals green">{{registered}}/<span>20</span></p>
+                    <p class="title_next_goals">Cleanwalk de Lannion et/ou d'une plage</p>
+                    <p class="compteur_next_goals green">{{registered}}/<span>45</span></p>
+                    <p class="title_next_goals">Baignade dans le Leguer 2/3 membres choisis au hasard</p>
+                    <p class="compteur_next_goals green">{{registered}}/<span>60</span></p>
+                    <p class="title_next_goals">Record de vitesse de descente de bières par au moins 5 membres /par les plus motivés (si notre meilleur joueur est battu par qqn don de klaxcoin)</p>
+                    <p class="compteur_next_goals green">{{registered}}/<span>75</span></p>
+                    <p class="title_next_goals">Trends Tiktok par des gens sélectionnés au hasard/par la communauté</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>100</span></p>
+                    <p class="title_next_goals">Recette pompette</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>120</span></p>
+                    <p class="title_next_goals">Teinture 2/3 membres choisis par la communauté</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>150</span></p>
+                    <p class="title_next_goals">Live 24h</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>200</span></p>
+                    <p class="title_next_goals">Calendrier dieux du stade</p> 
+                {% elif registered >= 100 and registered < 120 %}
+                    <p class="compteur_next_goals green">{{registered}}/<span>20</span></p>
+                    <p class="title_next_goals">Cleanwalk de Lannion et/ou d'une plage</p>
+                    <p class="compteur_next_goals green">{{registered}}/<span>45</span></p>
+                    <p class="title_next_goals">Baignade dans le Leguer 2/3 membres choisis au hasard</p>
+                    <p class="compteur_next_goals green">{{registered}}/<span>60</span></p>
+                    <p class="title_next_goals">Record de vitesse de descente de bières par au moins 5 membres /par les plus motivés (si notre meilleur joueur est battu par qqn don de klaxcoin)</p>
+                    <p class="compteur_next_goals green">{{registered}}/<span>75</span></p>
+                    <p class="title_next_goals">Trends Tiktok par des gens sélectionnés au hasard/par la communauté</p>
+                    <p class="compteur_next_goals green">{{registered}}/<span>100</span></p>
+                    <p class="title_next_goals">Recette pompette</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>120</span></p>
+                    <p class="title_next_goals">Teinture 2/3 membres choisis par la communauté</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>150</span></p>
+                    <p class="title_next_goals">Live 24h</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>200</span></p>
+                    <p class="title_next_goals">Calendrier dieux du stade</p> 
+                {% elif registered >= 120 and registered < 150 %}
+                    <p class="compteur_next_goals green">{{registered}}/<span>20</span></p>
+                    <p class="title_next_goals">Cleanwalk de Lannion et/ou d'une plage</p>
+                    <p class="compteur_next_goals green">{{registered}}/<span>45</span></p>
+                    <p class="title_next_goals">Baignade dans le Leguer 2/3 membres choisis au hasard</p>
+                    <p class="compteur_next_goals green">{{registered}}/<span>60</span></p>
+                    <p class="title_next_goals">Record de vitesse de descente de bières par au moins 5 membres /par les plus motivés (si notre meilleur joueur est battu par qqn don de klaxcoin)</p>
+                    <p class="compteur_next_goals green">{{registered}}/<span>75</span></p>
+                    <p class="title_next_goals">Trends Tiktok par des gens sélectionnés au hasard/par la communauté</p>
+                    <p class="compteur_next_goals green">{{registered}}/<span>100</span></p>
+                    <p class="title_next_goals">Recette pompette</p>
+                    <p class="compteur_next_goals green">{{registered}}/<span>120</span></p>
+                    <p class="title_next_goals">Teinture 2/3 membres choisis par la communauté</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>150</span></p>
+                    <p class="title_next_goals">Live 24h</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>200</span></p>
+                    <p class="title_next_goals">Calendrier dieux du stade</p> 
+                {% elif registered >= 150 and registered < 200 %}
+                    <p class="compteur_next_goals green">{{registered}}/<span>20</span></p>
+                    <p class="title_next_goals">Cleanwalk de Lannion et/ou d'une plage</p>
+                    <p class="compteur_next_goals green">{{registered}}/<span>45</span></p>
+                    <p class="title_next_goals">Baignade dans le Leguer 2/3 membres choisis au hasard</p>
+                    <p class="compteur_next_goals green">{{registered}}/<span>60</span></p>
+                    <p class="title_next_goals">Record de vitesse de descente de bières par au moins 5 membres /par les plus motivés (si notre meilleur joueur est battu par qqn don de klaxcoin)</p>
+                    <p class="compteur_next_goals green">{{registered}}/<span>75</span></p>
+                    <p class="title_next_goals">Trends Tiktok par des gens sélectionnés au hasard/par la communauté</p>
+                    <p class="compteur_next_goals green">{{registered}}/<span>100</span></p>
+                    <p class="title_next_goals">Recette pompette</p>
+                    <p class="compteur_next_goals green">{{registered}}/<span>120</span></p>
+                    <p class="title_next_goals">Teinture 2/3 membres choisis par la communauté</p>
+                    <p class="compteur_next_goals green">{{registered}}/<span>150</span></p>
+                    <p class="title_next_goals">Live 24h</p>
+                    <p class="compteur_next_goals">{{registered}}/<span>200</span></p>
+                    <p class="title_next_goals">Calendrier dieux du stade</p>    
+                {% else %}
+                    <p class="compteur_next_goals green">{{registered}}/<span>20</span></p>
+                    <p class="title_next_goals">Cleanwalk de Lannion et/ou d'une plage</p>
+                    <p class="compteur_next_goals green">{{registered}}/<span>45</span></p>
+                    <p class="title_next_goals">Baignade dans le Leguer 2/3 membres choisis au hasard</p>
+                    <p class="compteur_next_goals green">{{registered}}/<span>60</span></p>
+                    <p class="title_next_goals">Record de vitesse de descente de bières par au moins 5 membres /par les plus motivés (si notre meilleur joueur est battu par qqn don de klaxcoin)</p>
+                    <p class="compteur_next_goals green">{{registered}}/<span>75</span></p>
+                    <p class="title_next_goals">Trends Tiktok par des gens sélectionnés au hasard/par la communauté</p>
+                    <p class="compteur_next_goals green">{{registered}}/<span>100</span></p>
+                    <p class="title_next_goals">Recette pompette</p>
+                    <p class="compteur_next_goals green">{{registered}}/<span>120</span></p>
+                    <p class="title_next_goals">Teinture 2/3 membres choisis par la communauté</p>
+                    <p class="compteur_next_goals green">{{registered}}/<span>150</span></p>
+                    <p class="title_next_goals">Live 24h</p>
+                    <p class="compteur_next_goals green">{{registered}}/<span>200</span></p>
+                    <p class="title_next_goals">Calendrier dieux du stade</p>       
+                {% endif %}
+                  
             </div>
         </div>
     </div>

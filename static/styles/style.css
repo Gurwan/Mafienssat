@@ -814,3 +814,52 @@ a, a:hover, a:focus, a:active {
          -o-transition-delay: .04s;
             transition-delay: .04s;
 }
+
+#h1_goals {
+    font-size: 80px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.this_goal {
+   border: solid;
+   border-color: #000;
+   background-color: #000;
+   border-radius: 25px;
+}
+
+.next_goal {
+    margin-top: 20px;
+    background-color: rgb(0, 0, 0);
+    padding: 20px;
+}
+
+.compteur_goals {
+    font-size: 60px;
+    text-align: center;
+    color: red;
+}
+
+.compteur_next_goals {
+    font-size: 40px;
+    text-align: center;
+    color: red;
+}
+
+.title_next_goals {
+    font-size: 30px;
+    text-align: center;
+}
+
+.compteur_goals span {
+    color: gold;
+}
+
+.title_goals {
+    font-size: 40px;
+    text-align: center;
+}
+
+.green {
+    color: green!important;
+}
