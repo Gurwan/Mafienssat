@@ -845,13 +845,18 @@ footer .row {
 }
 .navTrigger.active i:nth-child(3) {
     -webkit-animation: inBtm 0.8s forwards;
-    animation: inBtm 0.8s forwards;
+    animation: inBtm 0.8s forwards; 
 }
 
 #liste_id_main {
-    background-color: lightblue!important;
+   /* background-color: lightblue!important; */
+    background-image: url('../img/bannertestlittle.png');
+
+    background-position:center;
+    background-position-y: -100px;
+    background-repeat:none ;
     width: 100%;
-    height: 100%;
+    height: 400px;
     padding-top: 30px;
     font-family: 'Rockville', Arial, sans-serif;
     font-weight:normal;
@@ -877,7 +882,91 @@ footer .row {
 }
 
 #event_id_main h1 {
-    vertical-align: middle;
+    text-align: center;
+    margin-left: 400px!important;
+    margin-top: 290px;
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1300px){
+    #event_id_main h1 {
+        text-align: center;
+        margin-left: 100px!important;
+        margin-top: 290px;
+        font-size: 50px!important;
+    }
+}
+
+@media screen and (min-width: 570px) and (max-width: 1000px){
+    #event_id_main {
+        width: 60%!important;
+        margin: 0;
+        padding: 0;
+    }
+    #event_id_main h1 {
+        text-align: center;
+        margin-left: 0px!important;
+        margin-top: 290px;
+        font-size: 40px!important;
+    }
+}
+
+@media screen and (min-width: 400px) and (max-width: 570px){
+    #event_id_main {
+        width: 40%!important;
+        margin: 0;
+        padding: 0;
+    }
+    #event_id_main h1 {
+        text-align: center;
+        margin-left: 0px!important;
+        margin-top: 290px;
+        font-size: 30px!important;
+    }
+}
+
+@media screen and (min-width: 380px) and (max-width: 400px){
+    #event_id_main {
+        width: 20%!important;
+        margin: 0;
+        padding: 0;
+    }
+    #event_id_main h1 {
+        text-align: center;
+        margin-left: 0px!important;
+        margin-top: 290px;
+        font-size: 25px!important;
+    }
+}
+
+@media screen and (max-width: 380px){
+    #pub_id_main {
+        display: none;
+    }
+    #event_id_main {
+        width: 100%!important;
+        margin: 0;
+        padding: 0;
+    }
+    #event_id_main h1 {
+        text-align: center;
+        margin-left: 0px!important;
+        margin-top: 20px;
+        padding-top: 80px;
+        padding-bottom: 80px;
+        font-size: 25px!important;
+    }
+}
+
+@media screen and (min-width: 320px) and (max-width:500px){
+    #liste_id_main h1 {
+        font-size: 70px!important;
+    }
+}
+
+@media screen and (max-width: 320px){
+    #liste_id_main h1 {
+        font-size: 60px!important;
+    }
 }
 
 #gif_gros_klax_id {
