@@ -4,26 +4,46 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 {% include 'nav.html' %}
-<div class="container-fluid"> <!-- Todo Faire en sorte de ne pas voir le lien hypertext-->
-  <div id="main_col">
-      <div class="row">
-          <a class="col" id="left" href="{% url "betCreator" %}">
-              <h2>Créer un betKlax</h2>
-          </a>
-          <a class="col" id="right" href="{% url "eventCreator" %}">
-              <h2>Créer un événement</h2>
-          </a>
+{% if user.is_staff %}
+    <div class="container-fluid"> <!-- Todo Faire en sorte de ne pas voir le lien hypertext-->
+      <div id="main_col">
+          <div class="row">
+              <a class="col" id="left" href="{% url "betCreator" %}">
+                  <h2>Créer un betKlax</h2>
+              </a>
+              <a class="col" id="right" href="{% url "eventCreator" %}">
+                  <h2>Créer un événement</h2>
+              </a>
+          </div>
+          <br>
+          <div class="row">
+              <a class="col" id="left" href="{% url "alloCreator" %}">
+                  <h2>Créer un allo</h2>
+              </a>
+              <a class="col" id="right" href="{% url "alloRequested" %}">
+                  <h2>Gérer les allos</h2>
+              </a>
+          </div>
+          <br>
+          {% if user.is_superuser %}
+              <div class="row">
+                  <a class="col" id="left" href="{% url "suBets" %}">
+                      <h2>suBets</h2>
+                  </a>
+                  <a class="col" id="right" href="{% url "suEvents" %}">
+                      <h2>Gérer les events</h2>
+                  </a>
+              </div>
+              <div class="row">
+                  <a class="col" id="left" href="{% url "suAllos" %}">
+                      <h2>Gérer les allos</h2>
+                  </a>
+              </div>
+          {% endif %}
       </div>
-      <br>
-      <div class="row">
-          <a class="col" id="left" href="{% url "alloCreator" %}">
-              <h2>Créer un allo</h2>
-          </a>
-          <a class="col" id="right" href="{% url "alloRequested" %}">
-              <h2>Gérer les allos</h2>
-          </a>
-      </div>
-  </div>
-</div>
+    </div>
+{% else %}
+    <h1>Si j'étais toi je m'arrêterai là et je ne tenterai rien de plus ;)</h1>
+{% endif %}
 {% endblock %}
 

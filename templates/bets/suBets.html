@@ -1,0 +1,28 @@
+{% extends 'main.html' %}
+{% block content %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% include 'nav.html' %}
+{% if user.is_superuser %}
+    <div class="container">
+        <h1 style="text-align: center; margin-top:20px">Tous les paris</h1>
+        {% for bet in bets %}
+            <small>{{ bet.bet_name }}: fini le {{bet.ended | date:"d"}} {{bet.ended  | date:"F"}} {{bet.ended  | date:"o"}} à {{bet.ended | date:"H"}}h{{bet.ended | date:"i"}}</small> <br>
+            {% if not bet.closed_bet %}
+            <a class="row btn" style="background-color: #522699" href="{% url "closeBet" id_bet=bet.id %}" id="closeBet{{ bet.id }}">
+                Fermer le bet
+            </a> <br>
+            {% endif %}
+            <small>Résultat du bet</small> <br>
+            <a class="col btn" style="background-color: #522699" href="{% url "sendBetsKalxcoins" id_bet=bet.id result_bet='W' %}" id="sendBetsKalxcoins{{ bet.id }}">
+                {{ bet.win_name }}
+            </a>
+            <a class="col btn" style="background-color: #522699" href="{% url "sendBetsKalxcoins" id_bet=bet.id result_bet='L' %}" id="sendBetsKalxcoins{{ bet.id }}">
+                {{ bet.lose_name }}
+            </a>
+            <br> <br>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}

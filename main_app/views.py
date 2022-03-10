@@ -359,6 +359,87 @@ def setVisibleEvent(request, id_event):
         messages.error(request, "Erreur lors de l'envoi de la requête")
 
 
+def suBets(request):
+    try:
+        user = User.objects.get(pk=request.user.id)
+    except User.DoesNotExist:
+        user = None
+
+    if user is not None:
+
+        bets = Bets.objects.all()
+        return render(request, "bets/suBets.html", {"user": user, "bets": bets})
+    else:
+        messages.error(request, "Vous devez être connecté")
+
+
+def closeBet(request, id_bet):
+    try:
+        bets = StoreBets.objects.filter(bet_id_id=id_bet)
+    except StoreBets.DoesNotExist:
+        bets = None
+
+    try:
+        bet = Bets.objects.get(pk=id_bet)
+    except Bets.DoesNotExist:
+        bet = None
+
+    if bet is not None and bets is not None:
+        bet.closed_bet = True
+        bet.save()
+
+        for b in bets:
+            b.blocked_bet = True
+            if b.RESULT == 'W':
+                b.bet_rate = bet.win_rate
+            else:
+                b.bet_rate = bet.lose_rate
+
+            b.save()
+
+        return redirect("suBets")
+
+    else:
+        messages.error(request, "Aucun pari enregistré")
+
+
+def sendBetsKalxcoins(request, id_bet, result_bet):
+    try:
+        bets = StoreBets.objects.filter(bet_id_id=id_bet)
+    except StoreBets.DoesNotExist:
+        bets = None
+    try:
+        bet = Bets.objects.get(pk=id_bet)
+    except Bets.DoesNotExist:
+        bet = None
+
+    if bet is not None:
+        if bets is not None:
+
+            for b in bets:
+                print("ok")
+                if result_bet == "W" and b.result == 'W':
+                    b.user_id.klax_coins += bet.win_rate*b.gains
+                    print(bet.win_rate * b.gains)
+                elif result_bet == "L" and b.result == 'L':
+                    b.user_id.klax_coins += bet.lose_rate*b.gains
+                    print(bet.lose_rate*b.gains)
+
+                b.user_id.save()
+
+            bet.delete()
+
+            return redirect("suBets")
+
+        else:
+            print("R frero")
+            bet.delete()
+
+            return redirect("suBets")
+    else:
+        messages.error(request, "Aucun pari enregistré")
+
+
 def event(request):
     events = Event.objects.all()
     try:
@@ -472,6 +553,35 @@ def eventUnregistration(request, event_id):
             messages.error(request, "Erreur lors de l'identification de l'évènement")
     else:
         messages.error(request, "Un problème est survenu lors de votre inscripion, veuillez réessayer et si cela persiste, veuillez contacter un admin")
+
+
+def suEvents(request):
+    try:
+        user = User.objects.get(pk=request.user.id)
+    except User.DoesNotExist:
+        user = None
+
+    if user is not None:
+
+        events = Event.objects.all()
+        return render(request, "events/suEvents.html", {"user": user, "events": events})
+    else:
+        messages.error(request, "Vous devez être connecté")
+
+
+def closeEvent(requets, id_event):
+    try:
+        this_event = Event.objects.get(pk=id_event)
+    except Event.DoesNotExist:
+        this_event = None
+
+    if this_event is not None:
+        this_event.closed_event = True
+        this_event.save()
+
+        return redirect("suEvents")
+    else:
+        messages.error(requets, "Erreur lors de l'envoie dela requête")
 
 
 def liste(request):
@@ -828,6 +938,35 @@ def dontTakeOverAllo(request, id_dontTake_allo):
         messages.error(request, "Erreur lors du chargement")
 
 
+def suAllos(request):
+    try:
+        user = User.objects.get(pk=request.user.id)
+    except User.DoesNotExist:
+        user = None
+
+    if user is not None:
+
+        all_allos = Allos.objects.all()
+        return render(request, "allos/suAllos.html", {"user": user, "allos": all_allos})
+    else:
+        messages.error(request, "Vous devez être connecté")
+
+
+def closeAllo(requets, id_allo):
+    try:
+        allo = Allos.objects.get(pk=id_allo)
+    except Allos.DoesNotExist:
+        allo = None
+
+    if allo is not None:
+        allo.closed_allo = True
+        allo.save()
+
+        return redirect("suAllos")
+    else:
+        messages.error(requets, "Erreur lors de l'envoie dela requête")
+
+
 """ 
 def sendAlloEmailConfirmation(request, id_allo):
     if request.method == 'POST':
@@ -847,7 +986,16 @@ def sendAlloEmailConfirmation(request, id_allo):
 
 
 def staff(request):
-    return render(request, 'staff.html')
+    try:
+        user = User.objects.get(pk=request.user.id)
+    except User.DoesNotExist:
+        user = None
+
+    if user is not None:
+
+        return render(request, 'staff.html', {'user': user})
+    else:
+        messages.error(request, "Vous devez être staff")
 
 
 def goals(request):

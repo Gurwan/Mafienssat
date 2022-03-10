@@ -7,7 +7,7 @@
         <h1>Prochains <span>événements</span></h1>
     </div>
     {% for event in events %}
-        {% if event.visible %}
+        {% if event.visible%}
             <div id="next-event">
                 <img class="img-fluid" src="{% static 'img/event/background.jpg' %}"/>
                 <h2 id="name">{{event.event_name}}</h2>
@@ -24,7 +24,7 @@
             <div class="container-fluid" id="choices">
                 <div id="main_col_event">
                     <div class="row">
-                        {% if user %}
+                        {% if user and not event.closed_event %}
                             {% if event.attendees_number < event.max_attendees and event.max_attendees != 0 %}
                                 <a class="col btn" style="background-color: #522699" href="{% url "eventRegistration" event_id=event.id %}" value="goEvent{{ event.id }}">
                                     <h2>Participer à l'événement</h2>

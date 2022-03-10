@@ -60,5 +60,14 @@ urlpatterns = [
     path("staff/alloRequested/", views.alloRequested, name="alloRequested"),
     path("staff/alloRequested/takeOverAllo/<int:id_take_allo>/", views.takeOverAllo, name="takeOverAllo"),
     path("staff/alloRequested/finalizeAllo/<int:id_finalized_allo>/", views.finalizeAllo, name="finalizeAllo"),
-    path("staff/alloRequested/dontTakeOverAllo/<int:id_dontTake_allo>/", views.dontTakeOverAllo, name="dontTakeOverAllo")
+    path("staff/alloRequested/dontTakeOverAllo/<int:id_dontTake_allo>/", views.dontTakeOverAllo, name="dontTakeOverAllo"),
+
+        # SuperUser
+    path("staff/betSuperUser/", views.suBets, name="suBets"),
+    path("staff/betSuperUser/closeBet/<int:id_bet>/", views.closeBet, name="closeBet"),
+    path("staff/betSuperUser/sendBetsKalxcoins/[<int:id_bet>, <str:result_bet>]/", views.sendBetsKalxcoins, name="sendBetsKalxcoins"),
+    path("staff/eventSuperUser/", views.suEvents, name="suEvents"),
+    path("staff/eventSuperUser/closeEvent/<int:id_event>/", views.closeEvent, name="closeEvent"),
+    path("staff/alloSuperUser/", views.suAllos, name="suAllos"),
+    path("staff/alloSuperUser/closeAllo/<int:id_allo>/", views.closeAllo, name="closeAllo"),
 ]
