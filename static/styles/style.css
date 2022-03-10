@@ -18,6 +18,11 @@
     src: url('../font/Rockville\ Solid.otf');
 }
 
+@font-face {
+    font-family: CorleoneDue;
+    src: url('../font/CorleoneDue.TTF');
+}
+
 
 body {
     background-color: #666666; /*; 666666 ou 0f0f3d*/
@@ -26,22 +31,191 @@ body {
 
 #klaxment_list {
     text-align: center;
+    font-family: 'CorleoneDue', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
 }
 
 #klaxment_list span {
-    color: rgb(255, 218, 85);
+    color: rgb(209,155,13,255);
+    padding-right: 20px;
 }
 
 #klaxment_list h2 {
-    font-size: 50px;
+    font-size: 40px;
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+
+#klaxment_list img {
+    margin-bottom: 10px;
 }
 
 #klaxment_list h3 {
-    font-size: 40px;
+    font-size: 38px;
+    text-transform: uppercase;
+    margin-bottom: 0;
 }
 
 #klaxment_list h4 {
-    font-size: 30px;
+    font-size: 36px;
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+
+#klaxment_list h5 {
+    font-size: 34px;
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+
+.sector_span {
+    color: red!important;
+    padding-right: 0!important;
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1400px) {
+    #klaxment_list h2 {
+        font-size: 35px;
+    }
+    #klaxment_list h3 {
+        font-size: 33px;
+    }
+    
+    #klaxment_list h4 {
+        font-size: 31px;
+    }
+    
+    #klaxment_list h5 {
+        font-size: 29px;
+    }
+    .arced {
+        font-size: 70px!important;
+    }
+}
+
+@media screen and (min-width: 800px) and (max-width: 1200px) {
+    #klaxment_list img {
+        width: 35px;
+        height: 35px;
+    }
+    #klaxment_list h2 {
+        font-size: 32px;
+    }
+    #klaxment_list h3 {
+        font-size: 28px;
+    }
+    
+    #klaxment_list h4 {
+        font-size: 26px;
+    }
+    
+    #klaxment_list h5 {
+        font-size: 26px;
+    }
+    .arced {
+        font-size: 50px!important;
+    }
+}
+
+@media screen and (min-width: 440px) and (max-width: 800px) {
+    #klaxment_list img {
+        width: 35px;
+        height: 35px;
+    }
+    #klaxment_list h2 {
+        font-size: 26px;
+    }
+    #klaxment_list h3 {
+        font-size: 24px;
+    }
+    
+    #klaxment_list h4 {
+        font-size: 22px;
+    }
+    
+    #klaxment_list h5 {
+        font-size: 20px;
+    }
+    .arced {
+        font-size: 45px!important;
+    }
+}
+
+@media screen and (min-width: 330px) and (max-width: 440px) {
+    #klaxment_list img {
+        width: 17px;
+        height: 17px;
+    }
+    #klaxment_list h2 {
+        font-size: 20px;
+    }
+    #klaxment_list h3 {
+        font-size: 18px;
+    }
+    
+    #klaxment_list h4 {
+        font-size: 16px;
+    }
+    
+    #klaxment_list h5 {
+        font-size: 15px;
+    }
+    .arced {
+        font-size: 37px!important;
+    }
+}
+
+@media screen and (max-width: 330px) {
+    #klaxment_list img {
+        display: none;
+    }
+    #klaxment_list h2 {
+        font-size: 20px;
+    }
+    #klaxment_list h3 {
+        font-size: 18px;
+    }
+    
+    #klaxment_list h4 {
+        font-size: 16px;
+    }
+    
+    #klaxment_list h5 {
+        font-size: 15px;
+    }
+    .arced {
+        font-size: 37px!important;
+    }
+
+    #klaxment_list span {
+        padding-right: 5px;
+    }
+    
+}
+
+@media screen and (max-width : 270px) {
+    .arced {
+        font-size: 27px!important;
+    }
+}
+
+@media screen and (max-width : 630px) {
+    .sector_span {
+        display: none;
+    }
+    
+}
+
+@media screen and (max-width: 1000px) {
+    #pub_id_klaxment {
+        display: none;
+    }
+    
+    .col-9 {
+        flex: 0 0 auto!important;
+        width: 100%!important;
+    }
 }
 
 * {
@@ -717,11 +891,38 @@ a, a:hover, a:focus, a:active {
 
 #klaxment_id {
     background-color: rgb(247, 226, 226);
-
     margin: 0;
     padding: 0;
     color: black;
 }
+
+#vote_mafienssat_klaxment {
+    background-color: rgb(247, 226, 226);
+    font-family: 'CorleoneDue', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+@media screen and (max-width : 1000px){
+    #klaxment_id {
+        padding-bottom: 600px!important;
+    }
+}
+
+@media screen and (min-height: 800px) and (max-height: 1000px) {
+    #klaxment_id {
+        padding-bottom: 200px;
+    }
+}
+
+@media screen and (min-height: 1000px) and (max-height: 1200px) {
+    #klaxment_id {
+        padding-bottom: 400px;
+    }
+}
+
 
 #klaxment_id h1 {
     text-align: center;
@@ -730,8 +931,8 @@ a, a:hover, a:focus, a:active {
 #pub_id_klaxment {
     padding-left:0 ;
     margin-left: 0;
-    width: 225px!important;
-    height: 750px!important;
+    width: 225px;
+    height: 750px;
 }
 
 /* Style The Dropdown Button */
@@ -789,30 +990,20 @@ a, a:hover, a:focus, a:active {
     display: block;
 }
 
-.arced > span:nth-child(1) {
-    -webkit-transform: translateX(-1px) translateY(68px) rotate(-178deg);
-       -moz-transform: translateX(-1px) translateY(68px) rotate(-178deg);
-        -ms-transform: translateX(-1px) translateY(68px) rotate(-178deg);
-         -o-transform: translateX(-1px) translateY(68px) rotate(-178deg);
-            transform: translateX(-1px) translateY(68px) rotate(-178deg);
-
-    -webkit-transition-delay: 0s;
-       -moz-transition-delay: 0s;
-         -o-transition-delay: 0s;
-            transition-delay: 0s;
+.arced {
+    color: black!important;
+    font-family: 'CorleoneDue', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+    font-size: 80px;
+    margin-bottom: 30px;
 }
 
-.arced > span:nth-child(2) {
-    -webkit-transform: translateX(-3px) translateY(39px) rotate(-13deg);
-       -moz-transform: translateX(-3px) translateY(39px) rotate(-13deg);
-        -ms-transform: translateX(-3px) translateY(39px) rotate(-13deg);
-         -o-transform: translateX(-3px) translateY(39px) rotate(-13deg);
-            transform: translateX(-3px) translateY(39px) rotate(-13deg);
-
-    -webkit-transition-delay: .04s;
-       -moz-transition-delay: .04s;
-         -o-transition-delay: .04s;
-            transition-delay: .04s;
+.arced span {
+    color: black!important;
+    font-family: 'CorleoneDue', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
 }
 
 #h1_goals {
@@ -832,6 +1023,7 @@ a, a:hover, a:focus, a:active {
     margin-top: 20px;
     background-color: rgb(0, 0, 0);
     padding: 20px;
+    margin-bottom: 30px;
 }
 
 .compteur_goals {

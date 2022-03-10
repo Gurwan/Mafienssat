@@ -4,17 +4,17 @@
 {% include 'nav.html' %}
 <div class="row" id="klaxment_id">
     <div id="main_title" class="col-9">
-        <h1 class="arced" id="arced">Klaxment officiel</h1>
+        <h1 class="arced" id="arced">KLAXMENT OFFICIEL</h1>
         <div id="klaxment_list">
             {% for user in userList %}
                 {% if forloop.counter == 1 %}
-                    <h2><span>Première place </span> {{user.first_name }} {{user.last_name }} - {{ user.get_sector_display }} - {{user.klax_coins}} <img class="img-fluid" height="75" width="75" src="{% static 'klax_or.png' %}" alt=""/></h2>
+                    <h2><span>Première place</span> {{user.first_name }} {{user.last_name }} <span class="sector_span">({{ user.get_sector_display }})</span> : {{user.klax_coins}} <img class="img-fluid" height="75" width="75" src="{% static 'klax_or.png' %}" alt=""/></h2>
                 {% elif forloop.counter == 2 %}
-                    <h3><span>Deuxième place </span>  {{user.first_name }} {{user.last_name }} - {{ user.get_sector_display }} - {{user.klax_coins}} <img class="img-fluid" height="75" width="75" src="{% static 'klax_argent.png' %}" alt=""/></h3>
+                    <h3><span>Deuxième place </span>  {{user.first_name }} {{user.last_name }} <span class="sector_span">({{ user.get_sector_display }})</span> : {{user.klax_coins}} <img class="img-fluid" height="75" width="75" src="{% static 'klax_argent.png' %}" alt=""/></h3>
                 {% elif forloop.counter == 3 %}
-                    <h4><span>Troisième place :</span> {{user.first_name }} {{user.last_name }} - {{ user.get_sector_display }} - {{user.klax_coins}} <img class="img-fluid" height="75" width="75" src="{% static 'klax_bronze.png' %}" alt=""/></h4>
+                    <h4><span>Troisième place </span> {{user.first_name }} {{user.last_name }} <span class="sector_span">({{ user.get_sector_display }})</span> : {{user.klax_coins}} <img class="img-fluid" height="75" width="75" src="{% static 'klax_bronze.png' %}" alt=""/></h4>
                 {% elif forloop.counter <= 10 %}
-                    <h5><span>{{forloop.counter}}ème place :</span> {{user.first_name }} {{user.last_name }} - {{ user.get_sector_display }} - {{user.klax_coins}}</h5>
+                    <h5><span>{{forloop.counter}}ème place </span> {{user.first_name }} {{user.last_name }} <span class="sector_span">({{ user.get_sector_display }})</span> : {{user.klax_coins}}</h5>
                 {% endif %}
             {% endfor %}
         </div>
@@ -25,11 +25,14 @@
         <img id="gif_chaud_klaxeurs_id" style="display:none" width="200px" height="750px" src="{% static 'img/pub_chaud_klaxeurs.gif' %}">
     </div>
 </div>
+<div id="vote_mafienssat_klaxment">
+    <p style="text-align:center; margin:0; color:black">Votez Mafienssat !</p>
+</div>
 <script src="{% static 'js/circletype.min.js' %}"></script>
 <script>
     $(document).ready(function(){
         const circleType = new CircleType(document.getElementById('arced'));
-        circleType.radius(300).dir(1);
+        circleType.radius(500).dir(1);
     })
     setInterval(function () {
         let e1 = document.getElementById("gif_gros_klax_id").style.display; 
