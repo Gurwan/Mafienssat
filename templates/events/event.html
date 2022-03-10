@@ -2,16 +2,16 @@
 {% block content %}
 {% load static %}
 {% include 'nav.html' %}
-<div class="container">
+<div class="container-fluid" id="event_page_id">
+    <img class="logo_loco" width="400px" height="400px" src="{% static 'img/logodeloco.png' %}">
     <div id="next-event">
         <h1>Prochains <span>événements</span></h1>
     </div>
     {% for event in events %}
         {% if event.visible %}
-            <div id="next-event">
-                <img class="img-fluid" src="{% static 'img/event/background.jpg' %}"/>
+            <div id="next-event-object">
                 <h2 id="name">{{event.event_name}}</h2>
-                <h3 id="date">Le {{event.event_date | date:"d"}} {{event.event_date | date:"F"}} {{event.event_date | date:"o"}} à {{event.event_date | date:"H"}}h{{event.event_date | date:"i"}}</h3>
+                <h3 id="date">{{event.event_date | date:"d"}} {{event.event_date | date:"F"}} {{event.event_date | date:"o"}} à partir de {{event.event_date | date:"H"}}h{{event.event_date | date:"i"}}</h3>
                 <div>
                     <h4>{{event.get_event_type_display}}</h4> <br>
                     {% if event.max_attendees != 0 %}
@@ -87,5 +87,11 @@
         <h1>Aucun <span>événement</span> enregistré</h1>
     {% endif %}
 {% endif %}
+<script>
+    $(document).ready(function(){
+        document.body.inner;HTML = document.body.innerHTML.replace('March', 'mars');
+    });
+    
+</script>
 </div>
 {% endblock %}
