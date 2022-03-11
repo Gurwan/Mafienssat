@@ -10,7 +10,7 @@
         <h1>Les <span>Allo</span> à votre disposition</h1>
     </div>
     {% for allo in allos %}
-        {% if allo.visible %}
+        {% if allo.visible and not allo.closed_allo %}
             <small>{{ allo.get_allo_type_display }}</small> <br>
             <small>{{ allo.description }}</small> <br>
             <small>Disponible du {{allo.start_date | date:"d"}} {{allo.start_date  | date:"F"}} {{allo.start_date  | date:"o"}} à {{allo.start_date | date:"H"}}h{{allo.start_date | date:"i"}}</small>
@@ -19,7 +19,7 @@
                 <small>Coût: {{ allo.cost }} klaxcoins </small> <br>
             {% endif %}
             {% if user %}
-                <a class="button_make_allo" value="alloRegistration{{ allo.id }}" href="{% url 'alloRegistration' allo.id %}">
+                <a class="button_make_allo" id="alloRegistration{{ allo.id }}" href="{% url 'alloRegistration' allo.id %}">
                     <p id="label">Envoyer une demande</p>
                 </a>
             {% endif %}

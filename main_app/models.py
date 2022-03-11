@@ -41,6 +41,7 @@ class Bets(models.Model):
     ended = models.DateTimeField(help_text='YYYY-MM-DD HH:MM:SS')
 
     visible = models.BooleanField(default=False)
+    closed_bet = models.BooleanField(default=False)
 
 
 class StoreBets(models.Model):
@@ -55,6 +56,7 @@ class StoreBets(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     bet_rate = models.DecimalField(max_digits=4, decimal_places=2, default=1.00)
     blocked_bet = models.BooleanField(default=False)
+    closed_bet = models.BooleanField(default=False)
 
 
 class Event(models.Model):
@@ -76,6 +78,7 @@ class Event(models.Model):
     associated_html = models.BooleanField(default=False)
 
     visible = models.BooleanField(default=False)
+    closed_event = models.BooleanField(default=False)
 
 
 class EventsRegistration(models.Model):
@@ -102,6 +105,7 @@ class Allos(models.Model):
     cost = models.DecimalField(max_digits=12, decimal_places=2, default=1.00)
 
     visible = models.BooleanField(default=False)
+    closed_allo = models.BooleanField(default=False)
 
 
 class AllosRegistration(models.Model):

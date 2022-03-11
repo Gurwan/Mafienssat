@@ -26,13 +26,16 @@
         {% if bet.visible %}
             <div class="div-du-bet">
                 <h3>{{ bet.bet_name }}</h3>
+                {% if bet.closed_bet %}
+                    <h4>Fermé</h4>
+                {% endif %}
                 <h4>Fini le {{bet.ended | date:"d"}} {{bet.ended  | date:"F"}} {{bet.ended  | date:"o"}} à {{bet.ended | date:"H"}}h{{bet.ended | date:"i"}}</h4>
-                {% if request.user.is_authenticated %}
-                    <a class="button_rate" href="{% url "makeBetW" bet.id %}" value="makeBetW{{ bet.id }}">
+                {% if request.user.is_authenticated and not bet.closed_bet%}
+                    <a class="button_rate" href="{% url "makeBetW" bet.id %}" id="makeBetW{{ bet.id }}">
                         <p id="label">{{ bet.win_name }}</p>
                         <p id="rate">{{ bet.win_rate }}</p>
                     </a>
-                    <a class="button_rate" href="{% url "makeBetL" bet.id %}" value="makeBetL{{ bet.id }}">
+                    <a class="button_rate" href="{% url "makeBetL" bet.id %}" id="makeBetL{{ bet.id }}">
                         <p id="label">{{ bet.lose_name }}</p>
                         <p id="rate">{{ bet.lose_rate }}</p>
                     </a>

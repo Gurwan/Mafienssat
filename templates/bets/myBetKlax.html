@@ -38,11 +38,11 @@
                 </a>
                 <br>
                 {% if bet.result == 'W' %}
-                    <a class="btn btn--main" style="background-color:red; color:white" href="{% url "finalizeBet" id_bet=bet.bet_id.id %}" value="finalizeBet{{ bet.bet_id.id }}">
+                    <a class="btn btn--main" style="background-color:red; color:white" href="{% url "finalizeBet" id_bet=bet.bet_id.id %}" id="finalizeBet{{ bet.bet_id.id }}">
                         Bloquer la cote à {{ bet.bet_id.win_rate }}
                     </a>
                 {% else %}
-                    <a class="btn btn--main" style="background-color:red; color:white" href="{% url "finalizeBet" id_bet=bet.bet_id.id %}" value="finalizeBet{{ bet.bet_id.id }}">
+                    <a class="btn btn--main" style="background-color:red; color:white" href="{% url "finalizeBet" id_bet=bet.bet_id.id %}" id="finalizeBet{{ bet.bet_id.id }}">
                         Bloquer la cote à {{ bet.bet_id.lose_rate }}
                     </a>
                 {% endif %}

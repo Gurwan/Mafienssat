@@ -29,7 +29,7 @@
                 <small>Ce allo est visible pour tout le monde</small>
             {% else %}
                 <small>Ce allo n'est pas visible pour tout le monde</small> <br>
-                <a class="row btn" style="background-color: #522699" href="{% url "setVisibleAllo" id_allo=allo.id %}" value="setVisibleAllo{{ allo.id }}">
+                <a class="row btn" style="background-color: #522699" href="{% url "setVisibleAllo" id_allo=allo.id %}" id="setVisibleAllo{{ allo.id }}">
                     Mettre en ligne le allo
                 </a>
             {% endif %}

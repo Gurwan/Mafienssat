@@ -10,6 +10,7 @@
     {% for event in events %}
         {% if event.visible %}
             <div id="next-event-object">
+<<<<<<< HEAD
                 <div class="row">
                     <div class="col">
                         <div class="name_date">
@@ -35,6 +36,39 @@
                                 </a>
                             {% endif %}
                         {% endif %}
+=======
+                <h2 id="name">{{event.event_name}}</h2>
+                <h3 id="date">{{event.event_date | date:"d"}} {{event.event_date | date:"F"}} {{event.event_date | date:"o"}} à partir de {{event.event_date | date:"H"}}h{{event.event_date | date:"i"}}</h3>
+                <div>
+                    <h4>{{event.get_event_type_display}}</h4> <br>
+                    {% if event.max_attendees != 0 %}
+                        <h4>{{event.attendees_number}} inscrits sur {{event.max_attendees}} places disponibles</h4>
+                    {% endif %}
+                </div>
+
+                <p>{{event.event_description}}</p>
+            </div>
+            <div class="container-fluid" id="choices">
+                <div id="main_col_event">
+                    <div class="row">
+                        {% if user and not event.closed_event %}
+                            {% if event.attendees_number < event.max_attendees and event.max_attendees != 0 %}
+                                <a class="col btn" style="background-color: #522699" href="{% url "eventRegistration" event_id=event.id %}" id="goEvent{{ event.id }}">
+                                    <h2>Participer à l'événement</h2>
+                                </a>
+                            {% endif %}
+                            {% if event.associated_bet %}
+                                <a class="col btn" style="background-color: #a7662a" href="{% url "homeBetKlax" %}" id="goBet{{ event.id }}">
+                                    <h2>Parier sur l'événement</h2>
+                                </a>
+                            {% endif %}
+                        {% endif %}
+                        {% if event.associated_html %}
+                            <a class="row btn" style="background-color: #522699" href="{% url "eventHTML" id_event=event.id %}" id="moreInformation{{ event.id }}">
+                                <h2>Plus d'informaions sur l'évènement</h2>
+                            </a>  <!-- Todo changer le type en bouton -->
+                        {% endif %}
+>>>>>>> 93500f6c582ea1ed5b96446bf49733dc9f896fb3
                     </div>
                 </div>
             
@@ -50,6 +84,7 @@
     {% if registered %}
         <h1 id="light-h1-event"><span>Événements</span> déjà enregistrés</h1>
         {% for event in registered %}
+<<<<<<< HEAD
             <div id="next-event-object">
                 <div class="row">
                     <div class="col">
@@ -103,7 +138,7 @@
             console.log(document.getElementById("event_page_id").style.height);
         }
     });
-    
+
 </script>
 </div
 {% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'main.html' %}
+{% block content %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% include 'nav.html' %}
+{% if user.is_superuser %}
+    <div class="container">
+        <h1 style="text-align: center; margin-top:20px">Tous les Events</h1>
+        {% for event in events %}
+            <h2 id="name">{{event.event_name}}</h2>
+            <h3 id="date">Le {{event.event_date | date:"d"}} {{event.event_date | date:"F"}} {{event.event_date | date:"o"}} à {{event.event_date | date:"H"}}h{{event.event_date | date:"i"}}</h3>
+            {% if not event.closed_event %}
+                <a class="row btn" style="background-color: #522699" href="{% url "closeEvent" id_event=event.id %}" id="closeEvent{{ event.id }}">
+                    Fermer l'event
+                </a> <br>
+            {% else %}
+                <small>Fermé</small> <br>
+            {% endif %}
+            <br> <br>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}
