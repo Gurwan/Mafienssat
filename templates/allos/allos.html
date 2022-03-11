@@ -19,7 +19,7 @@
                 <small>Coût: {{ allo.cost }} klaxcoins </small> <br>
             {% endif %}
             {% if user %}
-                <a class="button_make_allo" value="alloRegistration{{ allo.id }}" href="{% url 'alloRegistration' allo.id %}">
+                <a class="button_make_allo" id="alloRegistration{{ allo.id }}" href="{% url 'alloRegistration' allo.id %}">
                     <p id="label">Envoyer une demande</p>
                 </a>
             {% endif %}

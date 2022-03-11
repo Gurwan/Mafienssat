@@ -26,18 +26,18 @@
                     <div class="row">
                         {% if user and not event.closed_event %}
                             {% if event.attendees_number < event.max_attendees and event.max_attendees != 0 %}
-                                <a class="col btn" style="background-color: #522699" href="{% url "eventRegistration" event_id=event.id %}" value="goEvent{{ event.id }}">
+                                <a class="col btn" style="background-color: #522699" href="{% url "eventRegistration" event_id=event.id %}" id="goEvent{{ event.id }}">
                                     <h2>Participer à l'événement</h2>
                                 </a>
                             {% endif %}
                             {% if event.associated_bet %}
-                                <a class="col btn" style="background-color: #a7662a" href="{% url "homeBetKlax" %}" value="goBet{{ event.id }}">
+                                <a class="col btn" style="background-color: #a7662a" href="{% url "homeBetKlax" %}" id="goBet{{ event.id }}">
                                     <h2>Parier sur l'événement</h2>
                                 </a>
                             {% endif %}
                         {% endif %}
                         {% if event.associated_html %}
-                            <a class="row btn" style="background-color: #522699" href="{% url "eventHTML" id_event=event.id %}" value="moreInformation{{ event.id }}">
+                            <a class="row btn" style="background-color: #522699" href="{% url "eventHTML" id_event=event.id %}" id="moreInformation{{ event.id }}">
                                 <h2>Plus d'informaions sur l'évènement</h2>
                             </a>  <!-- Todo changer le type en bouton -->
                         {% endif %}
@@ -66,11 +66,11 @@
             <div class="container-fluid" id="choices">
                 <div id="main_col_event">
                     <div class="row">
-                        <a class="col btn" style="background-color: #522699" value="dontGoEvent{{ event.id }}" href="{% url "eventUnregistration" event_id=event.id %}">
+                        <a class="col btn" style="background-color: #522699" id="dontGoEvent{{ event.id }}" href="{% url "eventUnregistration" event_id=event.id %}">
                             <h2>Ne plus participer à l'événement</h2>
                         </a>
                         {% if event.associated_bet %}
-                            <a class="col btn" style="background-color: #a7662a" value="goBet" href="{% url "homeBetKlax" %}">
+                            <a class="col btn" style="background-color: #a7662a" id="goBet" href="{% url "homeBetKlax" %}">
                                 <h2>Parier sur l'événement</h2>
                             </a>
                         {% endif %}
