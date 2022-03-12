@@ -51,24 +51,29 @@ def registerUser(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.username = user.username.lower()
-            user.save()
-            allos_counters = AllosUserCounters(user_id=user)
-            allos_counters.save()
-            login(request, user)
+            if user.email.split("@")[1] == "enssat.fr":
 
-            current_site = get_current_site(request)
-            subject = 'Activate Your Mafienssat Account'
-            message = render_to_string('accountActivationEmail.html', {
-                'user': user,
-                'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.id)),
-                'token': account_activation_token.make_token(user),
-            })
+                user.save()
+                allos_counters = AllosUserCounters(user_id=user)
+                allos_counters.save()
+                login(request, user)
 
-            user_email = form.cleaned_data.get('email')
-            send_mail(subject, message, EMAIL_HOST_USER, [user_email])
+                current_site = get_current_site(request)
+                subject = 'Activate Your Mafienssat Account'
+                message = render_to_string('accountActivationEmail.html', {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.id)),
+                    'token': account_activation_token.make_token(user),
+                })
 
-            return HttpResponse('Please confirm your email address to complete the registration')
+                user_email = form.cleaned_data.get('email')
+                send_mail(subject, message, EMAIL_HOST_USER, [user_email])
+
+                return HttpResponse('Please confirm your email address to complete the registration')
+            else:
+                messages.error(request, "Vous devez utiliser votre adresse mail enssat")
+                return redirect('register')
 
 
 def activate(request, uidb64, token):
@@ -477,7 +482,7 @@ def event(request):
             events = Event.objects.exclude(id__in=reg_event_id)
             registered_event = Event.objects.filter(id__in=reg_event_id)
     else:
-        messages.error(request, "Erreur lors de l'envoie dea requête")
+        messages.error(request, "Erreur lors de l'envoie de la requête")
 
     return render(request, 'events/event.html', {'events': events, 'user': user, 'registered': registered_event})
 
@@ -543,7 +548,7 @@ def eventRegistration(request, event_id):
         else:
             messages.error(request, "Cet évènement est déja complet")
     else:
-        messages.error(request, "Erreur lors de l'identification de l'évènement")
+        messages.error(request, "Erreur lors de l'envoi de la requête")
 
 
 def eventUnregistration(request, event_id):
@@ -940,7 +945,7 @@ def closeAllo(requets, id_allo):
 
         return redirect("suAllos")
     else:
-        messages.error(requets, "Erreur lors de l'envoie dela requête")
+        messages.error(requets, "Erreur lors de l'envoie de la requête")
 
 
 def alloEmailConfirmation(request, id_allo):
@@ -1004,9 +1009,8 @@ def sendAlloEmailConfirmation(request, date, time, allo_id):
 
         else:
             messages.error(request, "staff non trouvé")
-
     else:
-        messages.error(request, "La requète est vide, veuillez réessayer")
+        messages.error(request, "La requête est vide, veuillez réessayer")
 
 
 def getAlloSentenceType(allo_type, date):
