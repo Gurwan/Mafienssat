@@ -23,8 +23,8 @@
     <h1 style="text-align: center; margin-top:20px">Faire la demande pour {{ allo.get_allo_type_display }}</h1>
     <div class="container">
 
-        <label for="date">Date souhaitée:</label><input type="date" id="date" min="{{ allo.start_date.year }}-{{ allo.start_date.month }}-{{ allo.start_date.day }}" max="{{ allo.end_date.year }}-{{ allo.end_date.month }}-{{ allo.end_date.day }}">
-        <label for="time">Heure souhaitée:</label><input type="time" id="time" min="{{ allo.start_date.hour }}:{{ allo.start_date.minute }}" max="{{ allo.end_date.hour }}:{{ allo.end_date.minute }}">
+        <label for="date">Date souhaitée:</label><input type="date" id="date" min="{{ allo.start_date.year }}-{{ allo.start_date.month }}-{{ allo.start_date.day }}" max="{{ allo.end_date.year }}-{{ allo.end_date.month }}-{{ allo.end_date.day }}"> <br>
+        <label for="time">Heure souhaitée:</label><input type="time" id="time" min="{{ allo.start_date.hour }}:{{ allo.start_date.minute }}" max="{{ allo.end_date.hour }}:{{ allo.end_date.minute }}"> <br>
         <br>
         {% if allowed > 0 %}
             <a class="btn btn--main" id="btn-href-{{ allo.id }}" href="{% url "sendAllo" date="a" time="b" allo_id=allo.id %}" onclick="sendAllo(this.id)" style="background-color:red; color:white">
