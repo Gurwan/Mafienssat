@@ -280,42 +280,26 @@ def finalizeBet(request, id_bet):
         current_user = User.objects.get(pk=request.user.id)
     except User.DoesNotExist:
         current_user = None
+    try:
+        bet = StoreBets.objects.get(bet_id_id=id_bet, user_id_id=current_user.id)
+    except StoreBets.DoesNotExist:
+        bet = None
 
-    if current_user is not None:
-        gains = request.POST['gains'] if request.POST['gains'] != "" else Decimal(0)
-        if current_user.klax_coins >= Decimal(gains):
-            if id_bet is not None:
-                try:
-                    bet = StoreBets.objects.get(bet_id_id=id_bet, user_id_id=current_user.id)
-                except StoreBets.DoesNotExist:
-                    bet = None
+    if current_user is not None and bet is not None:
 
-                if bet is not None:
-                    if Decimal(gains) > Decimal(0):
-                        current_user.klax_coins -= Decimal(gains)
-                        current_user.save()
-                        bet.gains += Decimal(gains)
-
-                    if bet.result == 'W':
-                        bet.bet_id.win_gains += Decimal(gains)
-                        bet.bet_rate = bet.bet_id.win_rate
-                    elif bet.result == 'L':
-                        bet.bet_id.lose_gains += Decimal(gains)
-                        bet.bet_rate = bet.bet_id.lose_rate
-                    else:
-                        messages.error(request, "Le résultat du pari est inconnu")
-
-                    bet.blocked_bet = True
-                    bet.bet_id.save()
-                    bet.save()
-
-                    ratingRecalculation(id_bet)
-
-                    return redirect("myBets")
-            else:
-                messages.error(request, "Contacte les admins si le problème perciste après un refresh de la page")
+        if bet.result == 'W':
+            bet.bet_rate = bet.bet_id.win_rate
+        elif bet.result == 'L':
+            bet.bet_rate = bet.bet_id.lose_rate
         else:
-            messages.error(request, "Tu n'as pas assez de KlaxCoins espèce de rat")
+            messages.error(request, "Le résultat du pari est inconnu")
+
+        bet.blocked_bet = True
+        bet.save()
+
+        ratingRecalculation(id_bet)
+
+        return redirect("myBets")
     else:
         messages.error(request, "Tu dois être connecté pour accéder à cette page")
 
