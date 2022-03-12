@@ -8,14 +8,11 @@ from decimal import *
 from datetime import datetime
 
 from django.template.loader import render_to_string
-from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.views import View
 
 from bet_klax.settings import EMAIL_HOST_USER
 from .models import User, Bets, StoreBets, Event, EventsRegistration, AllosRegistration, Allos, AllosUserCounters
 from .forms import UserForm, AddBetForm, AddEventForm, AlloAdminForm
-from . import forms
 from .tokens import account_activation_token
 from django.utils.encoding import force_bytes, force_str
 
@@ -44,7 +41,6 @@ def logoutUser(request):
 
 
 def registerUser(request):
-    form = UserForm()
 
     if request.method != 'POST':
         form = UserForm()
@@ -71,6 +67,7 @@ def registerUser(request):
 
             user_email = form.cleaned_data.get('email')
             send_mail(subject, message, EMAIL_HOST_USER, [user_email])
+
             return HttpResponse('Please confirm your email address to complete the registration')
 
 
@@ -81,13 +78,15 @@ def activate(request, uidb64, token):
         user = user.objects.get(pk=uid)
     except(TypeError, ValueError, OverflowError, user.DoesNotExist):
         user = None
+
     if user is not None and account_activation_token.check_token(user, token):
+
         user.is_active = True
         user.save()
+
         return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
     else:
         return HttpResponse('Activation link is invalid!')
-
 
 
 def home(request):
@@ -132,7 +131,7 @@ def betCreator(request):
                 bet = betform.save(commit=False)
                 bet.save()
             else:
-                messages.error(request, 'Erreur lors de la création du paris')
+                messages.error(request, 'Erreur lors de la création du pari')
 
         bets = Bets.objects.all()
 
@@ -209,11 +208,11 @@ def makeBetW(request, id_bet):
 
                 return redirect("betKlax")
             else:
-                messages.error(request, "Tu n\'as pas asser de klax_coins espèce de rat")
+                messages.error(request, "Tu n\'as pas asser de KlaxCoins espèce de rat")
         else:
             messages.error(request, "Tu as déja parié sur ce pari")
     else:
-        messages.error(request, "Erreur lors de l'envoie dela requète")
+        messages.error(request, "Erreur lors de l'envoie dela requête")
 
 
 def makeBetL(request, id_bet):
@@ -248,11 +247,11 @@ def makeBetL(request, id_bet):
 
                 return redirect("betKlax")
             else:
-                messages.error(request, "Tu n\'as pas asser de klax_coins espèce de rat")
+                messages.error(request, "Tu n\'as pas asser de KlaxCoins espèce de rat")
         else:
             messages.error(request, "Tu as déja parié sur ce pari")
     else:
-        messages.error(request, "Erreur lors de l'envoi de la requète")
+        messages.error(request, "Erreur lors de l'envoi de la requête")
 
 
 def myBets(request):
@@ -307,7 +306,7 @@ def addGains(request, id_bet, gains):
         else:
             messages.error(request, "Tu n'as pas asser de KlaxCoins espèce de rat")
     else:
-        messages.error(request, "Il faut être connecté pour acceder à cette page")
+        messages.error(request, "Il faut être connecté pour accéder à cette page")
 
 
 def finalizeBet(request, id_bet):
@@ -439,13 +438,10 @@ def sendBetsKalxcoins(request, id_bet, result_bet):
         if bets is not None:
 
             for b in bets:
-                print("ok")
                 if result_bet == "W" and b.result == 'W':
                     b.user_id.klax_coins += bet.win_rate*b.gains
-                    print(bet.win_rate * b.gains)
                 elif result_bet == "L" and b.result == 'L':
                     b.user_id.klax_coins += bet.lose_rate*b.gains
-                    print(bet.lose_rate*b.gains)
 
                 b.user_id.save()
 
@@ -454,7 +450,6 @@ def sendBetsKalxcoins(request, id_bet, result_bet):
             return redirect("suBets")
 
         else:
-            print("R frero")
             bet.delete()
 
             return redirect("suBets")
@@ -482,7 +477,7 @@ def event(request):
             events = Event.objects.exclude(id__in=reg_event_id)
             registered_event = Event.objects.filter(id__in=reg_event_id)
     else:
-        messages.error(request, "Erreur lors de l'envoie dea requète")
+        messages.error(request, "Erreur lors de l'envoie dea requête")
 
     return render(request, 'events/event.html', {'events': events, 'user': user, 'registered': registered_event})
 
@@ -574,7 +569,7 @@ def eventUnregistration(request, event_id):
         else:
             messages.error(request, "Erreur lors de l'identification de l'évènement")
     else:
-        messages.error(request, "Un problème est survenu lors de votre inscripion, veuillez réessayer et si cela persiste, veuillez contacter un admin")
+        messages.error(request, "Un problème est survenu lors de votre inscription, veuillez réessayer et si cela persiste, contacter un admin")
 
 
 def suEvents(request):
@@ -591,7 +586,7 @@ def suEvents(request):
         messages.error(request, "Vous devez être connecté")
 
 
-def closeEvent(requets, id_event):
+def closeEvent(request, id_event):
     try:
         this_event = Event.objects.get(pk=id_event)
     except Event.DoesNotExist:
@@ -603,7 +598,7 @@ def closeEvent(requets, id_event):
 
         return redirect("suEvents")
     else:
-        messages.error(requets, "Erreur lors de l'envoie dela requête")
+        messages.error(request, "Erreur lors de l'envoie dela requête")
 
 
 def liste(request):
@@ -613,6 +608,7 @@ def liste(request):
 def klaxment(request):
     userList = User.objects.filter(is_staff=False, is_superuser=False).order_by('-klax_coins')  # va chercher tous les utilisateurs du site
     data = {'userList': userList}
+
     return render(request, 'nav_links/klaxment.html', data)
 
 
@@ -690,14 +686,14 @@ def buyAllos(request, allo_type, allo_cost):
                     counter.save()
 
                 else:
-                    messages.error(request, "Tu n'as pas assez de klaxcoins")
+                    messages.error(request, "Tu n'as pas assez de KlaxCoins")
             else:
                 addAlloCounter(allo_type, counter, 1)
                 counter.save()
 
             return redirect('myAllos')
         else:
-            messages.error(request, "Erreur lors de l'envoie de la requete")
+            messages.error(request, "Erreur lors de l'envoie de la requête")
     else:
         messages.error(request, "Vous devez être connecté")
 
@@ -747,7 +743,7 @@ def buyAlloTicket(request, allo_ticket_id):
 
             return render(request, 'allos/alloRegistration.html', {'allo': selected_allo, 'allowed': allowed})
         else:
-            messages.error(request, "Tu n'as pas assez de klaxcoins")
+            messages.error(request, "Tu n'as pas assez de KlaxCoins")
     else:
         messages.error(request, "Tu dois être connecté")
 
