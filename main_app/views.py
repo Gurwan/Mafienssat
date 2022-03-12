@@ -1,14 +1,23 @@
 from django.contrib import messages
+from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail, BadHeaderError
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from decimal import *
 from datetime import datetime
+
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.views import View
 
 from bet_klax.settings import EMAIL_HOST_USER
 from .models import User, Bets, StoreBets, Event, EventsRegistration, AllosRegistration, Allos, AllosUserCounters
 from .forms import UserForm, AddBetForm, AddEventForm, AlloAdminForm
 from . import forms
+from .tokens import account_activation_token
+from django.utils.encoding import force_bytes, force_str
 
 
 def loginPage(request):
@@ -37,7 +46,10 @@ def logoutUser(request):
 def registerUser(request):
     form = UserForm()
 
-    if request.method == 'POST':
+    if request.method != 'POST':
+        form = UserForm()
+        return render(request, 'register.html', {'form': form})
+    else:
         form = UserForm(request.POST)
 
         if form.is_valid():
@@ -48,11 +60,34 @@ def registerUser(request):
             allos_counters.save()
             login(request, user)
 
-            return redirect('home')
-        else:
-            messages.error(request, 'Erreur lors de la création de l\'utilisateur')
+            current_site = get_current_site(request)
+            subject = 'Activate Your Mafienssat Account'
+            message = render_to_string('accountActivationEmail.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.id)),
+                'token': account_activation_token.make_token(user),
+            })
 
-    return render(request, 'register.html', {'form': form})
+            user_email = form.cleaned_data.get('email')
+            send_mail(subject, message, EMAIL_HOST_USER, [user_email])
+            return HttpResponse('Please confirm your email address to complete the registration')
+
+
+def activate(request, uidb64, token):
+    user = get_user_model()
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = user.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, user.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+    else:
+        return HttpResponse('Activation link is invalid!')
+
 
 
 def home(request):

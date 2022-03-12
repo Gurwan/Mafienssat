@@ -12,6 +12,7 @@ class UserForm(UserCreationForm):
             'first_name': 'Prénom',
             'last_name': 'Nom',
             'username': 'Pseudo',
+            'email': '@enssat.fr',
             'sector': 'Filière',
             'password1': 'Mot de passe',
             'password2': 'Confirmer le mot de passe ',
