@@ -405,7 +405,7 @@ body {
 
 .logo_loco {
     position: absolute;
-    top: 30px;
+    top: 25px;
     left: 50px;
 }
 
@@ -1191,4 +1191,75 @@ a, a:hover, a:focus, a:active {
     font-weight:normal;
     font-style:normal;
     color: black;
+    margin-bottom: 50px;
+}
+
+#next-event-object .name_date {
+    display: inline-block!important;
+}
+
+#next-event-object .name_date h2 {
+    display: inline-block!important;
+}
+
+#next-event-object .name_date h3 {
+    font-size: 20px;
+    margin-left: 10px;
+    display: inline-block!important;
+}
+
+#next-event-object #h4_available {
+    font-size: 20px;
+    margin-left: 10px;
+}
+
+#next-event-object #description_event {
+    border:red 1px solid;
+    margin-bottom: 30px;
+}
+
+#next-event-object .button_event h5{
+    font-family: 'Castellar', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+    margin-bottom: 0px;
+}
+
+#next-event-object .button_event .btn_event{
+    margin-top: 17px;
+    background-color: #8b1e27;
+    margin-right: 40px;
+}
+
+#next-event-object #description_event p {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 20px;
+}
+
+.no_event_registered {
+    font-family: 'Felixti', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+    color: black;
+    margin-top: 50px;
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+#light-h1-event {
+    text-align: center;
+    font-size: 40px;
+    color: black;
+    font-family: 'Felixti', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+}
+
+#vote_mafienssat_event {
+    font-family: 'Felixti', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+    text-transform: uppercase;
+    margin: 0;
 }
