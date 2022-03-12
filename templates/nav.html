@@ -12,6 +12,7 @@
               {% if not request.user.is_authenticated %}
                   <li><a href="{% url 'login' %}">Se connecter</a></li>
                   <li><a href="{% url 'register' %}">S'inscrire</a></li>
+                  <li><a href="{% url 'liste' %}">Notre liste</a></li>
                   <li><a href="{% url 'klaxment' %}">Klaxment</a></li>
                   <li><a href="{% url 'goals' %}">Goals</a></li>
                   <li>
@@ -33,6 +34,7 @@
                     </div>
                   </li>
               {% else %}
+                  <li><a href="{% url 'liste' %}">Notre liste</a></li>
                   <li><a href="{% url 'klaxment' %}">Klaxment</a></li>
                   <li><a href="{% url 'goals' %}">Goals</a></li>
                   <li><a href="{% url 'event' %}">Events</a></li>
