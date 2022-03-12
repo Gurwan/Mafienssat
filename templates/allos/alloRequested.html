@@ -12,18 +12,15 @@
             <small>{{ allo.allo_id.get_allo_type_display }} pour {{ allo.user_id.first_name }} {{ allo.user_id.last_name }} le {{allo.date | date:"d"}} {{allo.date  | date:"F"}} {{allo.date  | date:"o"}} à {{allo.date | date:"H"}}h{{allo.date | date:"i"}}</small> <br>
             {% if allo.take_over %}
                 {% if not allo.made %}
-                    <a class="button_take_over" href="{% url "dontTakeOverAllo" id_dontTake_allo=allo.id %}" id="dontTakeOver{{ allo.id }}">
-                        Ne plus prendre en charge ce allo
-                    </a><br>
 
                     <a class="button_take_over" href="{% url "finalizeAllo" id_finalized_allo=allo.id %}" id="finalizeAllo{{ allo.id }}">
                         Mettre ce allo terminé
                     </a>
                 {% endif %}
             {% else %}
-                <a class="button_take_over" href="{% url "takeOverAllo" id_take_allo=allo.id %}" id="takeOver{{ allo.id }}">
-                    Prendre en charge ce allo
-                </a>
+                <a class="button_take_over" href="{% url "alloEmailConfirmation" id_allo=allo.id %}" id="alloEmailConfirmation{{ allo.id }}">
+                    Envoyer la confirmation par mail
+                </a> <br>
             {% endif %}
             <br><br>
         {% endfor %}

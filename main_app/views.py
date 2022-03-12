@@ -1,11 +1,20 @@
 from django.contrib import messages
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import send_mail, BadHeaderError
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from decimal import *
 from datetime import datetime
+
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+
+from bet_klax.settings import EMAIL_HOST_USER
 from .models import User, Bets, StoreBets, Event, EventsRegistration, AllosRegistration, Allos, AllosUserCounters
-from .forms import UserForm, AddBetForm, AddEventForm, AlloAdminForm, SendEmailForms
-from . import forms
+from .forms import UserForm, AddBetForm, AddEventForm, AlloAdminForm
+from .tokens import account_activation_token
+from django.utils.encoding import force_bytes, force_str
 
 
 def loginPage(request):
@@ -32,9 +41,11 @@ def logoutUser(request):
 
 
 def registerUser(request):
-    form = UserForm()
 
-    if request.method == 'POST':
+    if request.method != 'POST':
+        form = UserForm()
+        return render(request, 'register.html', {'form': form})
+    else:
         form = UserForm(request.POST)
 
         if form.is_valid():
@@ -45,11 +56,37 @@ def registerUser(request):
             allos_counters.save()
             login(request, user)
 
-            return redirect('home')
-        else:
-            messages.error(request, 'Erreur lors de la création de l\'utilisateur')
+            current_site = get_current_site(request)
+            subject = 'Activate Your Mafienssat Account'
+            message = render_to_string('accountActivationEmail.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.id)),
+                'token': account_activation_token.make_token(user),
+            })
 
-    return render(request, 'register.html', {'form': form})
+            user_email = form.cleaned_data.get('email')
+            send_mail(subject, message, EMAIL_HOST_USER, [user_email])
+
+            return HttpResponse('Please confirm your email address to complete the registration')
+
+
+def activate(request, uidb64, token):
+    user = get_user_model()
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = user.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, user.DoesNotExist):
+        user = None
+
+    if user is not None and account_activation_token.check_token(user, token):
+
+        user.is_active = True
+        user.save()
+
+        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+    else:
+        return HttpResponse('Activation link is invalid!')
 
 
 def home(request):
@@ -94,7 +131,7 @@ def betCreator(request):
                 bet = betform.save(commit=False)
                 bet.save()
             else:
-                messages.error(request, 'Erreur lors de la création du paris')
+                messages.error(request, 'Erreur lors de la création du pari')
 
         bets = Bets.objects.all()
 
@@ -171,11 +208,11 @@ def makeBetW(request, id_bet):
 
                 return redirect("betKlax")
             else:
-                messages.error(request, "Tu n\'as pas asser de klax_coins espèce de rat")
+                messages.error(request, "Tu n\'as pas asser de KlaxCoins espèce de rat")
         else:
             messages.error(request, "Tu as déja parié sur ce pari")
     else:
-        messages.error(request, "Erreur lors de l'envoie dela requète")
+        messages.error(request, "Erreur lors de l'envoie dela requête")
 
 
 def makeBetL(request, id_bet):
@@ -210,11 +247,11 @@ def makeBetL(request, id_bet):
 
                 return redirect("betKlax")
             else:
-                messages.error(request, "Tu n\'as pas asser de klax_coins espèce de rat")
+                messages.error(request, "Tu n\'as pas asser de KlaxCoins espèce de rat")
         else:
             messages.error(request, "Tu as déja parié sur ce pari")
     else:
-        messages.error(request, "Erreur lors de l'envoi de la requète")
+        messages.error(request, "Erreur lors de l'envoi de la requête")
 
 
 def myBets(request):
@@ -269,7 +306,7 @@ def addGains(request, id_bet, gains):
         else:
             messages.error(request, "Tu n'as pas asser de KlaxCoins espèce de rat")
     else:
-        messages.error(request, "Il faut être connecté pour acceder à cette page")
+        messages.error(request, "Il faut être connecté pour accéder à cette page")
 
 
 def finalizeBet(request, id_bet):
@@ -277,42 +314,26 @@ def finalizeBet(request, id_bet):
         current_user = User.objects.get(pk=request.user.id)
     except User.DoesNotExist:
         current_user = None
+    try:
+        bet = StoreBets.objects.get(bet_id_id=id_bet, user_id_id=current_user.id)
+    except StoreBets.DoesNotExist:
+        bet = None
 
-    if current_user is not None:
-        gains = request.POST['gains'] if request.POST['gains'] != "" else Decimal(0)
-        if current_user.klax_coins >= Decimal(gains):
-            if id_bet is not None:
-                try:
-                    bet = StoreBets.objects.get(bet_id_id=id_bet, user_id_id=current_user.id)
-                except StoreBets.DoesNotExist:
-                    bet = None
+    if current_user is not None and bet is not None:
 
-                if bet is not None:
-                    if Decimal(gains) > Decimal(0):
-                        current_user.klax_coins -= Decimal(gains)
-                        current_user.save()
-                        bet.gains += Decimal(gains)
-
-                    if bet.result == 'W':
-                        bet.bet_id.win_gains += Decimal(gains)
-                        bet.bet_rate = bet.bet_id.win_rate
-                    elif bet.result == 'L':
-                        bet.bet_id.lose_gains += Decimal(gains)
-                        bet.bet_rate = bet.bet_id.lose_rate
-                    else:
-                        messages.error(request, "Le résultat du pari est inconnu")
-
-                    bet.blocked_bet = True
-                    bet.bet_id.save()
-                    bet.save()
-
-                    ratingRecalculation(id_bet)
-
-                    return redirect("myBets")
-            else:
-                messages.error(request, "Contacte les admins si le problème perciste après un refresh de la page")
+        if bet.result == 'W':
+            bet.bet_rate = bet.bet_id.win_rate
+        elif bet.result == 'L':
+            bet.bet_rate = bet.bet_id.lose_rate
         else:
-            messages.error(request, "Tu n'as pas assez de KlaxCoins espèce de rat")
+            messages.error(request, "Le résultat du pari est inconnu")
+
+        bet.blocked_bet = True
+        bet.save()
+
+        ratingRecalculation(id_bet)
+
+        return redirect("myBets")
     else:
         messages.error(request, "Tu dois être connecté pour accéder à cette page")
 
@@ -417,13 +438,10 @@ def sendBetsKalxcoins(request, id_bet, result_bet):
         if bets is not None:
 
             for b in bets:
-                print("ok")
                 if result_bet == "W" and b.result == 'W':
                     b.user_id.klax_coins += bet.win_rate*b.gains
-                    print(bet.win_rate * b.gains)
                 elif result_bet == "L" and b.result == 'L':
                     b.user_id.klax_coins += bet.lose_rate*b.gains
-                    print(bet.lose_rate*b.gains)
 
                 b.user_id.save()
 
@@ -432,7 +450,6 @@ def sendBetsKalxcoins(request, id_bet, result_bet):
             return redirect("suBets")
 
         else:
-            print("R frero")
             bet.delete()
 
             return redirect("suBets")
@@ -460,7 +477,7 @@ def event(request):
             events = Event.objects.exclude(id__in=reg_event_id)
             registered_event = Event.objects.filter(id__in=reg_event_id)
     else:
-        messages.error(request, "Erreur lors de l'envoie dea requète")
+        messages.error(request, "Erreur lors de l'envoie dea requête")
 
     return render(request, 'events/event.html', {'events': events, 'user': user, 'registered': registered_event})
 
@@ -552,7 +569,7 @@ def eventUnregistration(request, event_id):
         else:
             messages.error(request, "Erreur lors de l'identification de l'évènement")
     else:
-        messages.error(request, "Un problème est survenu lors de votre inscripion, veuillez réessayer et si cela persiste, veuillez contacter un admin")
+        messages.error(request, "Un problème est survenu lors de votre inscription, veuillez réessayer et si cela persiste, contacter un admin")
 
 
 def suEvents(request):
@@ -569,7 +586,7 @@ def suEvents(request):
         messages.error(request, "Vous devez être connecté")
 
 
-def closeEvent(requets, id_event):
+def closeEvent(request, id_event):
     try:
         this_event = Event.objects.get(pk=id_event)
     except Event.DoesNotExist:
@@ -581,7 +598,7 @@ def closeEvent(requets, id_event):
 
         return redirect("suEvents")
     else:
-        messages.error(requets, "Erreur lors de l'envoie dela requête")
+        messages.error(request, "Erreur lors de l'envoie dela requête")
 
 
 def liste(request):
@@ -591,6 +608,7 @@ def liste(request):
 def klaxment(request):
     userList = User.objects.filter(is_staff=False, is_superuser=False).order_by('-klax_coins')  # va chercher tous les utilisateurs du site
     data = {'userList': userList}
+
     return render(request, 'nav_links/klaxment.html', data)
 
 
@@ -668,14 +686,14 @@ def buyAllos(request, allo_type, allo_cost):
                     counter.save()
 
                 else:
-                    messages.error(request, "Tu n'as pas assez de klaxcoins")
+                    messages.error(request, "Tu n'as pas assez de KlaxCoins")
             else:
                 addAlloCounter(allo_type, counter, 1)
                 counter.save()
 
             return redirect('myAllos')
         else:
-            messages.error(request, "Erreur lors de l'envoie de la requete")
+            messages.error(request, "Erreur lors de l'envoie de la requête")
     else:
         messages.error(request, "Vous devez être connecté")
 
@@ -725,7 +743,7 @@ def buyAlloTicket(request, allo_ticket_id):
 
             return render(request, 'allos/alloRegistration.html', {'allo': selected_allo, 'allowed': allowed})
         else:
-            messages.error(request, "Tu n'as pas assez de klaxcoins")
+            messages.error(request, "Tu n'as pas assez de KlaxCoins")
     else:
         messages.error(request, "Tu dois être connecté")
 
@@ -876,28 +894,7 @@ def alloRequested(request):
         messages.error(request, "Vous devez être connecté")
 
 
-def takeOverAllo(request, id_take_allo):
-    try:
-        allo = AllosRegistration.objects.get(pk=id_take_allo)
-    except AllosRegistration.DoesNotExist:
-        allo = None
-    try:
-        user = User.objects.get(pk=request.user.id)
-    except User.DoesNotExist:
-        user = None
-
-    if allo is not None and user is not None:
-        allo.take_over = True
-        allo.staff_id = request.user.id
-        allo.save()
-
-        return redirect('alloRequested')
-    else:
-        messages.error(request, "Erreur lors du chargement")
-
-
 def finalizeAllo(request, id_finalized_allo):
-    print("ok")
     try:
         allo = AllosRegistration.objects.get(pk=id_finalized_allo)
     except AllosRegistration.DoesNotExist:
@@ -908,29 +905,8 @@ def finalizeAllo(request, id_finalized_allo):
         user = None
 
     if allo is not None and user is not None:
-        print(id_finalized_allo)
         allo.made = True
         allo.staff_id = request.user.id
-        allo.save()
-
-        return redirect('alloRequested')
-    else:
-        messages.error(request, "Erreur lors du chargement")
-
-
-def dontTakeOverAllo(request, id_dontTake_allo):
-    try:
-        allo = AllosRegistration.objects.get(pk=id_dontTake_allo)
-    except AllosRegistration.DoesNotExist:
-        allo = None
-    try:
-        user = User.objects.get(pk=request.user.id)
-    except User.DoesNotExist:
-        user = None
-
-    if allo is not None and user is not None:
-        allo.take_over = False
-        allo.staff_id = 0
         allo.save()
 
         return redirect('alloRequested')
@@ -967,22 +943,92 @@ def closeAllo(requets, id_allo):
         messages.error(requets, "Erreur lors de l'envoie dela requête")
 
 
-""" 
-def sendAlloEmailConfirmation(request, id_allo):
-    if request.method == 'POST':
+def alloEmailConfirmation(request, id_allo):
+    try:
+        allo = AllosRegistration.objects.get(pk=id_allo)
+    except AllosRegistration.DoesNotExist:
+        allo = None
+    try:
+        user = User.objects.get(pk=request.user.id)
+    except User.DoesNotExist:
+        user = None
+
+    if allo is not None and user is not None:
+        allo.take_over = True
+        allo.staff_id = request.user.id
+        allo.save()
+
+        return render(request, "allos/alloEmailForm.html", {'user': user, 'allo': allo})
+    else:
+        messages.error(request, "Erreur lors du chargement de la page")
+
+
+def sendAlloEmailConfirmation(request, date, time, allo_id):
+
+    try:
+        requested_allo = AllosRegistration.objects.get(pk=allo_id)
+    except AllosRegistration.DoesNotExist:
+        requested_allo = None
+
+    if date is not None and time is not None and requested_allo is not None:
         try:
-            date = SendEmailForms(request.POST)
-        except request.POST is None:
-            date = None
+            staff_user = User.objects.get(pk=requested_allo.staff_id)
+        except User.DoesNotExist:
+            staff_user = None
 
-        if date.is_valid():
+        if staff_user is not None:
+            date_time = date + " à " + time
+            user_email = requested_allo.user_id.email
+            subject = requested_allo.allo_id.get_allo_type_display()
 
+            body = {
+                'line1': 'Yo,',
+                'line2': '',
+                'line3': getAlloSentenceType(requested_allo.allo_id.allo_type, date_time),
+                'line4': '',
+                'line5': 'On va prendre contact avec toi incessamment sou peu.',
+                'line6': 'Si tu n\'as pas reçu de message avant le jour de ta demande, tu peux contacter ' + staff_user.first_name + ' ' + staff_user.last_name + '.',
+                'line7': '',
+                'line8': 'La bise,',
+                'line9': 'Mafienssat',
+            }
+
+            message = '\n'.join(body.values())
+            try:
+                send_mail(subject, message, EMAIL_HOST_USER, [user_email], fail_silently=True)
+            except BadHeaderError:
+                messages.error(request, "Erreur lors de l'envoie de l'email")
+                return redirect('alloEmailConfirmation')
+
+            return redirect('alloRequested')
 
         else:
-            messages.error(request, "La requète est vide, veuillez réessayer")
+            messages.error(request, "staff non trouvé")
+
     else:
-        messages.error(request, "Erreur lors de l'envoie de la requête")
-"""
+        messages.error(request, "La requète est vide, veuillez réessayer")
+
+
+def getAlloSentenceType(allo_type, date):
+
+    if allo_type == "A":
+        return "Askip t'es en dèche de bière ? On se donne rdv le " + date + "."
+    elif allo_type == "B":
+        return "Alors on à une p'tite fringale ? Bouge pas on arrive le " + date + "."
+    elif allo_type == "C":
+        return "Tu as besoin que maman te prépare ton p'tit dej ? On peut la remplacer le " + date + "."
+    elif allo_type == "D":
+        return "On passera nettoyer ta merde le " + date + "."
+    elif allo_type == "E":
+        return "Les filles chaudes de ta région laveront ta caisse le " + date + "."
+    elif allo_type == "F":
+        return "Le klaxeur fou va prendre contact avec toi pour transmettre ta missive le " + date + "."
+    elif allo_type == "G":
+        return "On t'apporte le petit plat du chef le " + date + "."
+    elif allo_type == "H":
+        return "On s'occupe de t'apporter tes courses pour le " + date + "."
+    else:
+        return ""
 
 
 def staff(request):

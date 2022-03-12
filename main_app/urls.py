@@ -7,6 +7,7 @@ urlpatterns = [
     path("login/", views.loginPage, name="login"),
     path("logout/", views.logoutUser, name="logout"),
     path("register/", views.registerUser, name="register"),
+    path('activate/<uidb64>/<token>/', views.activate, name='activate'),
 
         # Betklax
     path("home_betKlax/", views.homeBetKlax, name="homeBetKlax"),
@@ -58,9 +59,9 @@ urlpatterns = [
     path("staff/alloCreator/", views.alloCreator, name="alloCreator"),
     path("staff/alloCreator/setVisbleAllo/<int:id_allo>/", views.setVisibleAllo, name="setVisibleAllo"),
     path("staff/alloRequested/", views.alloRequested, name="alloRequested"),
-    path("staff/alloRequested/takeOverAllo/<int:id_take_allo>/", views.takeOverAllo, name="takeOverAllo"),
     path("staff/alloRequested/finalizeAllo/<int:id_finalized_allo>/", views.finalizeAllo, name="finalizeAllo"),
-    path("staff/alloRequested/dontTakeOverAllo/<int:id_dontTake_allo>/", views.dontTakeOverAllo, name="dontTakeOverAllo"),
+    path("staff/alloRequested/alloEmailConfirmation/<int:id_allo>/", views.alloEmailConfirmation, name="alloEmailConfirmation"),
+    path("staff/alloRequested/alloEmailConfirmation/sendAlloEmailConfirmation/[<str:date>, <str:time>, <int:allo_id>]/", views.sendAlloEmailConfirmation, name="sendAlloEmailConfirmation"),
 
         # SuperUser
     path("staff/betSuperUser/", views.suBets, name="suBets"),
