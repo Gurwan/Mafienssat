@@ -62,8 +62,3 @@ class AlloForm(ModelForm):
     class Meta:
         model = AllosRegistration
         fields = ['date']
-
-
-class SendEmailForms(forms.Form):
-    date = forms.DateTimeField()
-
