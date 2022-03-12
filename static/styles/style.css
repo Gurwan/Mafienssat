@@ -34,7 +34,12 @@
 }
 
 body {
-    background-color: #666666; /*; 666666 ou 0f0f3d*/
+    /*background-color: #666666; ; 666666 ou 0f0f3d*/
+    background-color: #fcddc2;
+    color: black;
+}
+
+#goals_list {
     color: white;
 }
 
@@ -528,6 +533,7 @@ body {
     border-radius: 12px;
     justify-content: center;
     margin-bottom: 20px;
+    color:white;
 }
 
 .div-du-bet h3 {    
@@ -594,8 +600,8 @@ body {
     }
 
     #liste_off img{
-        width: 300px;
-        height: 200px;
+        /*width: 300px;
+        height: 200px;*/
     }
 
     #next-event h1 {
@@ -664,11 +670,6 @@ body {
         font-size: 20px;
     }
 
-    #liste_off img{
-        width: 250px;
-        height: 166px;
-    }
-
     #login h1 {
         font-size: 30px;
     }
@@ -683,6 +684,13 @@ h6 {
     font-weight:normal;
     font-style:normal;
     font-size: 28px;
+}
+
+@media screen and (max-width : 400px) {
+    #liste_off img {
+        width: 262px;
+        height: 350px;
+    }
 }
 
 .nav {
