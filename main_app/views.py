@@ -1,10 +1,13 @@
 from django.contrib import messages
+from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from decimal import *
 from datetime import datetime
+
+from bet_klax.settings import EMAIL_HOST_USER
 from .models import User, Bets, StoreBets, Event, EventsRegistration, AllosRegistration, Allos, AllosUserCounters
-from .forms import UserForm, AddBetForm, AddEventForm, AlloAdminForm, SendEmailForms
+from .forms import UserForm, AddBetForm, AddEventForm, AlloAdminForm
 from . import forms
 
 
@@ -876,28 +879,7 @@ def alloRequested(request):
         messages.error(request, "Vous devez être connecté")
 
 
-def takeOverAllo(request, id_take_allo):
-    try:
-        allo = AllosRegistration.objects.get(pk=id_take_allo)
-    except AllosRegistration.DoesNotExist:
-        allo = None
-    try:
-        user = User.objects.get(pk=request.user.id)
-    except User.DoesNotExist:
-        user = None
-
-    if allo is not None and user is not None:
-        allo.take_over = True
-        allo.staff_id = request.user.id
-        allo.save()
-
-        return redirect('alloRequested')
-    else:
-        messages.error(request, "Erreur lors du chargement")
-
-
 def finalizeAllo(request, id_finalized_allo):
-    print("ok")
     try:
         allo = AllosRegistration.objects.get(pk=id_finalized_allo)
     except AllosRegistration.DoesNotExist:
@@ -908,29 +890,8 @@ def finalizeAllo(request, id_finalized_allo):
         user = None
 
     if allo is not None and user is not None:
-        print(id_finalized_allo)
         allo.made = True
         allo.staff_id = request.user.id
-        allo.save()
-
-        return redirect('alloRequested')
-    else:
-        messages.error(request, "Erreur lors du chargement")
-
-
-def dontTakeOverAllo(request, id_dontTake_allo):
-    try:
-        allo = AllosRegistration.objects.get(pk=id_dontTake_allo)
-    except AllosRegistration.DoesNotExist:
-        allo = None
-    try:
-        user = User.objects.get(pk=request.user.id)
-    except User.DoesNotExist:
-        user = None
-
-    if allo is not None and user is not None:
-        allo.take_over = False
-        allo.staff_id = 0
         allo.save()
 
         return redirect('alloRequested')
@@ -967,22 +928,92 @@ def closeAllo(requets, id_allo):
         messages.error(requets, "Erreur lors de l'envoie dela requête")
 
 
-""" 
-def sendAlloEmailConfirmation(request, id_allo):
-    if request.method == 'POST':
+def alloEmailConfirmation(request, id_allo):
+    try:
+        allo = AllosRegistration.objects.get(pk=id_allo)
+    except AllosRegistration.DoesNotExist:
+        allo = None
+    try:
+        user = User.objects.get(pk=request.user.id)
+    except User.DoesNotExist:
+        user = None
+
+    if allo is not None and user is not None:
+        allo.take_over = True
+        allo.staff_id = request.user.id
+        allo.save()
+
+        return render(request, "allos/alloEmailForm.html", {'user': user, 'allo': allo})
+    else:
+        messages.error(request, "Erreur lors du chargement de la page")
+
+
+def sendAlloEmailConfirmation(request, date, time, allo_id):
+
+    try:
+        requested_allo = AllosRegistration.objects.get(pk=allo_id)
+    except AllosRegistration.DoesNotExist:
+        requested_allo = None
+
+    if date is not None and time is not None and requested_allo is not None:
         try:
-            date = SendEmailForms(request.POST)
-        except request.POST is None:
-            date = None
+            staff_user = User.objects.get(pk=requested_allo.staff_id)
+        except User.DoesNotExist:
+            staff_user = None
 
-        if date.is_valid():
+        if staff_user is not None:
+            date_time = date + " à " + time
+            user_email = requested_allo.user_id.email
+            subject = requested_allo.allo_id.get_allo_type_display()
 
+            body = {
+                'line1': 'Yo,',
+                'line2': '',
+                'line3': getAlloSentenceType(requested_allo.allo_id.allo_type, date_time),
+                'line4': '',
+                'line5': 'On va prendre contact avec toi incessamment sou peu.',
+                'line6': 'Si tu n\'as pas reçu de message avant le jour de ta demande, tu peux contacter ' + staff_user.first_name + ' ' + staff_user.last_name + '.',
+                'line7': '',
+                'line8': 'La bise,',
+                'line9': 'Mafienssat',
+            }
+
+            message = '\n'.join(body.values())
+            try:
+                send_mail(subject, message, EMAIL_HOST_USER, [user_email], fail_silently=True)
+            except BadHeaderError:
+                messages.error(request, "Erreur lors de l'envoie de l'email")
+                return redirect('alloEmailConfirmation')
+
+            return redirect('alloRequested')
 
         else:
-            messages.error(request, "La requète est vide, veuillez réessayer")
+            messages.error(request, "staff non trouvé")
+
     else:
-        messages.error(request, "Erreur lors de l'envoie de la requête")
-"""
+        messages.error(request, "La requète est vide, veuillez réessayer")
+
+
+def getAlloSentenceType(allo_type, date):
+
+    if allo_type == "A":
+        return "Askip t'es en dèche de bière ? On se donne rdv le " + date + "."
+    elif allo_type == "B":
+        return "Alors on à une p'tite fringale ? Bouge pas on arrive le " + date + "."
+    elif allo_type == "C":
+        return "Tu as besoin que maman te prépare ton p'tit dej ? On peut la remplacer le " + date + "."
+    elif allo_type == "D":
+        return "On passera nettoyer ta merde le " + date + "."
+    elif allo_type == "E":
+        return "Les filles chaudes de ta région laveront ta caisse le " + date + "."
+    elif allo_type == "F":
+        return "Le klaxeur fou va prendre contact avec toi pour transmettre ta missive le " + date + "."
+    elif allo_type == "G":
+        return "On t'apporte le petit plat du chef le " + date + "."
+    elif allo_type == "H":
+        return "On s'occupe de t'apporter tes courses pour le " + date + "."
+    else:
+        return ""
 
 
 def staff(request):

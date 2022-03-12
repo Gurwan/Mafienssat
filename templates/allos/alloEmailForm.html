@@ -1,0 +1,37 @@
+{% extends 'main.html' %}
+{% block content %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% include 'nav.html' %}
+{% if user.is_staff %}
+    <div class="container" id="login">
+      <h1>Evoyer la confirmation du allo {{ allo.allo_id.get_allo_type_display }}</h1>
+        <small>{{ allo.user_id.first_name }} {{ allo.user_id.last_name }} le {{allo.date | date:"d"}} {{allo.date  | date:"F"}} {{allo.date  | date:"o"}} à {{allo.date | date:"H"}}h{{allo.date | date:"i"}}</small> <br>
+        <small>Veuillez confirmer la date pour envoyer le mail</small> <br>
+
+        <label for="date">Date souhaitée:</label><input type="date" id="date" min="{{ allo.start_date.year }}-{{ allo.start_date.month }}-{{ allo.start_date.day }}" max="{{ allo.end_date.year }}-{{ allo.end_date.month }}-{{ allo.end_date.day }}"> <br>
+        <label for="time">Heure souhaitée:</label><input type="time" id="time" min="{{ allo.start_date.hour }}:{{ allo.start_date.minute }}" max="{{ allo.end_date.hour }}:{{ allo.end_date.minute }}"> <br>
+        <br>
+
+        <a class="btn btn--main" id="btn-href-{{ allo.id }}" href="{% url "sendAlloEmailConfirmation" date="a" time="b" allo_id=allo.id %}" onclick="sendAlloEmail(this.id)" style="background-color:red; color:white">
+            Envoyer la demande
+        </a>
+    </div>
+{% endif %}
+<script>
+    function sendAlloEmail(id){
+
+        let right_id = id.split("-")[2]
+        let date = document.getElementById("date").value;
+        let time = document.getElementById("time").value;
+        let hrefAllo = document.getElementById("btn-href-" + right_id).href
+
+        console.log(hrefAllo)
+        hrefAllo = hrefAllo.replace("%5Ba", "%5B" + date)
+        hrefAllo = hrefAllo.replace("%20b", "%20" + time)
+        document.getElementById("btn-href-" + right_id).href = hrefAllo
+    }
+</script>
+{% endblock %}
+
