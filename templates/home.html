@@ -4,7 +4,7 @@
 {% include 'nav.html' %}
 <div class="container-fluid" id="main_page_id">
     <div class="row">
-        <a class="col-12 bg-image" id="liste_id_main" href="{% url "event" %}">
+        <a class="col-12 bg-image" id="liste_id_main" href="{% url "liste" %}">
             <h1>Découvre la liste</h1>
         </a>
     </div>
@@ -14,7 +14,7 @@
             <img id="gif_big_klax_id" style="display:none" width="200px" height="750px" src="{% static 'img/pub_big_klax.gif' %}">
             <img id="gif_chaud_klaxeurs_id" style="display:none" width="200px" height="750px" src="{% static 'img/pub_chaud_klaxeurs.gif' %}">
         </div>
-        <a class="col-9" id="event_id_main" href="{% url "liste" %}">
+        <a class="col-9" id="event_id_main" href="{% url "event" %}">
             <h1>Prochain evenement</h1>
         </a>
     </div>
