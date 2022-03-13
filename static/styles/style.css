@@ -42,10 +42,7 @@ body {
     /*background-color: #666666; ; 666666 ou 0f0f3d*/
     background-color: #fcddc2;
     color: black;
-    background: -moz-linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(251,187,163,1) 0%, rgba(254,231,204,1) 100%);
-    background: -webkit-linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(251,187,163,1) 0%, rgba(254,231,204,1) 100%);
-    background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(251,187,163,1) 0%, rgba(254,231,204,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#020024",endColorstr="#fee7cc",GradientType=1);
+
 
 }
 
@@ -354,6 +351,28 @@ body {
     border-bottom: 5px solid black;
 }
 
+#my-next-allo {
+    font-family: 'Felixti', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    font-size: 60px;
+    text-align: center;
+    font-size: 90px;
+    color: black;
+    font-family: 'Felixti', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    border-top: 5px solid black;
+    border-bottom: 5px solid black;
+}
+
 #wallet h1 {
 
     font-size: 60px;
@@ -369,7 +388,7 @@ body {
     font-family: 'Samuel', Arial, sans-serif;
     color: black;
     font-weight:normal;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     font-style:normal;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -377,6 +396,26 @@ body {
     margin-right: auto;
     width: 70%;
     border-top: 5px solid black;
+}
+
+
+
+#statep {
+    font-size: 25px;
+}
+
+@media screen and (max-width: 500px) {
+    #statep {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    #statep {
+        font-size: 20px;
+        margin-left: 10px!important;
+        padding: 0!important;
+    }
 }
 
 #wallet span {
@@ -388,6 +427,48 @@ body {
     margin-bottom: 10px;
 }
 
+@media screen and (min-width:400px) and (max-width: 600px){
+    #wallet {
+        margin-top: 20px;
+        font-size: 40px;
+        text-align: center;
+        color: black;
+        font-weight:normal;
+        margin-bottom: 15px;
+        font-style:normal;
+        padding-top: 10px;
+        padding-bottom: 5px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 80%;
+        border-top: 5px solid black;
+        border-bottom: 5px solid black;
+    }
+    
+    #wallet h1 {
+        font-size: 40px;
+        text-align: center;
+        font-family: 'Felixti', Arial, sans-serif;
+        font-weight: bold;
+    }
+    
+    #wallet p {
+    
+        font-size: 30px;
+        text-align: center;
+        font-family: 'Samuel', Arial, sans-serif;
+        color: black;
+        font-weight:normal;
+        margin-bottom: 5px;
+        font-style:normal;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 80%;
+        border-top: 5px solid black;
+    }
+}
 
 #betklax-pages {
     margin-top: 20px;
@@ -1338,6 +1419,15 @@ a, a:hover, a:focus, a:active {
     margin-bottom: 50px;
 }
 
+#end_allo {
+    margin-left: 25%;
+    margin-top: 20px;
+    font-family: 'Felixti', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+    color: black;
+    margin-bottom: 50px;
+}
 
 #event_page_id h5 {
 
@@ -1394,7 +1484,7 @@ a, a:hover, a:focus, a:active {
     padding-left: 20px;
     padding-top: 20px;
     padding-bottom: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     margin-top: 17px;
     background-color: #8b1e27;
     margin-right: 40px;
@@ -1435,6 +1525,9 @@ a, a:hover, a:focus, a:active {
 
 @media screen and (min-width: 750px) and (max-width: 1200px){
     #next-event-object {
+        margin-left: 20%;
+    }
+    #end_allo {
         margin-left: 20%;
     }
     #next-event h1 {
@@ -1508,6 +1601,9 @@ a, a:hover, a:focus, a:active {
     #next-event-object {
         margin-left: 15%;
     }
+    #end_allo {
+        margin-left: 15%;
+    }
 }
 
 @media screen and (min-width: 350px) and (max-width: 550px){
@@ -1547,6 +1643,9 @@ a, a:hover, a:focus, a:active {
     #next-event-object {
         margin-left: 10%;
     }
+    #end_allo {
+        margin-left: 10%;
+    }
 }
 
 @media screen and (max-width: 350px){
@@ -1584,5 +1683,161 @@ a, a:hover, a:focus, a:active {
     }
     #next-event-object {
         margin-left: 5%;
+    }
+    #end_allo {
+        margin-left: 5%;
+    }
+}
+
+#home_bet {
+    font-size: 60px;
+    color: black;
+    font-family: 'Felixti', Arial, sans-serif;
+    font-weight:bold;
+    padding-top: 10px;
+    background: -moz-linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(251,187,163,1) 0%, rgba(254,231,204,1) 100%);
+    background: -webkit-linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(251,187,163,1) 0%, rgba(254,231,204,1) 100%);
+    background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(251,187,163,1) 0%, rgba(254,231,204,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#020024",endColorstr="#fee7cc",GradientType=1);
+    color: black;
+    font-style:normal;
+
+}
+
+#home_bet h1 {
+    font-size: 60px;
+    text-align: center;
+    border-top: 5px solid black;
+    border-bottom: 5px solid black;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    border-top: 5px solid black;
+    border-bottom: 5px solid black;
+    margin-bottom:50px
+}
+
+@media screen and (min-width: 300px) and (max-width: 500px) {
+    #home_bet h1 {
+        font-size: 40px;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    #home_bet h1 {
+        font-size: 30px;
+    }
+}
+
+#home_bet span {
+    color: red;
+}
+
+#home_bet p {
+    font-family: 'Samuel', Arial, sans-serif;
+    font-size: 30px;
+    text-align: center;
+}
+
+#home_bet img {
+    margin-bottom: 10px;
+}
+
+#home_bet #btn {
+    text-align: center;
+    margin-top: 30px;
+    background-color: #8b1e27;
+    margin-right: 20px;
+    margin-left: 20px;
+    padding: 10px;
+    color: white;
+    border-radius: 20px;
+}
+
+@media screen and (min-width:300px) and (max-width: 600px){
+    #wallet {
+        margin-top: 20px;
+        font-size: 40px;
+        text-align: center;
+        color: black;
+        font-weight:normal;
+        margin-bottom: 15px;
+        font-style:normal;
+        padding-top: 10px;
+        padding-bottom: 5px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 80%;
+        border-top: 5px solid black;
+        border-bottom: 5px solid black;
+    }
+    
+    #wallet h1 {
+        font-size: 40px;
+        text-align: center;
+        font-family: 'Felixti', Arial, sans-serif;
+        font-weight: bold;
+    }
+    
+    #wallet p {
+    
+        font-size: 30px;
+        text-align: center;
+        font-family: 'Samuel', Arial, sans-serif;
+        color: black;
+        font-weight:normal;
+        margin-bottom: 5px;
+        font-style:normal;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 80%;
+        border-top: 5px solid black;
+    }
+}
+
+@media screen and (max-width: 300px){
+    #wallet {
+        margin-top: 20px;
+        font-size: 30px;
+        text-align: center;
+        color: black;
+        font-weight:normal;
+        margin-bottom: 15px;
+        font-style:normal;
+        padding-top: 10px;
+        padding-bottom: 5px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        border-top: 5px solid black;
+        border-bottom: 5px solid black;
+    }
+    
+    #wallet h1 {
+        font-size: 30px;
+        text-align: center;
+        font-family: 'Felixti', Arial, sans-serif;
+        font-weight: bold;
+    }
+    
+    #wallet p {
+    
+        font-size: 20px;
+        text-align: center;
+        font-family: 'Samuel', Arial, sans-serif;
+        color: black;
+        font-weight:normal;
+        margin-bottom: 5px;
+        font-style:normal;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        border-top: 5px solid black;
     }
 }

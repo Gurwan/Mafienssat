@@ -2,29 +2,24 @@
 {% block content %}
 {% load static %}
 {% include 'nav.html' %}
-
-<div class="container">
-    <div id="main_title">
-        <h1>Bienvenue dans l'espace <span>BetKlax</span>.</h1>
-    </div>
-</div>
-
-<div class="container">
-    <p> TODO Ajouter les explications ainsi que les règles</p>
-</div>
-
-<div class="container-fluid" id="choices">
-    <div id="main_col">
-        <div class="row"> <!-- Todo Faire ensorte de ne plus voir le lien hypertext -->
-            <a class="col" id="left" href="{% url "betKlax" %}">
-                <h2>Les paris en cours</h2>
+<div class="container-fluid" id="home_bet">
+    <h1>Bienvenue dans l'espace <span>BetKlax</span>.</h1>
+    <p><span>Mafienssat</span> est fier de vous présenter son nouveau espace de paris dédié aux campagnes AEE 2022 !</p>
+    <p>Profitez de <span>BetKlax</span> pour parier sur les différents événements de cette fin d'année scolaire à l'ENSSAT.</p>
+    <p>Ce système ne se base pas sur l'Euro mais sur la propre monnaie de Mafienssat : le <span>Klaxcoin</span> <img class="img-fluid" height="75" width="75" src="{% static 'klax_or.png' %}" alt=""/></p>
+    <p>Pariez dès maintenant afin d'engranger un maximum de Klaxcoin et finir à la tête du <span>Klaxment</span> !</p>
+    <div class="row">
+        <a class="col" id="btn" href="{% url "betKlax" %}">
+            <h2>Les paris en cours</h2>
+        </a>
+        {% if user %}
+            <a class="col" id="btn" href="{% url "myBets" %}">
+                <h2>Vos paris enregistrés</h2>
             </a>
-            {% if user %}
-                <a class="col" id="right" href="{% url "myBets" %}">
-                    <h2>Vos paris enregistrés</h2>
-                </a>
-            {% endif %}
-        </div>
+        {% endif %}
+    </div>
+    <div id="vote_mafienssat_event" style="margin-top: 360px;">
+        <p style="text-align:center; margin:0; color:black">Votez Mafienssat !</p>
     </div>
 </div>
 {% endblock %}

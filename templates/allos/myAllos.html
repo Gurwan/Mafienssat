@@ -21,7 +21,9 @@
     </div>
     <br>
 
-    <h1 style="text-align: center; margin-top:20px">Vos allo à disposition</h1>
+    <div id="my-next-allo">
+        <h1>Vos <span>Allo</span> à disposition</h1>
+    </div>
     {% if counter %} <!-- TODO ajuster les prix -->
 
         {% for type in allos_types %}
@@ -95,27 +97,40 @@
         <small>Erreur lors du chargement de vos donnés</small>
     {% endif %}
     <br>
-    <h1 style="text-align: center; margin-top:20px">Vos demandes de allo</h1>
+    <div id="my-next-allo">
+        <h1>Vos demandes de <span>Allo</span></h1>
+    </div>
     {% if allos %}
         {% for allo in allos %}
-            <small>{{ allo.allo_id.get_allo_type_display }}</small> <br>
-            <small>Le {{allo.date | date:"d"}} {{allo.date  | date:"F"}} {{allo.date  | date:"o"}} à {{allo.date | date:"H"}}h{{allo.date | date:"i"}}</small> <br>
-            {% if allo.take_over %}
-                {% if allo.made %}
-                    <small>Etat: Réalisé</small> <br>
-                {% else %}
-                    <small>Etat: Pris en charge</small> <br>
-                {% endif %}
-            {% else %}
-                <small>Etat: Envoyé</small> <br>
-                <a class="row btn" style="background-color: #522699" href="{% url "removeAllo" id_allo=allo.id %}" id="removeAllo{{ allo.id }}">
-                    Annuler la demande
-                </a> <br>
-            {% endif %}
-            <br>
+            <div id="next-event-object">
+                <div class="row">
+                    <div class="col">
+                        <div class="name_date">
+                            <h2 style="border-bottom: black 2px solid">{{ allo.allo_id.get_allo_type_display }}</h2>
+                        </div>
+                        <div>
+                            <h4 id="h4_available" style="margin-top: 10px;">Le {{allo.date | date:"d"}} {{allo.date  | date:"F"}} {{allo.date  | date:"o"}} à {{allo.date | date:"H"}}h{{allo.date | date:"i"}}</h4>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-bottom: 10px; padding-left:0px; padding-right: 0px; width:70%; margin-right: 30px" >
+                    {% if allo.take_over %}
+                        {% if allo.made %}
+                            <p id="statep">Etat: Réalisé</p> 
+                        {% else %}
+                            <p id="statep">Etat: Pris en charge</p> 
+                        {% endif %}
+                    {% else %}
+                        <p id="statep">Etat: Envoyé</p>
+                        <a class="button_make_allo btn btn_event" id="removeAllo{{ allo.id }}" href="{% url "removeAllo" id_allo=allo.id %}">
+                            <h5>Annuler la demande</h5>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
         {% endfor %}
     {% else %}
-        <small>Vous n'avez demandé aucun allo</small> <br>
+        <h3 id="end_allo">Vous n'avez demandé aucun <span>Allo</span></h3>
     {% endif %}
 {% endif %}
 {% endblock %}
