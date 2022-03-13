@@ -7,7 +7,7 @@
 {% include 'nav.html' %}
 {% if user %}
     <div class="container-fluid" id="wallet">
-        <h1>Ton pocheton de <span>klaxcoins</span></h1>
+        <h1>Ton pocheton de <span>Klaxcoins</span></h1>
           {% if user.klax_coins > 0 %}
               <div>
                   <p><span>Ton solde : </span>{{ user.klax_coins }} <img class="img-fluid" height="75" width="75" src="{% static 'klax_or.png' %}" alt=""/></p>

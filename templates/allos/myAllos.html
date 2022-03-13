@@ -8,7 +8,7 @@
 {% if user %}
 
     <div class="container-fluid" id="wallet">
-        <h1>Ton pocheton de <span>klaxcoins</span></h1>
+        <h1>Ton pocheton de <span>Klaxcoins</span></h1>
           {% if user.klax_coins > 0 %}
               <div>
                   <p><span>Ton solde : </span>{{ user.klax_coins }} <img class="img-fluid" height="75" width="75" src="{% static 'klax_or.png' %}" alt=""/></p>
@@ -31,7 +31,7 @@
                 <small>Bières à domicile: {{ counter.biere }}</small> <br>
                 {% if counter.biere == 0 %}
                     <a class="button_take_over" id="btn-href-A-20" href="{% url "buyAllos" allo_type="A" allo_cost=20 %}">
-                        Acheter ce allo 20 klaxcoins
+                        Acheter ce allo 20 Klaxcoins
                     </a> <br>
                 {% endif %}
 
@@ -39,7 +39,7 @@
                 <small>Goûter: {{ counter.gouter }}</small> <br>
                 {% if counter.gouter == 0 %}
                     <a class="button_take_over" id="btn-href-B-20" href="{% url "buyAllos" allo_type="B" allo_cost=20 %}">
-                        Acheter ce allo 20 klaxcoins
+                        Acheter ce allo 20 Klaxcoins
                     </a> <br>
                 {% endif %}
 
@@ -47,7 +47,7 @@
                 <small>P'tit dej: {{ counter.ptitdej }}</small> <br>
                 {% if counter.ptitdej == 0 %}
                     <a class="button_take_over" id="btn-href-C-20" href="{% url "buyAllos" allo_type="C" allo_cost=20 %}">
-                        Acheter ce allo 20 klaxcoins
+                        Acheter ce allo 20 Klaxcoins
                     </a> <br>
                 {% endif %}
 
@@ -55,7 +55,7 @@
                 <small>Ménage: {{ counter.menage }}</small> <br>
                 {% if counter.menage == 0 %}
                     <a class="button_take_over" id="btn-href-D-20" href="{% url "buyAllos" allo_type="D" allo_cost=20 %}">
-                        Acheter ce allo 20 klaxcoins
+                        Acheter ce allo 20 Klaxcoins
                     </a> <br>
                 {% endif %}
 
@@ -63,7 +63,7 @@
                 <small>Car wash: {{ counter.car_wash }}</small> <br>
                 {% if counter.car_wash == 0 %}
                     <a class="button_take_over" id="btn-href-E-20" href="{% url "buyAllos" allo_type="E" allo_cost=20 %}">
-                        Acheter ce allo 20 klaxcoins
+                        Acheter ce allo 20 Klaxcoins
                     </a> <br>
                 {% endif %}
 
@@ -71,7 +71,7 @@
                 <small>Klaxeur fou: {{ counter.klax }}</small> <br>
                 {% if counter.klax == 0 %}
                     <a class="button_take_over" id="btn-href-F-20" href="{% url "buyAllos" allo_type="F" allo_cost=20 %}">
-                        Acheter ce allo 20 klaxcoins
+                        Acheter ce allo 20 Klaxcoins
                     </a> <br>
                 {% endif %}
 
@@ -79,7 +79,7 @@
                 <small>Cuisine: {{ counter.cuisine }}</small> <br>
                 {% if counter.cuisine == 0 %}
                     <a class="button_take_over" id="btn-href-G-20" href="{% url "buyAllos" allo_type="G" allo_cost=20 %}">
-                        Acheter ce allo 20 klaxcoins
+                        Acheter ce allo 20 Klaxcoins
                     </a> <br>
                 {% endif %}
 
@@ -87,7 +87,7 @@
                 <small>Courses: {{ counter.courses }}</small> <br>
                 {% if counter.courses == 0 %}
                     <a class="button_take_over" id="btn-href-H-20" href="{% url "buyAllos" allo_type="H" allo_cost=20 %}">
-                        Acheter ce allo 20 klaxcoins
+                        Acheter ce allo 20 Klaxcoins
                     </a> <br>
                 {% endif %}
             {% endif %}
