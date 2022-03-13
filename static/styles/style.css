@@ -384,6 +384,10 @@ body {
     color: red;
 }
 
+#wallet img {
+    margin-bottom: 10px;
+}
+
 
 #betklax-pages {
     margin-top: 20px;
@@ -771,7 +775,7 @@ body {
 
     #liste_off h2 {
         margin-top: 10px;
-        font-size: 30px;
+        font-size: 25px;
     }
 
     #liste_off .row .col p {
