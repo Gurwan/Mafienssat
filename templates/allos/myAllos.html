@@ -21,83 +21,37 @@
     </div>
     <br>
 
-    <div id="my-next-allo">
-        <h1>Vos <span>Allo</span> à disposition</h1>
-    </div>
     {% if counter %} <!-- TODO ajuster les prix -->
 
-        {% for type in allos_types %}
-            {% if type == 'A' %}
-                <small>Bières à domicile: {{ counter.biere }}</small> <br>
-                {% if counter.biere == 0 %}
-                    <a class="button_take_over" id="btn-href-A-20" href="{% url "buyAllos" allo_type="A" allo_cost=20 %}">
-                        Acheter ce allo 20 Klaxcoins
-                    </a> <br>
-                {% endif %}
-
-            {% elif type == 'B' %}
-                <small>Goûter: {{ counter.gouter }}</small> <br>
-                {% if counter.gouter == 0 %}
-                    <a class="button_take_over" id="btn-href-B-20" href="{% url "buyAllos" allo_type="B" allo_cost=20 %}">
-                        Acheter ce allo 20 Klaxcoins
-                    </a> <br>
-                {% endif %}
-
-            {% elif type == 'C' %}
-                <small>P'tit dej: {{ counter.ptitdej }}</small> <br>
-                {% if counter.ptitdej == 0 %}
-                    <a class="button_take_over" id="btn-href-C-20" href="{% url "buyAllos" allo_type="C" allo_cost=20 %}">
-                        Acheter ce allo 20 Klaxcoins
-                    </a> <br>
-                {% endif %}
-
-            {% elif type == 'D' %}
-                <small>Ménage: {{ counter.menage }}</small> <br>
-                {% if counter.menage == 0 %}
-                    <a class="button_take_over" id="btn-href-D-20" href="{% url "buyAllos" allo_type="D" allo_cost=20 %}">
-                        Acheter ce allo 20 Klaxcoins
-                    </a> <br>
-                {% endif %}
-
-            {% elif type == 'E' %}
-                <small>Car wash: {{ counter.car_wash }}</small> <br>
-                {% if counter.car_wash == 0 %}
-                    <a class="button_take_over" id="btn-href-E-20" href="{% url "buyAllos" allo_type="E" allo_cost=20 %}">
-                        Acheter ce allo 20 Klaxcoins
-                    </a> <br>
-                {% endif %}
-
-            {% elif type == 'F' %}
-                <small>Klaxeur fou: {{ counter.klax }}</small> <br>
-                {% if counter.klax == 0 %}
-                    <a class="button_take_over" id="btn-href-F-20" href="{% url "buyAllos" allo_type="F" allo_cost=20 %}">
-                        Acheter ce allo 20 Klaxcoins
-                    </a> <br>
-                {% endif %}
-
-            {% elif type == 'G' %}
-                <small>Cuisine: {{ counter.cuisine }}</small> <br>
-                {% if counter.cuisine == 0 %}
-                    <a class="button_take_over" id="btn-href-G-20" href="{% url "buyAllos" allo_type="G" allo_cost=20 %}">
-                        Acheter ce allo 20 Klaxcoins
-                    </a> <br>
-                {% endif %}
-
-            {% elif type == 'H' %}
-                <small>Courses: {{ counter.courses }}</small> <br>
-                {% if counter.courses == 0 %}
-                    <a class="button_take_over" id="btn-href-H-20" href="{% url "buyAllos" allo_type="H" allo_cost=20 %}">
-                        Acheter ce allo 20 Klaxcoins
-                    </a> <br>
-                {% endif %}
-            {% endif %}
-        {% endfor %}
-
+        <div id="my_allo">
+            <h1>Vos <span>Allo</span> à disposition</h1>
+            <div style="text-align: center">
+                {% for type in allos_types %}
+                    {% if type == 'A' %}
+                        <small>Bières à domicile: <span>{{ counter.biere }}</span> | </small>
+                    {% elif type == 'B' %}
+                        <small>Goûter: <span>{{ counter.gouter }}</span> | </small>
+                    {% elif type == 'C' %}
+                        <small>P'tit dej: <span>{{ counter.ptitdej }}</span> | </small>
+                    {% elif type == 'D' %}
+                        <small>Ménage: <span>{{ counter.menage }}</span> | </small>
+                    {% elif type == 'E' %}
+                        <small>Car wash: <span>{{ counter.car_wash }}</span> | </small>
+                    {% elif type == 'F' %}
+                        <small>Klaxeur fou: <span>{{ counter.klax }}</span> | </small>
+                     {% elif type == 'G' %}
+                        <small>Cuisine: <span>{{ counter.cuisine }}</span> | </small>
+                    {% elif type == 'H' %}
+                        <small>Courses: <span>{{ counter.courses }}</span> | </small>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
     {% else %}
         <small>Erreur lors du chargement de vos donnés</small>
     {% endif %}
     <br>
-    <div id="my-next-allo">
+    <div id="my_allo">
         <h1>Vos demandes de <span>Allo</span></h1>
     </div>
     {% if allos %}
@@ -113,17 +67,17 @@
                         </div>
                     </div>
                 </div>
-                <div style="margin-bottom: 10px; padding-left:0px; padding-right: 0px; width:70%; margin-right: 30px" >
+                <div>
                     {% if allo.take_over %}
                         {% if allo.made %}
-                            <p id="statep">Etat: Réalisé</p> 
+                            <p id="statep">Etat: <span>réalisé</span></p>
                         {% else %}
-                            <p id="statep">Etat: Pris en charge</p> 
+                            <p id="statep">Etat: <span>pris en charge</span></p>
                         {% endif %}
                     {% else %}
-                        <p id="statep">Etat: Envoyé</p>
+                        <p id="statep">Etat: <span>envoyé</span></p>
                         <a class="button_make_allo btn btn_event" id="removeAllo{{ allo.id }}" href="{% url "removeAllo" id_allo=allo.id %}">
-                            <h5>Annuler la demande</h5>
+                            <h5><span>Annuler</span> la demande</h5>
                         </a>
                     {% endif %}
                 </div>

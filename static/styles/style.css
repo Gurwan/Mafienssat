@@ -423,6 +423,10 @@ body {
     font-size: 25px;
 }
 
+#statep span{
+    color: #e62e00;
+}
+
 @media screen and (max-width: 500px) {
     #statep {
         font-size: 20px;
@@ -1428,16 +1432,6 @@ a, a:hover, a:focus, a:active {
     color: green!important;
 }
 
-#next-event-object {
-    margin-left: 25%;
-    margin-top: 20px;
-    font-family: 'Felixti', Arial, sans-serif;
-    font-weight:normal;
-    font-style:normal;
-    color: black;
-    margin-bottom: 50px;
-}
-
 #end_allo {
     margin-left: 25%;
     margin-top: 20px;
@@ -1452,6 +1446,34 @@ a, a:hover, a:focus, a:active {
 
     font-family: 'Samuel', Arial, sans-serif;
     text-align: center;
+}
+
+#next-event-object {
+    margin-left: 25%;
+    margin-top: 20px;
+    font-family: 'Felixti', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+    color: black;
+    margin-bottom: 50px;
+}
+
+#next-event-object p {
+    font-family: 'Samuel', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+    color: black
+}
+
+#next-event-object span {
+    color: #e62e00;
+}
+
+#next-event-object h5 {
+    font-family: 'Samuel', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+    color: black
 }
 
 #next-event-object .name_date {
@@ -1499,10 +1521,7 @@ a, a:hover, a:focus, a:active {
 }
 
 #next-event-object .button_event .btn_event{
-    padding-right: 20px;
-    padding-left: 20px;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding: 20px;
     margin-bottom: 40px;
     margin-top: 17px;
     background-color: #8b1e27;
@@ -1510,10 +1529,7 @@ a, a:hover, a:focus, a:active {
 }
 
 #next-event-object .button_event .btn_event_allos{
-    padding-right: 20px;
-    padding-left: 20px;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding: 20px;
     width: 80%;
     margin-bottom: 40px;
     margin-top: 17px;
@@ -1730,7 +1746,6 @@ a, a:hover, a:focus, a:active {
     background: -webkit-linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(251,187,163,1) 0%, rgba(254,231,204,1) 100%);
     background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(251,187,163,1) 0%, rgba(254,231,204,1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#020024",endColorstr="#fee7cc",GradientType=1);
-    color: black;
     font-style:normal;
 
 }
@@ -1789,17 +1804,14 @@ a, a:hover, a:focus, a:active {
 
 @media screen and (min-width:300px) and (max-width: 600px){
     #wallet {
-        margin-top: 20px;
         font-size: 40px;
         text-align: center;
         color: black;
         font-weight:normal;
-        margin-bottom: 15px;
         font-style:normal;
         padding-top: 10px;
         padding-bottom: 5px;
-        margin-left: auto;
-        margin-right: auto;
+        margin: 20px auto 15px;
         width: 80%;
         border-top: 5px solid black;
         border-bottom: 5px solid black;
@@ -1832,17 +1844,14 @@ a, a:hover, a:focus, a:active {
 
 @media screen and (max-width: 300px){
     #wallet {
-        margin-top: 20px;
         font-size: 30px;
         text-align: center;
         color: black;
         font-weight:normal;
-        margin-bottom: 15px;
         font-style:normal;
         padding-top: 10px;
         padding-bottom: 5px;
-        margin-left: auto;
-        margin-right: auto;
+        margin: 20px auto 15px;
         width: 100%;
         border-top: 5px solid black;
         border-bottom: 5px solid black;
@@ -1881,6 +1890,24 @@ a, a:hover, a:focus, a:active {
     font-style:normal;
 }
 
+#thanks-page h1 {
+
+    text-align: center;
+    font-size: 90px;
+    color: black;
+    font-family: 'Felixti', Arial, sans-serif;
+    font-weight:normal;
+    margin-bottom: 30px;
+    font-style:normal;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    border-top: 5px solid black;
+    border-bottom: 5px solid black;
+}
+
 #thanks-page p {
     padding-top: 20px;
     font-size: 30px;
@@ -1888,8 +1915,206 @@ a, a:hover, a:focus, a:active {
     color: black;
     font-weight:normal;
     font-style:normal;
+    text-align: center;
+}
+
+#thanks-page span {
+    color: #e62e00;
 }
 
 #thanks-page img {
     margin-bottom: 20px;
+}
+
+#our_values{
+
+    padding-top: 20px;
+    font-weight:normal;
+    font-style:normal;
+}
+
+#our_values p {
+
+    font-family: 'Samuel', Arial, sans-serif;
+    font-size: 30px;
+    font-weight:normal;
+    font-style:normal;
+    text-align: center;
+}
+
+#our_values h1{
+
+    text-align: center;
+    font-size: 90px;
+    color: black;
+    font-family: 'Felixti', Arial, sans-serif;
+    font-weight:normal;
+    margin-bottom: 30px;
+    font-style:normal;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    border-top: 5px solid black;
+    border-bottom: 5px solid black;
+}
+
+#our_values span{
+    color: #e62e00;
+}
+
+
+#partners{
+
+    padding-top: 20px;
+    font-weight:normal;
+    font-style:normal;
+}
+
+#partners p {
+
+    font-family: 'Samuel', Arial, sans-serif;
+    font-size: 30px;
+    font-weight:normal;
+    font-style:normal;
+    text-align: center;
+}
+
+#partners h1{
+
+    text-align: center;
+    font-size: 90px;
+    color: black;
+    font-family: 'Felixti', Arial, sans-serif;
+    font-weight:normal;
+    margin-bottom: 30px;
+    font-style:normal;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    border-top: 5px solid black;
+    border-bottom: 5px solid black;
+}
+
+#partners span{
+    color: #e62e00;
+}
+
+#partners li{
+    font-family: 'Samuel', Arial, sans-serif;
+    font-size: 30px;
+    text-align: center;
+}
+
+
+#promises{
+
+    padding-top: 20px;
+    font-weight:normal;
+    font-style:normal;
+}
+
+#promises p {
+
+    font-family: 'Samuel', Arial, sans-serif;
+    font-size: 30px;
+    font-weight:normal;
+    font-style:normal;
+    text-align: center;
+}
+
+#promises h1{
+
+    text-align: center;
+    font-size: 90px;
+    color: black;
+    font-family: 'Felixti', Arial, sans-serif;
+    font-weight:normal;
+    margin-bottom: 30px;
+    font-style:normal;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    border-top: 5px solid black;
+    border-bottom: 5px solid black;
+}
+
+#promises span{
+    color: #e62e00;
+}
+
+#promises li{
+    font-family: 'Samuel', Arial, sans-serif;
+    font-size: 30px;
+    text-align: center;
+}
+
+#allo_Registration {
+
+    padding-top: 20px;
+    font-weight:normal;
+    font-style:normal;
+}
+
+#allo_registration h1{
+
+    text-align: center;
+    font-size: 70px;
+    color: black;
+    font-family: 'Felixti', Arial, sans-serif;
+    font-weight:normal;
+    margin-bottom: 30px;
+    font-style:normal;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    border-top: 5px solid black;
+    border-bottom: 5px solid black;
+}
+
+#allo_registration span{
+    color: #e62e00;
+}
+
+#my_allo{
+
+    padding-top: 20px;
+    font-weight:normal;
+    font-style:normal;
+}
+
+#my_allo h1{
+
+    text-align: center;
+    font-size: 70px;
+    color: black;
+    font-family: 'Felixti', Arial, sans-serif;
+    font-weight:normal;
+    margin-bottom: 30px;
+    font-style:normal;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    border-top: 5px solid black;
+    border-bottom: 5px solid black;
+}
+
+#my_allo small{
+
+    font-family: 'Samuel', Arial, sans-serif;
+    font-size: 30px;
+    text-align: center;
+}
+
+#my_allo span{
+    color: #e62e00;
 }
