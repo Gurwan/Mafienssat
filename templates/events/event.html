@@ -82,15 +82,17 @@
                                     <h5>Parier</h5>
                                 </a>
                             {% endif %}
+                            {% if event.associated_html %}
+                                <a class="col btn btn_event" href="{% url "eventHTML" id_event=event.id %}">
+                                    <h5>Informations</h5>
+                                </a>
+                            {% endif %}
                         {% endif %}
                     </div>
                 </div>
             
                 <div id="description_event">
                     <p>{{event.event_description}}</p>
-                </div>
-                <div style="margin-bottom: 30px;">
-
                 </div>
             </div>
         {% endfor %}
