@@ -366,7 +366,7 @@ body {
 
     font-size: 50px;
     text-align: center;
-    font-family: 'samuel', Arial, sans-serif;
+    font-family: 'Samuel', Arial, sans-serif;
     color: black;
     font-weight:normal;
     margin-bottom: 30px;
@@ -423,13 +423,13 @@ body {
 #betklax-pages h5 {
     font-size: 30px;
     text-align: center;
-    font-family: 'samuel', Arial, sans-serif;
+    font-family: 'Samuel', Arial, sans-serif;
 }
 
 #betklax-pages p {
     font-size: 30px;
     text-align: center;
-    font-family: 'samuel', sans-serif;
+    font-family: 'Samuel', sans-serif;
 }
 
 #betklax-pages span {
@@ -536,6 +536,12 @@ body {
     background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(251,187,163,1) 0%, rgba(254,231,204,1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#020024",endColorstr="#fee7cc",GradientType=1);
 
+}
+
+#event_page_id h1 {
+
+    font-family: 'Felixti', Arial, sans-serif;
+    text-align: center;
 }
 
 #main_page_id {
@@ -681,8 +687,8 @@ body {
 
 .bar {
     width:100%;
-    display:block;        
-    font-family:arial;
+    display:block;
+    font-family: arial, sans-serif;
     font-size:12px; 
     background-color:green;
     color:#fff;       
@@ -824,7 +830,6 @@ footer {
     position: fixed;
     left: 0;
     bottom: 0;
-    width: 100%;
     line-height: 65px;
     font-size: 25px;
     text-align: center;
@@ -890,8 +895,7 @@ footer .row {
 .nav div.main_list ul li {
     width: auto;
     height: 65px;
-    padding: 0;
-    padding-right: 3rem;
+    padding: 0 3rem 0 0;
 }
 .nav div.main_list ul li a {
     text-decoration: none;
@@ -1014,7 +1018,7 @@ footer .row {
     background-size: 2000px 900px;
     background-position:center;
     background-position-y: -230px;
-    background-repeat:none ;
+    background-repeat: none;
     width: 100%;
     height: 300px;
     padding-top: 30px;
@@ -1109,7 +1113,7 @@ footer .row {
     }
     #event_id_main h1 {
         text-align: center;
-        margin-left: 0px!important;
+        margin-left: 0 !important;
         margin-top: 20px;
         padding-top: 80px;
         padding-bottom: 80px;
@@ -1295,7 +1299,7 @@ a, a:hover, a:focus, a:active {
     font-size: 60px;
     text-align: center;
     color: red;
-    font-family: 'samuel', sans-serif;
+    font-family: 'Samuel', sans-serif;
 }
 
 .compteur_next_goals {
@@ -1307,7 +1311,7 @@ a, a:hover, a:focus, a:active {
 .title_next_goals {
     font-size: 30px;
     text-align: center;
-    font-family: 'samuel', sans-serif;
+    font-family: 'Samuel', sans-serif;
 }
 
 .compteur_goals span {
@@ -1317,7 +1321,7 @@ a, a:hover, a:focus, a:active {
 .title_goals {
     font-size: 40px;
     text-align: center;
-    font-family: 'samuel', sans-serif;
+    font-family: 'Samuel', sans-serif;
 }
 
 .green {
@@ -1334,15 +1338,26 @@ a, a:hover, a:focus, a:active {
     margin-bottom: 50px;
 }
 
+
+#event_page_id h5 {
+
+    font-family: 'Samuel', Arial, sans-serif;
+    text-align: center;
+}
+
 #next-event-object .name_date {
     display: inline-block!important;
 }
 
 #next-event-object .name_date h2 {
+    font-family: 'Castellar', Arial, sans-serif;
+    text-align: center;
     display: inline-block!important;
 }
 
 #next-event-object .name_date h3 {
+    font-family: 'Samuel', Arial, sans-serif;
+    text-align: center;
     font-size: 20px;
     margin-left: 10px;
     display: inline-block!important;
@@ -1351,6 +1366,8 @@ a, a:hover, a:focus, a:active {
 #next-event-object #h4_available {
     font-size: 20px;
     margin-left: 10px;
+    font-family: 'Samuel', Arial, sans-serif;
+    text-align: center;
 }
 
 #next-event-object #description_event {
@@ -1358,11 +1375,18 @@ a, a:hover, a:focus, a:active {
     margin-bottom: 30px;
 }
 
+#next-event-object #description_event p {
+    font-family: 'Samuel', Arial, sans-serif!important;
+    font-size: 50px!important;
+    text-align: center;
+}
+
 #next-event-object .button_event h5{
-    font-family: 'Castellar', Arial, sans-serif;
+    font-family: 'Samuel', Arial, sans-serif;
     font-weight:normal;
     font-style:normal;
-    margin-bottom: 0px;
+    color: grey;
+    margin-bottom: 0;
 }
 
 #next-event-object .button_event .btn_event{
