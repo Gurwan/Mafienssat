@@ -20,6 +20,7 @@ class User(AbstractUser):
     updated = models.DateTimeField(auto_now=True)
     klax_coins = models.DecimalField(max_digits=12, decimal_places=2, default=100.00)
     activate = models.BooleanField(default=False)
+    from_list = models.BooleanField(default=False)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
