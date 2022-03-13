@@ -1052,7 +1052,7 @@ def staff(request):
 
 def goals(request):
     try:
-        registered = User.objects.filter(is_staff=False, is_superuser=False).count()
+        registered = User.objects.filter(is_staff=False, is_superuser=False, from_list=False).count()
     except User.DoesNotExist:
         registered = 0
 
