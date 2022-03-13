@@ -10,12 +10,12 @@
         {% for bet in bets %}
             <small>{{ bet.bet_name }}: fini le {{bet.ended | date:"d"}} {{bet.ended  | date:"F"}} {{bet.ended  | date:"o"}} à {{bet.ended | date:"H"}}h{{bet.ended | date:"i"}}</small> <br>
             {% if not bet.closed_bet %}
-            <a class="row btn" style="background-color: #522699" href="{% url "closeBet" id_bet=bet.id %}" id="closeBet{{ bet.id }}">
-                Fermer le bet
-            </a> <br>
+                <a class="row btn" style="background-color: #522699" href="{% url "closeBet" id_bet=bet.id %}" id="closeBet{{ bet.id }}">
+                    Fermer le bet
+                </a> <br>
             {% endif %}
             <small>Résultat du bet</small> <br>
-            {% if bet.closed_bet %}
+            {% if not bet.closed_bet %}
                 <a class="col btn" style="background-color: #522699" href="{% url "sendBetsKalxcoins" id_bet=bet.id result_bet='W' %}" id="sendBetsKalxcoins{{ bet.id }}">
                     {{ bet.win_name }} ({{ bet.win_rate }})
                 </a>
@@ -23,8 +23,13 @@
                     {{ bet.lose_name }} ({{ bet.lose_rate }})
                 </a>
             {% else %}
-                <small>{{ bet.win_name }} ({{ bet.win_rate }})</small> <br>
-                <small>{{ bet.lose_name }} ({{ bet.lose_rate }})</small> <br>
+                {% if bet.result %}
+                    {% if bet.result == "W" %}
+                        <small>{{ bet.win_name }} ({{ bet.win_rate }})</small> <br>
+                    {% else %}
+                        <small>{{ bet.lose_name }} ({{ bet.lose_rate }})</small> <br>
+                    {% endif %}
+                {% endif %}
             {% endif %}
             <br>
         {% endfor %}

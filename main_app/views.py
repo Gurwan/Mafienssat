@@ -114,11 +114,12 @@ def homeBetKlax(request):
 
 def betKlax(request):
     try:
-        bets_done = StoreBets.objects.filter(user_id_id=request.user.id)
+        bets_done = StoreBets.objects.filter(user_id_id=request.user.id, closed_bet=False)
         bet = []
         for b in bets_done:
             bet.append(b.bet_id_id)
         bets = Bets.objects.exclude(id__in=bet)
+
         user = User.objects.get(pk=request.user.id)
 
     except User.DoesNotExist:
@@ -263,16 +264,12 @@ def makeBetL(request, id_bet):
 
 def myBets(request):
     try:
-        finalizedBets = StoreBets.objects.all().filter(user_id_id=request.user.id, blocked_bet=True)
+        finalizedBets = StoreBets.objects.filter(user_id_id=request.user.id, blocked_bet=True, closed_bet=False)
     except User.DoesNotExist:
         finalizedBets = None
 
-    finalId = []
-    for b in finalizedBets:
-        finalId.append(b.bet_id.id)
-
     try:
-        mybets = StoreBets.objects.all().filter(user_id_id=request.user.id).exclude(bet_id_id__in=finalId)
+        mybets = StoreBets.objects.filter(user_id_id=request.user.id, blocked_bet=False, closed_bet=False)
     except StoreBets.DoesNotExist:
         mybets = None
 
@@ -281,8 +278,13 @@ def myBets(request):
     except User.DoesNotExist:
         user = None
 
-    if mybets is not None and user is not None:
-        return render(request, 'bets/myBetKlax.html', {'mybets': mybets, 'finalizedBets': finalizedBets, 'user': user})
+    try:
+        myEndedBets = StoreBets.objects.filter(user_id_id=request.user.id, blocked_bet=True, closed_bet=True)
+    except StoreBets.DoesNotExist:
+        myEndedBets = None
+
+    if user is not None:
+        return render(request, 'bets/myBetKlax.html', {'mybets': mybets, 'finalizedBets': finalizedBets, 'user': user, 'myEndedBets': myEndedBets})
 
 
 def addGains(request, id_bet, gains):
@@ -345,32 +347,6 @@ def finalizeBet(request, id_bet):
         messages.error(request, "Tu dois être connecté pour accéder à cette page")
 
 
-def eventCreator(request):
-    try:
-        user = User.objects.get(pk=request.user.id)
-    except User.DoesNotExist:
-        user = None
-
-    if user is not None:
-        if user.is_staff:
-            eventform = AddEventForm()
-            if request.method == 'POST':
-                eventform = AddEventForm(request.POST)
-                if eventform.is_valid():
-                    eventf = eventform.save(commit=False)
-                    eventf.save()
-                else:
-                    messages.error(request, 'Erreur lors de la création d\'un événement')
-
-            events = Event.objects.all()
-
-            return render(request, 'events/eventCreator.html', {'user': user, 'eventform': eventform, 'events': events})
-        else:
-            messages.error(request, "Tu dois être membre du staff pour accéder à cette page")
-    else:
-        messages.error(request, "Vous devez être connecté pour accéder à cette page")
-
-
 def setVisibleEvent(request, id_event):
     try:
         this_event = Event.objects.get(pk=id_event)
@@ -423,6 +399,7 @@ def closeBet(request, id_bet):
             else:
                 b.bet_rate = bet.lose_rate
 
+            b.closed_bet = True
             b.save()
 
         return redirect("suBets")
@@ -447,12 +424,18 @@ def sendBetsKalxcoins(request, id_bet, result_bet):
             for b in bets:
                 if result_bet == "W" and b.result == 'W':
                     b.user_id.klax_coins += bet.win_rate*b.gains
+                    b.final_result = 'W'
                 elif result_bet == "L" and b.result == 'L':
                     b.user_id.klax_coins += bet.lose_rate*b.gains
+                    b.final_result = 'W'
+                else:
+                    b.final_result = 'L'
 
                 b.user_id.save()
+                b.save()
 
-            bet.delete()
+            bet.result = result_bet
+            bet.save()
 
             return redirect("suBets")
 
@@ -462,6 +445,32 @@ def sendBetsKalxcoins(request, id_bet, result_bet):
             return redirect("suBets")
     else:
         messages.error(request, "Aucun pari enregistré")
+
+
+def eventCreator(request):
+    try:
+        user = User.objects.get(pk=request.user.id)
+    except User.DoesNotExist:
+        user = None
+
+    if user is not None:
+        if user.is_staff:
+            eventform = AddEventForm()
+            if request.method == 'POST':
+                eventform = AddEventForm(request.POST)
+                if eventform.is_valid():
+                    eventf = eventform.save(commit=False)
+                    eventf.save()
+                else:
+                    messages.error(request, 'Erreur lors de la création d\'un événement')
+
+            events = Event.objects.all()
+
+            return render(request, 'events/eventCreator.html', {'user': user, 'eventform': eventform, 'events': events})
+        else:
+            messages.error(request, "Tu dois être membre du staff pour accéder à cette page")
+    else:
+        messages.error(request, "Vous devez être connecté pour accéder à cette page")
 
 
 def event(request):

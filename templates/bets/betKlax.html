@@ -30,7 +30,7 @@
                     <h4 style="color: #e62e00; font-weight: bold">Fermé</h4>
                 {% endif %}
                 <h5>Fini le {{bet.ended | date:"d"}} {{bet.ended  | date:"F"}} {{bet.ended  | date:"o"}} à {{bet.ended | date:"H"}}h{{bet.ended | date:"i"}}</h5>
-                {% if request.user.is_authenticated and not bet.closed_bet%}
+                {% if request.user.is_authenticated and not bet.closed_bet and not bet.result %}
                     <a class="button_rate" href="{% url "makeBetW" bet.id %}" id="makeBetW{{ bet.id }}">
                         <p id="label">{{ bet.win_name }}</p>
                         <p id="rate">{{ bet.win_rate }}</p>
@@ -39,6 +39,19 @@
                         <p id="label">{{ bet.lose_name }}</p>
                         <p id="rate">{{ bet.lose_rate }}</p>
                     </a>
+                {% elif bet.result %}
+                    {% if bet.result == 'W' %}
+                        <div class="button_rate">
+                            <p id="label">Résultat :</p>
+                            <p id="label">{{ bet.win_name }}</p>
+                            <p id="rate">{{ bet.win_rate }}</p>
+                        </div>
+                    {% else %}
+                        <div class="button_rate">
+                            <p id="label">{{ bet.lose_name }}</p>
+                            <p id="rate">{{ bet.lose_rate }}</p>
+                        </div>
+                    {% endif %}
                 {% else %}
                     <div class="button_rate">
                         <p id="label">{{ bet.win_name }}</p>
@@ -53,4 +66,5 @@
         {% endif %}
     {% endfor %}
 </div>
+
 {% endblock %}

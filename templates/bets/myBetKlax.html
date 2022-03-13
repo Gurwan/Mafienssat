@@ -22,31 +22,31 @@
         <h1 style="text-align: center; margin-top:20px">Tous vos <span>paris</span></h1><br>
         {% if mybets %}
             {%  for bet in mybets %}
-            <div class="div-du-bet">
-                <h3>{{ bet.bet_id.bet_name }}</h3>
-                <h5>Fini le {{bet.bet_id.ended | date:"d"}} {{bet.bet_id.ended  | date:"F"}} {{bet.bet_id.ended  | date:"o"}} à {{bet.bet_id.ended | date:"H"}}h{{bet.bet_id.ended | date:"i"}}</h5>
-                <p>Mise totale : <span>{{ bet.gains }}</span> <img class="img-fluid" height="30" width="30" src="{% static 'klax_or.png' %}" alt=""/></p>
-                {% if bet.result == 'W' %}
-                        <p>Sur la côte {{ bet.bet_id.win_name }} : <br> <span>{{ bet.bet_id.win_rate }}</span> </p>
-                {% else %}
-                        <p>Sur la côte {{ bet.bet_id.lose_name }} : <br>    <span>{{ bet.bet_id.lose_rate }}</span> </p>
-                {% endif %}
-                <label for="mise"></label><input style="font-size: 20px; font-family: 'samuel', sans-serif;" placeholder="15" type="number" id="mise{{ bet.bet_id.id }}">
-                <br>
-                <a class="btn btn--main" id="btn-href-{{ bet.bet_id.id }}" href="{% url "addGains" id_bet=bet.bet_id.id gains=0 %}" onclick="addGains(this.id)" style="font-size: 25px; font-family: 'samuel', sans-serif; color:black; background-color: yellow; margin-bottom:10px; margin-top: 5px">
-                    Ajouter des Klaxcoins sur le pari
-                </a>
-                <br>
-                {% if bet.result == 'W' %}
-                    <a class="btn btn--main" style="font-size: 25px; font-family: 'samuel', sans-serif; background-color:red; color:white" href="{% url "finalizeBet" id_bet=bet.bet_id.id %}" id="finalizeBet{{ bet.bet_id.id }}">
-                        Bloquer la cote à {{ bet.bet_id.win_rate }}
+                <div class="div-du-bet">
+                    <h3>{{ bet.bet_id.bet_name }}</h3>
+                    <h5>Fini le {{bet.bet_id.ended | date:"d"}} {{bet.bet_id.ended  | date:"F"}} {{bet.bet_id.ended  | date:"o"}} à {{bet.bet_id.ended | date:"H"}}h{{bet.bet_id.ended | date:"i"}}</h5>
+                    <p>Mise totale : <span>{{ bet.gains }}</span> <img class="img-fluid" height="30" width="30" src="{% static 'klax_or.png' %}" alt=""/></p>
+                    {% if bet.result == 'W' %}
+                            <p>Sur la côte {{ bet.bet_id.win_name }} : <br> <span>{{ bet.bet_id.win_rate }}</span> </p>
+                    {% else %}
+                            <p>Sur la côte {{ bet.bet_id.lose_name }} : <br>    <span>{{ bet.bet_id.lose_rate }}</span> </p>
+                    {% endif %}
+                    <label for="mise"></label><input style="font-size: 20px; font-family: 'samuel', sans-serif;" placeholder="15" type="number" id="mise{{ bet.bet_id.id }}">
+                    <br>
+                    <a class="btn btn--main" id="btn-href-{{ bet.bet_id.id }}" href="{% url "addGains" id_bet=bet.bet_id.id gains=0 %}" onclick="addGains(this.id)" style="font-size: 25px; font-family: 'samuel', sans-serif; color:black; background-color: yellow; margin-bottom:10px; margin-top: 5px">
+                        Ajouter des Klaxcoins sur le pari
                     </a>
-                {% else %}
-                    <a class="btn btn--main" style="font-size: 25px; font-family: 'samuel', sans-serif; background-color:red; color:white" href="{% url "finalizeBet" id_bet=bet.bet_id.id %}" id="finalizeBet{{ bet.bet_id.id }}">
-                        Bloquer la cote à {{ bet.bet_id.lose_rate }}
-                    </a>
-                {% endif %}
-            </div>
+                    <br>
+                    {% if bet.result == 'W' %}
+                        <a class="btn btn--main" style="font-size: 25px; font-family: 'samuel', sans-serif; background-color:red; color:white" href="{% url "finalizeBet" id_bet=bet.bet_id.id %}" id="finalizeBet{{ bet.bet_id.id }}">
+                            Bloquer la cote à {{ bet.bet_id.win_rate }}
+                        </a>
+                    {% else %}
+                        <a class="btn btn--main" style="font-size: 25px; font-family: 'samuel', sans-serif; background-color:red; color:white" href="{% url "finalizeBet" id_bet=bet.bet_id.id %}" id="finalizeBet{{ bet.bet_id.id }}">
+                            Bloquer la cote à {{ bet.bet_id.lose_rate }}
+                        </a>
+                    {% endif %}
+                </div>
             {% endfor %}
         {% else %}
             <h5 style="text-align: center;">Vous avez misé sur <span>aucun</span> pari</h5>
@@ -54,18 +54,54 @@
         <br>
         <h1 style="text-align: center; margin-top:20px"> Vos paris <span>bloqués</span> </h1> <br>
         <div class="container">
-            {% for bet in finalizedBets %}
-            <div class="div-du-bet">
-                <h3>{{ bet.bet_id.bet_name }}</h3>
-                <h5>Fini le {{bet.bet_id.ended | date:"d"}} {{bet.bet_id.ended  | date:"F"}} {{bet.bet_id.ended  | date:"o"}} à {{bet.bet_id.ended | date:"H"}}h{{bet.bet_id.ended | date:"i"}}</h5>
-                <p>Mise totale : <span>{{ bet.gains }} </span> <img class="img-fluid" height="30" width="30" src="{% static 'klax_or.png' %}" alt=""/></p>
-                {% if bet.result == 'W' %}
-                        <p>Sur la côte {{ bet.bet_id.win_name }} : <br> <span>{{ bet.bet_id.win_rate }}</span> </p>
-                {% else %}
-                        <p>Sur la côte {{ bet.bet_id.lose_name }} : <br> <span>{{ bet.bet_id.lose_rate }}</span> </p>
-                {% endif %}
-            </div>
-            {% endfor %}
+            {% if finalizedBets %}
+                {% for bet in finalizedBets %}
+                    <div class="div-du-bet">
+                        <h3>{{ bet.bet_id.bet_name }}</h3>
+                        <h5>Fini le {{bet.bet_id.ended | date:"d"}} {{bet.bet_id.ended  | date:"F"}} {{bet.bet_id.ended  | date:"o"}} à {{bet.bet_id.ended | date:"H"}}h{{bet.bet_id.ended | date:"i"}}</h5>
+                        <p>Mise totale : <span>{{ bet.gains }} </span> <img class="img-fluid" height="30" width="30" src="{% static 'klax_or.png' %}" alt=""/></p>
+                        {% if bet.result == 'W' %}
+                                <p>Sur la côte {{ bet.bet_id.win_name }} : <br> <span>{{ bet.bet_id.win_rate }}</span> </p>
+                        {% else %}
+                                <p>Sur la côte {{ bet.bet_id.lose_name }} : <br> <span>{{ bet.bet_id.lose_rate }}</span> </p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <h5 style="text-align: center;">Vous avez aucun pari <span>bloqué</span></h5>
+            {% endif %}
+        </div>
+        <br>
+        <h1 style="text-align: center; margin-top:20px"> Vos paris <span>finis</span> </h1> <br>
+        <div class="container">
+            {% if myEndedBets %}
+                {% for bet in myEndedBets %}
+                    <div class="div-du-bet">
+                        <h3>{{ bet.bet_id.bet_name }}</h3>
+                        <h5>Fini le {{bet.bet_id.ended | date:"d"}} {{bet.bet_id.ended  | date:"F"}} {{bet.bet_id.ended  | date:"o"}} à {{bet.bet_id.ended | date:"H"}}h{{bet.bet_id.ended | date:"i"}}</h5>
+                        <p>Mise totale : <span>{{ bet.gains }} </span> <img class="img-fluid" height="30" width="30" src="{% static 'klax_or.png' %}" alt=""/></p>
+                        {% if not bet.final_result %}
+                            <p>En attente des résultats</p>
+                            {% if bet.result == 'W' %}
+                                <p>Sur la côte {{ bet.bet_id.win_name }} : <br> <span>{{ bet.bet_id.win_rate }}</span> </p>
+                            {% else %}
+                                <p>Sur la côte {{ bet.bet_id.lose_name }} : <br> <span>{{ bet.bet_id.lose_rate }}</span> </p>
+                            {% endif %}
+                        {% else %}
+                            <p>Résultat</p>
+                            {% if bet.result == 'W' %}
+                                <p><span>{{ bet.bet_id.win_name }} : <br> {{ bet.bet_id.win_rate }}</span> </p>
+                                <p>{{ bet.bet_id.lose_name }} : <br> {{ bet.bet_id.lose_rate }} </p>
+                            {% else %}
+                                <p>{{ bet.bet_id.win_name }} : <br> {{ bet.bet_id.win_rate }} </p>
+                                <p><span>{{ bet.bet_id.lose_name }} : <br> {{ bet.bet_id.lose_rate }}</span> </p>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <h5 style="text-align: center;">Vous avez aucun bet <span>finis</span> pari</h5>
+            {% endif %}
         </div>
     </div>
 {% endif %}
