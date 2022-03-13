@@ -27,7 +27,7 @@
             <small>au {{allo.end_date | date:"d"}} {{allo.end_date  | date:"F"}} {{allo.end_date  | date:"o"}} à {{allo.end_date | date:"H"}}h{{allo.end_date | date:"i"}}</small> <br>
             {% if not allo.visible %}
                 <a class="row btn" style="background-color: #e62e00; padding-right: 20px" href="{% url "setVisibleAllo" id_allo=allo.id %}" id="setVisibleAllo{{ allo.id }}">
-                    Mettre en ligne le allo
+                    Mettre en ligne ce allo (irréversible)
                 </a>
             {% endif %}
             <br>

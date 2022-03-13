@@ -24,7 +24,7 @@
             <small>{{ event.event_name }}: fini le {{ event.event_date }} <br></small>
             {% if not event.visible %}
                 <a class="row btn" style="background-color: #e62e00; padding-right: 20px" href="{% url "setVisibleEvent" id_event=event.id %}" id="setVisibleEvent{{ event.id }}">
-                    Mettre en ligne l'event
+                    Mettre en ligne cet event (irréversible)
                 </a>
             {% endif %}
             <br>

@@ -6,11 +6,11 @@
 {% bootstrap_javascript %}
 {% include 'nav.html' %}
 {% if user %}
-    <div class="container-fluid" id="betklax-pages">
-        <h2>Ton pocheton de klaxcoins</h2>
+    <div class="container-fluid" id="wallet">
+        <h1>Ton pocheton de <span>klaxcoins</span></h1>
           {% if user.klax_coins > 0 %}
               <div>
-                  <p><span>Ton solde de Klaxcoins : </span>{{ user.klax_coins }} <img class="img-fluid" height="75" width="75" src="{% static 'klax_or.png' %}" alt=""/></p>
+                  <p><span>Ton solde : </span>{{ user.klax_coins }} <img class="img-fluid" height="75" width="75" src="{% static 'klax_or.png' %}" alt=""/></p>
               </div>
           {% else %}
               <div>
@@ -21,7 +21,7 @@
 {% endif %}
 
 <div class="container-fluid" id="betklax-pages">
-    <h1 style="text-align: center; margin-top:20px">Tous les paris</h1>
+    <h1 style="text-align: center; margin-top:20px">Tous les <span>paris</span></h1>
     {% for bet in bets %}
         {% if bet.visible %}
             <div class="div-du-bet">
@@ -29,7 +29,7 @@
                 {% if bet.closed_bet %}
                     <h4 style="color: #e62e00; font-weight: bold">Fermé</h4>
                 {% endif %}
-                <h4>Fini le {{bet.ended | date:"d"}} {{bet.ended  | date:"F"}} {{bet.ended  | date:"o"}} à {{bet.ended | date:"H"}}h{{bet.ended | date:"i"}}</h4>
+                <h5>Fini le {{bet.ended | date:"d"}} {{bet.ended  | date:"F"}} {{bet.ended  | date:"o"}} à {{bet.ended | date:"H"}}h{{bet.ended | date:"i"}}</h5>
                 {% if request.user.is_authenticated and not bet.closed_bet%}
                     <a class="button_rate" href="{% url "makeBetW" bet.id %}" id="makeBetW{{ bet.id }}">
                         <p id="label">{{ bet.win_name }}</p>

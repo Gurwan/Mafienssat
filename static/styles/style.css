@@ -335,26 +335,97 @@ body {
     font-family: 'Castellar', Arial, sans-serif;
 }
 
-#betklax-pages {
-    font-family: 'Bolf', Arial, sans-serif;
+#wallet {
+
+    margin-top: 20px;
+
+    font-size: 60px;
+    text-align: center;
+    color: black;
     font-weight:normal;
+    margin-bottom: 30px;
     font-style:normal;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    border-top: 5px solid black;
+    border-bottom: 5px solid black;
+}
+
+#wallet h1 {
+
+    font-size: 60px;
+    text-align: center;
+    font-family: 'Felixti', Arial, sans-serif;
+    font-weight: bold;
+}
+
+#wallet p {
+
+    font-size: 50px;
+    text-align: center;
+    font-family: 'samuel', Arial, sans-serif;
+    color: black;
+    font-weight:normal;
+    margin-bottom: 30px;
+    font-style:normal;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    border-top: 5px solid black;
+}
+
+#wallet span {
+
+    color: red;
+}
+
+
+#betklax-pages {
     margin-top: 20px;
 }
 
 #betklax-pages h1 {
     font-size: 60px;
     text-align: center;
+    font-family: 'Felixti', Arial, sans-serif;
+    font-weight: bold;
 }
 
 #betklax-pages h2 {
     font-size: 45px;
     text-align: center;
+    font-family: 'Felixti', Arial, sans-serif;
+}
+
+#betklax-pages h3 {
+    font-size: 45px;
+    text-align: center;
+    font-family: 'Castellar', Arial, sans-serif;
+    font-weight: bold;
+}
+
+#betklax-pages h4 {
+    font-size: 25px;
+    text-align: center;
+    font-family: 'Bolf', Arial, sans-serif;
+    font-weight: bold;
+}
+
+#betklax-pages h5 {
+    font-size: 30px;
+    text-align: center;
+    font-family: 'samuel', Arial, sans-serif;
 }
 
 #betklax-pages p {
     font-size: 30px;
     text-align: center;
+    font-family: 'samuel', sans-serif;
 }
 
 #betklax-pages span {
@@ -1232,6 +1303,7 @@ a, a:hover, a:focus, a:active {
 .title_next_goals {
     font-size: 30px;
     text-align: center;
+    font-family: 'samuel', sans-serif;
 }
 
 .compteur_goals span {
