@@ -24,12 +24,15 @@ def loginPage(request):
 
         user = authenticate(request, email=email, password=password)
 
-        if user is not None:
-            login(request, user)
+        if user.activate:
+            if user is not None:
+                login(request, user)
 
-            return redirect('home')
+                return redirect('home')
+            else:
+                messages.error(request, 'L\'utilisateur n\'existe pas ou tu t\'es trompé de mot de passe')
         else:
-            messages.error(request, 'L\'utilisateur n\'existe pas ou tu t\'es trompé de mot de passe')
+            messages.error(request, "Vous devez activer votre compte, vérifier votre adresse enssat")
 
     return render(request, 'login.html')
 
@@ -56,7 +59,6 @@ def registerUser(request):
                 user.save()
                 allos_counters = AllosUserCounters(user_id=user)
                 allos_counters.save()
-                login(request, user)
 
                 current_site = get_current_site(request)
                 subject = 'Activate Your Mafienssat Account'
@@ -86,7 +88,7 @@ def activate(request, uidb64, token):
 
     if user is not None and account_activation_token.check_token(user, token):
 
-        user.is_active = True
+        user.activate = True
         user.save()
 
         return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
@@ -1050,7 +1052,7 @@ def staff(request):
 
 def goals(request):
     try:
-        registered = User.objects.filter(is_staff=False, is_superuser=False).count()
+        registered = 54 #User.objects.filter(is_staff=False, is_superuser=False).count()
     except User.DoesNotExist:
         registered = 0
 
