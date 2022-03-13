@@ -20,14 +20,14 @@
                         </div>
                         <div>
                             {% if allo.cost > 0 %}
-                                <h4 id="h4_available" style="margin-top: 10px;">Coût : {{ allo.cost }} klaxcoins</h4>
+                                <h4 id="h4_available" style="margin-top: 10px;">Coût : {{ allo.cost }} Klaxcoins</h4>
                             {% endif %}
                     
                         </div>
                     </div>
                     <div class="col button_event" style="margin-bottom: 10px;">
                         {% if user %}
-                            <a class="button_make_allo btn btn_event" id="alloRegistration{{ allo.id }}" href="{% url 'alloRegistration' allo.id %}">
+                            <a class="button_make_allo btn btn_event_allos" id="alloRegistration{{ allo.id }}" href="{% url 'alloRegistration' allo.id %}">
                                 <h5>Envoyer une demande</h5>
                             </a>
                         {% endif %}
@@ -42,6 +42,7 @@
             </div>
         {% endif %}
     {% endfor %}
+    <h3 id="end_allo">C'est fini pour le moment ! On revient vite pour vous proposer nos services</h3>
     <div id="vote_mafienssat_event">
         <p style="text-align:center; margin:0; color:black">Votez Mafienssat !</p>
     </div>

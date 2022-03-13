@@ -6,7 +6,7 @@
 {% include 'nav.html' %}
 {% if user.is_staff %}
     <div class="container" id="sendEmail">
-      <h1>Evoyer la confirmation du allo {{ allo.allo_id.get_allo_type_display }}</h1>
+      <h1>Envoyer la confirmation du allo {{ allo.allo_id.get_allo_type_display }}</h1>
         <small>{{ allo.user_id.first_name }} {{ allo.user_id.last_name }} le {{allo.date | date:"d"}} {{allo.date  | date:"F"}} {{allo.date  | date:"o"}} à {{allo.date | date:"H"}}h{{allo.date | date:"i"}}</small> <br>
         <small>Veuillez confirmer la date pour envoyer le mail</small> <br>
 
