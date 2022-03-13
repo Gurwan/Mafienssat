@@ -326,6 +326,7 @@ body {
 
 #liste_off h2 {
     font-family: 'Castellar', Arial, sans-serif;
+    text-decoration: underline;
 }
 
 #liste_off h3 {
