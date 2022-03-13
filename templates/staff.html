@@ -9,34 +9,34 @@
       <div id="main_col">
           <div class="row">
               <a class="col" id="left" href="{% url "betCreator" %}">
-                  <h2>Créer un betKlax</h2>
+                  <h2 style="color: white">Créer un betKlax</h2>
               </a>
               <a class="col" id="right" href="{% url "eventCreator" %}">
-                  <h2>Créer un événement</h2>
+                  <h2 style="color: white">Créer un événement</h2>
               </a>
           </div>
           <br>
           <div class="row">
               <a class="col" id="left" href="{% url "alloCreator" %}">
-                  <h2>Créer un allo</h2>
+                  <h2 style="color: white">Créer un allo</h2>
               </a>
               <a class="col" id="right" href="{% url "alloRequested" %}">
-                  <h2>Gérer les allos</h2>
+                  <h2 style="color: white">Gérer les allos</h2>
               </a>
           </div>
           <br>
           {% if user.is_superuser %}
               <div class="row">
                   <a class="col" id="left" href="{% url "suBets" %}">
-                      <h2>suBets</h2>
+                      <h2 style="color: white">suBets</h2>
                   </a>
                   <a class="col" id="right" href="{% url "suEvents" %}">
-                      <h2>Gérer les events</h2>
+                      <h2 style="color: white">Gérer les events</h2>
                   </a>
               </div>
               <div class="row">
                   <a class="col" id="left" href="{% url "suAllos" %}">
-                      <h2>Gérer les allos</h2>
+                      <h2 style="color: white">Gérer les allos</h2>
                   </a>
               </div>
           {% endif %}
