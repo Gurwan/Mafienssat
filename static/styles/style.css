@@ -1965,14 +1965,14 @@ a, a:hover, a:focus, a:active {
 }
 
 
-#partners{
+#partners-page{
 
     padding-top: 20px;
     font-weight:normal;
     font-style:normal;
 }
 
-#partners p {
+#partners-page p {
 
     font-family: 'Samuel', Arial, sans-serif;
     font-size: 30px;
@@ -1981,7 +1981,7 @@ a, a:hover, a:focus, a:active {
     text-align: center;
 }
 
-#partners h1{
+#partners-page h1{
 
     text-align: center;
     font-size: 90px;
@@ -1999,25 +1999,25 @@ a, a:hover, a:focus, a:active {
     border-bottom: 5px solid black;
 }
 
-#partners span{
+#partners-page span{
     color: #e62e00;
 }
 
-#partners li{
+#partners-page li{
     font-family: 'Samuel', Arial, sans-serif;
     font-size: 30px;
     text-align: center;
 }
 
 
-#promises{
+#promises-page{
 
     padding-top: 20px;
     font-weight:normal;
     font-style:normal;
 }
 
-#promises p {
+#promises-page p {
 
     font-family: 'Samuel', Arial, sans-serif;
     font-size: 30px;
@@ -2026,7 +2026,7 @@ a, a:hover, a:focus, a:active {
     text-align: center;
 }
 
-#promises h1{
+#promises-page h1{
 
     text-align: center;
     font-size: 90px;
@@ -2044,11 +2044,11 @@ a, a:hover, a:focus, a:active {
     border-bottom: 5px solid black;
 }
 
-#promises span{
+#promises-page span{
     color: #e62e00;
 }
 
-#promises li{
+#promises-page li{
     font-family: 'Samuel', Arial, sans-serif;
     font-size: 30px;
     text-align: center;
