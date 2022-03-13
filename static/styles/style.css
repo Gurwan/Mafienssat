@@ -1367,7 +1367,7 @@ a, a:hover, a:focus, a:active {
     font-size: 20px;
     margin-left: 10px;
     font-family: 'Samuel', Arial, sans-serif;
-    text-align: center;
+    /* text-align: center; */
 }
 
 #next-event-object #description_event {
@@ -1377,7 +1377,7 @@ a, a:hover, a:focus, a:active {
 
 #next-event-object #description_event p {
     font-family: 'Samuel', Arial, sans-serif!important;
-    font-size: 50px!important;
+    font-size: 40px!important;
     text-align: center;
 }
 
@@ -1390,6 +1390,11 @@ a, a:hover, a:focus, a:active {
 }
 
 #next-event-object .button_event .btn_event{
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
     margin-top: 17px;
     background-color: #8b1e27;
     margin-right: 40px;

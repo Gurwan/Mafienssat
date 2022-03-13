@@ -55,7 +55,6 @@ def registerUser(request):
             user = form.save(commit=False)
             user.username = user.username.lower()
             if user.email.split("@")[1] == "enssat.fr":
-
                 user.save()
                 allos_counters = AllosUserCounters(user_id=user)
                 allos_counters.save()
@@ -75,7 +74,8 @@ def registerUser(request):
                 return HttpResponse('Please confirm your email address to complete the registration')
             else:
                 messages.error(request, "Vous devez utiliser votre adresse mail enssat")
-                return redirect('register')
+
+        return render(request, 'register.html', {'form': form})
 
 
 def activate(request, uidb64, token):
@@ -993,7 +993,7 @@ def sendAlloEmailConfirmation(request, date, time, allo_id):
                 'line2': '',
                 'line3': getAlloSentenceType(requested_allo.allo_id.allo_type, date_time),
                 'line4': '',
-                'line5': 'On va prendre contact avec toi incessamment sou peu.',
+                'line5': 'On va prendre contact avec toi incessamment sous peu.',
                 'line6': 'Si tu n\'as pas reçu de message avant le jour de ta demande, tu peux contacter ' + staff_user.first_name + ' ' + staff_user.last_name + '.',
                 'line7': '',
                 'line8': 'La bise,',
