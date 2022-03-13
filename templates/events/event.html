@@ -48,7 +48,10 @@
 
 {% if user %}
     {% if registered %}
-        <h1 id="light-h1-event"><span>Événements</span> déjà enregistrés</h1>
+        <div id="next-event">
+            <br>
+            <h1><span>Événements</span> auxquels vous participer</h1>
+        </div>
         {% for event in registered %}
             <div id="next-event-object">
                 <div class="row">
