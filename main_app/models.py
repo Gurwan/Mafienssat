@@ -44,6 +44,11 @@ class Bets(models.Model):
 
     visible = models.BooleanField(default=False)
     closed_bet = models.BooleanField(default=False)
+    RESULT = (
+        ('W', 'Win'),
+        ('L', 'Lose')
+    )
+    result = models.CharField(max_length=1, choices=RESULT, blank=False)
 
 
 class StoreBets(models.Model):
@@ -59,6 +64,7 @@ class StoreBets(models.Model):
     bet_rate = models.DecimalField(max_digits=4, decimal_places=2, default=1.00)
     blocked_bet = models.BooleanField(default=False)
     closed_bet = models.BooleanField(default=False)
+    final_result = models.CharField(max_length=1, choices=RESULT, blank=False)
 
 
 class Event(models.Model):
