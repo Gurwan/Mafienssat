@@ -306,10 +306,33 @@ body {
 }
 
 #liste_off {
-    font-family: 'Samuel', Arial, sans-serif;
-    font-weight:normal;
-    font-style:normal;
     margin-top: 20px;
+    font-family: 'Rockville', Arial, sans-serif;
+}
+
+#liste_off h1 {
+    font-family: 'Felixti', Arial, sans-serif;
+    text-align: center;
+    font-size: 90px;
+    color: black;
+    font-weight:normal;
+    margin-bottom: 30px;
+    font-style:normal;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    border-top: 5px solid black;
+    border-bottom: 5px solid black;
+}
+
+#liste_off h2 {
+    font-family: 'Castellar', Arial, sans-serif;
+}
+
+#liste_off h3 {
+    font-family: 'Castellar', Arial, sans-serif;
 }
 
 #betklax-pages {
@@ -1197,6 +1220,7 @@ a, a:hover, a:focus, a:active {
     font-size: 60px;
     text-align: center;
     color: red;
+    font-family: 'samuel', sans-serif;
 }
 
 .compteur_next_goals {
@@ -1217,6 +1241,7 @@ a, a:hover, a:focus, a:active {
 .title_goals {
     font-size: 40px;
     text-align: center;
+    font-family: 'samuel', sans-serif;
 }
 
 .green {
