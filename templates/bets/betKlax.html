@@ -27,7 +27,7 @@
             <div class="div-du-bet">
                 <h3>{{ bet.bet_name }}</h3>
                 {% if bet.closed_bet %}
-                    <h4>Fermé</h4>
+                    <h4 style="color: #e62e00; font-weight: bold">Fermé</h4>
                 {% endif %}
                 <h4>Fini le {{bet.ended | date:"d"}} {{bet.ended  | date:"F"}} {{bet.ended  | date:"o"}} à {{bet.ended | date:"H"}}h{{bet.ended | date:"i"}}</h4>
                 {% if request.user.is_authenticated and not bet.closed_bet%}

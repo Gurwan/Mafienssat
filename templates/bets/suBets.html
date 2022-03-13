@@ -15,13 +15,18 @@
             </a> <br>
             {% endif %}
             <small>Résultat du bet</small> <br>
-            <a class="col btn" style="background-color: #522699" href="{% url "sendBetsKalxcoins" id_bet=bet.id result_bet='W' %}" id="sendBetsKalxcoins{{ bet.id }}">
-                {{ bet.win_name }}
-            </a>
-            <a class="col btn" style="background-color: #522699" href="{% url "sendBetsKalxcoins" id_bet=bet.id result_bet='L' %}" id="sendBetsKalxcoins{{ bet.id }}">
-                {{ bet.lose_name }}
-            </a>
-            <br> <br>
+            {% if bet.closed_bet %}
+                <a class="col btn" style="background-color: #522699" href="{% url "sendBetsKalxcoins" id_bet=bet.id result_bet='W' %}" id="sendBetsKalxcoins{{ bet.id }}">
+                    {{ bet.win_name }} ({{ bet.win_rate }})
+                </a>
+                <a class="col btn" style="background-color: #522699" href="{% url "sendBetsKalxcoins" id_bet=bet.id result_bet='L' %}" id="sendBetsKalxcoins{{ bet.id }}">
+                    {{ bet.lose_name }} ({{ bet.lose_rate }})
+                </a>
+            {% else %}
+                <small>{{ bet.win_name }} ({{ bet.win_rate }})</small> <br>
+                <small>{{ bet.lose_name }} ({{ bet.lose_rate }})</small> <br>
+            {% endif %}
+            <br>
         {% endfor %}
     </div>
 {% endif %}

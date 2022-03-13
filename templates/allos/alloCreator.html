@@ -25,15 +25,12 @@
             <small>{{ allo.get_allo_type_display }} au prix de {{ allo.cost }} klaxcoins</small><br>
             <small>Disponible du {{allo.start_date | date:"d"}} {{allo.start_date  | date:"F"}} {{allo.start_date  | date:"o"}} à {{allo.start_date | date:"H"}}h{{allo.start_date | date:"i"}}</small>
             <small>au {{allo.end_date | date:"d"}} {{allo.end_date  | date:"F"}} {{allo.end_date  | date:"o"}} à {{allo.end_date | date:"H"}}h{{allo.end_date | date:"i"}}</small> <br>
-            {% if allo.visible %}
-                <small>Ce allo est visible pour tout le monde</small>
-            {% else %}
-                <small>Ce allo n'est pas visible pour tout le monde</small> <br>
-                <a class="row btn" style="background-color: #522699" href="{% url "setVisibleAllo" id_allo=allo.id %}" id="setVisibleAllo{{ allo.id }}">
+            {% if not allo.visible %}
+                <a class="row btn" style="background-color: #e62e00; padding-right: 20px" href="{% url "setVisibleAllo" id_allo=allo.id %}" id="setVisibleAllo{{ allo.id }}">
                     Mettre en ligne le allo
                 </a>
             {% endif %}
-            <br> <br>
+            <br>
         {% endfor %}
     </div>
 {% endif %}

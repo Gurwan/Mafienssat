@@ -22,15 +22,12 @@
     <div class="container">
         {% for bet in bets %}
             <small>{{ bet.bet_name }}: fini le {{bet.ended | date:"d"}} {{bet.ended  | date:"F"}} {{bet.ended  | date:"o"}} à {{bet.ended | date:"H"}}h{{bet.ended | date:"i"}} <br></small>
-            {% if bet.visible %}
-                <small>Ce bet est visible pour tout le monde</small>
-            {% else %}
-                <small>Ce bet n'est pas visible pour tout le monde</small> <br>
-                <a class="row btn" style="background-color: #522699" href="{% url "setVisibleBet" id_bet=bet.id %}" id="setVisibleBet{{ bet.id }}">
-                    Mettre en ligne le pari
+            {% if not bet.visible %}
+                <a class="row btn" style="background-color: #e62e00; padding-right: 20px" href="{% url "setVisibleBet" id_bet=bet.id %}" id="setVisibleBet{{ bet.id }}">
+                    Mettre en ligne le pari (irréversible)
                 </a>
             {% endif %}
-            <br> <br>
+            <br>
         {% endfor %}
     </div>
 {% endif %}
