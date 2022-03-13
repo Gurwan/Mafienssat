@@ -2118,3 +2118,68 @@ a, a:hover, a:focus, a:active {
 #my_allo span{
     color: #e62e00;
 }
+
+#event_presentation{
+
+    padding-top: 20px;
+    font-weight:normal;
+    font-style:normal;
+}
+
+#event_presentation h1{
+
+    text-align: center;
+    font-size: 70px;
+    color: black;
+    font-family: 'Felixti', Arial, sans-serif;
+    font-weight:normal;
+    margin-bottom: 30px;
+    font-style:normal;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    border-top: 5px solid black;
+    border-bottom: 5px solid black;
+}
+
+#event_presentation #title0{
+
+    text-align: center;
+    font-size: 40px;
+    color: black;
+    font-family: 'Felixti', Arial, sans-serif;
+    font-weight:normal;
+    margin-bottom: 30px;
+    font-style:normal;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#event_presentation #title1{
+
+    text-align: center;
+    font-size: 30px;
+    color: black;
+    font-family: 'Felixti', Arial, sans-serif;
+    font-weight:normal;
+    margin-bottom: 30px;
+    font-style:normal;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#event_presentation #parag0{
+
+    text-align: center;
+    font-size: 30px;
+    color: black;
+    font-family: 'Samuel', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+}
