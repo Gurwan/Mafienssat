@@ -42,6 +42,11 @@ body {
     /*background-color: #666666; ; 666666 ou 0f0f3d*/
     background-color: #fcddc2;
     color: black;
+    background: -moz-linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(251,187,163,1) 0%, rgba(254,231,204,1) 100%);
+    background: -webkit-linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(251,187,163,1) 0%, rgba(254,231,204,1) 100%);
+    background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(251,187,163,1) 0%, rgba(254,231,204,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#020024",endColorstr="#fee7cc",GradientType=1);
+
 }
 
 #goals_list {
@@ -248,6 +253,7 @@ body {
     font-family: 'Bolf', Arial, sans-serif;
     font-weight:normal;
     font-style:normal;
+
 }
 
 #login h1 {
@@ -1035,10 +1041,15 @@ a, a:hover, a:focus, a:active {
 }
 
 #klaxment_id {
-    background-color: rgb(247, 226, 226);
+    background-color: #FCDDC2;
     margin: 0;
     padding: 0;
     color: black;
+    background: -moz-linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(251,187,163,1) 0%, rgba(254,231,204,1) 100%);
+    background: -webkit-linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(251,187,163,1) 0%, rgba(254,231,204,1) 100%);
+    background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(251,187,163,1) 0%, rgba(254,231,204,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#020024",endColorstr="#fee7cc",GradientType=1);
+
 }
 
 #vote_mafienssat_klaxment {
@@ -1161,8 +1172,8 @@ a, a:hover, a:focus, a:active {
     font-style:normal;
     padding-top: 10px;
     padding-bottom: 10px;
-    margin-left: 25%;
-    margin-right: 5px;
+    margin-left: auto;
+    margin-right: auto;
     width: 70%;
     border-top: 5px solid black;
     border-bottom: 5px solid black;
