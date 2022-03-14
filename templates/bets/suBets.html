@@ -30,12 +30,12 @@
                         {{ bet.lose_name }} ({{ bet.lose_rate }})
                     </a>
                 {% endif %}
-            {% else %}
-                <a class="col btn" style="background-color: #522699" href="{% url "deleteBet" id_bet=bet.id %}" id="deleteBet{{ bet.id }}">
-                    Supprimer le bet
-                </a>
             {% endif %}
             <br>
+
+            <a class="col btn" style="background-color: #522699" href="{% url "deleteBet" id_bet=bet.id %}" id="deleteBet{{ bet.id }}">
+                Supprimer le bet
+            </a>
         {% endfor %}
     </div>
 {% endif %}
