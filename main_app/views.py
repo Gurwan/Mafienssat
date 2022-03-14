@@ -212,7 +212,7 @@ def makeBetW(request, id_bet):
                 myBet.user_id = user
                 myBet.save()
 
-                return redirect("betKlax")
+                return redirect("myBets")
             else:
                 messages.error(request, "Tu n\'as pas asser de KlaxCoins espèce de rat")
         else:
@@ -251,7 +251,7 @@ def makeBetL(request, id_bet):
                 myBet.user_id = user
                 myBet.save()
 
-                return redirect("betKlax")
+                return redirect("myBets")
             else:
                 messages.error(request, "Tu n\'as pas asser de KlaxCoins espèce de rat")
         else:
