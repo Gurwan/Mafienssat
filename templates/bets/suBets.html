@@ -28,14 +28,13 @@
                     </a>
                     <a class="col btn" style="background-color: #522699" href="{% url "sendBetsKalxcoins" id_bet=bet.id result_bet='L' %}" id="sendBetsKalxcoins{{ bet.id }}">
                         {{ bet.lose_name }} ({{ bet.lose_rate }})
-                    </a>
+                    </a> <br>
                 {% endif %}
             {% endif %}
-            <br>
 
             <a class="col btn" style="background-color: #522699" href="{% url "deleteBet" id_bet=bet.id %}" id="deleteBet{{ bet.id }}">
                 Supprimer le bet
-            </a>
+            </a> <br><br>
         {% endfor %}
     </div>
 {% endif %}
