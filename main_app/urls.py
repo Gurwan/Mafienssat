@@ -70,6 +70,8 @@ urlpatterns = [
     path("staff/betSuperUser/sendBetsKalxcoins/[<int:id_bet>, <str:result_bet>]/", views.sendBetsKalxcoins, name="sendBetsKalxcoins"),
     path("staff/eventSuperUser/", views.suEvents, name="suEvents"),
     path("staff/eventSuperUser/closeEvent/<int:id_event>/", views.closeEvent, name="closeEvent"),
+    path("staff/betSuperUser/deleteEvent/<int:id_event>/", views.deleteEvent, name="deleteEvent"),
     path("staff/alloSuperUser/", views.suAllos, name="suAllos"),
     path("staff/alloSuperUser/closeAllo/<int:id_allo>/", views.closeAllo, name="closeAllo"),
+    path("staff/betSuperUser/deleteAllo/<int:id_allo>/", views.deleteAllo, name="deleteAllo"),
 ]

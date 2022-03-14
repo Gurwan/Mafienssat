@@ -636,6 +636,20 @@ def closeEvent(request, id_event):
         messages.error(request, "Erreur lors de l'envoie dela requête")
 
 
+def deleteEvent(request, id_event):
+    try:
+        evt = Event.objects.get(pk=id_event)
+    except Event.DoesNotExist:
+        evt = None
+
+    if evt is not None:
+        evt.delete()
+    else:
+        messages.error(request, "Cet event n'existe pas")
+
+    return redirect("suEvents")
+
+
 def liste(request):
     return render(request, 'nav_links/liste.html')
 
@@ -1063,6 +1077,20 @@ def getAlloSentenceType(allo_type, date):
         return "On s'occupe de t'apporter tes courses pour le " + date + "."
     else:
         return ""
+
+
+def deleteAllo(request, id_allo):
+    try:
+        allo = Allos.objects.get(pk=id_allo)
+    except Allos.DoesNotExist:
+        allo = None
+
+    if allo is not None:
+        allo.delete()
+    else:
+        messages.error(request, "Ce allo n'existe pas")
+
+    return redirect("suBets")
 
 
 def staff(request):

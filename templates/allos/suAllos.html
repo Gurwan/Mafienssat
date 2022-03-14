@@ -16,7 +16,9 @@
                     Fermer le allo
                 </a> <br>
             {% else %}
-                <small>Fermé</small> <br>
+                <a class="col btn" style="background-color: #522699" href="{% url "deleteAllo" id_allo=allo.id %}" id="deleteAllo{{ allo.id }}">
+                    Supprimer le allo
+                </a>
             {% endif %}
             <br> <br>
         {% endfor %}
