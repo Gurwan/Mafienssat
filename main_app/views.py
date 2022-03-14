@@ -176,6 +176,7 @@ def ratingRecalculation(id_bet):
 
         w_rate = (w_gains + l_gains) / w_gains
         l_rate = (w_gains + l_gains) / l_gains
+
         bet.win_rate = Decimal(w_rate)
         bet.lose_rate = Decimal(l_rate)
         bet.save()
@@ -303,8 +304,6 @@ def addGains(request, id_bet, gains):
                 bet.bet_id.win_gains += Decimal(gains)
             elif bet.result == 'L':
                 bet.bet_id.lose_gains += Decimal(gains)
-            else:
-                messages.error(request, "Le résultat du pari est inconnu")
 
             bet.save()
 
