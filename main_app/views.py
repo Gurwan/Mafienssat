@@ -543,6 +543,8 @@ def eventHTML(request, id_event):
     else:
         messages.error(request, "Erreur lors de l'envoie de la requête")
 
+    return redirect("event")
+
 
 def eventRegistration(request, event_id):
 
