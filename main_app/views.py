@@ -1090,7 +1090,7 @@ def deleteAllo(request, id_allo):
     else:
         messages.error(request, "Ce allo n'existe pas")
 
-    return redirect("suBets")
+    return redirect("suAllos")
 
 
 def staff(request):
