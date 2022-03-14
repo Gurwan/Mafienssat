@@ -452,6 +452,20 @@ def sendBetsKalxcoins(request, id_bet, result_bet):
         messages.error(request, "Aucun pari enregistré")
 
 
+def deleteBet(request, id_bet):
+    try:
+        bet = Bets.objects.get(pk=id_bet)
+    except Bets.DoesNotExist:
+        bet = None
+
+    if bet is not None:
+        bet.delete()
+    else:
+        messages.error(request, "Ce bet n'existe pas")
+
+    return redirect("suBets")
+
+
 def eventCreator(request):
     try:
         user = User.objects.get(pk=request.user.id)
