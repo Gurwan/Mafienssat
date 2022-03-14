@@ -539,7 +539,7 @@ def eventHTML(request, id_event):
 
     if evt is not None:
 
-        infos = readFileForHTML(staticfiles_storage.url('events/'+ evt.event_name +'.txt'))
+        infos = readFileForHTML('./static/events/'+ evt.event_name +'.txt')
 
         return render(request, 'events/eventPresentation.html', {'event': evt, 'infos': infos})
     else:
