@@ -311,7 +311,7 @@ def addGains(request, id_bet, gains):
 
             ratingRecalculation(id_bet)
 
-            return redirect("myBets")
+            return redirect(request, "myBets")
         else:
             messages.error(request, "Tu n'as pas asser de KlaxCoins espèce de rat")
     else:
