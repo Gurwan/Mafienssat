@@ -4,15 +4,17 @@
 {% include 'nav.html' %}
 {% if event and infos %}
     {% regroup infos by index as index_list %}
-    <h1 style="text-align: center; margin-top:20px"> {{ event }}</h1>
-    <div class="{{ event }}">
+    <div id="event_presentation">
+        <h1>{{ event }}</h1>
+
         {% for index in index_list %}
             {% for info in index.list %}
-                <div class="{{ index.infoClass }}" id="{{ info.index }}">
+                <div id="{{ info.infoClass }}" value="{{ info.index }}">
                     {{ info.info }}
                 </div>
             {% endfor %}
         {% endfor %}
     </div>
 {% endif %}
+{% include 'footer.html' %}
 {% endblock %}
