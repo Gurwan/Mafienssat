@@ -291,9 +291,13 @@ def addGains(request, id_bet, gains):
     except User.DoesNotExist:
         current_user = None
 
-    if current_user is not None:
+    try:
+        bet = StoreBets.objects.get(user_id_id=request.user.id, bet_id_id=id_bet, closed_bet=False, blocked_bet=False)
+    except StoreBets.DoesNotExist:
+        bet = None
+
+    if current_user is not None and bet is not None:
         if current_user.klax_coins >= Decimal(gains):
-            bet = StoreBets.objects.get(user_id_id=current_user.id, bet_id_id=id_bet, blocked_bet=False)
             bet.gains += Decimal(gains)
             if bet.result == 'W':
                 bet.bet_id.win_gains += Decimal(gains)
@@ -309,11 +313,12 @@ def addGains(request, id_bet, gains):
 
             ratingRecalculation(id_bet)
 
-            return redirect(request, "myBets")
         else:
             messages.error(request, "Tu n'as pas asser de KlaxCoins espèce de rat")
     else:
         messages.error(request, "Il faut être connecté pour accéder à cette page")
+
+    return redirect("myBets")
 
 
 def finalizeBet(request, id_bet):
@@ -392,6 +397,7 @@ def closeBet(request, id_bet):
 
         for b in bets:
             b.blocked_bet = True
+            b.closed_bet = True
             if b.RESULT == 'W':
                 b.bet_rate = bet.win_rate
             else:
