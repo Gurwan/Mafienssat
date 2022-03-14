@@ -8,9 +8,10 @@ from decimal import *
 from datetime import datetime
 
 from django.template.loader import render_to_string
+from django.templatetags import static
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
-from bet_klax.settings import EMAIL_HOST_USER
+from bet_klax.settings import EMAIL_HOST_USER, STATICFILES_DIRS
 from .models import User, Bets, StoreBets, Event, EventsRegistration, AllosRegistration, Allos, AllosUserCounters
 from .forms import UserForm, AddBetForm, AddEventForm, AlloAdminForm
 from .tokens import account_activation_token
@@ -531,15 +532,15 @@ def readFileForHTML(file_name):
 
 def eventHTML(request, id_event):
     try:
-        event_name = Event.objects.get(pk=id_event).event_name
+        evt = Event.objects.get(pk=id_event)
     except Event.DoesNotExist:
-        event_name = None
+        evt = None
 
-    if event_name is not None:
+    if evt is not None:
 
-        infos = readFileForHTML("static/events/" + event_name + ".txt")
+        infos = readFileForHTML("./static/events/" + evt.event_name + ".txt")
 
-        return render(request, 'events/eventPresentation.html', {'event': event_name, 'infos': infos})
+        return render(request, 'events/eventPresentation.html', {'event': evt, 'infos': infos})
     else:
         messages.error(request, "Erreur lors de l'envoie de la requête")
 
