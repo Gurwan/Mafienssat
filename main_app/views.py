@@ -305,6 +305,7 @@ def addGains(request, id_bet, gains):
                 bet.bet_id.lose_gains += Decimal(gains)
             else:
                 messages.error(request, "Le résultat du pari est inconnu")
+
             bet.bet_id.save()
             bet.save()
 
