@@ -306,7 +306,6 @@ def addGains(request, id_bet, gains):
             else:
                 messages.error(request, "Le résultat du pari est inconnu")
 
-            bet.bet_id.save()
             bet.save()
 
             current_user.klax_coins -= Decimal(gains)
