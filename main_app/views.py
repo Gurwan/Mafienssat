@@ -293,7 +293,7 @@ def addGains(request, id_bet, gains):
 
     if current_user is not None:
         if current_user.klax_coins >= Decimal(gains):
-            bet = StoreBets.objects.get(user_id_id=current_user.id, bet_id_id=id_bet, closed_bet=False)
+            bet = StoreBets.objects.get(user_id_id=current_user.id, bet_id_id=id_bet, blocked_bet=False)
             bet.gains += Decimal(gains)
             if bet.result == 'W':
                 bet.bet_id.win_gains += Decimal(gains)
