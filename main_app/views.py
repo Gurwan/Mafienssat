@@ -166,7 +166,7 @@ def setVisibleBet(request, id_bet):
 
 def ratingRecalculation(id_bet):
     try:
-        bet = Bets.objects.all().get(pk=id_bet)
+        bet = Bets.objects.get(pk=id_bet)
     except Bets.DoesNotExist:
         bet = None
 
@@ -179,8 +179,6 @@ def ratingRecalculation(id_bet):
         bet.win_rate = Decimal(w_rate)
         bet.lose_rate = Decimal(l_rate)
         bet.save()
-
-        return redirect('myBets')
 
 
 def makeBetW(request, id_bet):
