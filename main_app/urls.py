@@ -16,7 +16,7 @@ urlpatterns = [
     path('home_betKlax/makeBetW/<int:id_bet>/', views.makeBetW, name='makeBetW'),
     path('home_betKlax/makeBetL/<int:id_bet>/', views.makeBetL, name='makeBetL'),
     path("home_betKlax/myBets/", views.myBets, name="myBets"),
-    path("home_betKlax/addGains/[<int:id_bet>, <int:gains>]/", views.addGains, name="addGains"),
+    path("home_betKlax/addGains/[<int:id_bet>, <int:gains>]", views.addGains, name="addGains"),
     path("home_betKlax/finalizeBet/<int:id_bet>", views.finalizeBet, name="finalizeBet"),
 
         # Event
