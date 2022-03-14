@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.sites.shortcuts import get_current_site
+from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -538,7 +539,7 @@ def eventHTML(request, id_event):
 
     if evt is not None:
 
-        infos = readFileForHTML("./static/events/" + evt.event_name + ".txt")
+        infos = readFileForHTML(staticfiles_storage.url('events/'+ evt.event_name +'.txt'))
 
         return render(request, 'events/eventPresentation.html', {'event': evt, 'infos': infos})
     else:
