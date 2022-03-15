@@ -16,7 +16,7 @@ urlpatterns = [
     path('home_betKlax/makeBetW/<int:id_bet>/', views.makeBetW, name='makeBetW'),
     path('home_betKlax/makeBetL/<int:id_bet>/', views.makeBetL, name='makeBetL'),
     path("home_betKlax/myBets/", views.myBets, name="myBets"),
-    path("home_betKlax/addGains/[<int:id_bet>, <int:gains>]/", views.addGains, name="addGains"),
+    path("home_betKlax/addGains/[<int:id_bet>, <int:gains>]", views.addGains, name="addGains"),
     path("home_betKlax/finalizeBet/<int:id_bet>", views.finalizeBet, name="finalizeBet"),
 
         # Event
@@ -66,9 +66,12 @@ urlpatterns = [
         # SuperUser
     path("staff/betSuperUser/", views.suBets, name="suBets"),
     path("staff/betSuperUser/closeBet/<int:id_bet>/", views.closeBet, name="closeBet"),
+    path("staff/betSuperUser/deleteBet/<int:id_bet>/", views.deleteBet, name="deleteBet"),
     path("staff/betSuperUser/sendBetsKalxcoins/[<int:id_bet>, <str:result_bet>]/", views.sendBetsKalxcoins, name="sendBetsKalxcoins"),
     path("staff/eventSuperUser/", views.suEvents, name="suEvents"),
     path("staff/eventSuperUser/closeEvent/<int:id_event>/", views.closeEvent, name="closeEvent"),
+    path("staff/betSuperUser/deleteEvent/<int:id_event>/", views.deleteEvent, name="deleteEvent"),
     path("staff/alloSuperUser/", views.suAllos, name="suAllos"),
     path("staff/alloSuperUser/closeAllo/<int:id_allo>/", views.closeAllo, name="closeAllo"),
+    path("staff/betSuperUser/deleteAllo/<int:id_allo>/", views.deleteAllo, name="deleteAllo"),
 ]
