@@ -656,8 +656,7 @@ def liste(request):
 
 
 def klaxment(request):
-    userList = User.objects.filter(is_staff=False, is_superuser=False).order_by(
-        '-klax_coins')  # va chercher tous les utilisateurs du site
+    userList = User.objects.filter(is_staff=False, is_superuser=False,from_list=False).order_by('-klax_coins')
     data = {'userList': userList}
 
     return render(request, 'nav_links/klaxment.html', data)
