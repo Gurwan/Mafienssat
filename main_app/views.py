@@ -46,7 +46,6 @@ def logoutUser(request):
 
 
 def registerUser(request):
-
     if request.method != 'POST':
         form = UserForm()
         return render(request, 'register.html', {'form': form})
@@ -285,7 +284,8 @@ def myBets(request):
         myEndedBets = None
 
     if user is not None:
-        return render(request, 'bets/myBetKlax.html', {'mybets': mybets, 'finalizedBets': finalizedBets, 'user': user, 'myEndedBets': myEndedBets})
+        return render(request, 'bets/myBetKlax.html',
+                      {'mybets': mybets, 'finalizedBets': finalizedBets, 'user': user, 'myEndedBets': myEndedBets})
 
 
 def addGains(request, id_bet, gains):
@@ -428,10 +428,10 @@ def sendBetsKalxcoins(request, id_bet, result_bet):
 
             for b in bets:
                 if result_bet == "W" and b.result == 'W':
-                    b.user_id.klax_coins += bet.win_rate*b.gains
+                    b.user_id.klax_coins += bet.win_rate * b.gains
                     b.final_result = 'W'
                 elif result_bet == "L" and b.result == 'L':
-                    b.user_id.klax_coins += bet.lose_rate*b.gains
+                    b.user_id.klax_coins += bet.lose_rate * b.gains
                     b.final_result = 'W'
                 else:
                     b.final_result = 'L'
@@ -539,7 +539,7 @@ def eventHTML(request, id_event):
 
     if evt is not None:
 
-        infos = readFileForHTML('./static/events/'+ evt.event_name +'.txt')
+        infos = readFileForHTML('./static/events/' + evt.event_name + '.txt')
 
         return render(request, 'events/eventPresentation.html', {'event': evt, 'infos': infos})
     else:
@@ -549,7 +549,6 @@ def eventHTML(request, id_event):
 
 
 def eventRegistration(request, event_id):
-
     try:
         user = User.objects.get(pk=request.user.id)
     except User.DoesNotExist:
@@ -606,7 +605,8 @@ def eventUnregistration(request, event_id):
         else:
             messages.error(request, "Erreur lors de l'identification de l'évènement")
     else:
-        messages.error(request, "Un problème est survenu lors de votre inscription, veuillez réessayer et si cela persiste, contacter un admin")
+        messages.error(request,
+                       "Un problème est survenu lors de votre inscription, veuillez réessayer et si cela persiste, contacter un admin")
 
 
 def suEvents(request):
@@ -657,7 +657,8 @@ def liste(request):
 
 
 def klaxment(request):
-    userList = User.objects.filter(is_staff=False, is_superuser=False).order_by('-klax_coins')  # va chercher tous les utilisateurs du site
+    userList = User.objects.filter(is_staff=False, is_superuser=False).order_by(
+        '-klax_coins')  # va chercher tous les utilisateurs du site
     data = {'userList': userList}
 
     return render(request, 'nav_links/klaxment.html', data)
@@ -673,7 +674,6 @@ def homeAllos(request):
 
 
 def allos(request):
-
     try:
         user = User.objects.get(pk=request.user.id)
     except User.DoesNotExist:
@@ -715,7 +715,8 @@ def myAllos(request):
         for allo in all_allos:
             types.append(allo.allo_type)
 
-        return render(request, 'allos/myAllos.html', {'user': user, 'counter': counter, 'allos': my_allos, 'allos_types': types})
+        return render(request, 'allos/myAllos.html',
+                      {'user': user, 'counter': counter, 'allos': my_allos, 'allos_types': types})
     else:
         messages.error(request, "Vous devez être connecté")
 
@@ -894,7 +895,6 @@ def setVisibleAllo(request, id_allo):
 
 
 def alloRegistration(request, id_allo):
-
     try:
         user = User.objects.get(pk=request.user.id)
     except User.DoesNotExist:
@@ -940,7 +940,8 @@ def alloRequested(request):
         all_request = AllosRegistration.objects.filter(made=False)
         done_allos = AllosRegistration.objects.filter(made=True)
 
-        return render(request, 'allos/alloRequested.html', {'user': user, 'allos': all_request, 'doneAllos': done_allos})
+        return render(request, 'allos/alloRequested.html',
+                      {'user': user, 'allos': all_request, 'doneAllos': done_allos})
     else:
         messages.error(request, "Vous devez être connecté")
 
@@ -1015,7 +1016,6 @@ def alloEmailConfirmation(request, id_allo):
 
 
 def sendAlloEmailConfirmation(request, date, time, allo_id):
-
     try:
         requested_allo = AllosRegistration.objects.get(pk=allo_id)
     except AllosRegistration.DoesNotExist:
@@ -1060,7 +1060,6 @@ def sendAlloEmailConfirmation(request, date, time, allo_id):
 
 
 def getAlloSentenceType(allo_type, date):
-
     if allo_type == "A":
         return "Askip t'es en dèche de bière ? On se donne rdv le " + date + "."
     elif allo_type == "B":

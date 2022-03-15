@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-4z#**v4$(7icr7v^um0$q&)yr5*#$q7-hfvr1q=lw_swtlzjt^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['s22958634.onlinehome-server.info']
+ALLOWED_HOSTS = [] #['s22958634.onlinehome-server.info']
 
 # Application definition
 
@@ -118,9 +118,9 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_ROOT = ''
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), 'var/www/bet_klax/static']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -128,13 +128,17 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # DataFlair Email
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'stmp.gmail.com'
+EMAIL_PORT = 587
 EMAIL_HOST_USER = 'mafienssat.dontreply@gmail.com'
 EMAIL_HOST_PASSWORD = '6mqfHKwZ6ZY6VvL'
-EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 CRONJOBS = [
     ('0-30 * * * *', 'main_app.cron.my_cron_bets'),
