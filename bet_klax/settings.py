@@ -128,17 +128,13 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), 'var/www/bet_klax/static']
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # DataFlair Email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'stmp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'mafienssat.dontreply@gmail.com'
 EMAIL_HOST_PASSWORD = '6mqfHKwZ6ZY6VvL'
 EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
-
-if DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-else:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_SSL = True
 
 CRONJOBS = [
     ('0-30 * * * *', 'main_app.cron.my_cron_bets'),
