@@ -17,14 +17,6 @@
 
     <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
 
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-
 
     <div id="soundlink" class="{% static 'sound/klax.mp3' %}"></div>
 
@@ -38,8 +30,17 @@
         });
     </script>
 
+    {% if messages %}
+         <ul class="messages" style="margin-top: 70px;">
+            {% for message in messages %}
+                <p>{{ messages }}</p>
+            {% endfor %}
+         </ul>
+    {% endif %}
+
     {% block content %}
 
+    
 
     {% endblock %}
 

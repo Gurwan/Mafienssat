@@ -26,16 +26,16 @@ def loginPage(request):
 
         user = authenticate(request, email=email, password=password)
 
-        if user.activate:
-            if user is not None:
+        if user is not None:
+            if user.activate:
                 login(request, user)
 
                 return redirect('home')
             else:
-                messages.error(request, 'L\'utilisateur n\'existe pas ou tu t\'es trompé de mot de passe')
+                messages.error(request, "Vous devez activer votre compte, vérifier votre adresse enssat")
         else:
-            messages.error(request, "Vous devez activer votre compte, vérifier votre adresse enssat")
-
+            messages.error(request, 'L\'utilisateur n\'existe pas ou tu t\'es trompé de mot de passe')
+            
     return render(request, 'login.html')
 
 

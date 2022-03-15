@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-4z#**v4$(7icr7v^um0$q&)yr5*#$q7-hfvr1q=lw_swtlzjt^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['lagrossemothe.mafienssat.org', 's22958634.onlinehome-server.info']
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -128,7 +128,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # DataFlair Email
-EMAIL_BACKEND = 'django.core.mail.backends.stmp.EmailBackend'
+EMAIL_BACKEND = 'console'
 EMAIL_HOST_USER = 'dontreply@mafienssat.org'
 EMAIL_HOST = 'stmp.ionos.fr'
 EMAIL_PORT = 587
