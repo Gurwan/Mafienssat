@@ -6,36 +6,6 @@
 {% bootstrap_javascript %}
 {% include 'nav.html' %}
 {% if user %}
-    {% if counter %}
-
-        <div id="my_allo">
-            <h1>Vos <span>Allo</span> à disposition</h1>
-            <div style="text-align: center">
-                {% for type in allos_types %}
-                    {% if type == 'A' %}
-                        <small>Bières à domicile: <span>{{ counter.biere }}</span> | </small>
-                    {% elif type == 'B' %}
-                        <small>Goûter: <span>{{ counter.gouter }}</span> | </small>
-                    {% elif type == 'C' %}
-                        <small>P'tit dej: <span>{{ counter.ptitdej }}</span> | </small>
-                    {% elif type == 'D' %}
-                        <small>Ménage: <span>{{ counter.menage }}</span> | </small>
-                    {% elif type == 'E' %}
-                        <small>Car wash: <span>{{ counter.car_wash }}</span> | </small>
-                    {% elif type == 'F' %}
-                        <small>Klaxeur fou: <span>{{ counter.klax }}</span> | </small>
-                     {% elif type == 'G' %}
-                        <small>Cuisine: <span>{{ counter.cuisine }}</span> | </small>
-                    {% elif type == 'H' %}
-                        <small>Courses: <span>{{ counter.courses }}</span> | </small>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </div>
-    {% else %}
-        <small>Erreur lors du chargement de vos donnés</small>
-    {% endif %}
-    <br>
     <div id="my_allo">
         <h1>Vos demandes de <span>Allo</span></h1>
     </div>
