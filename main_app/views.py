@@ -809,19 +809,27 @@ def sendAllo(request, date, time, allo_id):
 
     if user is not None and date is not None and time is not None and allo_id is not None:
         date_time = date + " " + time + ":00"
-        selected_allo = Allos.objects.get(id=allo_id)
-        counter = AllosUserCounters.objects.get(user_id=request.user)
+        try:
+            selected_allo = Allos.objects.get(id=allo_id)
+        except Allos.DoesNotExist:
+            selected_allo = None
 
-        addAlloCounter(selected_allo.allo_type, counter, -1)
-        counter.save()
+        try:
+            counter = AllosUserCounters.objects.get(user_id=request.user)
+        except AllosUserCounters.DoesNotExist:
+            counter = None
 
-        allo = AllosRegistration()
-        allo.user_id = user
-        allo.allo_id = selected_allo
-        allo.date = datetime.strptime(str(date_time), '%Y-%m-%d %H:%M:%S')
-        allo.save()
+        if selected_allo is not None and counter is not None:
+            addAlloCounter(selected_allo.allo_type, counter, -1)
+            counter.save()
 
-        return redirect('allos')
+            allo = AllosRegistration()
+            allo.user_id = user
+            allo.allo_id = selected_allo
+            allo.date = datetime.strptime(str(date_time), '%Y-%m-%d %H:%M:%S')
+            allo.save()
+
+        return redirect('myAllos')
 
     else:
         messages.error(request, "Utilisateur non trouvé")
