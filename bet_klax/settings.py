@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-4z#**v4$(7icr7v^um0$q&)yr5*#$q7-hfvr1q=lw_swtlzjt^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['s22958634.onlinehome-server.info']
+ALLOWED_HOSTS = ['lagrossemothe.mafienssat.org', 's22958634.onlinehome-server.info']
 
 # Application definition
 
@@ -118,7 +118,7 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = BASE_DIR / 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), 'var/www/bet_klax/static/']
 
@@ -134,7 +134,7 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'mafienssat.dontreply@gmail.com'
 EMAIL_HOST_PASSWORD = '6mqfHKwZ6ZY6VvL'
 EMAIL_USE_TLS = True
-EMAIL_USE_SSL = True
+EMAIL_USE_SSL = False
 
 CRONJOBS = [
     ('0-30 * * * *', 'main_app.cron.my_cron_bets'),
