@@ -70,16 +70,8 @@ def registerUser(request):
                     'token': account_activation_token.make_token(user),
                 })
 
-                user_email = form.cleaned_data.get('email')
-                #send_mail(subject, message, EMAIL_HOST_USER, [user_email])
-                send_mail(
-                    subject=subject,
-                    message=message,
-                    from_email='mafienssat.dontreply@gmail.com',
-                    recipient_list=[user_email,],
-                    auth_user='mafienssat.dontreply@gmail.com',
-                    auth_password='6mqfHKwZ6ZY6VvL',
-                    fail_silently=False)
+                user_email = user.email #form.cleaned_data.get('email')
+                send_mail(subject, message, EMAIL_HOST_USER, [user_email])
 
                 return HttpResponse('Please confirm your email address to complete the registration')
             else:
