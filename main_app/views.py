@@ -216,7 +216,7 @@ def makeBetW(request, id_bet):
 
                 return redirect("betKlax")
             else:
-                messages.error(request, "Tu n\'as pas asser de KlaxCoins espèce de rat")
+                messages.error(request, "Tu n\'as pas assez de KlaxCoins espèce de rat")
         else:
             messages.error(request, "Tu as déja parié sur ce pari")
     else:
@@ -255,7 +255,7 @@ def makeBetL(request, id_bet):
 
                 return redirect("betKlax")
             else:
-                messages.error(request, "Tu n\'as pas asser de KlaxCoins espèce de rat")
+                messages.error(request, "Tu n\'as pas assez de KlaxCoins espèce de rat")
         else:
             messages.error(request, "Tu as déja parié sur ce pari")
     else:
@@ -313,7 +313,7 @@ def addGains(request, id_bet, gains):
 
             return redirect("myBets")
         else:
-            messages.error(request, "Tu n'as pas asser de KlaxCoins espèce de rat")
+            messages.error(request, "Tu n'as pas assez de KlaxCoins espèce de rat")
     else:
         messages.error(request, "Il faut être connecté pour accéder à cette page")
 
