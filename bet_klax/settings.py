@@ -130,7 +130,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # DataFlair Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST_USER = 'dontreply@mafienssat.org'
-EMAIL_HOST = 'stmp.ionos.fr'
+EMAIL_HOST = 'smtp.ionos.fr'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_PASSWORD = 'g87a99hY2aCXBWF' # '6mqfHKwZ6ZY6VvL'
