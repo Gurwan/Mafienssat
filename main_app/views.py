@@ -62,6 +62,7 @@ def registerUser(request):
 
                 current_site = get_current_site(request)
                 subject = 'Activate Your Mafienssat Account'
+
                 message = render_to_string('accountActivationEmail.html', {
                     'user': user,
                     'domain': current_site.domain,
@@ -70,7 +71,15 @@ def registerUser(request):
                 })
 
                 user_email = form.cleaned_data.get('email')
-                send_mail(subject, message, EMAIL_HOST_USER, [user_email])
+                #send_mail(subject, message, EMAIL_HOST_USER, [user_email])
+                send_mail(
+                    subject=subject,
+                    message=message,
+                    from_email='mafienssat.dontreply@gmail.com',
+                    recipient_list=[user_email,],
+                    auth_user='mafienssat.dontreply@gmail.com',
+                    auth_password='6mqfHKwZ6ZY6VvL',
+                    fail_silently=False)
 
                 return HttpResponse('Please confirm your email address to complete the registration')
             else:
