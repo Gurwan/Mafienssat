@@ -110,7 +110,6 @@ class Allos(models.Model):
     start_date = models.DateTimeField(help_text='YYYY-MM-DD HH:MM:SS')
     end_date = models.DateTimeField(help_text='YYYY-MM-DD HH:MM:SS')
     description = models.CharField(max_length=1024)
-    cost = models.DecimalField(max_digits=12, decimal_places=2, default=1.00)
 
     visible = models.BooleanField(default=False)
     closed_allo = models.BooleanField(default=False)
@@ -123,15 +122,3 @@ class AllosRegistration(models.Model):
     take_over = models.BooleanField(default=False)
     made = models.BooleanField(default=False)
     staff_id = models.IntegerField(default=0)
-
-
-class AllosUserCounters(models.Model):
-    user_id = models.ForeignKey('User', on_delete=models.CASCADE)
-    biere = models.IntegerField(default=1)
-    gouter = models.IntegerField(default=0)
-    ptitdej = models.IntegerField(default=0)
-    menage = models.IntegerField(default=0)
-    car_wash = models.IntegerField(default=1)
-    klax = models.IntegerField(default=0)
-    cuisine = models.IntegerField(default=0)
-    courses = models.IntegerField(default=0)

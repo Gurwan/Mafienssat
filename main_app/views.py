@@ -12,8 +12,8 @@ from django.template.loader import render_to_string
 from django.templatetags import static
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
-from bet_klax.settings import EMAIL_HOST_USER, STATICFILES_DIRS
-from .models import User, Bets, StoreBets, Event, EventsRegistration, AllosRegistration, Allos, AllosUserCounters
+from bet_klax.settings import EMAIL_HOST_USER
+from .models import User, Bets, StoreBets, Event, EventsRegistration, AllosRegistration, Allos
 from .forms import UserForm, AddBetForm, AddEventForm, AlloAdminForm
 from .tokens import account_activation_token
 from django.utils.encoding import force_bytes, force_str
@@ -57,8 +57,6 @@ def registerUser(request):
             user.username = user.username.lower()
             if user.email.split("@")[1] == "enssat.fr":
                 user.save()
-                allos_counters = AllosUserCounters(user_id=user)
-                allos_counters.save()
 
                 current_site = get_current_site(request)
                 subject = 'Activate Your Mafienssat Account'
@@ -70,7 +68,7 @@ def registerUser(request):
                     'token': account_activation_token.make_token(user),
                 })
 
-                user_email = user.email #form.cleaned_data.get('email')
+                user_email = user.email
                 send_mail(subject, message, EMAIL_HOST_USER, [user_email])
 
                 return HttpResponse('Please confirm your email address to complete the registration')
@@ -689,7 +687,7 @@ def allos(request):
         if registered_allo is not None:
             ids = []
             for a in registered_allo:
-                ids.append(a.id)
+                ids.append(a.allo_id.id)
 
             unregistered_allos = Allos.objects.exclude(id__in=ids)
 
@@ -708,7 +706,6 @@ def myAllos(request):
         user = None
 
     if user is not None:
-        counter = AllosUserCounters.objects.get(user_id_id=user.id)
         my_allos = AllosRegistration.objects.filter(user_id_id=user.id)
 
         all_allos = Allos.objects.filter(visible=True)
@@ -717,88 +714,9 @@ def myAllos(request):
             types.append(allo.allo_type)
 
         return render(request, 'allos/myAllos.html',
-                      {'user': user, 'counter': counter, 'allos': my_allos, 'allos_types': types})
+                      {'user': user, 'allos': my_allos, 'allos_types': types})
     else:
         messages.error(request, "Vous devez être connecté")
-
-
-def buyAllos(request, allo_type, allo_cost):
-    try:
-        user = User.objects.get(pk=request.user.id)
-    except User.DoesNotExist:
-        user = None
-
-    if user is not None:
-        counter = AllosUserCounters.objects.get(user_id_id=user.id)
-        if allo_type is not None and allo_cost is not None:
-            if int(allo_cost) > 0:
-                if user.klax_coins >= Decimal(allo_cost):
-                    user.klax_coins -= Decimal(allo_cost)
-                    user.save()
-                    addAlloCounter(allo_type, counter, 1)
-                    counter.save()
-
-                else:
-                    messages.error(request, "Tu n'as pas assez de KlaxCoins")
-            else:
-                addAlloCounter(allo_type, counter, 1)
-                counter.save()
-
-            return redirect('myAllos')
-        else:
-            messages.error(request, "Erreur lors de l'envoie de la requête")
-    else:
-        messages.error(request, "Vous devez être connecté")
-
-
-def addAlloCounter(allo_type, counter, nb):
-    if allo_type == "A":
-        counter.biere += nb
-    elif allo_type == "B":
-        counter.gouter += nb
-    elif allo_type == "C":
-        counter.ptitdej += nb
-    elif allo_type == "D":
-        counter.menage += nb
-    elif allo_type == "E":
-        counter.car_wash += nb
-    elif allo_type == "F":
-        counter.klax += nb
-    elif allo_type == "G":
-        counter.cuisine += nb
-    elif allo_type == "H":
-        counter.courses += nb
-
-
-def buyAlloTicket(request, allo_ticket_id):
-    try:
-        user = User.objects.get(id=request.user.id)
-    except User.DoesNotExist:
-        user = None
-
-    try:
-        selected_allo = Allos.objects.get(id=allo_ticket_id)
-    except Allos.DoesNotExist:
-        selected_allo = None
-
-    if user is not None and selected_allo is not None:
-
-        counter = AllosUserCounters.objects.get(user_id=user)
-
-        if user.klax_coins >= selected_allo.cost:
-            user.klax_coins -= selected_allo.cost
-            user.save()
-
-            addAlloCounter(selected_allo.allo_type, counter, 1)
-            counter.save()
-
-            allowed = alloAllowed(selected_allo.allo_type, counter)
-
-            return render(request, 'allos/alloRegistration.html', {'allo': selected_allo, 'allowed': allowed})
-        else:
-            messages.error(request, "Tu n'as pas assez de KlaxCoins")
-    else:
-        messages.error(request, "Tu dois être connecté")
 
 
 def sendAllo(request, date, time, allo_id):
@@ -809,19 +727,20 @@ def sendAllo(request, date, time, allo_id):
 
     if user is not None and date is not None and time is not None and allo_id is not None:
         date_time = date + " " + time + ":00"
-        selected_allo = Allos.objects.get(id=allo_id)
-        counter = AllosUserCounters.objects.get(user_id=request.user)
+        try:
+            selected_allo = Allos.objects.get(id=allo_id)
+        except Allos.DoesNotExist:
+            selected_allo = None
 
-        addAlloCounter(selected_allo.allo_type, counter, -1)
-        counter.save()
+        if selected_allo is not None:
 
-        allo = AllosRegistration()
-        allo.user_id = user
-        allo.allo_id = selected_allo
-        allo.date = datetime.strptime(str(date_time), '%Y-%m-%d %H:%M:%S')
-        allo.save()
+            allo = AllosRegistration()
+            allo.user_id = user
+            allo.allo_id = selected_allo
+            allo.date = datetime.strptime(str(date_time), '%Y-%m-%d %H:%M:%S')
+            allo.save()
 
-        return redirect('allos')
+        return redirect('myAllos')
 
     else:
         messages.error(request, "Utilisateur non trouvé")
@@ -841,9 +760,6 @@ def removeAllo(request, id_allo):
             allo = None
 
         if allo is not None:
-
-            user.klax_coins += allo.allo_id.cost
-            user.save()
 
             allo.delete()
 
@@ -900,35 +816,15 @@ def alloRegistration(request, id_allo):
         user = User.objects.get(pk=request.user.id)
     except User.DoesNotExist:
         user = None
-
-    if user is not None:
+    try:
         selected_allo = Allos.objects.get(pk=id_allo)
-        counter = AllosUserCounters.objects.get(user_id_id=user.id)
-        allowed = alloAllowed(selected_allo.allo_type, counter)
-        return render(request, 'allos/alloRegistration.html', {'user': user, 'allo': selected_allo, 'allowed': allowed})
+    except Allos.DoesNotExist:
+        selected_allo = None
+
+    if user is not None and selected_allo is not None:
+        return render(request, 'allos/alloRegistration.html', {'user': user, 'allo': selected_allo})
     else:
         messages.error(request, "Vous devez être connecté")
-
-
-def alloAllowed(allo_type, counter):
-    if allo_type == "A":
-        return counter.biere
-    elif allo_type == "B":
-        return counter.gouter
-    elif allo_type == "C":
-        return counter.ptitdej
-    elif allo_type == "D":
-        return counter.menage
-    elif allo_type == "E":
-        return counter.car_wash
-    elif allo_type == "F":
-        return counter.klax
-    elif allo_type == "G":
-        return counter.cuisine
-    elif allo_type == "H":
-        return counter.courses
-    else:
-        return 0
 
 
 def alloRequested(request):

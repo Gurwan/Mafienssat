@@ -48,11 +48,10 @@ class AddEventForm(ModelForm):
 class AlloAdminForm(ModelForm):
     class Meta:
         model = Allos
-        fields = ['allo_type', 'description', 'cost', 'start_date', 'end_date']
+        fields = ['allo_type', 'description', 'start_date', 'end_date']
         labels = {
             'allo_type': 'Type de allo à proposer',
             'description': 'Description succincte du allo',
-            'cost': 'Coût en klaxcoins du allo',
             'start_date': 'Date et heure de début de disponibilité au format \'YYYY-MM-DD HH:MM:SS\'',
             'end_date': 'Date et heure de fin de disponibilité au format \'YYYY-MM-DD HH:MM:SS\''
         }

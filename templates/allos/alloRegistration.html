@@ -7,18 +7,6 @@
 {% include 'nav.html' %}
 {% if allo and user %}
 
-    <div class="container-fluid" id="wallet">
-        <h1>Ton pocheton de <span>Klaxcoins</span></h1>
-          {% if user.klax_coins > 0 %}
-              <div>
-                  <p><span>Ton solde : </span> {{ user.klax_coins }} <img class="img-fluid" height="75" width="75" src="{% static 'klax_or.png' %}" alt=""/></p>
-              </div>
-          {% else %}
-              <div>
-                <p><span>Time to soudoyer</span> car là tu n'as aucun <img class="img-fluid" height="75" width="75" src="{% static 'klax_or.png' %}" alt=""/> à parier</p>
-              </div>
-          {% endif %}
-    </div>
     <div id="allo_registration">
         <h1>Faire la demande pour <br> <span>{{ allo.get_allo_type_display }}</span></h1>
     </div>
@@ -28,20 +16,15 @@
             <label for="date">Date souhaitée:</label>
             <input type="date" class="form-control" id="date" min="{{ allo.start_date.year }}-{{ allo.start_date.month }}-{{ allo.start_date.day }}" max="{{ allo.end_date.year }}-{{ allo.end_date.month }}-{{ allo.end_date.day }}">
         </div>
+
         <div class="form-group">
             <label for="time">Heure souhaitée:</label>
             <input type="time" class="form-control" id="time" min="{{ allo.start_date.hour }}:{{ allo.start_date.minute }}" max="{{ allo.end_date.hour }}:{{ allo.end_date.minute }}">
         </div>
-  
-        {% if allowed > 0 %}
-            <a class="btn btn--main" style="background-color:red; color:white;width: 100%; margin-top: 15px" id="btn-href-{{ allo.id }}" href="{% url "sendAllo" date="a" time="b" allo_id=allo.id %}" onclick="sendAllo(this.id)" style="background-color:red; color:white">
-                Envoyer la demande
-            </a>
-        {% else %} <!-- Todo Faire en sorte de ne plus voir le lien hypertext -->
-            <a style="background-color:red; color:white;width: 100%; margin-top: 15px" class="btn btn--main" href="{% url "buyAlloTicket" allo.id %}" value="buyAlloTicket{{ allo.id }}">
-                <p>Acheter un ticket</p>
-            </a>
-        {% endif %}
+
+        <a class="btn btn--main" style="background-color:red; color:white;width: 100%; margin-top: 15px" id="btn-href-{{ allo.id }}" href="{% url "sendAllo" date="a" time="b" allo_id=allo.id %}" onclick="sendAllo(this.id)" style="background-color:red; color:white">
+            Envoyer la demande
+        </a>
     </div>
 {% elif user %}
     <h1 style="text-align: center; margin-top:20px">Erreur lors du chargement réessaye</h1>
