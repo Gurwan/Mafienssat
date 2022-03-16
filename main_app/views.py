@@ -101,9 +101,9 @@ def home(request):
     try:
         last_events = Event.objects.last()
     except Event.DoesNotExist:
-        last_event = None
+        last_events = None
 
-    return render(request, 'home.html', {'players': players, 'event': last_event})
+    return render(request, 'home.html', {'players': players, 'event': last_events})
 
 
 def homeBetKlax(request):
