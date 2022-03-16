@@ -1848,6 +1848,7 @@ a, a:hover, a:focus, a:active {
     color: black;
     font-weight:normal;
     font-style:normal;
+    margin-bottom: 200px;
 }
 
 #thanks-page h1 {
@@ -1891,6 +1892,7 @@ a, a:hover, a:focus, a:active {
     padding-top: 20px;
     font-weight:normal;
     font-style:normal;
+    margin-bottom: 200px;
 }
 
 #our_values p {
@@ -1930,6 +1932,7 @@ a, a:hover, a:focus, a:active {
     padding-top: 20px;
     font-weight:normal;
     font-style:normal;
+    margin-bottom: 200px;
 }
 
 #partners-page p {
@@ -1998,6 +2001,7 @@ a, a:hover, a:focus, a:active {
     padding-top: 20px;
     font-weight:normal;
     font-style:normal;
+    margin-bottom: 200px;
 }
 
 #promises-page p {
