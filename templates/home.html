@@ -19,14 +19,10 @@
     </div>
     {% if event %}
             <div class="col-9" id="event_id_main">
-                <div class="row">
-                    <div class="col">
-                        <a class="name_date" href="{% url "event" %}">
-                            <h2 id="name">{{event.event_name}}</h2>
-                            <h3 id="date">{{event.event_date | date:"d"}} {{event.event_date | date:"F"}} {{event.event_date | date:"o"}} à partir de {{event.event_date | date:"H"}}h{{event.event_date | date:"i"}}</h3>
-                        </a>
-                    </div>
-                </div>
+                <a class="name_date" href="{% url "event" %}">
+                    <h2 id="name">{{event.event_name}}</h2>
+                    <h3 id="date">{{event.event_date | date:"d"}} {{event.event_date | date:"F"}} {{event.event_date | date:"o"}} à partir de {{event.event_date | date:"H"}}h{{event.event_date | date:"i"}}</h3>
+                </a>
             </div>
         {% endif %}
     <div class="row" style=" background-color: black;">
