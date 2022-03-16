@@ -2212,11 +2212,18 @@ a, a:hover, a:focus, a:active {
 
     font-family: 'Rockville', Arial, sans-serif;
     padding-top: 200px;
+    font-style:normal;
+    font-weight:normal;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #event-main-block a {
 
-    border: black; border-radius: 10px; background: #917a69;
+    border: black;
+    border-radius: 10px;
+    background: #917a69;
 }
 
 #event-main-block h2 {
