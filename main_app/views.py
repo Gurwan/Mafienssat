@@ -309,17 +309,17 @@ def addGains(request, id_bet, gains):
         except Bets.DoesNotExist:
             this_bet = None
 
-        if current_user.klax_coins >= Decimal(gains) and this_bet is not None:
-            bet.gains += Decimal(gains)
+        if current_user.klax_coins >= Decimal(abs(gains)) and this_bet is not None:
+            bet.gains += Decimal(abs(gains))
             bet.save()
             if bet.result == 'W':
-                this_bet.win_gains += Decimal(gains)
+                this_bet.win_gains += Decimal(abs(gains))
             elif bet.result == 'L':
-                this_bet.lose_gains += Decimal(gains)
+                this_bet.lose_gains += Decimal(abs(gains))
 
             this_bet.save()
 
-            current_user.klax_coins -= Decimal(gains)
+            current_user.klax_coins -= Decimal(abs(gains))
             current_user.save()
 
             ratingRecalculation(bet.bet_id_id)
