@@ -14,8 +14,8 @@
 }
 
 @font-face {
-    font-family: Castellar;
-    src: url('../font/Castellar.ttf');
+    font-family: Castelar;
+    src: url('../font/Castelar.ttf');
 }
 
 @font-face {
@@ -40,13 +40,13 @@ body {
 
 #klaxment_list {
     text-align: center;
-    font-family: 'Castellar', Arial, sans-serif;
+    font-family: 'Castelar', Arial, sans-serif;
     font-weight:normal;
     font-style:normal;
 }
 
 #klaxment_list span {
-    color: rgb(209,155,13,255);
+    color: #F9E211; /*rgb(209,155,13,255);*/
     padding-right: 20px;
 }
 
@@ -311,7 +311,7 @@ body {
 }
 
 #liste_off h2 {
-    font-family: 'Castellar', Arial, sans-serif;
+    font-family: 'Castelar', Arial, sans-serif;
 }
 
 #liste_off p {
@@ -1444,7 +1444,7 @@ a, a:hover, a:focus, a:active {
 }
 
 #next-event-object .name_date h2 {
-    font-family: 'Castellar', Arial, sans-serif;
+    font-family: 'Castelar', Arial, sans-serif;
     text-align: center;
     display: inline-block!important;
 }
@@ -2006,7 +2006,7 @@ a, a:hover, a:focus, a:active {
     font-size: 30px;
     font-weight:normal;
     font-style:normal;
-    text-align: center;
+    text-align: justify;
 }
 
 #promises-page h1{
