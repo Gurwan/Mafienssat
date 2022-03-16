@@ -99,7 +99,7 @@ def activate(request, uidb64, token):
 def home(request):
     players = User.objects.all()
     try:
-        last_events = Event.objects.last()
+        last_events = Event.objects.filter(visible=True, closed_event=False).last()
     except Event.DoesNotExist:
         last_events = None
 
