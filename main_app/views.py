@@ -35,7 +35,7 @@ def loginPage(request):
                 messages.error(request, "Vous devez activer votre compte, vérifier votre adresse enssat")
         else:
             messages.error(request, 'L\'utilisateur n\'existe pas ou tu t\'es trompé de mot de passe')
-            
+
     return render(request, 'login.html')
 
 
@@ -541,17 +541,12 @@ def readFileForHTML(file_name):
     return toReturn
 
 
-def eventHTML(request, id_event):
-    try:
-        evt = Event.objects.get(pk=id_event)
-    except Event.DoesNotExist:
-        evt = None
+def eventHTML(request, event_name):
+    if event_name is not None:
 
-    if evt is not None:
+        # infos = readFileForHTML('./static/events/' + event_name + '.txt')
 
-        infos = readFileForHTML('./static/events/' + evt.event_name + '.txt')
-
-        return render(request, 'events/eventPresentation.html', {'event': evt, 'infos': infos})
+        return render(request, 'events/eventPresentation.html', {'event': event_name})
     else:
         messages.error(request, "Erreur lors de l'envoie de la requête")
 
@@ -667,7 +662,7 @@ def liste(request):
 
 
 def klaxment(request):
-    userList = User.objects.filter(is_staff=False, is_superuser=False,from_list=False).order_by('-klax_coins')
+    userList = User.objects.filter(is_staff=False, is_superuser=False, from_list=False).order_by('-klax_coins')
     data = {'userList': userList}
 
     return render(request, 'nav_links/klaxment.html', data)
@@ -743,7 +738,6 @@ def sendAllo(request, date, time, allo_id):
             selected_allo = None
 
         if selected_allo is not None:
-
             allo = AllosRegistration()
             allo.user_id = user
             allo.allo_id = selected_allo
