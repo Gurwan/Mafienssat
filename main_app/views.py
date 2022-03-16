@@ -9,7 +9,7 @@ from decimal import *
 from datetime import datetime
 
 from django.template.loader import render_to_string
-from django.templatetags import static
+from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 from bet_klax.settings import EMAIL_HOST_USER
@@ -550,7 +550,8 @@ def eventHTML(request, id_event):
 
     if evt is not None:
 
-        infos = readFileForHTML('/var/www/bet_klax/static/events/' + evt.event_name + '.txt')
+        #infos = readFileForHTML('./static/events/' + evt.event_name + '.txt')
+        infos = readFileForHTML(static('events/' + evt.event_name + '.txt'))
 
         return render(request, 'events/eventPresentation.html', {'event': evt, 'infos': infos})
     else:
