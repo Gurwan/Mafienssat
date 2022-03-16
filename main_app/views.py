@@ -175,7 +175,12 @@ def ratingRecalculation(id_bet):
         l_gains = float(bet.lose_gains) + float(1)
 
         w_rate = (w_gains + l_gains) / w_gains
+        if w_rate > 50:
+            w_rate = 50
+
         l_rate = (w_gains + l_gains) / l_gains
+        if l_rate > 50:
+            l_rate = 50
 
         bet.win_rate = Decimal(w_rate)
         bet.lose_rate = Decimal(l_rate)
@@ -306,18 +311,18 @@ def addGains(request, id_bet, gains):
 
         if current_user.klax_coins >= Decimal(gains) and this_bet is not None:
             bet.gains += Decimal(gains)
+            bet.save()
             if bet.result == 'W':
                 this_bet.win_gains += Decimal(gains)
             elif bet.result == 'L':
                 this_bet.lose_gains += Decimal(gains)
 
             this_bet.save()
-            bet.save()
 
             current_user.klax_coins -= Decimal(gains)
             current_user.save()
 
-            ratingRecalculation(id_bet)
+            ratingRecalculation(bet.bet_id_id)
             return redirect("myBets")
 
         else:
@@ -350,7 +355,7 @@ def finalizeBet(request, id_bet):
         bet.blocked_bet = True
         bet.save()
 
-        ratingRecalculation(id_bet)
+        ratingRecalculation(bet.bet_id_id)
 
         return redirect("myBets")
     else:
