@@ -299,27 +299,33 @@ def addGains(request, id_bet, gains):
         bet = None
 
     if current_user is not None and bet is not None:
-        if current_user.klax_coins >= Decimal(gains):
+        try:
+            this_bet = Bets.objects.get(pk=bet.bet_id_id)
+        except Bets.DoesNotExist:
+            this_bet = None
+
+        if current_user.klax_coins >= Decimal(gains) and this_bet is not None:
             bet.gains += Decimal(gains)
             if bet.result == 'W':
-                bet.bet_id.win_gains += Decimal(gains)
+                this_bet.win_gains += Decimal(gains)
             elif bet.result == 'L':
-                bet.bet_id.lose_gains += Decimal(gains)
+                this_bet.lose_gains += Decimal(gains)
 
-            bet.bet_id.save()
+            this_bet.save()
             bet.save()
 
             current_user.klax_coins -= Decimal(gains)
             current_user.save()
 
             ratingRecalculation(id_bet)
+            return redirect("myBets")
 
         else:
             messages.error(request, "Tu n'as pas assez de KlaxCoins espèce de rat")
+            return redirect("myBets")
     else:
         messages.error(request, "Il faut être connecté pour accéder à cette page")
-
-    return redirect("myBets")
+        return redirect("myBets")
 
 
 def finalizeBet(request, id_bet):
