@@ -626,10 +626,10 @@ body {
     font-family: 'Felixti', Arial, sans-serif;
     font-weight:normal;
     font-style:normal;
-    background-color: white;
     height: 100%;  
     display: flex;
     flex-flow: column;
+    background: #ad9684;
 }
 
 #main_col .row .col {
