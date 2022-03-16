@@ -2207,3 +2207,24 @@ a, a:hover, a:focus, a:active {
     font-weight:normal;
     font-style:normal;
 }
+
+#event-main-block {
+
+    font-family: 'Rockville', Arial, sans-serif;
+    padding-top: 200px;
+}
+
+#event-main-block a {
+
+    border: black; border-radius: 10px; background: #917a69;
+}
+
+#event-main-block h2 {
+
+    font-size: 50px;
+}
+
+#event-main-block h3 {
+
+    font-size: 45px;
+}
