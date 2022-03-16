@@ -79,7 +79,7 @@ body {
 }
 
 .sector_span {
-    color: red!important;
+    color: rgb(165, 1, 1)!important;
     padding-right: 0!important;
 }
 
@@ -275,7 +275,7 @@ body {
 
 
 #login label {
-    color: red;
+    color: rgb(165, 1, 1);
     font-size: 40px;
 }
 
@@ -419,7 +419,7 @@ body {
 
 #wallet span {
 
-    color: red;
+    color: rgb(165, 1, 1);
 }
 
 #wallet img {
@@ -510,7 +510,7 @@ body {
 }
 
 #betklax-pages span {
-    color: red;
+    color: rgb(165, 1, 1);
 }
 
 #yellow-span {
@@ -603,6 +603,12 @@ body {
     left: 50px;
 }
 
+@media screen and (min-width: 1400px) and (max-width: 1700px) {
+    .logo_loco {
+        top: 50px;
+    }
+}
+
 #event_page_id {
     width: 100%;
     height: 100%;
@@ -677,11 +683,11 @@ body {
 }
 
 #main_title h1 span {
-    color: red;
+    color: rgb(165, 1, 1);
 }
 
 #liste_off span {
-    color: red;
+    color: rgb(165, 1, 1);
 }
 
 #liste_off .row .col p {
@@ -699,7 +705,7 @@ body {
 }
 
 #next-event span {
-    color: red;
+    color: rgb(165, 1, 1);
 }
 
 #next-event .row .col p {
@@ -1255,6 +1261,7 @@ a, a:hover, a:focus, a:active {
     width: 225px;
     height: 750px;
     margin-left: auto;
+    padding-right: 0;
 }
 
 /* Style The Dropdown Button */
@@ -1361,14 +1368,14 @@ a, a:hover, a:focus, a:active {
 .compteur_goals {
     font-size: 60px;
     text-align: center;
-    color: red;
+    color: rgb(165, 1, 1);
     font-family: 'LinBiolinum', sans-serif;
 }
 
 .compteur_next_goals {
     font-size: 40px;
     text-align: center;
-    color: red;
+    color: rgb(165, 1, 1);
 }
 
 .title_next_goals {
@@ -1461,7 +1468,7 @@ a, a:hover, a:focus, a:active {
 }
 
 #next-event-object #description_event {
-    border:red 1px solid;
+    border:rgb(165, 1, 1) 1px solid;
     margin-bottom: 30px;
 }
 
@@ -1734,7 +1741,7 @@ a, a:hover, a:focus, a:active {
 }
 
 #home_bet span {
-    color: red;
+    color: rgb(165, 1, 1);
 }
 
 #home_bet p {
