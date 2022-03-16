@@ -98,9 +98,12 @@ def activate(request, uidb64, token):
 
 def home(request):
     players = User.objects.all()
-    data = {'players': players}
+    try:
+        last_events = Event.objects.last()
+    except Event.DoesNotExist:
+        last_event = None
 
-    return render(request, 'home.html', data)
+    return render(request, 'home.html', {'players': players, 'event': last_event})
 
 
 def homeBetKlax(request):
