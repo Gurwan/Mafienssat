@@ -1875,7 +1875,7 @@ a, a:hover, a:focus, a:active {
     color: black;
     font-weight:normal;
     font-style:normal;
-    text-align: center;
+    text-align: justify;
 }
 
 #thanks-page span {
@@ -1899,7 +1899,7 @@ a, a:hover, a:focus, a:active {
     font-size: 30px;
     font-weight:normal;
     font-style:normal;
-    text-align: center;
+    text-align: justify;
 }
 
 #our_values h1{
