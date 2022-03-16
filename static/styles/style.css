@@ -1,6 +1,6 @@
 @font-face {
     font-family: Corleone;
-    src: url('../font/Corleone.TTF');
+    src: url('../../static/font/Corleone.TTF');
 }
 
 @font-face {
