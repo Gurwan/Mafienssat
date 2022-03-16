@@ -15,16 +15,17 @@
                 <img id="gif_big_klax_id" style="display:none" width="200px" height="750px" src="{% static 'img/pub_big_klax.gif' %}">
                 <img id="gif_chaud_klaxeurs_id" style="display:none" width="200px" height="750px" src="{% static 'img/pub_chaud_klaxeurs.gif' %}">
             </div>
+            {% if event %}
+                <div class="col-9" id="event_id_main">
+                    <a class="name_date" href="{% url "event" %}">
+                        <h2 id="name">{{event.event_name}}</h2>
+                        <h3 id="date">{{event.event_date | date:"d"}} {{event.event_date | date:"F"}} {{event.event_date | date:"o"}} à partir de {{event.event_date | date:"H"}}h{{event.event_date | date:"i"}}</h3>
+                    </a>
+                </div>
+            {% endif %}
         </div>
     </div>
-    {% if event %}
-            <div class="col-9" id="event_id_main">
-                <a class="name_date" href="{% url "event" %}">
-                    <h2 id="name">{{event.event_name}}</h2>
-                    <h3 id="date">{{event.event_date | date:"d"}} {{event.event_date | date:"F"}} {{event.event_date | date:"o"}} à partir de {{event.event_date | date:"H"}}h{{event.event_date | date:"i"}}</h3>
-                </a>
-            </div>
-        {% endif %}
+
     <div class="row" style=" background-color: black;">
         <p style="margin-bottom: 100px; margin-top:100px; text-align:center; color:white">Votez Mafienssat !</p>
     </div>
