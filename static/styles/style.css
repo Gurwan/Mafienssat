@@ -1957,6 +1957,9 @@ a, a:hover, a:focus, a:active {
     font-size: 30px;
     font-weight:normal;
     font-style:normal;
+    border: black;
+    border-radius: 10px;
+    background: #a99280;
 }
 
 #partners-page h1{
