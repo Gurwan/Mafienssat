@@ -118,7 +118,7 @@ def betKlax(request):
         bet = []
         for b in bets_done:
             bet.append(b.bet_id_id)
-        bets = Bets.objects.exclude(id__in=bet)
+        bets = Bets.objects.exclude(id__in=bet).order_by("-id")
 
         user = User.objects.get(pk=request.user.id)
 
