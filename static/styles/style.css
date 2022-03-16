@@ -1958,14 +1958,6 @@ a, a:hover, a:focus, a:active {
     margin-bottom: 200px;
 }
 
-#partners-page p {
-
-    font-family: 'LinBiolinum', Arial, sans-serif;
-    font-size: 30px;
-    font-weight:normal;
-    font-style:normal;
-}
-
 #partners-page h1{
 
     text-align: center;
@@ -1984,22 +1976,6 @@ a, a:hover, a:focus, a:active {
     border-bottom: 5px solid black;
 }
 
-#partners-page h2 {
-
-    font-family: 'LinBiolinum', Arial, sans-serif;
-    font-size: 30px;
-    font-weight:normal;
-    font-style:normal;
-}
-
-#partners-page h3 {
-
-    font-family: 'LinBiolinum', Arial, sans-serif;
-    font-size: 20px;
-    font-weight:normal;
-    font-style:normal;
-}
-
 #partners-page h4 {
 
     font-family: 'LinBiolinum', Arial, sans-serif;
@@ -2009,6 +1985,44 @@ a, a:hover, a:focus, a:active {
 }
 
 #partners-page span{
+    color: #e62e00;
+}
+
+#partners-page-block{
+
+    padding-top: 20px;
+    font-weight:normal;
+    font-style:normal;
+    border: black;
+    border-radius: 10px;
+    background: #917a69;
+}
+
+#partners-page-block p {
+
+    font-family: 'LinBiolinum', Arial, sans-serif;
+    font-size: 30px;
+    font-weight:normal;
+    font-style:normal;
+}
+
+#partners-page-block h2 {
+
+    font-family: 'LinBiolinum', Arial, sans-serif;
+    font-size: 30px;
+    font-weight:normal;
+    font-style:normal;
+}
+
+#partners-page-block h3 {
+
+    font-family: 'LinBiolinum', Arial, sans-serif;
+    font-size: 20px;
+    font-weight:normal;
+    font-style:normal;
+}
+
+#partners-page-block span{
     color: #e62e00;
 }
 
