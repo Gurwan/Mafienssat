@@ -1984,6 +1984,14 @@ a, a:hover, a:focus, a:active {
     font-style:normal;
 }
 
+#partners-page h4 {
+
+    font-family: 'Samuel', Arial, sans-serif;
+    font-size: 15px;
+    font-weight:normal;
+    font-style:normal;
+}
+
 #partners-page span{
     color: #e62e00;
 }
