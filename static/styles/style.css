@@ -618,10 +618,6 @@ body {
     height: 100%;
     padding-top: 30px;
     background: rgb(2,0,36);
-    background: -moz-linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(251,187,163,1) 0%, rgba(254,231,204,1) 100%);
-    background: -webkit-linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(251,187,163,1) 0%, rgba(254,231,204,1) 100%);
-    background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(251,187,163,1) 0%, rgba(254,231,204,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#020024",endColorstr="#fee7cc",GradientType=1);
 
 }
 
@@ -1234,10 +1230,6 @@ a, a:hover, a:focus, a:active {
     margin: 0;
     padding: 0;
     color: black;
-    background: -moz-linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(251,187,163,1) 0%, rgba(254,231,204,1) 100%);
-    background: -webkit-linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(251,187,163,1) 0%, rgba(254,231,204,1) 100%);
-    background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(251,187,163,1) 0%, rgba(254,231,204,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#020024",endColorstr="#fee7cc",GradientType=1);
 
 }
 
@@ -1724,10 +1716,6 @@ a, a:hover, a:focus, a:active {
     font-family: 'Felixti', Arial, sans-serif;
     font-weight:bold;
     padding-top: 10px;
-    background: -moz-linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(251,187,163,1) 0%, rgba(254,231,204,1) 100%);
-    background: -webkit-linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(251,187,163,1) 0%, rgba(254,231,204,1) 100%);
-    background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(251,187,163,1) 0%, rgba(254,231,204,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#020024",endColorstr="#fee7cc",GradientType=1);
     font-style:normal;
 
 }
