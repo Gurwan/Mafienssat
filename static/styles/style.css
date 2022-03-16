@@ -1879,6 +1879,26 @@ a, a:hover, a:focus, a:active {
     text-align: justify;
 }
 
+#thanks-page li {
+    padding-top: 20px;
+    font-size: 30px;
+    font-family: 'LinBiolinum', Arial, sans-serif;
+    color: black;
+    font-weight:normal;
+    font-style:normal;
+    text-align: justify;
+}
+
+#thanks-page ul {
+    padding-top: 20px;
+    font-size: 30px;
+    font-family: 'LinBiolinum', Arial, sans-serif;
+    color: black;
+    font-weight:normal;
+    font-style:normal;
+    text-align: justify;
+}
+
 #thanks-page span {
     color: #e62e00;
 }
