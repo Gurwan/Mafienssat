@@ -306,6 +306,7 @@ def addGains(request, id_bet, gains):
             elif bet.result == 'L':
                 bet.bet_id.lose_gains += Decimal(gains)
 
+            bet.bet_id.save()
             bet.save()
 
             current_user.klax_coins -= Decimal(gains)
