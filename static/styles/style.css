@@ -1,6 +1,6 @@
 @font-face {
     font-family: Corleone; /* Entête et pied de page */
-    src: url('../../static/font/Corleone.TTF');
+    src: url('../font/Corleone.TTF');
 }
 
 @font-face {
@@ -19,7 +19,7 @@
 }
 
 @font-face {
-    font-family: LinBiolinum;
+    font-family: LinBiolinum; /* Paragraphes */
     src: url('../font/LinBiolinum.ttf');
 }
 
@@ -888,7 +888,7 @@ h6 {
     height: 65px;
     position: relative;
     line-height: 65px;
-    text-align: center;
+    text-align: justify;
     font-family: 'Corleone', Arial, sans-serif;
     font-weight:normal;
     font-style:normal;
@@ -1085,12 +1085,10 @@ footer .row {
 }
 
 #liste_id_main {
-   /* background-color: lightblue!important; */
     background-image: url('../img/bannertestlittle.png');
     background-size: 2000px 900px;
     background-position:center;
     background-position-y: -230px;
-    background-repeat: none;
     width: 100%;
     height: 300px;
     padding-top: 30px;
@@ -1216,19 +1214,18 @@ a, a:hover, a:focus, a:active {
 
 #klaxment_id {
     background-color: #ad9684;
-    margin: 0;
-    padding: 0;
     color: black;
 
 }
 
 #vote_mafienssat_klaxment {
-    background-color: rgb(247, 226, 226);
+    background-color: #ad9684;
     font-family: 'LinBiolinum', Arial, sans-serif;
     font-weight:normal;
     font-style:normal;
     text-transform: uppercase;
     margin: 0;
+    text-align: center;
 }
 
 @media screen and (max-width : 1000px){
@@ -1255,10 +1252,9 @@ a, a:hover, a:focus, a:active {
 }
 
 #pub_id_klaxment {
-    padding-left:0 ;
-    margin-left: 0;
     width: 225px;
     height: 750px;
+    margin-left: auto;
 }
 
 /* Style The Dropdown Button */
