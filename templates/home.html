@@ -16,8 +16,8 @@
                 <img id="gif_chaud_klaxeurs_id" style="display:none" width="200px" height="750px" src="{% static 'img/pub_chaud_klaxeurs.gif' %}">
             </div>
             {% if event %}
-                <div class="col-9" id="event_id_main" style="font-family: 'Felixti', Arial, sans-serif; padding-top: 200px; font-size: 40px; border: #8b1e27; border-radius: 10px; background: #917a69;">
-                    <a class="name_date" href="{% url "event" %}">
+                <div class="col-9" id="event_id_main" style="font-family: 'Felixti', Arial, sans-serif; padding-top: 200px; font-size: 40px;">
+                    <a class="name_date" href="{% url "event" %}" style="border: black; border-radius: 10px; background: #917a69;">
                         <h2 id="name">{{event.event_name}}</h2>
                         <h3 id="date">{{event.event_date | date:"d"}} {{event.event_date | date:"F"}} {{event.event_date | date:"o"}} à partir de {{event.event_date | date:"H"}}h{{event.event_date | date:"i"}}</h3>
                     </a>
