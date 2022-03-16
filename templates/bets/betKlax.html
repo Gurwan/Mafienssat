@@ -11,6 +11,7 @@
           {% if user.klax_coins > 0 %}
               <div>
                   <p><span>Ton solde : </span>{{ user.klax_coins }} <img class="img-fluid" height="75" width="75" src="{% static 'klax_or.png' %}" alt=""/></p>
+                  <p style="font-size: 28px;"><span>Ton identifiant Mafienssat : </span> {{user.id}} </p>
               </div>
           {% else %}
               <div>

@@ -71,7 +71,7 @@ def registerUser(request):
                 user_email = user.email
                 send_mail(subject, message, EMAIL_HOST_USER, [user_email])
 
-                return HttpResponse('Please confirm your email address to complete the registration')
+                return HttpResponse('<h2 style="color:rgb(165, 1, 1);">Please confirm your email address to complete the registration. After that go back to the website to login!</h2>')
             else:
                 messages.error(request, "Vous devez utiliser votre adresse mail enssat")
 

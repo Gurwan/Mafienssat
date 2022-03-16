@@ -14,7 +14,7 @@
         <label for="time">Heure souhaitée:</label><input type="time" id="time" min="{{ allo.start_date.hour }}:{{ allo.start_date.minute }}" max="{{ allo.end_date.hour }}:{{ allo.end_date.minute }}"> <br>
         <br>
 
-        <a class="btn btn--main" id="btn-href-{{ allo.id }}" href="{% url "sendAlloEmailConfirmation" date="a" time="b" allo_id=allo.id %}" onclick="sendAlloEmail(this.id)" style="background-color:red; color:white">
+        <a class="btn btn--main" id="btn-href-{{ allo.id }}" href="{% url "sendAlloEmailConfirmation" date="a" time="b" allo_id=allo.id %}" onclick="sendAlloEmail(this.id)" style="background-color:rgb(165, 1, 1); color:white">
             Envoyer la demande
         </a>
     </div>
