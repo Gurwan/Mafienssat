@@ -1,0 +1,27 @@
+{% extends 'main.html' %}
+{% block content %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% include 'nav.html' %}
+{% if user.is_superuser and bet %}
+    <div class="container">
+        <h1 style="text-align: center; margin-top:20px">Pari {{ bet.bet_name }}</h1>
+
+        <h1 style="text-align: center; margin-top:20px">{{ bet.win_name }} à {{ bet.win_rate }}</h1>
+        {% for b in user_bets %}
+            {% if b.result == 'W' %}
+                <p>{{ b.user_id.id }} : {{ b.user_id.first_name }} {{ b.user_id.last_name }}, {{ b.user_id.sector }} {{ b.user_id.email }}  {{ b.user_id.klax_coins }}</p> <br>
+            {% endif %}
+        {% endfor %}
+
+        <h1 style="text-align: center; margin-top:20px">{{ bet.lose_name }} à {{ bet.lose_rate }}</h1>
+        {% for b in user_bets %}
+            {% if b.result == 'L' %}
+                <p>{{ b.user_id.id }} : {{ b.user_id.first_name }} {{ b.user_id.last_name }}, {{ b.user_id.sector }} send {{ b.gains }}</p> <br>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <br><br><br><br>
+{% endif %}
+{% endblock %}
