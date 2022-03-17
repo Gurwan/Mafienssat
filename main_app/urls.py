@@ -64,6 +64,7 @@ urlpatterns = [
 
         # SuperUser
     path("staff/betSuperUser/", views.suBets, name="suBets"),
+    path("staff/betSuperUser/suCheckBet/<int:id_bet>/", views.suCheckBet, name="suCheckBet"),
     path("staff/betSuperUser/closeBet/<int:id_bet>/", views.closeBet, name="closeBet"),
     path("staff/betSuperUser/deleteBet/<int:id_bet>/", views.deleteBet, name="deleteBet"),
     path("staff/betSuperUser/sendBetsKalxcoins/[<int:id_bet>, <str:result_bet>]/", views.sendBetsKalxcoins, name="sendBetsKalxcoins"),
