@@ -1,3 +1,5 @@
+import os
+
 from django.contrib import messages
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.staticfiles.storage import staticfiles_storage
@@ -12,6 +14,7 @@ from django.template.loader import render_to_string
 from django.templatetags import static
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
+from bet_klax import settings
 from bet_klax.settings import EMAIL_HOST_USER, STATICFILES_DIRS
 from .models import User, Bets, StoreBets, Event, EventsRegistration, AllosRegistration, Allos
 from .forms import UserForm, AddBetForm, AddEventForm, AlloAdminForm
@@ -532,7 +535,7 @@ def event(request):
 
 
 def readFileForHTML(file_name):
-    all_lines = open(file_name).read().splitlines()
+    all_lines = open(os.path.join(settings.BASE_DIR, file_name)).read().splitlines()
     toReturn = []
     i = 0
     for line in all_lines:
@@ -544,12 +547,17 @@ def readFileForHTML(file_name):
     return toReturn
 
 
-def eventHTML(request, event_name):
-    if event_name is not None:
+def eventHTML(request, id_event):
+    try:
+        this_event = Event.objects.get(pk=id_event)
+    except Event.DoesNotExist:
+        this_event = None
 
-        # infos = readFileForHTML('./static/events/' + event_name + '.txt')
+    if this_event is not None:
 
-        return render(request, 'events/eventPresentation.html', {'event': event_name})
+        infos = readFileForHTML('./static/events/' + this_event.event_name + '.txt')
+
+        return render(request, 'events/eventPresentation.html', {'event': this_event, 'infos': infos})
     else:
         messages.error(request, "Erreur lors de l'envoie de la requête")
 
