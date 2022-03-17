@@ -555,7 +555,7 @@ def eventHTML(request, id_event):
 
     if this_event is not None:
 
-        infos = readFileForHTML(os.path.join(settings.BASE_DIR, 'static') + '/events/' + this_event.event_name + '.txt')
+        infos = readFileForHTML(os.path.join(settings.BASE_DIR, 'static/') + 'events/' + this_event.event_name + '.txt')
 
         return render(request, 'events/eventPresentation.html', {'event': this_event, 'infos': infos})
     else:
