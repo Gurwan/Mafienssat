@@ -4,9 +4,11 @@
 {% include 'nav.html' %}
 <div class="container-fluid" id="event_page_id">
     <img class="logo_loco" width="350px" height="350px" src="{% static 'img/logodeloco.png' %}">
-    <div id="next-event">
-        <h1>Prochains <span>événements</span></h1>
-    </div>
+    {% if not registered %}
+        <div id="next-event">
+            <h1>Prochains <span>événements</span></h1>
+        </div>
+    {% endif %}
     {% for event in events %}
         {% if event.visible %}
             <div id="next-event-object">
