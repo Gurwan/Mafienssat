@@ -535,7 +535,7 @@ def event(request):
 
 
 def readFileForHTML(file_name):
-    all_lines = open(os.path.join(os.path.abspath(os.path.dirname(__file__)), file_name)).read().splitlines()
+    all_lines = open(os.path.join(settings.BASE_DIR, file_name)).read().splitlines()
     toReturn = []
     i = 0
     for line in all_lines:
