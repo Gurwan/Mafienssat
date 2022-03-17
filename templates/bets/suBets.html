@@ -8,7 +8,7 @@
     <div class="container">
         <h1 style="text-align: center; margin-top:20px">Tous les paris</h1>
         {% for bet in bets %}
-            <a style="font-family: Arial,sans-serif" href="">
+            <a style="font-family: Arial,sans-serif" href="{% url "suCheckBet" id_bet=bet.id %}">
                 {{ bet.bet_name }}: fini le {{bet.ended | date:"d"}} {{bet.ended  | date:"F"}} {{bet.ended  | date:"o"}} à {{bet.ended | date:"H"}}h{{bet.ended | date:"i"}}
             </a> <br>
             {% if not bet.closed_bet %}
