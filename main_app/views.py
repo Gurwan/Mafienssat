@@ -1046,7 +1046,7 @@ def suUsers(request):
             from_list = None
 
         try:
-            staff_list = User.objects.filter(is_staff=True)
+            staff_list = User.objects.filter(is_staff=True, is_superuser=False)
         except User.DoesNotExist:
             staff_list = None
 
