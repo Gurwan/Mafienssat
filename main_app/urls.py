@@ -50,6 +50,7 @@ urlpatterns = [
 
         # Staff
     path("staff/", views.staff, name="staff"),
+    path("staff/users", views.suUsers, name="suUsers"),
     path("staff/betCreator/", views.betCreator, name="betCreator"),
     path("staff/betCreator/setVisbleBet/<int:id_bet>/", views.setVisibleBet, name="setVisibleBet"),
     path("staff/eventCreator/", views.eventCreator, name="eventCreator"),
