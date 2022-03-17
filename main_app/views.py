@@ -492,6 +492,29 @@ def deleteBet(request, id_bet):
     return redirect("suBets")
 
 
+def suCheckBet(request, id_bet):
+    try:
+        user = User.objects.get(pk=request.user.id)
+    except User.DoesNotExist:
+        user = None
+
+    try:
+        bet = Bets.objects.get(pk=id_bet)
+    except Bets.DoesNotExist:
+        bet = None
+
+    if user is not None and bet is not None:
+
+        try:
+            user_bets = StoreBets.objects.filter(bet_id_id=id_bet)
+        except StoreBets.DoesNotExist:
+            user_bets = None
+
+        return render(request, "bets/suCheckBet.html", {"user": user, "bet": bet, "user_bets": user_bets})
+    else:
+        messages.error(request, "Vous devez être connecté")
+
+
 def eventCreator(request):
     try:
         user = User.objects.get(pk=request.user.id)
@@ -516,29 +539,6 @@ def eventCreator(request):
             messages.error(request, "Tu dois être membre du staff pour accéder à cette page")
     else:
         messages.error(request, "Vous devez être connecté pour accéder à cette page")
-
-
-def suCheckBet(request, id_bet):
-    try:
-        user = User.objects.get(pk=request.user.id)
-    except User.DoesNotExist:
-        user = None
-
-    try:
-        bet = Bets.objects.get(pk=id_bet)
-    except Bets.DoesNotExist:
-        bet = None
-
-    if user is not None and bet is not None:
-
-        try:
-            user_bets = StoreBets.objects.filter(bet_id_id=id_bet)
-        except StoreBets.DoesNotExist:
-            user_bets = None
-
-        return render(request, "staffUsers.html", {"user": user, "bet": bet, "user_bets": user_bets})
-    else:
-        messages.error(request, "Vous devez être connecté")
 
 
 def event(request):
