@@ -1106,3 +1106,7 @@ def promises(request):
 
 def ourValues(request):
     return render(request, 'footers/ourValues.html')
+
+
+def Chasse(request):
+    return render(request, 'events/Chasse.html')
