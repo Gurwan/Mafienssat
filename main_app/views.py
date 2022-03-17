@@ -535,7 +535,7 @@ def event(request):
 
 
 def readFileForHTML(file_name):
-    all_lines = open(os.path.join(settings.BASE_DIR, file_name)).read().splitlines()
+    all_lines = open(file_name).read().splitlines()
     toReturn = []
     i = 0
     for line in all_lines:
@@ -555,7 +555,7 @@ def eventHTML(request, id_event):
 
     if this_event is not None:
 
-        infos = readFileForHTML('static/events/' + this_event.event_name + '.txt')
+        infos = readFileForHTML(os.path.join(settings.BASE_DIR, 'static') + '/events/' + this_event.event_name + '.txt')
 
         return render(request, 'events/eventPresentation.html', {'event': this_event, 'infos': infos})
     else:
