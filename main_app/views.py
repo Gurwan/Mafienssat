@@ -316,12 +316,21 @@ def addGains(request, id_bet, gains):
             this_bet = None
 
         if current_user.klax_coins >= Decimal(abs(gains)) and this_bet is not None:
-            bet.gains += Decimal(abs(gains))
+            if bet.gains + Decimal(abs(gains)) > 9999999999.99:
+                bet.gains = Decimal(9999999999.99)
+            else:
+                bet.gains += Decimal(abs(gains))
             bet.save()
             if bet.result == 'W':
-                this_bet.win_gains += Decimal(abs(gains))
+                if this_bet.win_gains + Decimal(abs(gains)) > 9999999999.99:
+                    this_bet.win_gains = Decimal(9999999999.99)
+                else:
+                    this_bet.win_gains += Decimal(abs(gains))
             elif bet.result == 'L':
-                this_bet.lose_gains += Decimal(abs(gains))
+                if this_bet.lose_gains + Decimal(abs(gains)) > 9999999999.99:
+                    this_bet.lose_gains = Decimal(9999999999.99)
+                else:
+                    this_bet.lose_gains += Decimal(abs(gains))
 
             this_bet.save()
 
@@ -1017,6 +1026,38 @@ def staff(request):
         return render(request, 'staff.html', {'user': user})
     else:
         messages.error(request, "Vous devez être staff")
+
+
+def suUsers(request):
+    try:
+        user = User.objects.get(pk=request.user.id)
+    except User.DoesNotExist:
+        user = None
+
+    if user is not None:
+        try:
+            registered = User.objects.filter(from_list=False)
+        except User.DoesNotExist:
+            registered = None
+
+        try:
+            from_list = User.objects.filter(from_list=True, is_superuser=False, is_staff=False)
+        except User.DoesNotExist:
+            from_list = None
+
+        try:
+            staff_list = User.objects.filter(is_staff=True)
+        except User.DoesNotExist:
+            staff_list = None
+
+        try:
+            su_list = User.objects.filter(is_superuser=True)
+        except User.DoesNotExist:
+            su_list = None
+
+        return render(request, "staffUsers.html", {"user": user, "registered": registered, "from_list": from_list, "staff_list": staff_list, "su_list": su_list})
+    else:
+        messages.error(request, "Vous devez être connecté")
 
 
 def goals(request):
