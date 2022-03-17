@@ -1,0 +1,32 @@
+{% extends 'main.html' %}
+{% block content %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% include 'nav.html' %}
+{% if user.is_staff %}
+    <!-- "user": user, "registered": registered, "from_list": from_list, "staff_list": staff_list, "su_list": su_list -->
+    <div class="container">
+        <h1 style="text-align: center; margin-top:20px">Tous les Users</h1>
+        {% for user in registered %}
+            <p>{{ user.id }} : {{ user.first_name }} {{ user.last_name }}, {{ user.sector }} {{ user.email }}  {{ user.klax_coins }}</p> <br>
+        {% endfor %}
+    <br><br>
+        <h1 style="text-align: center; margin-top:20px">Tous les membres de la Liste</h1>
+        {% for user in from_list %}
+            <p>{{ user.id }} : {{ user.first_name }} {{ user.last_name }}, {{ user.sector }} {{ user.email }}  {{ user.klax_coins }}</p> <br>
+        {% endfor %}
+    <br><br>
+        <h1 style="text-align: center; margin-top:20px">Tous les Staffs</h1>
+        {% for user in staff_list %}
+            <p>{{ user.id }} : {{ user.first_name }} {{ user.last_name }}, {{ user.sector }} {{ user.email }}  {{ user.klax_coins }}</p> <br>
+        {% endfor %}
+    <br><br>
+        <h1 style="text-align: center; margin-top:20px">Tous les SU</h1>
+        {% for user in su_list %}
+            <p>{{ user.id }} : {{ user.first_name }} {{ user.last_name }}, {{ user.sector }} {{ user.email }}  {{ user.klax_coins }}</p> <br>
+        {% endfor %}
+    </div>
+    <br><br><br><br>
+{% endif %}
+{% endblock %}

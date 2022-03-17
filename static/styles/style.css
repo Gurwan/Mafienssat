@@ -628,10 +628,10 @@ body {
     font-family: 'Felixti', Arial, sans-serif;
     font-weight:normal;
     font-style:normal;
-    background-color: white;
     height: 100%;  
     display: flex;
     flex-flow: column;
+    background: #ad9684;
 }
 
 #main_col .row .col {
@@ -1117,7 +1117,7 @@ footer .row {
 }
 
 #event_id_main {
-    background-color: white;
+    background-color: #ad9684;
     color:black;
     padding-top: 30px;
     text-align: center;
@@ -2208,4 +2208,32 @@ a, a:hover, a:focus, a:active {
     font-family: 'LinBiolinum', Arial, sans-serif;
     font-weight:normal;
     font-style:normal;
+}
+
+#event-main-block {
+
+    font-family: 'Rockville', Arial, sans-serif;
+    padding-top: 200px;
+    font-style:normal;
+    font-weight:normal;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#event-main-block a {
+
+    border: black;
+    border-radius: 10px;
+    background: #917a69;
+}
+
+#event-main-block h2 {
+
+    font-size: 50px;
+}
+
+#event-main-block h3 {
+
+    font-size: 45px;
 }

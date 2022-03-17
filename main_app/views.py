@@ -1,3 +1,5 @@
+import os
+
 from django.contrib import messages
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.staticfiles.storage import staticfiles_storage
@@ -12,6 +14,7 @@ from django.template.loader import render_to_string
 from django.templatetags import static
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
+from bet_klax import settings
 from bet_klax.settings import EMAIL_HOST_USER, STATICFILES_DIRS
 from .models import User, Bets, StoreBets, Event, EventsRegistration, AllosRegistration, Allos
 from .forms import UserForm, AddBetForm, AddEventForm, AlloAdminForm
@@ -98,9 +101,12 @@ def activate(request, uidb64, token):
 
 def home(request):
     players = User.objects.all()
-    data = {'players': players}
+    try:
+        last_events = Event.objects.filter(visible=True, closed_event=False).last()
+    except Event.DoesNotExist:
+        last_events = None
 
-    return render(request, 'home.html', data)
+    return render(request, 'home.html', {'players': players, 'event': last_events})
 
 
 def homeBetKlax(request):
@@ -310,12 +316,21 @@ def addGains(request, id_bet, gains):
             this_bet = None
 
         if current_user.klax_coins >= Decimal(abs(gains)) and this_bet is not None:
-            bet.gains += Decimal(abs(gains))
+            if bet.gains + Decimal(abs(gains)) > 9999999999.99:
+                bet.gains = Decimal(9999999999.99)
+            else:
+                bet.gains += Decimal(abs(gains))
             bet.save()
             if bet.result == 'W':
-                this_bet.win_gains += Decimal(abs(gains))
+                if this_bet.win_gains + Decimal(abs(gains)) > 9999999999.99:
+                    this_bet.win_gains = Decimal(9999999999.99)
+                else:
+                    this_bet.win_gains += Decimal(abs(gains))
             elif bet.result == 'L':
-                this_bet.lose_gains += Decimal(abs(gains))
+                if this_bet.lose_gains + Decimal(abs(gains)) > 9999999999.99:
+                    this_bet.lose_gains = Decimal(9999999999.99)
+                else:
+                    this_bet.lose_gains += Decimal(abs(gains))
 
             this_bet.save()
 
@@ -541,12 +556,17 @@ def readFileForHTML(file_name):
     return toReturn
 
 
-def eventHTML(request, event_name):
-    if event_name is not None:
+def eventHTML(request, id_event):
+    try:
+        this_event = Event.objects.get(pk=id_event)
+    except Event.DoesNotExist:
+        this_event = None
 
-        # infos = readFileForHTML('./static/events/' + event_name + '.txt')
+    if this_event is not None:
 
-        return render(request, 'events/eventPresentation.html', {'event': event_name})
+        infos = readFileForHTML('/var/www/bet_klax/static/events/' + this_event.event_name + '.txt')
+
+        return render(request, 'events/eventPresentation.html', {'event': this_event, 'infos': infos})
     else:
         messages.error(request, "Erreur lors de l'envoie de la requête")
 
@@ -662,7 +682,7 @@ def liste(request):
 
 
 def klaxment(request):
-    userList = User.objects.filter(is_staff=False, is_superuser=False, from_list=False).order_by('-klax_coins')
+    userList = User.objects.filter(is_staff=False, is_superuser=False, from_list=False, activate=True).order_by('-klax_coins')
     data = {'userList': userList}
 
     return render(request, 'nav_links/klaxment.html', data)
@@ -1006,6 +1026,38 @@ def staff(request):
         return render(request, 'staff.html', {'user': user})
     else:
         messages.error(request, "Vous devez être staff")
+
+
+def suUsers(request):
+    try:
+        user = User.objects.get(pk=request.user.id)
+    except User.DoesNotExist:
+        user = None
+
+    if user is not None:
+        try:
+            registered = User.objects.filter(from_list=False)
+        except User.DoesNotExist:
+            registered = None
+
+        try:
+            from_list = User.objects.filter(from_list=True, is_superuser=False, is_staff=False)
+        except User.DoesNotExist:
+            from_list = None
+
+        try:
+            staff_list = User.objects.filter(is_staff=True, is_superuser=False)
+        except User.DoesNotExist:
+            staff_list = None
+
+        try:
+            su_list = User.objects.filter(is_superuser=True)
+        except User.DoesNotExist:
+            su_list = None
+
+        return render(request, "staffUsers.html", {"user": user, "registered": registered, "from_list": from_list, "staff_list": staff_list, "su_list": su_list})
+    else:
+        messages.error(request, "Vous devez être connecté")
 
 
 def goals(request):

@@ -25,6 +25,12 @@
               </a>
           </div>
           <br>
+          <div class="row">
+              <a class="col" id="left" href="{% url "suUsers" %}">
+                  <h2 style="color: white">Les Inscrits</h2>
+              </a>
+          </div>
+          <br>
           {% if user.is_superuser %}
               <div class="row">
                   <a class="col" id="left" href="{% url "suBets" %}">
