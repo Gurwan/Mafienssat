@@ -1039,6 +1039,12 @@ footer .row {
     .nav div.media_button {
         display: block;
     }
+
+    .nav .dropdown-content {
+        position: absolute;
+        bottom: 50px;
+        right: 50px;
+    }
 }
 /* Animation */
 /* Inspiration taken from Dicson https://codemyui.com/simple-hamburger-menu-x-mark-animation/ */
