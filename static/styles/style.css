@@ -75,7 +75,7 @@ body {
 #klaxment_list h5 {
     font-size: 34px;
     text-transform: uppercase;
-    margin-bottom: 0;
+    margin-bottom: 20px;
 }
 
 .sector_span {
@@ -216,12 +216,12 @@ body {
     
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1330px) {
     #pub_id_klaxment {
         display: none;
     }
     
-    .col-9 {
+    .col-10 {
         flex: 0 0 auto!important;
         width: 100%!important;
     }
@@ -285,6 +285,8 @@ body {
     font-style:normal;
     font-size: 110px;
     margin-top: 20px;
+    margin-right: 0!important;
+    padding-right: 0!important;
 }
 
 #liste_off {
@@ -1325,7 +1327,7 @@ a, a:hover, a:focus, a:active {
     font-weight:normal;
     font-style:normal;
     font-size: 80px;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
 }
 
 .arced span {
