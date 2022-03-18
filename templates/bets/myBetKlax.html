@@ -89,7 +89,7 @@
                             {% endif %}
                         {% else %}
                             <p>Résultat</p>
-                            {% if bet.result == 'W' %}
+                            {% if bet.bet_id.result == 'W' %}
                                 <p><span>{{ bet.bet_id.win_name }} : <br> {{ bet.bet_id.win_rate }}</span> </p>
                                 <p>{{ bet.bet_id.lose_name }} : <br> {{ bet.bet_id.lose_rate }} </p>
                             {% else %}
