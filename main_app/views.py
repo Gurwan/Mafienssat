@@ -700,6 +700,29 @@ def deleteEvent(request, id_event):
     return redirect("suEvents")
 
 
+def suCheckEvent(request, id_event):
+    try:
+        user = User.objects.get(pk=request.user.id)
+    except User.DoesNotExist:
+        user = None
+
+    try:
+        evt = Event.objects.get(pk=id_event)
+    except Bets.DoesNotExist:
+        evt = None
+
+    if user is not None and evt is not None:
+
+        try:
+            events = EventsRegistration.objects.filter(event_id_id=id_event)
+        except StoreBets.DoesNotExist:
+            events = None
+
+        return render(request, "events/suCheckEvent.html", {"user": user, "event": evt, "events": events})
+    else:
+        messages.error(request, "Vous devez être connecté")
+
+
 def liste(request):
     return render(request, 'nav_links/liste.html')
 
