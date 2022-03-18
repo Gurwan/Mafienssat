@@ -1,0 +1,18 @@
+{% extends 'main.html' %}
+{% block content %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% include 'nav.html' %}
+{% if user.is_superuser and event %}
+    <div class="container">
+        <h1 style="text-align: center; margin-top:20px">Event {{ event.event_name }}</h1>
+
+        <h1 style="text-align: center; margin-top:20px">Liste des inscrits</h1>
+        {% for user in registered %}
+            <p>{{ user.id }} : {{ user.first_name }} {{ user.last_name }}, {{ user.email }}</p> <br>
+        {% endfor %}
+    </div>
+    <br><br><br><br>
+{% endif %}
+{% endblock %}

@@ -69,6 +69,7 @@ urlpatterns = [
     path("staff/betSuperUser/deleteBet/<int:id_bet>/", views.deleteBet, name="deleteBet"),
     path("staff/betSuperUser/sendBetsKalxcoins/[<int:id_bet>, <str:result_bet>]/", views.sendBetsKalxcoins, name="sendBetsKalxcoins"),
     path("staff/eventSuperUser/", views.suEvents, name="suEvents"),
+    path("staff/betSuperUser/suCheckEvent/<int:id_event>/", views.suCheckEvent(), name="suCheckEvent"),
     path("staff/eventSuperUser/closeEvent/<int:id_event>/", views.closeEvent, name="closeEvent"),
     path("staff/betSuperUser/deleteEvent/<int:id_event>/", views.deleteEvent, name="deleteEvent"),
     path("staff/alloSuperUser/", views.suAllos, name="suAllos"),
