@@ -61,9 +61,9 @@
                         <h5>Fini le {{bet.bet_id.ended | date:"d"}} {{bet.bet_id.ended  | date:"F"}} {{bet.bet_id.ended  | date:"o"}} à {{bet.bet_id.ended | date:"H"}}h{{bet.bet_id.ended | date:"i"}}</h5>
                         <p>Mise totale : <span>{{ bet.gains }} </span> <img class="img-fluid" height="30" width="30" src="{% static 'klax_or.png' %}" alt=""/></p>
                         {% if bet.result == 'W' %}
-                                <p>Sur la côte {{ bet.bet_id.win_name }} : <br> <span>{{ bet.bet_id.win_rate }}</span> </p>
+                                <p>Sur la côte {{ bet.bet_id.win_name }} : <br> <span>{{ bet.bet_rate }}</span> </p>
                         {% else %}
-                                <p>Sur la côte {{ bet.bet_id.lose_name }} : <br> <span>{{ bet.bet_id.lose_rate }}</span> </p>
+                                <p>Sur la côte {{ bet.bet_id.lose_name }} : <br> <span>{{ bet.bet_rate }}</span> </p>
                         {% endif %}
                     </div>
                 {% endfor %}
@@ -83,15 +83,15 @@
                         {% if not bet.final_result %}
                             <p>En attente des résultats</p>
                             {% if bet.result == 'W' %}
-                                <p>Sur la côte {{ bet.bet_id.win_name }} : <br> <span>{{ bet.bet_id.win_rate }}</span> </p>
+                                <p>Sur la côte {{ bet.bet_id.win_name }} : <br> <span>{{ bet.bet_rate }}</span> </p>
                             {% else %}
-                                <p>Sur la côte {{ bet.bet_id.lose_name }} : <br> <span>{{ bet.bet_id.lose_rate }}</span> </p>
+                                <p>Sur la côte {{ bet.bet_id.lose_name }} : <br> <span>{{ bet.bet_rate }}</span> </p>
                             {% endif %}
                         {% else %}
                             <p>Résultat</p>
                             {% if bet.bet_id.result == 'W' %}
-                                <p><span>{{ bet.bet_id.win_name }} : <br> {{ bet.bet_id.win_rate }}</span> </p>
-                                <p>{{ bet.bet_id.lose_name }} : <br> {{ bet.bet_id.lose_rate }} </p>
+                                <p><span>{{ bet.bet_id.win_name }} : <br> {{ bet.bet_rate }}</span> </p>
+                                <p>{{ bet.bet_id.lose_name }} : <br> {{ bet.bet_rate }} </p>
                             {% else %}
                                 <p>{{ bet.bet_id.win_name }} : <br> {{ bet.bet_id.win_rate }} </p>
                                 <p><span>{{ bet.bet_id.lose_name }} : <br> {{ bet.bet_id.lose_rate }}</span> </p>

@@ -423,12 +423,12 @@ def closeBet(request, id_bet):
         bet.save()
 
         for b in bets:
-            b.blocked_bet = True
-            b.closed_bet = True
-            if b.RESULT == 'W':
-                b.bet_rate = bet.win_rate
-            else:
-                b.bet_rate = bet.lose_rate
+            if not b.blocked_bet:
+                b.blocked_bet = True
+                if b.result == 'W':
+                    b.bet_rate = bet.win_rate
+                else:
+                    b.bet_rate = bet.lose_rate
 
             b.closed_bet = True
             b.save()
@@ -454,10 +454,10 @@ def sendBetsKalxcoins(request, id_bet, result_bet):
 
             for b in bets:
                 if result_bet == "W" and b.result == 'W':
-                    b.user_id.klax_coins += bet.win_rate * b.gains
+                    b.user_id.klax_coins += b.bet_rate * b.gains
                     b.final_result = 'W'
                 elif result_bet == "L" and b.result == 'L':
-                    b.user_id.klax_coins += bet.lose_rate * b.gains
+                    b.user_id.klax_coins += b.bet_rate * b.gains
                     b.final_result = 'W'
                 else:
                     b.final_result = 'L'
