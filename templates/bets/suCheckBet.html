@@ -11,14 +11,14 @@
         <h1 style="text-align: center; margin-top:20px">{{ bet.win_name }} à {{ bet.win_rate }}</h1>
         {% for b in user_bets %}
             {% if b.result == 'W' %}
-                <p>{{ b.user_id.id }} : {{ b.user_id.first_name }} {{ b.user_id.last_name }}, {{ b.user_id.sector }} send {{ b.gains }} | bloqué ? {{ b.blocked_bets }}</p> <br>
+                <p>{{ b.user_id.id }} : {{ b.user_id.first_name }} {{ b.user_id.last_name }}, {{ b.user_id.sector }} send {{ b.gains }} | bloqué ? {{ b.blocked_bet }}</p> <br>
             {% endif %}
         {% endfor %}
 
         <h1 style="text-align: center; margin-top:20px">{{ bet.lose_name }} à {{ bet.lose_rate }}</h1>
         {% for b in user_bets %}
             {% if b.result == 'L' %}
-                <p>{{ b.user_id.id }} : {{ b.user_id.first_name }} {{ b.user_id.last_name }}, {{ b.user_id.sector }} send {{ b.gains }} | bloqué ? {{ b.blocked_bets }}</p> <br>
+                <p>{{ b.user_id.id }} : {{ b.user_id.first_name }} {{ b.user_id.last_name }}, {{ b.user_id.sector }} send {{ b.gains }} | bloqué ? {{ b.blocked_bet }}</p> <br>
             {% endif %}
         {% endfor %}
     </div>
