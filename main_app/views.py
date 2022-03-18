@@ -729,7 +729,11 @@ def liste(request):
 
 def klaxment(request):
     userList = User.objects.filter(is_staff=False, is_superuser=False, from_list=False, activate=True).order_by('-klax_coins')
-    data = {'userList': userList}
+    try:
+        user = User.objects.get(pk=request.user.id)
+    except User.DoesNotExist:
+        user = None
+    data = {'userList': userList,'user': user}
 
     return render(request, 'nav_links/klaxment.html', data)
 
