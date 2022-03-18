@@ -80,7 +80,11 @@
                         <h3>{{ bet.bet_id.bet_name }}</h3>
                         <h5>Fini le {{bet.bet_id.ended | date:"d"}} {{bet.bet_id.ended  | date:"F"}} {{bet.bet_id.ended  | date:"o"}} à {{bet.bet_id.ended | date:"H"}}h{{bet.bet_id.ended | date:"i"}}</h5>
                         <p>Mise totale : <span>{{ bet.gains }} </span> <img class="img-fluid" height="30" width="30" src="{% static 'klax_or.png' %}" alt=""/> sur la côte :</p>
-                        <p>{{ bet.result }}</p>
+                        {% if bet.result == 'W' %}
+                            <p>{{ bet.bet_id.win_name }}</p>
+                        {% else %}
+                            <p>{{ bet.bet_id.lose_name }}</p>
+                        {% endif %}
                         {% if not bet.final_result %}
                             <p>En attente des résultats</p>
                             {% if bet.result == 'W' %}
