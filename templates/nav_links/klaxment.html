@@ -15,6 +15,8 @@
                     <h4><span id="third-span">Troisième place </span> {{ user.username }} <span class="sector_span">({{ user.get_sector_display }})</span> : {{user.klax_coins}} <img class="img-fluid" height="75" width="75" src="{% static 'klax_bronze.png' %}" alt=""/></h4>
                 {% elif forloop.counter <= 10 %}
                     <h5><span id="after-span">{{forloop.counter}}ème place </span> {{ user.username }} <span class="sector_span">({{ user.get_sector_display }})</span> : {{user.klax_coins}}</h5>
+                {% elif user.username == pseudo %}
+                    <h5><span id="after-span">{{forloop.counter}}ème place </span> {{ user.username }} <span class="sector_span">({{ user.get_sector_display }})</span> : {{user.klax_coins}}</h5>
                 {% endif %}
             {% endfor %}
         </div>
