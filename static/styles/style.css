@@ -46,23 +46,23 @@ body {
 }
 
 #klaxment_list span {
-    color: #F9E211; /*rgb(209,155,13,255);*/
+    /*color: #F9E211; rgb(209,155,13,255);*/
     padding-right: 20px;
 }
 
-#klaxment_list span #first-span {
+#first-span {
     color: #FFD700!important;
 }
 
-#klaxment_list span #second-span {
+#second-span {
     color: #C0C0C0!important;
 }
 
-#klaxment_list span #third-span {
+#third-span {
     color: #CD7F32!important;
 }
 
-#klaxment_list span #after-span {
+#after-span {
     color: black!important;
 }
 
