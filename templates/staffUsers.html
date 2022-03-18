@@ -9,7 +9,7 @@
     <div class="container">
         <h1 style="text-align: center; margin-top:20px">Tous les Users</h1>
         {% for user in registered %}
-            <p>{{ user.id }} : {{ user.first_name }} {{ user.last_name }}, {{ user.sector }} {{ user.email }}  {{ user.klax_coins }}</p> <br>
+            <p>{{ user.id }} : {{ user.first_name }} {{ user.last_name }} alias {{ user.username }}, {{ user.sector }} {{ user.email }}  {{ user.klax_coins }}</p> <br>
         {% endfor %}
     <br><br>
         <h1 style="text-align: center; margin-top:20px">Tous les membres de la Liste</h1>
