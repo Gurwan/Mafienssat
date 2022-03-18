@@ -733,7 +733,7 @@ def klaxment(request):
         user = User.objects.get(pk=request.user.id)
     except User.DoesNotExist:
         user = None
-    data = {'userList': userList,'user': user}
+    data = {'userList': userList,'pseudo': user.username}
 
     return render(request, 'nav_links/klaxment.html', data)
 
