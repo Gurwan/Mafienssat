@@ -5,7 +5,7 @@
 {% bootstrap_javascript %}
 {% include 'nav.html' %}
 {% if user.is_staff %}
-    <div class="container-fluid"> <!-- Todo Faire en sorte de ne pas voir le lien hypertext-->
+    <div class="container-fluid">
       <div id="main_col" style="margin-top: 40px;">
           <div class="row">
               <a class="col" id="left" href="{% url "betCreator" %}">

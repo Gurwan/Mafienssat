@@ -74,7 +74,8 @@ def registerUser(request):
                 user_email = user.email
                 send_mail(subject, message, EMAIL_HOST_USER, [user_email])
 
-                return HttpResponse('<h2 style="color:rgb(165, 1, 1);">Please confirm your email address to complete the registration. After that go back to the website to login!</h2>')
+                return HttpResponse(
+                    '<h2 style="color:rgb(165, 1, 1);">Please confirm your email address to complete the registration. After that go back to the website to login!</h2>')
             else:
                 messages.error(request, "Vous devez utiliser votre adresse mail enssat")
 
@@ -728,14 +729,15 @@ def liste(request):
 
 
 def klaxment(request):
-    userList = User.objects.filter(is_staff=False, is_superuser=False, from_list=False, activate=True).order_by('-klax_coins')
+    userList = User.objects.filter(is_staff=False, is_superuser=False, from_list=False, activate=True).order_by(
+        '-klax_coins')
     try:
         user = User.objects.get(pk=request.user.id)
         pseudo = user.username
     except User.DoesNotExist:
         user = None
         pseudo = ""
-    data = {'userList': userList,'pseudo': pseudo}
+    data = {'userList': userList, 'pseudo': pseudo}
 
     return render(request, 'nav_links/klaxment.html', data)
 
@@ -750,25 +752,25 @@ def homeAllos(request):
 
 
 def checkAlloRegistration(registered, allo_type):
-    if allo_type == "A": # Bière
+    if allo_type == "A":  # Bière
         return False
-    elif allo_type == "B": # Gouterç-
+    elif allo_type == "B":  # Gouterç-
         return registered[1]
-    elif allo_type == "C": # p'tit dej
+    elif allo_type == "C":  # p'tit dej
         return False
-    elif allo_type == "D": # Ménage
+    elif allo_type == "D":  # Ménage
         return registered[3]
-    elif allo_type == "E": # Car wash
+    elif allo_type == "E":  # Car wash
         return registered[4]
-    elif allo_type == "F": # Klaxeur
+    elif allo_type == "F":  # Klaxeur
         return registered[5]
-    elif allo_type == "G": # Cuisine
+    elif allo_type == "G":  # Cuisine
         return registered[6]
-    elif allo_type == "H": # Courses
+    elif allo_type == "H":  # Courses
         return registered[7]
-    elif allo_type == "I": # Allo semaine
+    elif allo_type == "I":  # Allo semaine
         return registered[8]
-    elif allo_type == "K": # Allo surprise
+    elif allo_type == "K":  # Allo surprise
         return registered[9]
     else:
         return True
@@ -790,7 +792,6 @@ def allos(request):
             ids = []
             registered = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             for a in registered_allo:
-
                 ids.append(a.allo_id.id)
 
             unregistered_allos = Allos.objects.exclude(id__in=ids)
@@ -801,6 +802,7 @@ def allos(request):
         unregistered_allos = Allos.objects.all()
 
     return render(request, 'allos/allos.html', {'user': user, 'allos': unregistered_allos})
+
 
 '''
     try:
@@ -958,6 +960,33 @@ def alloRegistration(request, id_allo):
         messages.error(request, "Vous devez être connecté")
 
 
+def fillAllos(all_allos):
+    toReturn = [[],[],[],[],[],[],[],[],[],[]]
+    for allo in all_allos:
+        if allo.allo_id.allo_type == "A":
+            toReturn[0].append(allo)
+        elif allo.allo_id.allo_type == "B":
+            toReturn[1].append(allo)
+        elif allo.allo_id.allo_type == "C":
+            toReturn[2].append(allo)
+        elif allo.allo_id.allo_type == "D":
+            toReturn[3].append(allo)
+        elif allo.allo_id.allo_type == "E":
+            toReturn[4].append(allo)
+        elif allo.allo_id.allo_type == "F":
+            toReturn[5].append(allo)
+        elif allo.allo_id.allo_type == "G":
+            toReturn[6].append(allo)
+        elif allo.allo_id.allo_type == "H":
+            toReturn[7].append(allo)
+        elif allo.allo_id.allo_type == "I":
+            toReturn[8].append(allo)
+        elif allo.allo_id.allo_type == "K":
+            toReturn[9].append(allo)
+
+    return toReturn
+
+
 def alloRequested(request):
     try:
         user = User.objects.get(pk=request.user.id)
@@ -965,8 +994,10 @@ def alloRequested(request):
         user = None
 
     if user is not None:
-        all_request = AllosRegistration.objects.filter(made=False)
-        done_allos = AllosRegistration.objects.filter(made=True)
+        all_request_db = AllosRegistration.objects.filter(made=False)
+        done_allos_db = AllosRegistration.objects.filter(made=True)
+        all_request = fillAllos(all_request_db)
+        done_allos = fillAllos(done_allos_db)
 
         return render(request, 'allos/alloRequested.html',
                       {'user': user, 'allos': all_request, 'doneAllos': done_allos})
@@ -1166,7 +1197,9 @@ def suUsers(request):
         except User.DoesNotExist:
             su_list = None
 
-        return render(request, "staffUsers.html", {"user": user, "registered": registered, "from_list": from_list, "staff_list": staff_list, "su_list": su_list})
+        return render(request, "staffUsers.html",
+                      {"user": user, "registered": registered, "from_list": from_list, "staff_list": staff_list,
+                       "su_list": su_list})
     else:
         messages.error(request, "Vous devez être connecté")
 
