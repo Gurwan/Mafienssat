@@ -1198,3 +1198,7 @@ def ourValues(request):
 
 def Chasse(request):
     return render(request, 'events/descriptions/Chasse.html')
+
+
+def Tournois(request):
+    return render(request, 'events/descriptions/Tournois.html')
