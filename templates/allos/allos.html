@@ -38,7 +38,9 @@
             </div>
         {% endif %}
     {% endfor %}
-    <h3 id="end_allo">C'est fini pour le moment ! On revient vite pour vous proposer nos services</h3>
+    {% if not allos %}
+        <h3 id="end_allo">C'est fini pour le moment ! On revient vite pour vous proposer nos services</h3>
+    {% endif %}
     <div id="vote_mafienssat_event">
         <p style="text-align:center; margin:0; color:black">Votez Mafienssat !</p>
     </div>
