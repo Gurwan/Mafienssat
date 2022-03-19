@@ -13,12 +13,12 @@
             {% if allo.take_over %}
                 {% if not allo.made %}
 
-                    <a class="button_take_over" href="{% url "finalizeAllo" id_finalized_allo=allo.id %}" id="finalizeAllo{{ allo.id }}">
+                    <a class="button_take_over" style="color: #e62e00" href="{% url "finalizeAllo" id_finalized_allo=allo.id %}" id="finalizeAllo{{ allo.id }}">
                         Mettre ce allo terminé
                     </a>
                 {% endif %}
             {% else %}
-                <a class="button_take_over" href="{% url "alloEmailConfirmation" id_allo=allo.id %}" id="alloEmailConfirmation{{ allo.id }}">
+                <a class="button_take_over" style="color: #e62e00" href="{% url "alloEmailConfirmation" id_allo=allo.id %}" id="alloEmailConfirmation{{ allo.id }}">
                     Envoyer la confirmation par mail
                 </a> <br>
             {% endif %}
