@@ -21,9 +21,10 @@ urlpatterns = [
 
         # Event
     path("event/", views.event, name="event"),
-    path("event/Chasse_au_tresor/", views.Chasse, name="Chasse"),
     path("event/eventRegistration/<int:event_id>/", views.eventRegistration, name="eventRegistration"),
     path("event/eventUnregistration/<int:event_id>/", views.eventUnregistration, name="eventUnregistration"),
+    path("event/Chasse_au_tresor/", views.Chasse, name="Chasse"),
+    path("event/Tournois_des_foufous/", views.Tournois, name="Tournois"),
 
         # Liste
     path("liste/", views.liste, name="liste"),

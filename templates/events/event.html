@@ -117,7 +117,11 @@
         while(i<sizeEvents){
             if(allEvent[i].id === 'Chasse aux trésors'){
                 document.getElementById('Chasse aux trésors').href = '{% url "Chasse" %}';
-            } else {
+            }
+            else if(allEvent[i].id === 'Tournois des foufous'){
+                document.getElementById('Tournois des foufous').href = '{% url "Tournois" %}';
+            }
+            else {
                 //mettre les autres cas possible
             }
             i = i + 1;
