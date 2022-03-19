@@ -749,6 +749,31 @@ def homeAllos(request):
     return render(request, 'allos/homeAllos.html', {'user': user})
 
 
+def checkAlloRegistration(registered, allo_type):
+    if allo_type == "A": # Bière
+        return False
+    elif allo_type == "B": # Gouterç-
+        return registered[1]
+    elif allo_type == "C": # p'tit dej
+        return False
+    elif allo_type == "D": # Ménage
+        return registered[3]
+    elif allo_type == "E": # Car wash
+        return registered[4]
+    elif allo_type == "F": # Klaxeur
+        return registered[5]
+    elif allo_type == "G": # Cuisine
+        return registered[6]
+    elif allo_type == "H": # Courses
+        return registered[7]
+    elif allo_type == "I": # Allo semaine
+        return registered[8]
+    elif allo_type == "K": # Allo surprise
+        return registered[9]
+    else:
+        return True
+
+
 def allos(request):
     try:
         user = User.objects.get(pk=request.user.id)
@@ -763,6 +788,35 @@ def allos(request):
 
         if registered_allo is not None:
             ids = []
+            registered = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            for a in registered_allo:
+
+                ids.append(a.allo_id.id)
+
+            unregistered_allos = Allos.objects.exclude(id__in=ids)
+
+        else:
+            unregistered_allos = Allos.objects.all()
+    else:
+        unregistered_allos = Allos.objects.all()
+
+    return render(request, 'allos/allos.html', {'user': user, 'allos': unregistered_allos})
+
+'''
+    try:
+        user = User.objects.get(pk=request.user.id)
+    except User.DoesNotExist:
+        user = None
+
+    if user is not None:
+        try:
+            registered_allo = AllosRegistration.objects.filter(user_id=user)
+        except AllosRegistration.DoesNotExist:
+            registered_allo = None
+
+        if registered_allo is not None:
+            ids = []
+            registered = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             for a in registered_allo:
                 ids.append(a.allo_id.id)
 
@@ -774,6 +828,7 @@ def allos(request):
         unregistered_allos = Allos.objects.all()
 
     return render(request, 'allos/allos.html', {'user': user, 'allos': unregistered_allos})
+    '''
 
 
 def myAllos(request):
@@ -1049,6 +1104,10 @@ def getAlloSentenceType(allo_type, date):
         return "On t'apporte le petit plat du chef le " + date + "."
     elif allo_type == "H":
         return "On s'occupe de t'apporter tes courses pour le " + date + "."
+    elif allo_type == "I":
+        return "C'est l'heure du rendez-vous hebdomadaire, on se retrouve le " + date + "."
+    elif allo_type == "K":
+        return "Eh psssst ! On a un truc pour toi le " + date + "."
     else:
         return ""
 
@@ -1138,4 +1197,4 @@ def ourValues(request):
 
 
 def Chasse(request):
-    return render(request, 'events/Chasse.html')
+    return render(request, 'events/descriptions/Chasse.html')
