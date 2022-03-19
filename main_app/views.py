@@ -103,11 +103,11 @@ def activate(request, uidb64, token):
 def home(request):
     players = User.objects.all()
     try:
-        last_events = Event.objects.filter(visible=True, closed_event=False).last()
+        last_events = Event.objects.filter(visible=True, closed_event=False).order_by("-id")[:3]
     except Event.DoesNotExist:
         last_events = None
 
-    return render(request, 'home.html', {'players': players, 'event': last_events})
+    return render(request, 'home.html', {'players': players, 'events': last_events})
 
 
 def homeBetKlax(request):
