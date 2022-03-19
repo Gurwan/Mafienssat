@@ -9,27 +9,32 @@
     <div class="container"> <!-- Todo Faire en sorte de ne plus voirle lien hypertext -->
         <h1 style="text-align: center; margin-top:20px">Les allos à approuver</h1>
         {% for allo in allos %}
-            <small>{{ allo.allo_id.get_allo_type_display }} pour {{ allo.user_id.first_name }} {{ allo.user_id.last_name }} le {{allo.date | date:"d"}} {{allo.date  | date:"F"}} {{allo.date  | date:"o"}} à {{allo.date | date:"H"}}h{{allo.date | date:"i"}}</small> <br>
-            {% if allo.take_over %}
-                {% if not allo.made %}
-
-                    <a class="button_take_over" style="color: #e62e00" href="{% url "finalizeAllo" id_finalized_allo=allo.id %}" id="finalizeAllo{{ allo.id }}">
-                        Mettre ce allo terminé
-                    </a>
+            <div id="item_backoffice">
+                <p>{{ allo.allo_id.get_allo_type_display }} pour {{ allo.user_id.first_name }} {{ allo.user_id.last_name }} le {{allo.date | date:"d"}} {{allo.date  | date:"F"}} {{allo.date  | date:"o"}} à {{allo.date | date:"H"}}h{{allo.date | date:"i"}}</p> 
+                {% if allo.take_over %}
+                    {% if not allo.made %}
+    
+                        <a class="button_take_over" style="color: #e62e00" href="{% url "finalizeAllo" id_finalized_allo=allo.id %}" id="finalizeAllo{{ allo.id }}">
+                            Mettre ce allo terminé
+                        </a>
+                    {% endif %}
+                {% else %}
+                    <a class="button_take_over" style="color: #e62e00" href="{% url "alloEmailConfirmation" id_allo=allo.id %}" id="alloEmailConfirmation{{ allo.id }}">
+                        Envoyer la confirmation par mail
+                    </a> 
                 {% endif %}
-            {% else %}
-                <a class="button_take_over" style="color: #e62e00" href="{% url "alloEmailConfirmation" id_allo=allo.id %}" id="alloEmailConfirmation{{ allo.id }}">
-                    Envoyer la confirmation par mail
-                </a> <br>
-            {% endif %}
-            <br><br>
+                
+            </div>
+            
         {% endfor %}
     </div>
 
     <div class="container">
         <h1 style="text-align: center; margin-top:20px">Les allos réalisés</h1>
         {% for allo in doneAllos %}
-            <small>{{ allo.allo_id.get_allo_type_display }} pour {{ allo.user_id.first_name }} {{ allo.user_id.last_name }} le {{allo.date | date:"d"}} {{allo.date  | date:"F"}} {{allo.date  | date:"o"}} à {{allo.date | date:"H"}}h{{allo.date | date:"i"}}</small> <br> <br>
+            <div id="item_backoffice">
+                <p>{{ allo.allo_id.get_allo_type_display }} pour {{ allo.user_id.first_name }} {{ allo.user_id.last_name }} le {{allo.date | date:"d"}} {{allo.date  | date:"F"}} {{allo.date  | date:"o"}} à {{allo.date | date:"H"}}h{{allo.date | date:"i"}}</p>  
+            </div>
         {% endfor %}
     </div>
 {% endif %}
