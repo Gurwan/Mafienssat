@@ -163,7 +163,7 @@ body {
         font-size: 20px;
     }
     .arced {
-        font-size: 45px!important;
+        font-size: 35px!important;
     }
 }
 
@@ -187,7 +187,7 @@ body {
         font-size: 15px;
     }
     .arced {
-        font-size: 37px!important;
+        font-size: 30px!important;
     }
 }
 
@@ -210,7 +210,7 @@ body {
         font-size: 15px;
     }
     .arced {
-        font-size: 37px!important;
+        font-size: 30px!important;
     }
 
     #klaxment_list span {
@@ -1202,10 +1202,13 @@ footer .row {
     }
 }
 
-@media screen and (max-width: 380px){
+@media screen and (max-width: 300px) {
     #pub_id_main {
         display: none;
     }
+}
+
+@media screen and (max-width: 380px){
     #event_id_main {
         width: 100%!important;
         margin: 0;
@@ -1617,6 +1620,12 @@ a, a:hover, a:focus, a:active {
         border-top: 5px solid black;
         border-bottom: 5px solid black;
     }
+
+    #next-event-object #description_event p {
+        font-family: 'LinBiolinum', Arial, sans-serif!important;
+        font-size: 30px!important;
+        text-align: center;
+    }
     
     .logo_loco {
         position: absolute;
@@ -1659,6 +1668,12 @@ a, a:hover, a:focus, a:active {
         border-top: 5px solid black;
         border-bottom: 5px solid black;
     }
+
+    #next-event-object #description_event p {
+        font-family: 'LinBiolinum', Arial, sans-serif!important;
+        font-size: 25px!important;
+        text-align: center;
+    }
     
     .logo_loco {
         position: absolute;
@@ -1685,6 +1700,52 @@ a, a:hover, a:focus, a:active {
     }
 }
 
+@media screen and (min-width: 650px) and (max-width: 900px){
+    #next_event_main_page #name {
+        font-size: 40px!important;
+    }
+    #next_event_main_page #date {
+        font-size: 35px!important;
+    }
+
+    #event-main-block {
+        width: 65%;
+    }
+}
+
+@media screen and (min-width: 300px) and (max-width: 650px){
+    #next_event_main_page #name {
+        font-size: 40px!important;
+    }
+    #next_event_main_page #date {
+        font-size: 35px!important;
+    }
+
+    #event-main-block {
+        width: 50%;
+    }
+
+    #pub_id_main {
+        width: 150px!important;
+        height: 562px!important;
+    }
+
+    #gif_gros_klax_id  {
+        width: 150px!important;
+        height: 562px!important;
+    }
+
+    #gif_big_klax_id {
+        width: 150px!important;
+        height: 562px!important;
+    }
+
+    #gif_chaud_klaxeurs_id {
+        width: 150px!important;
+        height: 562px!important;
+    }
+}
+
 @media screen and (max-width: 350px){
     #next-event h1 {
         text-align: center;
@@ -1700,6 +1761,12 @@ a, a:hover, a:focus, a:active {
         width: 85%;
         border-top: 5px solid black;
         border-bottom: 5px solid black;
+    }
+
+    #next-event-object #description_event p {
+        font-family: 'LinBiolinum', Arial, sans-serif!important;
+        font-size: 26px!important;
+        text-align: center;
     }
     
     .logo_loco {
@@ -2268,4 +2335,11 @@ a, a:hover, a:focus, a:active {
 #event-main-block h3 {
 
     font-size: 45px;
+}
+
+@media screen and (max-width: 300px) {
+    #event-main-block {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
 }

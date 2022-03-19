@@ -731,9 +731,11 @@ def klaxment(request):
     userList = User.objects.filter(is_staff=False, is_superuser=False, from_list=False, activate=True).order_by('-klax_coins')
     try:
         user = User.objects.get(pk=request.user.id)
+        pseudo = user.username
     except User.DoesNotExist:
         user = None
-    data = {'userList': userList,'pseudo': user.username}
+        pseudo = ""
+    data = {'userList': userList,'pseudo': pseudo}
 
     return render(request, 'nav_links/klaxment.html', data)
 
