@@ -2358,3 +2358,13 @@ a, a:hover, a:focus, a:active {
         padding-bottom: 20px;
     }
 }
+
+#item_backoffice {
+    background-color: rgb(0, 0, 0); 
+    margin-bottom: 5px; 
+    color:white;
+    border:1px black solid; 
+    border-radius: 25px; 
+    padding:10px;
+    text-align: center;
+}

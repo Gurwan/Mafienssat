@@ -21,13 +21,14 @@
     <h1 style="text-align: center; margin-top:20px">Événements en cours</h1>
     <div class="container">
         {% for event in events %}
-            <small>{{ event.event_name }}: fini le {{ event.event_date }} <br></small>
+          <div id="item_backoffice">
+            <p>{{ event.event_name }}: fini le {{ event.event_date }} </p>
             {% if not event.visible %}
                 <a class="row btn" style="background-color: #e62e00; padding-right: 20px" href="{% url "setVisibleEvent" id_event=event.id %}" id="setVisibleEvent{{ event.id }}">
                     Mettre en ligne cet event (irréversible)
                 </a>
             {% endif %}
-            <br>
+          </div>
         {% endfor %}
     </div>
 {% endif %}

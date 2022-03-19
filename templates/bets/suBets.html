@@ -10,33 +10,44 @@
         {% for bet in bets %}
             <a style="font-family: Arial,sans-serif" href="{% url "suCheckBet" id_bet=bet.id %}">
                 {{ bet.bet_name }}: fini le {{bet.ended | date:"d"}} {{bet.ended  | date:"F"}} {{bet.ended  | date:"o"}} à {{bet.ended | date:"H"}}h{{bet.ended | date:"i"}}
-            </a> <br>
+            </a> 
             {% if not bet.closed_bet %}
-                <a class="row btn" style="background-color: #522699" href="{% url "closeBet" id_bet=bet.id %}" id="closeBet{{ bet.id }}">
-                    Fermer le bet
-                </a> <br>
+                <div>
+                    <a class="row btn" style="background-color: black; color:white" href="{% url "closeBet" id_bet=bet.id %}" id="closeBet{{ bet.id }}">
+                        Fermer le bet
+                    </a> 
+                </div>
+
 
             {% else %}
                 {% if bet.result %}
                     {% if bet.result == "W" %}
-                        <small>{{ bet.win_name }} ({{ bet.win_rate }})</small> <br>
+                        <p>{{ bet.win_name }} ({{ bet.win_rate }})</p> 
                     {% else %}
-                        <small>{{ bet.lose_name }} ({{ bet.lose_rate }})</small> <br>
+                        <p>{{ bet.lose_name }} ({{ bet.lose_rate }})</p> 
                     {% endif %}
                 {% else %}
-                    <small>Résultat du bet</small> <br>
-                    <a class="col btn" style="background-color: #522699" href="{% url "sendBetsKalxcoins" id_bet=bet.id result_bet='W' %}" id="sendBetsKalxcoins{{ bet.id }}">
-                        {{ bet.win_name }} ({{ bet.win_rate }})
-                    </a> <br>
-                    <a class="col btn" style="background-color: #522699" href="{% url "sendBetsKalxcoins" id_bet=bet.id result_bet='L' %}" id="sendBetsKalxcoins{{ bet.id }}">
-                        {{ bet.lose_name }} ({{ bet.lose_rate }})
-                    </a> <br>
+                    <p>Résultat du bet</p> 
+                    <div>
+                        <a class="col btn" style="background-color: black; color:white" href="{% url "sendBetsKalxcoins" id_bet=bet.id result_bet='W' %}" id="sendBetsKalxcoins{{ bet.id }}">
+                            {{ bet.win_name }} ({{ bet.win_rate }})
+                        </a> 
+                    </div>
+                    <div>
+                        <a class="col btn" style="background-color: black; color:white" href="{% url "sendBetsKalxcoins" id_bet=bet.id result_bet='L' %}" id="sendBetsKalxcoins{{ bet.id }}">
+                            {{ bet.lose_name }} ({{ bet.lose_rate }})
+                        </a> 
+                    </div>
+                    
                 {% endif %}
             {% endif %}
 
-            <a class="col btn" style="background-color: #522699" href="{% url "deleteBet" id_bet=bet.id %}" id="deleteBet{{ bet.id }}">
-                Supprimer le bet
-            </a> <br><br>
+            <div>
+                <a class="col btn" style="background-color: black; color:white" href="{% url "deleteBet" id_bet=bet.id %}" id="deleteBet{{ bet.id }}">
+                    Supprimer le bet
+                </a> 
+            </div>
+
         {% endfor %}
     </div>
 {% endif %}

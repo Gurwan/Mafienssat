@@ -8,19 +8,19 @@
     <div class="container">
         <h1 style="text-align: center; margin-top:20px">Tous les Allos</h1>
         {% for allo in allos %}
-            <small>{{ allo.get_allo_type_display }}</small> <br>
-            <small>Disponible du {{allo.start_date | date:"d"}} {{allo.start_date  | date:"F"}} {{allo.start_date  | date:"o"}} à {{allo.start_date | date:"H"}}h{{allo.start_date | date:"i"}}</small>
-            <small>au {{allo.end_date | date:"d"}} {{allo.end_date  | date:"F"}} {{allo.end_date  | date:"o"}} à {{allo.end_date | date:"H"}}h{{allo.end_date | date:"i"}}</small> <br>
-            {% if not allo.closed_allo %}
-                <a class="row btn" style="background-color: #522699" href="{% url "closeAllo" id_allo=allo.id %}" id="closeAllo{{ allo.id }}">
-                    Fermer le allo
-                </a> <br>
-            {% else %}
-                <a class="col btn" style="background-color: #522699" href="{% url "deleteAllo" id_allo=allo.id %}" id="deleteAllo{{ allo.id }}">
-                    Supprimer le allo
-                </a>
-            {% endif %}
-            <br> <br>
+            <div id="item_backoffice">
+                <p>{{ allo.get_allo_type_display }}</p> 
+                <p>Disponible du {{allo.start_date | date:"d"}} {{allo.start_date  | date:"F"}} {{allo.start_date  | date:"o"}} à {{allo.start_date | date:"H"}}h{{allo.start_date | date:"i"}} au {{allo.end_date | date:"d"}} {{allo.end_date  | date:"F"}} {{allo.end_date  | date:"o"}} à {{allo.end_date | date:"H"}}h{{allo.end_date | date:"i"}}</p> 
+                {% if not allo.closed_allo %}
+                    <a class="row btn" style="background-color: red; color:black" href="{% url "closeAllo" id_allo=allo.id %}" id="closeAllo{{ allo.id }}">
+                        Fermer le allo
+                    </a>
+                {% else %}
+                    <a class="col btn" style="background-color: red; color:black" href="{% url "deleteAllo" id_allo=allo.id %}" id="deleteAllo{{ allo.id }}">
+                        Supprimer le allo
+                    </a>
+                {% endif %}
+            </div>
         {% endfor %}
     </div>
 {% endif %}

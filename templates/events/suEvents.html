@@ -16,16 +16,19 @@
             {% endif %}
             <h3 id="date">Le {{event.event_date | date:"d"}} {{event.event_date | date:"F"}} {{event.event_date | date:"o"}} à {{event.event_date | date:"H"}}h{{event.event_date | date:"i"}}</h3>
             {% if not event.closed_event %}
-                <a class="row btn" style="background-color: #522699" href="{% url "closeEvent" id_event=event.id %}" id="closeEvent{{ event.id }}">
+                <a class="row btn" style="background-color: black; color:white"href="{% url "closeEvent" id_event=event.id %}" id="closeEvent{{ event.id }}">
                     Fermer l'event
                 </a> <br>
             {% else %}
                 <small>Fermé</small> <br>
             {% endif %}
-
-            <a class="col btn" style="background-color: #522699" href="{% url "deleteEvent" id_event=event.id %}" id="deleteEvent{{ event.id }}">
-                Supprimer l'event
-            </a> <br><br>
+                
+            <div style="margin-bottom: 15px;">
+                <a class="col btn" style="background-color: black; color:white" href="{% url "deleteEvent" id_event=event.id %}" id="deleteEvent{{ event.id }}">
+                    Supprimer l'event
+                </a>
+            </div>
+            
         {% endfor %}
     </div>
 {% endif %}
