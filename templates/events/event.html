@@ -37,9 +37,9 @@
                                 </a>
                             {% endif %}
                             {% if event.associated_html %}
-                                <a class="col btn btn_event" href="{% url "eventHTML" id_event=event.id %}">
-                                    <h5>Informations</h5>
-                                </a>
+                            <a name="html-event" id="{{ event.event_name }}" class="col btn btn_event html-event" href="#">
+                                <h5>Informations</h5>
+                            </a>
                             {% endif %}
                         {% endif %}
                     </div>
@@ -85,7 +85,7 @@
                                 </a>
                             {% endif %}
                             {% if event.associated_html %}
-                                <a name="html-event" id="{{ event.event_name }}" class="col btn btn_event" href="">
+                                <a name="html-event" id="{{ event.event_name }}" class="col btn btn_event html-event" href="#">
                                     <h5>Informations</h5>
                                 </a>
                             {% endif %}
@@ -101,32 +101,48 @@
     {% else %}
         <h1 class="no_event_registered">Aucun <span>événement</span> enregistré</h1>
     {% endif %}
-    <div id="vote_mafienssat_event">
-        <p style="text-align:center; margin:0; color:black">Votez Mafienssat !</p>
-    </div>
 {% endif %}
+<div id="vote_mafienssat_event">
+    <p style="text-align:center; margin:0; color:black">Votez Mafienssat !</p>
+</div>
 <script>
-/*
+
+    /*
     $(document).ready(function(){
         document.body.inner;
         HTML = document.body.innerHTML.replace('March', 'mars');
-        const height = document.querySelector('#event_page_id').offsetHeight;
-        if(height < 800){
-            document.getElementById("vote_mafienssat_event").style.padding = "450px 0 0 0";
-            console.log(document.getElementById("event_page_id").style.height);
-        }
+        
 
-        let events = document.getElementsByName("html-event")
 
         for(let evt in events){
 
             if(evt.name === 'Chasse au trésor'){
 
-                evt.href.replace = {% url "Chasse" %}
+                evt.href.replace = {% url "Chasse" %};
             }
         }
     });
-*/
+    */
+
+    $(document).ready(function(){
+        const height = document.querySelector('#event_page_id').offsetHeight;
+        if(height < 800){
+            document.getElementById("vote_mafienssat_event").style.padding = "450px 0 0 0";
+            console.log(document.getElementById("event_page_id").style.height);
+        }
+        let allEvent = document.getElementsByClassName("html-event");
+        let sizeEvents = allEvent.length;
+        let i = 0;
+        while(i<sizeEvents){
+            if(allEvent[i].id === 'Chasse aux trésors'){
+                document.getElementById('Chasse aux trésors').href = '{% url "Chasse" %}';
+            } else {
+                //mettre les autres cas possible
+            }
+            i = i + 1;
+        }
+    })
+
 </script>
 </div>
 {% endblock %}

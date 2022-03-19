@@ -17,7 +17,7 @@
             </div>
             {% if event %}
                 <div class="col-9" id="event-main-block">
-                    <a href="{% url "event" %}">
+                    <a id="next_event_main_page" href="{% url "event" %}">
                         <h2 id="name">{{event.event_name}}</h2>
                         <h3 id="date" style="font-size: 45px;">{{event.event_date | date:"d"}} {{event.event_date | date:"F"}} {{event.event_date | date:"o"}} à partir de {{event.event_date | date:"H"}}h{{event.event_date | date:"i"}}</h3>
                     </a>
@@ -49,6 +49,15 @@
             document.getElementById("gif_chaud_klaxeurs_id").style.display = "none";
         }
     }, 13000);
+
+    setInterval(function () {
+        var BackgroundImg=["../static/img/bannertestlittle.png",
+            "../static/img/bannertestlittle2.png",
+            "../static/img/bannertestlittle3.png",
+        ];
+        var i = Math.floor((Math.random() * 3));
+        document.getElementById("liste_id_main").style.backgroundImage = 'url("' + BackgroundImg[i] + '")';
+    }, 10000);
 </script>
 
 {% include 'footer.html' %}
