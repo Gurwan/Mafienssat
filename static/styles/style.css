@@ -2291,7 +2291,16 @@ a, a:hover, a:focus, a:active {
 
 #event_presentation p {
 
-    text-align: center;
+    font-size: 30px;
+    color: black;
+    font-family: 'LinBiolinum', Arial, sans-serif;
+    font-weight:normal;
+    font-style:normal;
+    text-align: justify;
+}
+
+#event_presentation li {
+
     font-size: 30px;
     color: black;
     font-family: 'LinBiolinum', Arial, sans-serif;
@@ -2299,14 +2308,9 @@ a, a:hover, a:focus, a:active {
     font-style:normal;
 }
 
-#event_presentation li {
+#event_presentation span {
 
-    text-align: center;
-    font-size: 30px;
-    color: black;
-    font-family: 'LinBiolinum', Arial, sans-serif;
-    font-weight:normal;
-    font-style:normal;
+    color: #e62e00;
 }
 
 #event-main-block {
