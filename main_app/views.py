@@ -1001,21 +1001,21 @@ def alloRequested(request):
         all_done = []
         for allo in all_allos:
             try:
-                tmp = AllosRegistration.objects.filter(pk=allo.id, made=False, take_over=False)
+                tmp = AllosRegistration.objects.filter(allo_id_id=allo.id, made=False, take_over=False)
             except AllosRegistration.DoesNotExist:
                 tmp = None
             if tmp is not None:
                 all_requested.append(tmp)
 
             try:
-                tmp = AllosRegistration.objects.filter(pk=allo.id, made=False, take_over=True)
+                tmp = AllosRegistration.objects.filter(allo_id_id=allo.id, made=False, take_over=True)
             except AllosRegistration.DoesNotExist:
                 tmp = None
             if tmp is not None:
                 all_take.append(tmp)
 
             try:
-                tmp = AllosRegistration.objects.filter(pk=allo.id, made=True, take_over=True)
+                tmp = AllosRegistration.objects.filter(allo_id_id=allo.id, made=True, take_over=True)
             except AllosRegistration.DoesNotExist:
                 tmp = None
             if tmp is not None:
