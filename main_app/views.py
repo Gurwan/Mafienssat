@@ -1096,7 +1096,7 @@ def getAlloSentenceType(allo_type, date):
     elif allo_type == "F":
         return "Le klaxeur fou va prendre contact avec toi pour transmettre ta missive le " + date + "."
     elif allo_type == "G":
-        return "Votre commande est bien prise en compte à mercredi !"
+        return "Votre commande est bien prise en compte. À mercredi !"
     elif allo_type == "H":
         return "On s'occupe de t'apporter tes courses pour le " + date + "."
     elif allo_type == "I":
