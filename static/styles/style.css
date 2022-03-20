@@ -1734,6 +1734,7 @@ a, a:hover, a:focus, a:active {
 
     #event-main-block {
         width: 50%;
+        padding-top: 50px!important;
     }
 
     #pub_id_main {
