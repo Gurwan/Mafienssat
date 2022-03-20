@@ -559,8 +559,8 @@ def event(request):
         for e in registered_event:
             reg_event_id.append(e.event_id.id)
         if reg_event_id:
-            events = Event.objects.exclude(id__in=reg_event_id)
-            registered_event = Event.objects.filter(id__in=reg_event_id)
+            events = Event.objects.exclude(id__in=reg_event_id).order_by("-event_date")
+            registered_event = Event.objects.filter(id__in=reg_event_id).order_by("-event_date")
     else:
         messages.error(request, "Erreur lors de l'envoie de la requête")
 
