@@ -790,7 +790,6 @@ def allos(request):
 
         if registered_allo is not None:
             ids = []
-            registered = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             for a in registered_allo:
                 ids.append(a.allo_id.id)
 
@@ -843,12 +842,9 @@ def myAllos(request):
         my_allos = AllosRegistration.objects.filter(user_id_id=user.id)
 
         all_allos = Allos.objects.filter(visible=True)
-        types = []
-        for allo in all_allos:
-            types.append(allo.allo_type)
 
         return render(request, 'allos/myAllos.html',
-                      {'user': user, 'allos': my_allos, 'allos_types': types})
+                      {'user': user, 'allos': my_allos})
     else:
         messages.error(request, "Vous devez être connecté")
 
@@ -993,14 +989,40 @@ def alloRequested(request):
     except User.DoesNotExist:
         user = None
 
-    if user is not None:
-        all_request_db = AllosRegistration.objects.filter(made=False)
-        done_allos_db = AllosRegistration.objects.filter(made=True)
-        all_request = fillAllos(all_request_db)
-        done_allos = fillAllos(done_allos_db)
+    try:
+        all_allos = Allos.objects.all()
+    except Allos.DoesNotExist:
+        all_allos = None
+
+    if user is not None and all_allos is not None:
+
+        all_requested = []
+        all_take = []
+        all_done = []
+        for allo in all_allos:
+            try:
+                tmp = AllosRegistration.objects.filter(pk=allo.id, made=False, take_over=False)
+            except AllosRegistration.DoesNotExist:
+                tmp = None
+            if tmp is not None:
+                all_requested.append(tmp)
+
+            try:
+                tmp = AllosRegistration.objects.filter(pk=allo.id, made=False, take_over=True)
+            except AllosRegistration.DoesNotExist:
+                tmp = None
+            if tmp is not None:
+                all_take.append(tmp)
+
+            try:
+                tmp = AllosRegistration.objects.filter(pk=allo.id, made=True, take_over=True)
+            except AllosRegistration.DoesNotExist:
+                tmp = None
+            if tmp is not None:
+                all_done.append(tmp)
 
         return render(request, 'allos/alloRequested.html',
-                      {'user': user, 'allos': all_request, 'doneAllos': done_allos})
+                      {'user': user, 'allos': all_requested, 'takeOver': all_take, 'doneAllos': all_done})
     else:
         messages.error(request, "Vous devez être connecté")
 

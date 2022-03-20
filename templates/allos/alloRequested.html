@@ -7,43 +7,86 @@
 {% include 'nav.html' %}
 {% if user.is_staff %}
     <div class="container">
-        <h1 style="text-align: center; margin-top:20px">Les allos à approuver</h1>
+        <h1 style="text-align: center; margin-top:20px">Les allos à confirmer</h1>
+        {% if allos %}
+            {% for allo in allos %}
+                {% for a in allo %}
+                    <div id="item_backoffice">
+                        <p>{{ a.allo_id.get_allo_type_display }} pour {{ a.user_id.first_name }} {{ a.user_id.last_name }} le {{a.date | date:"d"}} {{a.date  | date:"F"}} {{a.date  | date:"o"}} à {{a.date | date:"H"}}h{{a.date | date:"i"}}</p>
+                        {% if a.take_over %}
+                            {% if not a.made %}
 
-        {% for allo in allos %}
-            {% for a in allo %}
-                <div id="item_backoffice">
-                    <p>{{ a.allo_id.get_allo_type_display }} pour {{ a.user_id.first_name }} {{ a.user_id.last_name }} le {{a.date | date:"d"}} {{a.date  | date:"F"}} {{a.date  | date:"o"}} à {{a.date | date:"H"}}h{{a.date | date:"i"}}</p>
-                    {% if a.take_over %}
-                        {% if not a.made %}
-
-                            <a class="button_take_over" style="color: #e62e00" href="{% url "finalizeAllo" id_finalized_allo=a.id %}" id="finalizeAllo{{ a.id }}">
-                                Mettre ce allo terminé
+                                <a class="button_take_over" style="color: #e62e00" href="{% url "finalizeAllo" id_finalized_allo=a.id %}" id="finalizeAllo{{ a.id }}">
+                                    Mettre ce allo terminé
+                                </a>
+                            {% endif %}
+                        {% else %}
+                            <a class="button_take_over" style="color: #e62e00" href="{% url "alloEmailConfirmation" id_allo=a.id %}" id="alloEmailConfirmation{{ a.id }}">
+                                Envoyer la confirmation par mail
                             </a>
                         {% endif %}
-                    {% else %}
-                        <a class="button_take_over" style="color: #e62e00" href="{% url "alloEmailConfirmation" id_allo=a.id %}" id="alloEmailConfirmation{{ a.id }}">
-                            Envoyer la confirmation par mail
-                        </a>
-                    {% endif %}
-                </div>
+                    </div>
+                {% endfor %}
+                {% if allo %}
+                    <p>____________________________________</p>
+                {% endif %}
             {% endfor %}
-            {% if a %}
-                <br>
-                <p>-------------------------------------------------</p>
-                <br>
-            {% endif %}
-        {% endfor %}
-    </div>
+        {% endif %}
+    </div><br>
 
     <div class="container">
-        <h1 style="text-align: center; margin-top:20px">Les allos réalisés</h1>
-        {% for allo in doneAllos %}
-            {% for a in allo %}
-                <div id="item_backoffice">
-                    <p>{{ a.allo_id.get_allo_type_display }} pour {{ a.user_id.first_name }} {{ a.user_id.last_name }} le {{a.date | date:"d"}} {{a.date  | date:"F"}} {{a.date  | date:"o"}} à {{a.date | date:"H"}}h{{a.date | date:"i"}}</p>
-                </div>
+        <h1 style="text-align: center; margin-top:20px">Les allos à réaliser</h1>
+        {% if takeOver %}
+            {% for allo in takeOver %}
+                {% for a in allo %}
+                    <div id="item_backoffice">
+                        <p>{{ a.allo_id.get_allo_type_display }} pour {{ a.user_id.first_name }} {{ a.user_id.last_name }} le {{a.date | date:"d"}} {{a.date  | date:"F"}} {{a.date  | date:"o"}} à {{a.date | date:"H"}}h{{a.date | date:"i"}}</p>
+                        {% if a.take_over %}
+                            {% if not a.made %}
+
+                                <a class="button_take_over" style="color: #e62e00" href="{% url "finalizeAllo" id_finalized_allo=a.id %}" id="finalizeAllo{{ a.id }}">
+                                    Mettre ce allo terminé
+                                </a>
+                            {% endif %}
+                        {% else %}
+                            <a class="button_take_over" style="color: #e62e00" href="{% url "alloEmailConfirmation" id_allo=a.id %}" id="alloEmailConfirmation{{ a.id }}">
+                                Envoyer la confirmation par mail
+                            </a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                {% if allo %}
+                    <p>____________________________________</p>
+                {% endif %}
             {% endfor %}
-        {% endfor %}
+        {% endif %}
+    </div><br>
+
+    <div class="container"><h1 style="text-align: center; margin-top:20px">Les allos terminés</h1>
+        {% if doneAllos %}
+            {% for allo in doneAllos %}
+                {% for a in allo %}
+                    <div id="item_backoffice">
+                        <p>{{ a.allo_id.get_allo_type_display }} pour {{ a.user_id.first_name }} {{ a.user_id.last_name }} le {{a.date | date:"d"}} {{a.date  | date:"F"}} {{a.date  | date:"o"}} à {{a.date | date:"H"}}h{{a.date | date:"i"}}</p>
+                        {% if a.take_over %}
+                            {% if not a.made %}
+
+                                <a class="button_take_over" style="color: #e62e00" href="{% url "finalizeAllo" id_finalized_allo=a.id %}" id="finalizeAllo{{ a.id }}">
+                                    Mettre ce allo terminé
+                                </a>
+                            {% endif %}
+                        {% else %}
+                            <a class="button_take_over" style="color: #e62e00" href="{% url "alloEmailConfirmation" id_allo=a.id %}" id="alloEmailConfirmation{{ a.id }}">
+                                Envoyer la confirmation par mail
+                            </a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                {% if allo %}
+                    <p>____________________________________</p>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
     </div>
 {% endif %}
 {% endblock %}
