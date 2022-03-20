@@ -1063,9 +1063,6 @@ def sendAlloEmailConfirmation(request, date, time, allo_id):
                 'line2': '',
                 'line3': getAlloSentenceType(requested_allo.allo_id.allo_type, date_time),
                 'line4': '',
-                'line5': 'On va prendre contact avec toi incessamment sous peu.',
-                'line6': 'Si tu n\'as pas reçu de message avant le jour de ta demande, tu peux contacter ' + staff_user.first_name + ' ' + staff_user.last_name + '.',
-                'line7': '',
                 'line8': 'La bise,',
                 'line9': 'Mafienssat',
             }
@@ -1099,7 +1096,7 @@ def getAlloSentenceType(allo_type, date):
     elif allo_type == "F":
         return "Le klaxeur fou va prendre contact avec toi pour transmettre ta missive le " + date + "."
     elif allo_type == "G":
-        return "On t'apporte le petit plat du chef le " + date + "."
+        return "Votre commande est bien prise en compte à mercredi !"
     elif allo_type == "H":
         return "On s'occupe de t'apporter tes courses pour le " + date + "."
     elif allo_type == "I":
