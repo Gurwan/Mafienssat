@@ -966,8 +966,11 @@ def alloRequested(request):
             if tmp is not None:
                 all_done.append(tmp)
 
+        allo_nb = all_requested.count()
+        take_nb = all_take.count()
+        done_nb = all_done.count()
         return render(request, 'allos/alloRequested.html',
-                      {'user': user, 'allos': all_requested, 'takeOver': all_take, 'doneAllos': all_done})
+                      {'user': user, 'allos': all_requested, 'alloNb': allo_nb, 'takeOver': all_take, 'takeNb': take_nb, 'doneAllos': all_done, 'doneNb': done_nb})
     else:
         messages.error(request, "Vous devez être connecté")
 
