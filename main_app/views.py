@@ -563,6 +563,7 @@ def event(request):
             registered_event = Event.objects.filter(id__in=reg_event_id).order_by("-event_date")
     else:
         messages.error(request, "Erreur lors de l'envoie de la requête")
+        events = Event.objects.all().order_by('-event_date')
 
     return render(request, 'events/event.html', {'events': events, 'user': user, 'registered': registered_event})
 
@@ -803,35 +804,6 @@ def allos(request):
     return render(request, 'allos/allos.html', {'user': user, 'allos': unregistered_allos})
 
 
-'''
-    try:
-        user = User.objects.get(pk=request.user.id)
-    except User.DoesNotExist:
-        user = None
-
-    if user is not None:
-        try:
-            registered_allo = AllosRegistration.objects.filter(user_id=user)
-        except AllosRegistration.DoesNotExist:
-            registered_allo = None
-
-        if registered_allo is not None:
-            ids = []
-            registered = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            for a in registered_allo:
-                ids.append(a.allo_id.id)
-
-            unregistered_allos = Allos.objects.exclude(id__in=ids)
-
-        else:
-            unregistered_allos = Allos.objects.all()
-    else:
-        unregistered_allos = Allos.objects.all()
-
-    return render(request, 'allos/allos.html', {'user': user, 'allos': unregistered_allos})
-    '''
-
-
 def myAllos(request):
     try:
         user = User.objects.get(pk=request.user.id)
@@ -954,33 +926,6 @@ def alloRegistration(request, id_allo):
         return render(request, 'allos/alloRegistration.html', {'user': user, 'allo': selected_allo})
     else:
         messages.error(request, "Vous devez être connecté")
-
-
-def fillAllos(all_allos):
-    toReturn = [[],[],[],[],[],[],[],[],[],[]]
-    for allo in all_allos:
-        if allo.allo_id.allo_type == "A":
-            toReturn[0].append(allo)
-        elif allo.allo_id.allo_type == "B":
-            toReturn[1].append(allo)
-        elif allo.allo_id.allo_type == "C":
-            toReturn[2].append(allo)
-        elif allo.allo_id.allo_type == "D":
-            toReturn[3].append(allo)
-        elif allo.allo_id.allo_type == "E":
-            toReturn[4].append(allo)
-        elif allo.allo_id.allo_type == "F":
-            toReturn[5].append(allo)
-        elif allo.allo_id.allo_type == "G":
-            toReturn[6].append(allo)
-        elif allo.allo_id.allo_type == "H":
-            toReturn[7].append(allo)
-        elif allo.allo_id.allo_type == "I":
-            toReturn[8].append(allo)
-        elif allo.allo_id.allo_type == "K":
-            toReturn[9].append(allo)
-
-    return toReturn
 
 
 def alloRequested(request):
