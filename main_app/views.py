@@ -717,7 +717,7 @@ def suCheckEvent(request, id_event):
 
         try:
             registered = EventsRegistration.objects.filter(event_id=evt)
-        except StoreBets.DoesNotExist:
+        except EventsRegistration.DoesNotExist:
             registered = None
 
         return render(request, "events/suCheckEvent.html", {"user": user, "event": evt, "registered": registered})

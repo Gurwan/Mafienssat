@@ -10,7 +10,7 @@
 
         <h1 style="text-align: center; margin-top:20px">Liste des inscrits</h1>
         {% for user in registered %}
-            <p>{{ event.user_id.id }} : {{ event.user_id.first_name }} {{ event.user_id.last_name }}, {{ event.user_id.email }}</p> <br>
+            <p>{{ user.user_id.id }} : {{ user.user_id.first_name }} {{ user.user_id.last_name }}, {{ user.user_id.email }}</p> <br>
         {% endfor %}
     </div>
     <br><br><br><br>
