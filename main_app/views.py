@@ -58,7 +58,7 @@ def registerUser(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.username = user.username.lower()
-            if user.email.split("@")[1] == "enssat.fr":
+            if user.email.split("@")[1] == "enssat.fr" and user.email.split("@")[0] != "1a" and user.email.split("@")[0] != "2a" and user.email.split("@")[0] != "3a" and user.email.split("@")[0] != "etudiants" and user.email.split("@")[0] != "ips1":
                 user.save()
 
                 current_site = get_current_site(request)
