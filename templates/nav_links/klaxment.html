@@ -10,9 +10,9 @@
                 {% if forloop.counter == 1 %}
                     <h2><span id="first-span">Première place</span> {{ user.username }} <span class="sector_span">({{ user.get_sector_display }})</span> : {{user.klax_coins}} <img class="img-fluid" height="75" width="75" src="{% static 'klax_or.png' %}" alt=""/></h2>
                 {% elif forloop.counter == 2 %}
-                    <h3><span id="second-span">Deuxième place </span> {{ user.username }} <span class="sector_span">({{ user.get_sector_display }})</span> : {{user.klax_coins}} <img class="img-fluid" height="75" width="75" src="{% static 'klax_argent.png' %}" alt=""/></h3>
+                    <h3><span id="second-span">Deuxième place</span> {{ user.username }} <span class="sector_span">({{ user.get_sector_display }})</span> : {{user.klax_coins}} <img class="img-fluid" height="75" width="75" src="{% static 'klax_argent.png' %}" alt=""/></h3>
                 {% elif forloop.counter == 3 %}
-                    <h4><span id="third-span">Troisième place </span> {{ user.username }} <span class="sector_span">({{ user.get_sector_display }})</span> : {{user.klax_coins}} <img class="img-fluid" height="75" width="75" src="{% static 'klax_bronze.png' %}" alt=""/></h4>
+                    <h4><span id="third-span">Troisième place</span> {{ user.username }} <span class="sector_span">({{ user.get_sector_display }})</span> : {{user.klax_coins}} <img class="img-fluid" height="75" width="75" src="{% static 'klax_bronze.png' %}" alt=""/></h4>
                 {% elif forloop.counter <= 10 %}
                     <h5><span id="after-span">{{forloop.counter}}ème place </span> {{ user.username }} <span class="sector_span">({{ user.get_sector_display }})</span> : {{user.klax_coins}}</h5>
                 {% elif user.username == pseudo %}
