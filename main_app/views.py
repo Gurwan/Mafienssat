@@ -716,11 +716,11 @@ def suCheckEvent(request, id_event):
     if user is not None and evt is not None:
 
         try:
-            events = EventsRegistration.objects.filter(event_id_id=id_event)
+            registered = EventsRegistration.objects.filter(event_id=evt)
         except StoreBets.DoesNotExist:
-            events = None
+            registered = None
 
-        return render(request, "events/suCheckEvent.html", {"user": user, "event": evt, "events": events})
+        return render(request, "events/suCheckEvent.html", {"user": user, "event": evt, "registered": registered})
     else:
         messages.error(request, "Vous devez être connecté")
 
