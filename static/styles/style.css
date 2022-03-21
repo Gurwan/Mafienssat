@@ -25,7 +25,7 @@
 
 body {
     /*background-color: #666666; ; 666666 ou 0f0f3d*/
-    background-color: #ad9684; /*#fcddc2; #ad9684 ou #e3e6c1 ou #a39899*/
+    background-color: #dbbea8; /*#fcddc2; #ad9684 ou #e3e6c1 ou #a39899*/
     color: black;
 
 
@@ -52,14 +52,23 @@ body {
 
 #first-span {
     color: #FFD700!important;
+    background-color: rgb(95, 95, 95);
+    padding-right:5px!important;
+    border-radius: 5px;
 }
 
 #second-span {
     color: #C0C0C0!important;
+    background-color: rgb(109, 91, 91);
+    padding-right:5px!important;
+    border-radius: 5px;
 }
 
 #third-span {
     color: #CD7F32!important;
+    background-color: rgb(39, 32, 32);
+    padding-right:5px!important;
+    border-radius: 5px;
 }
 
 #after-span {
@@ -631,7 +640,7 @@ body {
     width: 100%;
     height: 100%;
     padding-top: 30px;
-    background-color: #ad9684;
+    background-color: #dbbea8;
 }
 
 #event_page_id h1 {
@@ -647,7 +656,7 @@ body {
     height: 100%;  
     display: flex;
     flex-flow: column;
-    background: #ad9684;
+    background: #dbbea8;
 }
 
 #main_col .row .col {
@@ -1141,7 +1150,7 @@ footer .row {
 }
 
 #event_id_main {
-    background-color: #ad9684;
+    background-color: #dbbea8;
     color:black;
     padding-top: 30px;
     text-align: center;
@@ -1248,13 +1257,13 @@ a, a:hover, a:focus, a:active {
 }
 
 #klaxment_id {
-    background-color: #ad9684;
+    background-color: #dbbea8;
     color: black;
 
 }
 
 #vote_mafienssat_klaxment {
-    background-color: #ad9684;
+    background-color: #dbbea8;
     font-family: 'LinBiolinum', Arial, sans-serif;
     font-weight:normal;
     font-style:normal;
@@ -1811,7 +1820,7 @@ a, a:hover, a:focus, a:active {
     font-family: 'Felixti', Arial, sans-serif;
     font-weight:bold;
     padding-top: 10px;
-    background-color: #ad9684;
+    background-color: #dbbea8;
     font-style:normal;
 
 }
