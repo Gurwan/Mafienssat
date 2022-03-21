@@ -784,7 +784,7 @@ def allos(request):
         user = None
 
     try:
-        closed_allo = Allos.objects.filter(closed_allo=True)
+        closed_allo = Allos.objects.filter(closed_allo=True, visible=True)
     except Allos.DoesNotExist:
         closed_allo = None
 
@@ -799,7 +799,7 @@ def allos(request):
             for a in registered_allo:
                 ids.append(a.allo_id.id)
 
-            unregistered_allos = Allos.objects.exclude(id__in=ids)
+            unregistered_allos = Allos.objects.filter(visible=True, closed_allo=False).exclude(id__in=ids)
 
         else:
             unregistered_allos = Allos.objects.all()
