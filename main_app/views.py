@@ -783,6 +783,11 @@ def allos(request):
     except User.DoesNotExist:
         user = None
 
+    try:
+        closed_allo = Allos.objects.filter(closed_allo=True, visible=True)
+    except Allos.DoesNotExist:
+        closed_allo = None
+
     if user is not None:
         try:
             registered_allo = AllosRegistration.objects.filter(user_id=user)
@@ -794,14 +799,14 @@ def allos(request):
             for a in registered_allo:
                 ids.append(a.allo_id.id)
 
-            unregistered_allos = Allos.objects.exclude(id__in=ids)
+            unregistered_allos = Allos.objects.filter(visible=True, closed_allo=False).exclude(id__in=ids)
 
         else:
             unregistered_allos = Allos.objects.all()
     else:
         unregistered_allos = Allos.objects.all()
 
-    return render(request, 'allos/allos.html', {'user': user, 'allos': unregistered_allos})
+    return render(request, 'allos/allos.html', {'user': user, 'allos': unregistered_allos, 'closedAllo': closed_allo})
 
 
 def myAllos(request):
@@ -1170,7 +1175,7 @@ def suUsers(request):
 
 def goals(request):
     try:
-        registered = User.objects.filter(is_staff=False, is_superuser=False, from_list=False).count()
+        registered = User.objects.filter(is_staff=False, is_superuser=False, from_list=False, activate=True).count()
     except User.DoesNotExist:
         registered = 0
 

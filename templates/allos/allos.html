@@ -13,32 +13,48 @@
     </div>
 
     {% for allo in allos %}
-        {% if allo.visible and not allo.closed_allo %}
+        <div id="next-event-object">
+            <div class="row">
+                <div class="col">
+                    <div class="name_date">
+                        <h2 style="border-bottom: black 2px solid">{{ allo.get_allo_type_display }}</h2>
+                    </div>
+                </div>
+                <div class="col button_event" style="margin-bottom: 10px;">
+                    {% if user %}
+                        <a class="button_make_allo btn btn_event_allos" id="alloRegistration{{ allo.id }}" href="{% url 'alloRegistration' allo.id %}">
+                            <h5>Envoyer une demande</h5>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div id="description_event">
+                <h5 style="margin-top: 5px; margin-left: 10px">Disponible du {{allo.start_date | date:"d"}} {{allo.start_date  | date:"F"}} {{allo.start_date  | date:"o"}} à {{allo.start_date | date:"H"}}h{{allo.start_date | date:"i"}} au {{allo.end_date | date:"d"}} {{allo.end_date  | date:"F"}} {{allo.end_date  | date:"o"}} à {{allo.end_date | date:"H"}}h{{allo.end_date | date:"i"}}</h5>
+                <p>{{allo.description}}</p>
+            </div>
+        </div>
+    {% endfor %}
+    {% if closedAllo %}
+        {% for allo in closedAllo %}
             <div id="next-event-object">
                 <div class="row">
                     <div class="col">
                         <div class="name_date">
-                            <h2 style="border-bottom: black 2px solid">{{ allo.get_allo_type_display }}</h2>
+                            <h2 style="border-bottom: black 2px solid">{{ allo.get_allo_type_display }} - <span>Fermé</span></h2>
                         </div>
                     </div>
-                    <div class="col button_event" style="margin-bottom: 10px;">
-                        {% if user %}
-                            <a class="button_make_allo btn btn_event_allos" id="alloRegistration{{ allo.id }}" href="{% url 'alloRegistration' allo.id %}">
-                                <h5>Envoyer une demande</h5>
-                            </a>
-                        {% endif %}
+                    <div class="col">
                     </div>
                 </div>
-
                 <div id="description_event">
                     <h5 style="margin-top: 5px; margin-left: 10px">Disponible du {{allo.start_date | date:"d"}} {{allo.start_date  | date:"F"}} {{allo.start_date  | date:"o"}} à {{allo.start_date | date:"H"}}h{{allo.start_date | date:"i"}} au {{allo.end_date | date:"d"}} {{allo.end_date  | date:"F"}} {{allo.end_date  | date:"o"}} à {{allo.end_date | date:"H"}}h{{allo.end_date | date:"i"}}</h5>
                     <p>{{allo.description}}</p>
                 </div>
 
             </div>
-        {% endif %}
-    {% endfor %}
-    {% if not allos %}
+        {% endfor %}
+    {% else %}
         <h3 id="end_allo">C'est fini pour le moment ! On revient vite pour vous proposer nos services</h3>
     {% endif %}
     <div id="vote_mafienssat_event">

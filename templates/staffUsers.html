@@ -12,7 +12,7 @@
             {% if user.activate %}
                 <p>{{ user.id }} : {{ user.first_name }} {{ user.last_name }} alias {{ user.username }}, {{ user.sector }} {{ user.email }}  {{ user.klax_coins }}</p> <br>
             {% else %}
-                <p><span>{{ user.id }} : {{ user.first_name }} {{ user.last_name }} alias {{ user.username }}, {{ user.sector }} {{ user.email }}  {{ user.klax_coins }}</span></p> <br>
+                <p><span style="color: #e62e00">{{ user.id }} : {{ user.first_name }} {{ user.last_name }} alias {{ user.username }}, {{ user.sector }} {{ user.email }}  {{ user.klax_coins }}</span></p> <br>
             {% endif %}
         {% endfor %}
     <br><br>
