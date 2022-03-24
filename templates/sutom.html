@@ -6,6 +6,9 @@
     <div>
         <h1>SUTO<span>Mafienssat</span></h1>
     </div>
+    <div id="result-div">
+        <p id="result"></p>
+    </div>
     <div id="grid">
         <table class="table">
             <tr class="first" id="current">
@@ -113,11 +116,13 @@
         let currentRow = document.getElementById("current");
         let cases = currentRow.getElementsByTagName("td");    
         let word = "{{word_of_the_day}}";
+        let all = true;
         for(var i=0;i<cases.length;i++) {
             var c = cases[i];
             if(c.innerHTML.toLowerCase() === word[i]){
                 c.style.backgroundColor = "green";
             } else {
+                all = false;
                 c.style.backgroundColor = "red";
                 for(var j=0;j<word.length;j++) {
                     if(c.innerHTML.toLowerCase() === word[j]){
@@ -126,9 +131,27 @@
                 }
             }
         }
-        currentRow.setAttribute("id",currentRow.className+"-done");
-        document.getElementById("next").setAttribute("id","current");
-        $('#current td').html('.');
+        if(!all){
+            if(document.getElementById("current").className !== "sixth"){
+                currentRow.setAttribute("id",currentRow.className+"-done");
+                document.getElementById("next").setAttribute("id","current");
+                if(document.getElementById("current").className === "second"){
+                    document.getElementById("third").setAttribute("id","next");
+                } else if(document.getElementById("current").className === "third"){
+                    document.getElementById("forth").setAttribute("id","next");
+                } else if(document.getElementById("current").className === "forth"){
+                    document.getElementById("fifth").setAttribute("id","next");
+                } else if(document.getElementById("current").className === "fifth"){
+                    document.getElementById("sixth").setAttribute("id","next");
+                }
+                $('#current td').html('.');
+            } else {
+                document.getElementById("result").innerHTML = "Dommage chacal, le mot était " + word + ". Allez c'est pas grave reviens demain";
+            }
+        } else {
+            document.getElementById("result").innerHTML = "Félicitations ! Reviens demain pour un autre SUTOMafienssat";
+        }
+        
     }
 </script>
 
