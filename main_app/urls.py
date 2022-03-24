@@ -35,6 +35,9 @@ urlpatterns = [
         # Goals
     path("goals/", views.goals, name="goals"),
 
+        # Sutom
+    path("sutom/", views.sutom, name="sutom"),
+
         # Allos
     path("home_allos/", views.homeAllos, name="homeAllos"),
     path("home_allos/allos/", views.allos, name="allos"),

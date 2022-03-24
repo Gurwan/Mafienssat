@@ -1,0 +1,120 @@
+{% extends 'main.html' %}
+{% block content %}
+{% load static %}
+{% include 'nav.html' %}
+<div class="container" id="sutomafienssat-id">
+    <div>
+        <h1>SUTO<span>Mafienssat</span></h1>
+    </div>
+    <div id="grid">
+        <table class="table">
+            <tr id="current">
+                {% for i in word_of_the_day %}
+                    <td id="first-{{forloop.counter}}"></td>
+                {% endfor %}
+            </tr>
+            <tr id="next">
+                {% for i in word_of_the_day %}
+                    <td id="second-{{forloop.counter}}"></td>
+                {% endfor %}
+            </tr>
+            <tr id="third">
+                {% for i in word_of_the_day %}
+                    <td id="third-{{forloop.counter}}"></td>
+                {% endfor %}
+            </tr>
+            <tr id="forth">
+                {% for i in word_of_the_day %}
+                    <td id="forth-{{forloop.counter}}"></td>
+                {% endfor %}
+            </tr>
+            <tr id="fifth">
+                {% for i in word_of_the_day %}
+                    <td id="fifth-{{forloop.counter}}"></td>
+                {% endfor %}
+            </tr>
+            <tr id="sixth">
+                {% for i in word_of_the_day %}
+                    <td id="sixth-{{forloop.counter}}"></td>
+                {% endfor %}
+            </tr>
+        </table>
+    </div>
+
+    <div id="input-area">
+        <div class="input-ligne row">
+            <div class="input-lettre col-sm" onclick="chooseLetter('A')">A</div>
+            <div class="input-lettre col-sm" onclick="chooseLetter('Z')">Z</div>
+            <div class="input-lettre col-sm" onclick="chooseLetter('E')">E</div>
+            <div class="input-lettre col-sm" onclick="chooseLetter('R')">R</div>
+            <div class="input-lettre col-sm" onclick="chooseLetter('T')">T</div>
+            <div class="input-lettre col-sm" onclick="chooseLetter('Y')">Y</div>
+            <div class="input-lettre col-sm" onclick="chooseLetter('U')">U</div>
+            <div class="input-lettre col-sm" onclick="chooseLetter('I')">I</div>
+            <div class="input-lettre col-sm" onclick="chooseLetter('O')">O</div>
+            <div class="input-lettre col-sm" onclick="chooseLetter('P')">P</div>
+        </div>
+        <div class="input-ligne row">
+            <div class="input-lettre col-sm" onclick="chooseLetter('Q')">Q</div>
+            <div class="input-lettre col-sm" onclick="chooseLetter('S')">S</div>
+            <div class="input-lettre col-sm" onclick="chooseLetter('D')">D</div>
+            <div class="input-lettre col-sm" onclick="chooseLetter('F')">F</div>
+            <div class="input-lettre col-sm" onclick="chooseLetter('G')">G</div>
+            <div class="input-lettre col-sm" onclick="chooseLetter('H')">H</div>
+            <div class="input-lettre col-sm" onclick="chooseLetter('J')">J</div>
+            <div class="input-lettre col-sm" onclick="chooseLetter('K')">K</div>
+            <div class="input-lettre col-sm" onclick="chooseLetter('L')">L</div>
+            <div class="input-lettre col-sm" onclick="chooseLetter('M')">M</div>
+        </div>
+        <div class="input-ligne row">
+            <div class="input-lettre col-sm" onclick="chooseLetter('W')">W</div>
+            <div class="input-lettre col-sm" onclick="chooseLetter('X')">X</div>
+            <div class="input-lettre col-sm" onclick="chooseLetter('C')">C</div>
+            <div class="input-lettre col-sm" onclick="chooseLetter('V')">V</div>
+            <div class="input-lettre col-sm" onclick="chooseLetter('B')">B</div>
+            <div class="input-lettre col-sm" onclick="chooseLetter('N')">N</div>
+            <div class="input-lettre col-sm" onclick="effacer()">⌫</div>
+            <div class="input-lettre col-sm input-lettre-entree" onclick="validate()">↲</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $('#current td').html('.');
+    })
+    
+    function chooseLetter(letter){
+        let currentRow = document.getElementById("current");
+        let cases = currentRow.getElementsByTagName("td");
+        let done = true;
+        for(var i=0;i<cases.length;i++) {
+            var c = cases[i];
+            if(c.innerHTML == "."){
+                c.innerHTML = letter;
+                done = false;
+                break;
+            }
+        }
+    }
+
+    function effacer(){
+        let currentRow = document.getElementById("current");
+        let cases = currentRow.getElementsByTagName("td");
+        let done = true;
+        for(var i=cases.length-1;i>-1;i--) {
+            var c = cases[i];
+            if(c.innerHTML != "."){
+                c.innerHTML = ".";
+                break;
+            }
+        }
+    }
+
+    function valider(){
+
+    }
+</script>
+
+{% include 'footer.html' %}
+{% endblock %}
