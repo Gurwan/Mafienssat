@@ -1204,3 +1204,7 @@ def Chasse(request):
 
 def Tournois(request):
     return render(request, 'events/descriptions/Tournois.html')
+
+
+def Kfet(request):
+    return render(request, 'events/descriptions/Kfet.html')

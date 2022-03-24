@@ -121,21 +121,15 @@
             else if(allEvent[i].id === 'Tournois des foufous'){
                 document.getElementById('Tournois des foufous').href = '{% url "Tournois" %}';
             }
+            else if(allEvent[i].id === 'Soirée K\'Fet'){
+                document.getElementById('Soirée K\'Fet').href = '{% url "Kfet" %}';
+            }
             else {
                 //mettre les autres cas possible
             }
             i = i + 1;
         }
     })
-
-    /*
-    $(document).ready(function(){
-        document.body.innerHTML = document.body.innerHTML.replaceAll("March", "Mars");
-        document.body.innerHTML = document.body.innerHTML.replaceAll("April", "Avril");
-    })
-    */
-    
-
 </script>
 </div>
 {% endblock %}
