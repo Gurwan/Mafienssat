@@ -8,32 +8,32 @@
     </div>
     <div id="grid">
         <table class="table">
-            <tr id="current">
+            <tr class="first" id="current">
                 {% for i in word_of_the_day %}
                     <td id="first-{{forloop.counter}}"></td>
                 {% endfor %}
             </tr>
-            <tr id="next">
+            <tr class="second" id="next">
                 {% for i in word_of_the_day %}
                     <td id="second-{{forloop.counter}}"></td>
                 {% endfor %}
             </tr>
-            <tr id="third">
+            <tr class="third" id="third">
                 {% for i in word_of_the_day %}
                     <td id="third-{{forloop.counter}}"></td>
                 {% endfor %}
             </tr>
-            <tr id="forth">
+            <tr class="forth" id="forth">
                 {% for i in word_of_the_day %}
                     <td id="forth-{{forloop.counter}}"></td>
                 {% endfor %}
             </tr>
-            <tr id="fifth">
+            <tr class="fifth" id="fifth">
                 {% for i in word_of_the_day %}
                     <td id="fifth-{{forloop.counter}}"></td>
                 {% endfor %}
             </tr>
-            <tr id="sixth">
+            <tr class="sixth" id="sixth">
                 {% for i in word_of_the_day %}
                     <td id="sixth-{{forloop.counter}}"></td>
                 {% endfor %}
@@ -119,9 +119,14 @@
                 c.style.backgroundColor = "green";
             } else {
                 c.style.backgroundColor = "red";
+                for(var j=0;j<word.length;j++) {
+                    if(c.innerHTML.toLowerCase() === word[j]){
+                        c.style.backgroundColor = "orange";
+                    }
+                }
             }
         }
-        currentRow.setAttribute("id","first-done");
+        currentRow.setAttribute("id",currentRow.className+"-done");
         document.getElementById("next").setAttribute("id","current");
         $('#current td').html('.');
     }

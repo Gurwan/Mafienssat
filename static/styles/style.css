@@ -2045,6 +2045,7 @@ tr {
 }
 
 td {
+    font-weight: bold;
     color:white!important;
     text-align: center;
     width: fit-content;
@@ -2056,6 +2057,7 @@ td {
 }
 
 #input-area {
+    font-weight: bold;
     color: white;
 }
 
