@@ -87,9 +87,9 @@
     function chooseLetter(letter){
         let currentRow = document.getElementById("current");
         let cases = currentRow.getElementsByTagName("td");
-        for(var i=0;i<cases.length;i++) {
-            var c = cases[i];
-            if(c.innerHTML == "."){
+        for(let i = 0; i < cases.length; i++) {
+            let c = cases[i];
+            if(c.innerHTML === "."){
                 c.innerHTML = letter;
                 break;
             }
@@ -99,10 +99,9 @@
     function effacer(){
         let currentRow = document.getElementById("current");
         let cases = currentRow.getElementsByTagName("td");
-        let done = true;
-        for(var i=cases.length-1;i>-1;i--) {
-            var c = cases[i];
-            if(c.innerHTML != "."){
+        for(let i = cases.length - 1; i > -1; i--) {
+            let c = cases[i];
+            if(c.innerHTML !== "."){
                 c.innerHTML = ".";
                 break;
             }
@@ -113,13 +112,13 @@
         let currentRow = document.getElementById("current");
         let cases = currentRow.getElementsByTagName("td");    
         let word = "{{word_of_the_day}}";
-        for(var i=0;i<cases.length;i++) {
-            var c = cases[i];
+        for(let i = 0; i < cases.length; i++) {
+            let c = cases[i];
             if(c.innerHTML.toLowerCase() === word[i]){
                 c.style.backgroundColor = "green";
             } else {
                 c.style.backgroundColor = "red";
-                for(var j=0;j<word.length;j++) {
+                for(let j = 0; j < word.length; j++) {
                     if(c.innerHTML.toLowerCase() === word[j]){
                         c.style.backgroundColor = "orange";
                     }
