@@ -31,16 +31,16 @@
                                     <h5>Participer</h5>
                                 </a>
                             {% endif %}
-                            {% if event.associated_bet %}
-                                <a class="col btn btn_event" href="{% url "homeBetKlax" %}" value="goBet{{ event.id }}">
-                                    <h5>Parier</h5>
-                                </a>
-                            {% endif %}
-                            {% if event.associated_html %}
-                            <a name="html-event" id="{{ event.event_name }}" class="col btn btn_event html-event" href="#">
-                                <h5>Informations</h5>
+                        {% endif %}
+                        {% if event.associated_bet %}
+                            <a class="col btn btn_event" href="{% url "homeBetKlax" %}" value="goBet{{ event.id }}">
+                                <h5>Parier</h5>
                             </a>
-                            {% endif %}
+                        {% endif %}
+                        {% if event.associated_html %}
+                        <a name="html-event" id="{{ event.event_name }}" class="col btn btn_event html-event" href="#">
+                            <h5>Informations</h5>
+                        </a>
                         {% endif %}
                     </div>
                 </div>
@@ -73,16 +73,22 @@
                         </div>
                     </div>
                     <div class="col button_event">
+
+                        {% if event.attendees_number < event.max_attendees and event.max_attendees != 0 %}
+                            <a class="col btn btn_event" value="dontGoEvent{{ event.id }}" href="{% url "eventUnregistration" event_id=event.id %}">
+                                <h5>Ne plus participer</h5>
+                            </a>
+                        {% endif %}
                         {% if event.associated_bet %}
-                                <a class="col btn btn_event" href="{% url "homeBetKlax" %}" value="goBet{{ event.id }}">
-                                    <h5>Parier</h5>
-                                </a>
-                            {% endif %}
-                            {% if event.associated_html %}
+                            <a class="col btn btn_event" href="{% url "homeBetKlax" %}" value="goBet{{ event.id }}">
+                                <h5>Parier</h5>
+                            </a>
+                        {% endif %}
+                        {% if event.associated_html %}
                             <a name="html-event" id="{{ event.event_name }}" class="col btn btn_event html-event" href="#">
                                 <h5>Informations</h5>
                             </a>
-                            {% endif %}
+                        {% endif %}
                     </div>
                 </div>
             
