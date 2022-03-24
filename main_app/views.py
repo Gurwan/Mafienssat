@@ -1205,6 +1205,11 @@ def Chasse(request):
 def Tournois(request):
     return render(request, 'events/descriptions/Tournois.html')
 
+def sutom(request):
+    word_of_the_day = "cochon"
+    size = len(word_of_the_day)
+    return render(request, 'sutom.html', {'word_of_the_day': word_of_the_day,'size':size})
 
 def Kfet(request):
     return render(request, 'events/descriptions/Kfet.html')
+

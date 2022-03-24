@@ -1966,7 +1966,17 @@ a, a:hover, a:focus, a:active {
     margin-bottom: 200px;
 }
 
-#thanks-page h1 {
+#sutomafienssat-id {
+    padding-top: 20px;
+    font-family: 'Roboto Medium', Arial, sans-serif;
+    font-size: 30px;
+    font-weight:normal;
+    font-style:normal;
+    margin-bottom: 200px;
+    text-transform: uppercase;
+}
+
+#thanks-page h1, #sutomafienssat-id h1 {
 
     text-align: center;
     font-size: 90px;
@@ -1984,7 +1994,7 @@ a, a:hover, a:focus, a:active {
     border-bottom: 5px solid black;
 }
 
-#thanks-page p {
+#thanks-page p, #sutomafienssat-id p {
     padding-top: 20px;
     font-size: 30px;
     font-family: 'LinBiolinum', Arial, sans-serif;
@@ -1994,7 +2004,7 @@ a, a:hover, a:focus, a:active {
     text-align: justify;
 }
 
-#thanks-page li {
+#thanks-page li, #sutomafienssat-id li {
     padding-top: 20px;
     font-size: 30px;
     font-family: 'LinBiolinum', Arial, sans-serif;
@@ -2004,7 +2014,7 @@ a, a:hover, a:focus, a:active {
     text-align: justify;
 }
 
-#thanks-page ul {
+#thanks-page ul, #sutomafienssat-id ul {
     padding-top: 20px;
     font-size: 30px;
     font-family: 'LinBiolinum', Arial, sans-serif;
@@ -2014,12 +2024,47 @@ a, a:hover, a:focus, a:active {
     text-align: justify;
 }
 
-#thanks-page span {
+#thanks-page span, #sutomafienssat-id span {
     color: rgb(165, 1, 1);
 }
 
 #thanks-page img {
     margin-bottom: 20px;
+}
+
+#sutomafienssat-id table {
+    border: white;
+}
+
+tr, td {
+    border: 1px solid white;
+}
+
+tr {
+    background-color: #0077c7;
+}
+
+td {
+    font-weight: bold;
+    color:white!important;
+    text-align: center;
+    width: fit-content;
+    padding: 0!important;
+    padding-top: 5px!important;
+    padding-bottom: 5px!important;
+    height: 56px!important;
+    min-height: 56px!important;
+}
+
+#input-area {
+    font-weight: bold;
+    color: white;
+}
+
+.input-lettre {
+    border: 1px solid white;
+    background-color: #000;
+    text-align: center;
 }
 
 #our_values{
@@ -2377,4 +2422,16 @@ a, a:hover, a:focus, a:active {
     border-radius: 25px; 
     padding:10px;
     text-align: center;
+}
+
+@media screen and (min-width: 425px) and (max-width: 780px) {
+    #thanks-page h1, #partners-page h1, #our_values h1, #promises-page h1, #sutomafienssat-id h1{
+        font-size: 40px;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    #thanks-page h1, #partners-page h1, #our_values h1, #promises-page h1, #sutomafienssat-id h1{
+        font-size: 30px;
+    }
 }
