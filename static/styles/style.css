@@ -2040,8 +2040,11 @@ tr, td {
     border: 1px solid white;
 }
 
+tr {
+    background-color: #0077c7;
+}
+
 td {
-    background-color: #0077c7!important;
     color:white!important;
     text-align: center;
     width: fit-content;

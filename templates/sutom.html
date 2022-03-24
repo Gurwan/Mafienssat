@@ -74,7 +74,7 @@
             <div class="input-lettre col-sm" onclick="chooseLetter('B')">B</div>
             <div class="input-lettre col-sm" onclick="chooseLetter('N')">N</div>
             <div class="input-lettre col-sm" onclick="effacer()">⌫</div>
-            <div class="input-lettre col-sm input-lettre-entree" onclick="validate()">↲</div>
+            <div class="input-lettre col-sm input-lettre-entree" onclick="valider()">↲</div>
         </div>
     </div>
 </div>
@@ -87,12 +87,10 @@
     function chooseLetter(letter){
         let currentRow = document.getElementById("current");
         let cases = currentRow.getElementsByTagName("td");
-        let done = true;
         for(var i=0;i<cases.length;i++) {
             var c = cases[i];
             if(c.innerHTML == "."){
                 c.innerHTML = letter;
-                done = false;
                 break;
             }
         }
@@ -112,7 +110,20 @@
     }
 
     function valider(){
-
+        let currentRow = document.getElementById("current");
+        let cases = currentRow.getElementsByTagName("td");    
+        let word = "{{word_of_the_day}}";
+        for(var i=0;i<cases.length;i++) {
+            var c = cases[i];
+            if(c.innerHTML.toLowerCase() === word[i]){
+                c.style.backgroundColor = "green";
+            } else {
+                c.style.backgroundColor = "red";
+            }
+        }
+        currentRow.setAttribute("id","first-done");
+        document.getElementById("next").setAttribute("id","current");
+        $('#current td').html('.');
     }
 </script>
 
