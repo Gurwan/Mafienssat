@@ -26,6 +26,7 @@ urlpatterns = [
     path("event/Chasse_au_tresor/", views.Chasse, name="Chasse"),
     path("event/Tournois_des_foufous/", views.Tournois, name="Tournois"),
     path("event/Soiree_KFet/", views.Kfet, name="Kfet"),
+    path("event/BBQ_Kermess/", views.BBK, name="BBK"),
 
         # Liste
     path("liste/", views.liste, name="liste"),

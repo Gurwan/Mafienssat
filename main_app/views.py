@@ -1213,3 +1213,5 @@ def sutom(request):
 def Kfet(request):
     return render(request, 'events/descriptions/Kfet.html')
 
+def BBK(request):
+    return render(request, 'events/descriptions/bbkermess.html')
