@@ -550,7 +550,7 @@ def event(request):
         user = None
 
     try:
-        registered_event = EventsRegistration.objects.filter(user_id_id=request.user.id)
+        registered_event = EventsRegistration.objects.filter(user_id_id=request.user.id).order_by("-id")
     except EventsRegistration.DoesNotExist:
         registered_event = None
 
@@ -559,11 +559,11 @@ def event(request):
         for e in registered_event:
             reg_event_id.append(e.event_id.id)
         if reg_event_id:
-            events = Event.objects.exclude(id__in=reg_event_id).order_by("-event_date")
-            registered_event = Event.objects.filter(id__in=reg_event_id).order_by("-event_date")
+            events = Event.objects.exclude(id__in=reg_event_id).order_by("-id")
+            registered_event = Event.objects.filter(id__in=reg_event_id).order_by("-id")
     else:
         messages.error(request, "Erreur lors de l'envoie de la requête")
-        events = Event.objects.all().order_by('-event_date')
+        events = Event.objects.all().order_by('-id')
 
     return render(request, 'events/event.html', {'events': events, 'user': user, 'registered': registered_event})
 
@@ -1205,13 +1205,16 @@ def Chasse(request):
 def Tournois(request):
     return render(request, 'events/descriptions/Tournois.html')
 
+
 def sutom(request):
     word_of_the_day = "cochon"
     size = len(word_of_the_day)
     return render(request, 'sutom.html', {'word_of_the_day': word_of_the_day,'size':size})
 
+
 def Kfet(request):
     return render(request, 'events/descriptions/Kfet.html')
+
 
 def BBK(request):
     return render(request, 'events/descriptions/bbkermess.html')
