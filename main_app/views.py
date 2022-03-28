@@ -1218,3 +1218,7 @@ def Kfet(request):
 
 def BBK(request):
     return render(request, 'events/descriptions/bbkermess.html')
+
+
+def Master(request):
+    return render(request, 'events/descriptions/Master.html')
