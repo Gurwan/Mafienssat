@@ -67,7 +67,6 @@ urlpatterns = [
     path("staff/alloRequested/", views.alloRequested, name="alloRequested"),
     path("staff/alloRequested/finalizeAllo/<int:id_finalized_allo>/", views.finalizeAllo, name="finalizeAllo"),
     path("staff/alloRequested/alloEmailConfirmation/<int:id_allo>/", views.alloEmailConfirmation, name="alloEmailConfirmation"),
-    path("staff/alloRequested/alloEmailConfirmation/sendAlloEmailConfirmation/[<str:date>, <str:time>, <int:allo_id>]/", views.sendAlloEmailConfirmation, name="sendAlloEmailConfirmation"),
 
         # SuperUser
     path("staff/betSuperUser/", views.suBets, name="suBets"),
