@@ -28,6 +28,7 @@ urlpatterns = [
     path("event/Soiree_KFet/", views.Kfet, name="Kfet"),
     path("event/BBQ_Kermess/", views.BBK, name="BBK"),
     path("event/Master_Of_The_Grid/", views.Master, name="Master"),
+    path("event/Wati_by_Chiche/", views.Chiche, name="Chiche"),
 
         # Liste
     path("liste/", views.liste, name="liste"),

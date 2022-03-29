@@ -1156,3 +1156,7 @@ def BBK(request):
 
 def Master(request):
     return render(request, 'events/descriptions/Master.html')
+
+
+def Chiche(request):
+    return render(request, 'events/descriptions/Chiche.html')
