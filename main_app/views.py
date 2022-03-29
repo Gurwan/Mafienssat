@@ -1041,75 +1041,9 @@ def alloEmailConfirmation(request, id_allo):
         allo.staff_id = request.user.id
         allo.save()
 
-        return render(request, "allos/alloEmailForm.html", {'user': user, 'allo': allo})
+        return render(request, "allos/alloRequested.html", {'user': user, 'allo': allo})
     else:
         messages.error(request, "Erreur lors du chargement de la page")
-
-
-def sendAlloEmailConfirmation(request, date, time, allo_id):
-    try:
-        requested_allo = AllosRegistration.objects.get(pk=allo_id)
-    except AllosRegistration.DoesNotExist:
-        requested_allo = None
-
-    if date is not None and time is not None and requested_allo is not None:
-        try:
-            staff_user = User.objects.get(pk=requested_allo.staff_id)
-        except User.DoesNotExist:
-            staff_user = None
-
-        if staff_user is not None:
-            date_time = date + " à " + time
-            user_email = requested_allo.user_id.email
-            subject = requested_allo.allo_id.get_allo_type_display()
-
-            body = {
-                'line1': 'Yo,',
-                'line2': '',
-                'line3': getAlloSentenceType(requested_allo.allo_id.allo_type, date_time),
-                'line4': '',
-                'line8': 'La bise,',
-                'line9': 'Mafienssat',
-            }
-
-            message = '\n'.join(body.values())
-            try:
-                send_mail(subject, message, EMAIL_HOST_USER, [user_email], fail_silently=True)
-            except BadHeaderError:
-                messages.error(request, "Erreur lors de l'envoie de l'email")
-                return redirect('alloEmailConfirmation')
-
-            return redirect('alloRequested')
-
-        else:
-            messages.error(request, "staff non trouvé")
-    else:
-        messages.error(request, "La requête est vide, veuillez réessayer")
-
-
-def getAlloSentenceType(allo_type, date):
-    if allo_type == "A":
-        return "Askip t'es en dèche de bière ? On se donne rdv le " + date + "."
-    elif allo_type == "B":
-        return "Alors on à une p'tite fringale ? Bouge pas on arrive le " + date + "."
-    elif allo_type == "C":
-        return "Tu as besoin que maman te prépare ton p'tit dej ? On peut la remplacer le " + date + "."
-    elif allo_type == "D":
-        return "On passera nettoyer ta merde le " + date + "."
-    elif allo_type == "E":
-        return "Les filles chaudes de ta région laveront ta caisse le " + date + "."
-    elif allo_type == "F":
-        return "Le klaxeur fou va prendre contact avec toi pour transmettre ta missive le " + date + "."
-    elif allo_type == "G":
-        return "Votre commande est bien prise en compte. À mercredi !"
-    elif allo_type == "H":
-        return "On s'occupe de t'apporter tes courses pour le " + date + "."
-    elif allo_type == "I":
-        return "C'est l'heure du rendez-vous hebdomadaire, on se retrouve le " + date + "."
-    elif allo_type == "K":
-        return "Eh psssst ! On a un truc pour toi le " + date + "."
-    else:
-        return ""
 
 
 def deleteAllo(request, id_allo):
