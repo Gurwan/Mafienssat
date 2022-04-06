@@ -1160,3 +1160,11 @@ def Master(request):
 
 def Chiche(request):
     return render(request, 'events/descriptions/Chiche.html')
+
+
+def Cartes(request):
+    return render(request, 'events/descriptions/Cartes.html')
+
+
+def Billard(request):
+    return render(request, 'events/descriptions/Billard.html')
