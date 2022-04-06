@@ -132,6 +132,12 @@
             else if(allEvent[i].id === 'Wati by Chiche'){
                 document.getElementById('Wati by Chiche').href = '{% url "Chiche" %}';
             }
+            else if(allEvent[i].id === 'Tournois de cartes'){
+                document.getElementById('Tournois de cartes').href = '{% url "Cartes" %}';
+            }
+            else if(allEvent[i].id === 'Tournois de billard et baby foot'){
+                document.getElementById('Tournois de billard et baby foot').href = '{% url "Billard" %}';
+            }
             else {
                 //mettre les autres cas possible
             }
