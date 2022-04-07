@@ -1041,7 +1041,7 @@ def alloEmailConfirmation(request, id_allo):
         allo.staff_id = request.user.id
         allo.save()
 
-        return render(request, "allos/alloRequested.html", {'user': user, 'allo': allo})
+        return redirect('alloRequested')
     else:
         messages.error(request, "Erreur lors du chargement de la page")
 
